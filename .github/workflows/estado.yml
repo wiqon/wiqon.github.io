@@ -1,0 +1,29 @@
+# Recalcula el estado público de la estrategia una vez por día, después del
+# cierre de la vela diaria (00:00 UTC), y lo publica en la página.
+name: Actualizar estado de la estrategia
+
+on:
+  schedule:
+    - cron: "15 0 * * *"   # 00:15 UTC = 21:15 en Paraguay
+  workflow_dispatch:        # permite correrlo a mano desde la pestaña Actions
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Calcular estado (solo datos públicos, sin claves)
+        run: python scripts/actualizar_estado.py
+      - name: Guardar si cambió
+        run: |
+          git config user.name "wiqon-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add estado.json
+          git diff --cached --quiet || git commit -m "Actualiza estado de la estrategia ($(date -u +%F))"
+          git push
