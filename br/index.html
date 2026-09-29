@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIQON Brasil — Inteligência de Fluxo de Mercado</title>
+<meta name="description" content="Testamos estratégias de trading com dados reais e publicamos tudo: o que funciona e o que não funciona. Documentar, não prometer.">
+<meta property="og:title" content="WIQON Brasil — Inteligência de Fluxo de Mercado">
+<meta property="og:description" content="Testamos estratégias de trading com dados reais e publicamos tudo: o que funciona e o que não funciona.">
+<meta property="og:image" content="https://wiqon.github.io/assets/og.png">
+<meta property="og:url" content="https://wiqon.github.io/br/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="es_LA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
+<link rel="alternate" hreflang="es" href="https://wiqon.github.io/">
+<link rel="alternate" hreflang="pt-BR" href="https://wiqon.github.io/br/">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/estilo.css">
+</head>
+<body data-estado="../estado.json">
+<main>
+
+  <nav class="idioma" aria-label="Idioma">
+    <a href="../" lang="es">🇵🇾 Español</a>
+    <a class="activo" href="./" lang="pt-BR">🇧🇷 Português</a>
+  </nav>
+
+  <header>
+    <div class="avatar"><img src="../assets/logo.png" alt="Logo da WIQON"></div>
+    <h1>WIQON</h1>
+    <div class="descriptor">Inteligência de Fluxo de Mercado</div>
+    <p class="lema">Documentar, não prometer.</p>
+    <p class="problema">A maioria das estratégias de trading que "funcionam" na internet não sobrevive a um teste honesto.</p>
+    <p class="bajada">A gente testa com dados reais e publica tudo — o que funciona e o que não funciona — para você decidir com evidência.</p>
+    <p class="metodo">Observar → Quantificar → Verificar → Automatizar</p>
+    <div class="ctas">
+      <a class="cta principal" href="#vivo"><span>📡</span>Ver os dados</a>
+      <a class="cta" href="https://github.com/wiqon/wiqon-lab#cómo-usarlo" target="_blank" rel="noopener"><span>🔬</span>Reproduzir um experimento</a>
+      <a class="cta" href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener"><span>💬</span>Entrar na comunidade</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>🇧🇷 Por que o Brasil</h2>
+    <div class="tarjeta brasil">
+      <span class="etiqueta">Direto da fronteira Paraguai–Brasil</span>
+      <div class="cifra">O Brasil é o nº 1 do mundo em adoção cripto</div>
+      <p>Segundo a Chainalysis, o Brasil lidera o índice global de adoção cripto de base em 2026, com uma economia cripto de <strong>US$ 252,5 bilhões</strong> — a maior da América Latina.</p>
+      <p>Moramos na fronteira e vivemos os dois lados. Por isso produzimos conteúdo nativo em português, pensado para quem investe e opera no Brasil.</p>
+      <p class="fuente">Fonte: Chainalysis, <a href="https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/" target="_blank" rel="noopener"><em>2026 Global Crypto Adoption Index</em></a> (23/09/2026).</p>
+    </div>
+  </section>
+
+  <!-- Estado real da estratégia que operamos, recalculado diariamente com dados públicos -->
+  <section class="vivo" id="vivo">
+    <h2>📡 Estratégia ao vivo</h2>
+    <div class="tarjeta">
+      <div class="fila">
+        <span class="etiqueta"><span class="sello real">REAL</span><span class="punto"></span>Filtro de tendência no BTC</span>
+        <span class="etiqueta" id="vela">—</span>
+      </div>
+      <div class="senal" id="senal">Carregando…</div>
+      <div class="nota" id="desde"></div>
+      <div class="datos">
+        <div class="dato"><b id="cierre">—</b><span>Fechamento diário BTC</span></div>
+        <div class="dato"><b id="sma">—</b><span>Média de 100 dias</span></div>
+        <div class="dato"><b id="dist">—</b><span>Distância</span></div>
+      </div>
+      <p class="actualizado" id="actualizado"></p>
+      <p class="nota">Regra: BTC acima da média de 100 dias → em BTC; abaixo → em USDT. Operamos com capital real desde setembro de 2026. Não é recomendação de investimento.</p>
+      <details class="como">
+        <summary>Como é atualizado?</summary>
+        <p>Todos os dias, quando fecha o candle diário do Bitcoin (21h no horário de Brasília, 00h UTC), um processo automático baixa os preços públicos da Binance, recalcula o sinal e atualiza esta página, normalmente por volta das 21h15.</p>
+        <p><strong>Por que aparece o candle de ontem e não o de hoje?</strong> Porque a estratégia decide só com candles <em>fechados</em>. O candle de hoje continua aberto e o preço muda a cada minuto até as 21h; decidir com ele seria usar um dado incompleto. Por isso, durante o dia, o último dado confirmado é o fechamento de ontem.</p>
+        <p>Se o Bitcoin fechar abaixo da média de 100 dias, o sinal passa para <strong>EM USDT</strong> na mesma noite. O cálculo é público: <a href="https://github.com/wiqon/wiqon.github.io/blob/main/scripts/actualizar_estado.py" target="_blank" rel="noopener">ver o código</a>.</p>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <h2>🔬 Experimentos</h2>
+    <a class="tarjeta experimento" href="https://github.com/wiqon/wiqon-lab#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc" target="_blank" rel="noopener">
+      <span class="etiqueta"><span class="sello backtest">BACKTEST</span>8 anos · com taxas</span>
+      <div class="cifra">20+ estratégias, só uma sobreviveu</div>
+      <p>O filtro de tendência no BTC: 56,6% ao ano contra 37,3% de comprar e segurar, com metade da queda máxima. Em mercados de alta, rende menos.</p>
+    </a>
+    <a class="tarjeta experimento" href="https://github.com/wiqon/wiqon-lab#2-el-sesgo-de-supervivencia-infla-todo" target="_blank" rel="noopener">
+      <span class="etiqueta"><span class="sello backtest">BACKTEST</span>Viés de sobrevivência · 5 anos</span>
+      <div class="cifra">De 33,7% para 1% ao ano</div>
+      <p>A mesma estratégia de altcoins, com as moedas de hoje e com as que existiam em 2021 (incluindo LUNA e FTT).</p>
+    </a>
+    <a class="tarjeta experimento" href="https://github.com/wiqon/wiqon-lab#4-arbitraje-medido-no-supuesto" target="_blank" rel="noopener">
+      <span class="etiqueta"><span class="sello medicion">MEDIÇÃO</span>Arbitragem · 24 h · 6 exchanges</span>
+      <div class="cifra">69 oportunidades, quase nenhuma real</div>
+      <p>Moedas diferentes com o mesmo nome, saques bloqueados e diferenças que duravam segundos.</p>
+    </a>
+    <p class="nota"><span class="sello real">REAL</span> operado com dinheiro · <span class="sello backtest">BACKTEST</span> simulado com dados históricos · <span class="sello medicion">MEDIÇÃO</span> observado ao vivo, sem operar.</p>
+  </section>
+
+  <section>
+    <h2>🧭 Próximas pesquisas</h2>
+    <div class="tarjeta">
+      <ul class="servicios">
+        <li><strong>Bitcoin na Binance vs. produtos de Bitcoin da B3:</strong> custos, liquidez e o que muda para quem opera no Brasil.</li>
+        <li><strong>O que o order flow realmente mostra?</strong> Testando absorção e agressão com dados.</li>
+        <li><strong>Custos escondidos:</strong> quanto as taxas e o slippage comem de uma estratégia.</li>
+      </ul>
+      <p class="nota">Pesquisas em andamento. Cada uma será publicada com dados, código e limitações — dê certo ou não.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>🔗 Siga a WIQON</h2>
+    <div class="enlaces">
+      <a class="boton principal" href="https://www.youtube.com/@wiqonlab" target="_blank" rel="noopener">
+        <span class="icono">▶</span><span>YouTube<small>Experimentos e pesquisas</small></span></a>
+      <a class="boton" href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">
+        <span class="icono">💬</span><span>Discord<small>Comunidade — pode falar em português</small></span></a>
+      <a class="boton" href="https://t.me/wiqonlab" target="_blank" rel="noopener">
+        <span class="icono">✈</span><span>Telegram<small>Canal com cada novo experimento</small></span></a>
+      <div class="dos">
+        <a class="boton" href="https://www.instagram.com/wiqonlab/" target="_blank" rel="noopener"><span class="icono">📷</span>Instagram</a>
+        <a class="boton" href="https://www.tiktok.com/@wiqonlab" target="_blank" rel="noopener"><span class="icono">♪</span>TikTok</a>
+        <a class="boton" href="https://x.com/wiqonlab" target="_blank" rel="noopener"><span class="icono">𝕏</span>X</a>
+        <a class="boton" href="https://www.linkedin.com/company/wiqonlab" target="_blank" rel="noopener"><span class="icono">in</span>LinkedIn</a>
+        <a class="boton" href="https://www.facebook.com/wiqonlab/" target="_blank" rel="noopener"><span class="icono">f</span>Facebook</a>
+        <a class="boton" href="https://www.threads.net/@wiqonlab" target="_blank" rel="noopener"><span class="icono">@</span>Threads</a>
+      </div>
+      <a class="boton" href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">
+        <span class="icono">⌘</span><span>GitHub<small>Código aberto: reproduza cada número</small></span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>💼 Serviços</h2>
+    <div class="tarjeta">
+      <ul class="servicios">
+        <li><strong>Auditoria de estratégias:</strong> backtest de portfólio com custos reais, validação fora da amostra e intervalos de confiança, antes de arriscar capital.</li>
+        <li><strong>Bots para Binance:</strong> ordens protegidas, Earn automático, alertas no Telegram e operação 24/7.</li>
+        <li><strong>Dashboards e capacitação</strong> em Python aplicado a mercados.</li>
+      </ul>
+      <a class="boton principal" style="margin-top:14px" href="mailto:wiqon027@gmail.com?subject=Contato%20WIQON%20Brasil">
+        <span class="icono">✉</span><span>Fale com a gente<small>wiqon027@gmail.com</small></span></a>
+      <p class="nota">Serviços técnicos de software e dados. Não oferecemos consultoria de investimentos, recomendação personalizada nem gestão de recursos de terceiros.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>⚠️ Conteúdo educacional e de pesquisa. Não é recomendação de investimento. Resultados passados não garantem resultados futuros.</p>
+    <p>© <span id="anio">2026</span> WIQON · Paraguai · Brasil</p>
+  </footer>
+
+</main>
+<script src="../assets/vivo.js"></script>
+</body>
+</html>
