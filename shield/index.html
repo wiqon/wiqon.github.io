@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIQON Shield — EA para MetaTrader 5</title>
+<meta name="description" content="WIQON Shield: el escudo automático para tu Bitcoin en MetaTrader 5. Probado con costos reales de broker. Demo gratis, licencia anual desde USD 59.">
+<meta property="og:title" content="WIQON Shield — el escudo automático para tu Bitcoin">
+<meta property="og:description" content="Misma ganancia que mantener BTC, con casi la mitad de la caída (probado con costos reales de broker, 2022-2026). Demo gratis.">
+<meta property="og:image" content="https://wiqon.github.io/assets/shield.png">
+<meta property="og:url" content="https://wiqon.github.io/shield/">
+<meta property="og:type" content="product">
+<meta property="og:locale" content="es_LA">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/estilo.css">
+<style>
+  .volver { font-size: .85rem; color: var(--cian); }
+  .hero { text-align: center; margin: 14px 0 6px; }
+  .hero img { width: 100%; height: auto; max-width: 420px; border-radius: 16px; border: 1px solid var(--borde); }
+  .paso { display: flex; align-items: center; gap: 10px; margin: 26px 0 10px; }
+  .paso b { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; flex: none;
+            background: linear-gradient(135deg, var(--azul), var(--cian)); color: #fff; font-size: .9rem; }
+  .paso h2 { margin: 0; font-size: 1.05rem; }
+  .opciones { display: grid; gap: 10px; }
+  .opcion { display: block; cursor: pointer; }
+  .opcion input { position: absolute; opacity: 0; pointer-events: none; }
+  .opcion .tarjeta { display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: border-color .15s; }
+  .opcion input:checked + .tarjeta { border-color: var(--cian); background: #0b1630; box-shadow: 0 0 0 1px var(--cian) inset; }
+  .opcion input:focus-visible + .tarjeta { outline: 2px solid var(--cian); outline-offset: 2px; }
+  .opcion.inactiva { cursor: not-allowed; opacity: .55; }
+  .opcion strong { display: block; }
+  .opcion small { color: var(--gris); font-size: .8rem; display: block; }
+  .precio { text-align: right; white-space: nowrap; font-weight: 700; font-size: 1.15rem; color: var(--cian); }
+  .precio s { color: var(--gris); font-weight: 400; font-size: .85rem; display: block; }
+  .precio.gratis { color: var(--verde); }
+  .medios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .medios .tarjeta { flex-direction: column; align-items: flex-start; gap: 2px; padding: 14px; }
+  .resumen { margin-top: 18px; font-size: .9rem; color: var(--gris); }
+  .resumen b { color: var(--texto); }
+  .pasos-lista { margin: 10px 0 0 18px; color: var(--gris); font-size: .88rem; }
+  .pasos-lista li { margin-bottom: 4px; }
+  .pasos-lista strong { color: var(--texto); }
+  h2.seccion { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gris); margin: 30px 0 10px; }
+  .faq details { border-top: 1px solid var(--borde); padding: 10px 0; }
+  .faq summary { cursor: pointer; font-weight: 600; font-size: .92rem; }
+  .faq p { color: var(--gris); font-size: .86rem; margin-top: 6px; }
+  .faq a { color: var(--cian); text-decoration: underline; }
+</style>
+</head>
+<body>
+<main>
+  <a class="volver" href="../">← wiqon.github.io</a>
+
+  <div class="hero"><img src="../assets/shield.png" alt="WIQON Shield: el escudo automático para tu Bitcoin, EA para MetaTrader 5" width="1080" height="1350"></div>
+
+  <div class="tarjeta" style="margin-top:14px">
+    <span class="etiqueta"><span class="sello backtest">BACKTEST</span>Probador MT5 · broker real · 2022-2026</span>
+    <p style="margin-top:8px">Con los spreads y swaps reales de un broker, WIQON Shield <strong>ganó lo mismo que mantener BTC (x2,02 vs x1,96), con casi la mitad de la caída (39% vs 67%)</strong>. Lo malo también: en CFD los swaps se llevaron un tercio de la ventaja.
+    <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener" style="color:var(--cian);text-decoration:underline">Ver el informe completo</a>.</p>
+  </div>
+
+  <div class="paso"><b>1</b><h2>Elegí tu plan</h2></div>
+  <div class="opciones" role="radiogroup" aria-label="Plan">
+    <label class="opcion"><input type="radio" name="plan" value="Demo gratis" data-precio="0">
+      <span class="tarjeta"><span><strong>Demo</strong><small>Funciona sin licencia en cuentas demo. Probalo todo lo que quieras.</small></span><span class="precio gratis">Gratis</span></span></label>
+    <label class="opcion"><input type="radio" name="plan" value="Licencia anual (lanzamiento)" data-precio="59" checked>
+      <span class="tarjeta"><span><strong>Licencia anual</strong><small>1 cuenta real · 12 meses · soporte por WhatsApp. Precio de lanzamiento: primeros 10 clientes.</small></span><span class="precio"><s>USD 99</s>USD 59</span></span></label>
+    <label class="opcion"><input type="radio" name="plan" value="Licencia vitalicia" data-precio="199">
+      <span class="tarjeta"><span><strong>Licencia vitalicia</strong><small>1 cuenta real · sin vencimiento.</small></span><span class="precio">USD 199</span></span></label>
+    <label class="opcion"><input type="radio" name="plan" value="Instalación asistida" data-precio="30">
+      <span class="tarjeta"><span><strong>Instalación asistida</strong><small>Videollamada: lo instalamos y configuramos con vos (MT5 o VPS). Se suma a cualquier plan.</small></span><span class="precio">USD 30</span></span></label>
+  </div>
+
+  <div id="bloque-pago">
+    <div class="paso"><b>2</b><h2>Elegí cómo pagar</h2></div>
+    <div class="opciones medios" role="radiogroup" aria-label="Medio de pago">
+      <label class="opcion"><input type="radio" name="medio" value="Binance Pay / USDT" checked>
+        <span class="tarjeta"><strong>₮ Binance Pay / USDT</strong><small>Sin comisión entre usuarios de Binance · TRC20 o BEP20</small></span></label>
+      <label class="opcion"><input type="radio" name="medio" value="Transferencia en Paraguay">
+        <span class="tarjeta"><strong>🇵🇾 Transferencia</strong><small>Banco (SIPAP) o billetera, en guaraníes al cambio del día</small></span></label>
+      <label class="opcion"><input type="radio" name="medio" value="PayPal">
+        <span class="tarjeta"><strong>🅿 PayPal</strong><small>Para pagos desde cualquier país</small></span></label>
+      <label class="opcion inactiva"><input type="radio" name="medio" value="Tarjeta" disabled>
+        <span class="tarjeta"><strong>💳 Tarjeta</strong><small>Próximamente</small></span></label>
+    </div>
+  </div>
+
+  <div class="paso"><b id="num-pedir">3</b><h2>Hacé tu pedido</h2></div>
+  <p class="resumen" id="resumen"></p>
+  <a class="boton principal whatsapp" id="pedir" style="margin-top:12px" href="https://wa.me/595987685651" target="_blank" rel="noopener">
+    <span class="icono">💬</span><span id="pedir-texto">Pedir por WhatsApp<small>Se abre con tu pedido ya escrito</small></span></a>
+  <ol class="pasos-lista" id="que-sigue">
+    <li>Te respondemos con los <strong>datos de pago</strong> del medio que elegiste.</li>
+    <li>Pagás y nos enviás el <strong>comprobante</strong> y tu <strong>número de cuenta REAL de MT5</strong>.</li>
+    <li>Recibís el <strong>EA, el manual en PDF y tu clave</strong> en menos de 24 horas.</li>
+  </ol>
+  <p class="nota">🔒 Los datos de pago se envían <strong>solo</strong> desde nuestro WhatsApp oficial <strong>+595 987 685 651</strong>. Si alguien te escribe desde otro número pidiendo pagos a nombre de WIQON, no es nuestro.</p>
+
+  <h2 class="seccion">Preguntas frecuentes</h2>
+  <div class="faq">
+    <details><summary>¿Qué hace exactamente?</summary>
+      <p>Compra BTC cuando el cierre diario está sobre la media móvil de 100 días y cierra la posición cuando cae debajo. Decide una vez por día, con la vela cerrada. Solo opera comprado y no usa apalancamiento.</p></details>
+    <details><summary>¿Garantiza ganancias?</summary>
+      <p>No. Ningún software puede garantizarlas. Su valor está en <strong>proteger en las caídas</strong>; en mercados que suben sin parar rinde menos que mantener. Publicamos los resultados buenos y malos en el <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">informe</a>.</p></details>
+    <details><summary>¿Qué necesito?</summary>
+      <p>MetaTrader 5 (gratis) y una cuenta en un broker que ofrezca BTCUSD. Para operar 24/7 conviene una PC encendida o un VPS. Probalo antes en demo con los costos (swaps) de tu broker.</p></details>
+    <details><summary>¿La licencia sirve en varias cuentas?</summary>
+      <p>Cada clave funciona en <strong>una</strong> cuenta real. Si cambiás de cuenta o broker, te generamos una nueva gratis una vez por año.</p></details>
+    <details><summary>¿Hay reembolso?</summary>
+      <p>Como la demo es gratis y sin límite de tiempo, te pedimos que la pruebes antes de comprar: una vez emitida la clave para tu cuenta, la licencia no se reembolsa.</p></details>
+    <details><summary>¿Y en Brasil?</summary>
+      <p>La versión para Brasil llega pronto. <a href="../br/#shield">Entrá a la lista de espera</a>.</p></details>
+  </div>
+
+  <p class="nota" style="margin-top:24px">WIQON Shield es software educativo y de investigación. No es asesoría financiera ni garantiza resultados. Operar CFD con apalancamiento puede generar pérdidas mayores a lo invertido. © 2026 WIQON.</p>
+</main>
+<script>
+  // Arma el pedido de WhatsApp con el plan y el medio de pago elegidos
+  const NUMERO = "595987685651";
+  const $ = (s) => document.querySelector(s);
+  function actualizar() {
+    const plan = $('input[name="plan"]:checked');
+    const medio = $('input[name="medio"]:checked');
+    const gratis = plan.dataset.precio === "0";
+    $("#bloque-pago").hidden = gratis;
+    $("#que-sigue").hidden = gratis;
+    $("#num-pedir").textContent = gratis ? "2" : "3";
+    let texto, resumen;
+    if (gratis) {
+      texto = "Hola WIQON, quiero probar WIQON Shield GRATIS en mi cuenta demo. ¿Me envían el EA y el manual?";
+      resumen = "Te enviamos el <b>EA y el manual</b> por WhatsApp para que lo pruebes en demo.";
+    } else {
+      texto = `Hola WIQON, quiero comprar WIQON Shield.\n• Plan: ${plan.value} (USD ${plan.dataset.precio})\n• Pago con: ${medio.value}\n• Mi cuenta real de MT5: (la completo después)`;
+      resumen = `Pedido: <b>${plan.value}</b> · <b>USD ${plan.dataset.precio}</b> · pago con <b>${medio.value}</b>.`;
+    }
+    $("#resumen").innerHTML = resumen;
+    $("#pedir").href = `https://wa.me/${NUMERO}?text=${encodeURIComponent(texto)}`;
+    $("#pedir-texto").firstChild.textContent = gratis ? "Pedir la demo gratis" : "Pedir por WhatsApp";
+  }
+  document.querySelectorAll('input[name="plan"], input[name="medio"]').forEach((el) => el.addEventListener("change", actualizar));
+  actualizar();
+</script>
+</body>
+</html>
