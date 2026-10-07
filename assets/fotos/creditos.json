@@ -1,0 +1,42 @@
+{
+ "puente": {
+  "archivo": "puente.jpg",
+  "titulo": "Ponte da Amizade in Foz do Iguacu.jpg",
+  "autor": "Rodrigo Yoshioka from São Paulo, Brasil",
+  "licencia": "CC BY 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/2.0",
+  "fuente": "https://commons.wikimedia.org/wiki/File:Ponte_da_Amizade_in_Foz_do_Iguacu.jpg"
+ },
+ "puente2": {
+  "archivo": "puente2.jpg",
+  "titulo": "Ciudad del Este puente de la Amistad.jpg",
+  "autor": "Ekem",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "fuente": "https://commons.wikimedia.org/wiki/File:Ciudad_del_Este_puente_de_la_Amistad.jpg"
+ },
+ "cde": {
+  "archivo": "cde.jpg",
+  "titulo": "Ciudad del Este downtown skyline 143945.jpg",
+  "autor": "Cmasi",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "fuente": "https://commons.wikimedia.org/wiki/File:Ciudad_del_Este_downtown_skyline_143945.jpg"
+ },
+ "asuncion": {
+  "archivo": "asuncion.jpg",
+  "titulo": "Asunción skyline from Chaco'i.jpg",
+  "autor": "P. S. F. Freitas",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "fuente": "https://commons.wikimedia.org/wiki/File:Asunci%C3%B3n_skyline_from_Chaco%27i.jpg"
+ },
+ "parana": {
+  "archivo": "parana.jpg",
+  "titulo": "Parana River Viewed from the 'Ponte da Amizade' - 2017-09-19.jpg",
+  "autor": "Diego3336",
+  "licencia": "CC BY 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/2.0",
+  "fuente": "https://commons.wikimedia.org/wiki/File:Parana_River_Viewed_from_the_%27Ponte_da_Amizade%27_-_2017-09-19.jpg"
+ }
+}

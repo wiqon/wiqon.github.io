@@ -1,0 +1,52 @@
+# Publica wiqonlab.com con GitHub Pages y actualiza los datos dinámicos sin
+# llenar el historial del repo: noticias.json, cambio.json y videos.json se
+# generan en cada corrida y se publican directamente (no se commitean).
+name: Publicar sitio y actualizar datos
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "*/30 * * * *"   # News Radar cada 30 minutos (GitHub puede demorar algunos minutos)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Traer los últimos datos publicados (respaldo si una fuente falla)
+        run: |
+          for f in noticias.json cambio.json videos.json; do
+            curl -sf "https://wiqonlab.com/$f" -o "$f.pub" && mv "$f.pub" "$f" || rm -f "$f.pub"
+          done
+      - name: News Radar
+        run: python scripts/actualizar_noticias.py
+        continue-on-error: true
+      - name: Tipo de cambio oficial
+        run: python scripts/actualizar_cambio.py
+        continue-on-error: true
+      - name: Videos de YouTube
+        run: python scripts/actualizar_videos.py
+        continue-on-error: true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deploy
+        uses: actions/deploy-pages@v4
