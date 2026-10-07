@@ -32,7 +32,7 @@ jobs:
           python-version: "3.12"
       - name: Traer los últimos datos publicados (respaldo si una fuente falla)
         run: |
-          for f in noticias.json cambio.json videos.json; do
+          for f in noticias.json cambio.json videos.json inflacion.json; do
             curl -sf "https://wiqonlab.com/$f" -o "$f.pub" && mv "$f.pub" "$f" || rm -f "$f.pub"
           done
       - name: News Radar
@@ -43,6 +43,9 @@ jobs:
         continue-on-error: true
       - name: Videos de YouTube
         run: python scripts/actualizar_videos.py
+        continue-on-error: true
+      - name: Inflación por país (FMI)
+        run: python scripts/actualizar_inflacion.py
         continue-on-error: true
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
