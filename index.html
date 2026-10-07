@@ -3,174 +3,200 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WIQON — Market Flow Intelligence</title>
-<meta name="description" content="Probamos estrategias de trading con datos reales y publicamos todo: lo que funciona y lo que no. Documentar, no prometer.">
-<meta property="og:title" content="WIQON — Market Flow Intelligence">
-<meta property="og:description" content="Probamos estrategias de trading con datos reales y publicamos todo: lo que funciona y lo que no.">
+<title>WIQON — Laboratorio de trading con datos reales</title>
+<meta name="description" content="Probamos estrategias de trading con datos reales y publicamos todo: lo que funciona y lo que no. Estrategia en vivo, experimentos con código abierto y WIQON Shield.">
+<meta property="og:title" content="WIQON — Laboratorio de trading con datos reales">
+<meta property="og:description" content="Probamos estrategias de trading con datos reales y publicamos todo: lo que funciona y lo que no. Estrategia en vivo, experimentos con código abierto y WIQON Shield.">
 <meta property="og:image" content="https://wiqonlab.com/assets/og.png">
 <meta property="og:url" content="https://wiqonlab.com/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_LA">
-<meta property="og:locale:alternate" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#04060c">
+<link rel="canonical" href="https://wiqonlab.com/">
 <link rel="alternate" hreflang="es" href="https://wiqonlab.com/">
 <link rel="alternate" hreflang="pt-BR" href="https://wiqonlab.com/br/">
 <link rel="icon" href="assets/favicon.png">
-<link rel="stylesheet" href="assets/estilo.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/v2.css">
 </head>
 <body data-estado="estado.json">
-<main>
 
-  <nav class="idioma" aria-label="Idioma">
-    <a class="activo" href="./" lang="es">🇵🇾 Español</a>
-    <a href="br/" lang="pt-BR">🇧🇷 Português</a>
-  </nav>
+<div class="cinta" aria-label="Precios en vivo"><div class="cinta-pista" id="cinta-pista"></div></div>
 
-  <header>
-    <div class="avatar"><img src="assets/logo.png" alt="Logo de WIQON"></div>
-    <h1>WIQON</h1>
-    <div class="descriptor">Market Flow Intelligence</div>
-    <p class="lema">Documentar, no prometer.</p>
-    <p class="problema">La mayoría de las estrategias de trading que "funcionan" en internet no sobreviven a una prueba honesta.</p>
-    <p class="bajada">Nosotros las probamos con datos reales y publicamos todo, lo que funciona y lo que no, para que decidas con evidencia.</p>
-    <p class="metodo">Observar → Cuantificar → Verificar → Automatizar</p>
-    <div class="ctas">
-      <a class="cta principal" href="#vivo"><span>📡</span>Ver los datos</a>
-      <a class="cta" href="https://github.com/wiqon/wiqon-lab#cómo-usarlo" target="_blank" rel="noopener"><span>🔬</span>Reproducir un experimento</a>
-      <a class="cta" href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener"><span>💬</span>Entrar a la comunidad</a>
+<nav class="nav">
+  <div class="contenedor">
+    <a class="marca" href="./"><img src="assets/logo.png" alt="WIQON">WIQON</a>
+    <div class="nav-links">
+      <a href="#vivo">En vivo</a><a href="#experimentos">Experimentos</a><a href="#shield">Shield</a>
+      <a href="#servicios">Servicios</a><a href="#comunidad">Comunidad</a>
     </div>
-  </header>
+    <div class="nav-der">
+      <div class="idiomas"><a class="activo" href="" lang="es">ES</a><a  href="br/" lang="pt-BR">PT</a></div>
+      <a class="btn prim chico" href="shield/">Probar Shield gratis</a>
+    </div>
+  </div>
+</nav>
 
-  <!-- Estado real de la estrategia que operamos, recalculado a diario con datos públicos -->
-  <section class="vivo" id="vivo">
-    <h2>📡 Estrategia en vivo</h2>
-    <div class="tarjeta">
-      <div class="fila">
-        <span class="etiqueta"><span class="sello real">REAL</span><span class="punto"></span>Filtro de tendencia en BTC</span>
-        <span class="etiqueta" id="vela">—</span>
+<header class="hero">
+  <div class="contenedor">
+    <div class="rev">
+      <span class="ceja"><span class="punto-vivo"></span>Laboratorio de trading cuantitativo · desde 2026</span>
+      <h1>Probamos estrategias de trading con datos reales. <span class="grad">Publicamos todo.</span></h1>
+      <p class="bajada">La mayoría de las estrategias que “funcionan” en internet no sobreviven a una prueba honesta. Nosotros las medimos con años de datos, costos reales y código abierto: lo que funciona y lo que no.</p>
+      <div class="acciones">
+        <a class="btn prim" href="#vivo">Ver la estrategia en vivo</a>
+        <a class="btn" href="shield/">🛡 Probar WIQON Shield gratis</a>
       </div>
-      <div class="senal" id="senal">Cargando…</div>
-      <div class="nota" id="desde"></div>
-      <div class="datos">
-        <div class="dato"><b id="cierre">—</b><span>Cierre diario BTC</span></div>
-        <div class="dato"><b id="sma">—</b><span>Media 100 días</span></div>
-        <div class="dato"><b id="dist">—</b><span>Distancia</span></div>
+      <div class="confianza"><span>Código abierto</span><span>Sin promesas de rendimiento</span><span>Operamos con capital real</span></div>
+    </div>
+    <div class="grafico rev">
+      <div class="grafico-cab">
+        <span class="par"><b id="precio-hero">—</b>BTC/USDT · 1D</span>
+        <span class="insignia" id="insignia">…</span>
       </div>
-      <p class="actualizado" id="actualizado"></p>
-      <p class="nota">Regla: BTC sobre su media de 100 días → en BTC; debajo → en USDT. La operamos con capital real desde septiembre de 2026. No es una recomendación.</p>
-      <details class="como">
-        <summary>¿Cómo se actualiza?</summary>
-        <p>Todos los días, cuando cierra la vela diaria de Bitcoin (21:00 hora de Paraguay, 00:00 UTC), un proceso automático descarga los precios públicos de Binance, recalcula la señal y actualiza esta página, normalmente alrededor de las 21:15.</p>
-        <p><strong>¿Por qué muestra la vela de ayer y no la de hoy?</strong> Porque la estrategia decide solo con velas <em>cerradas</em>. La vela de hoy sigue abierta y su precio cambia minuto a minuto hasta las 21:00; decidir con ella sería usar un dato incompleto. Por eso, durante el día, lo último confirmado es el cierre de ayer.</p>
-        <p>Si Bitcoin cierra debajo de su media de 100 días, la señal pasa a <strong>EN USDT</strong> esa misma noche. El cálculo es público: <a href="https://github.com/wiqon/wiqon.github.io/blob/main/scripts/actualizar_estado.py" target="_blank" rel="noopener">ver el código</a>.</p>
-      </details>
+      <canvas id="lienzo" aria-label="Gráfico del precio de Bitcoin y su media de 100 días"></canvas>
+      <div class="grafico-pie"><span><i style="background:#e9eef8"></i>Precio BTC (cierre diario)</span><span><i style="background:#28c8ff"></i>Media 100 días</span><span><i style="background:rgba(52,214,140,.5)"></i>Cierre sobre la media</span></div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <section>
-    <h2>🔗 Seguinos</h2>
-    <div class="enlaces">
-      <a class="boton principal" href="https://www.youtube.com/@wiqonlab" target="_blank" rel="noopener">
-        <span class="icono">▶</span><span>YouTube<small>Experimentos e investigaciones</small></span></a>
-      <a class="boton" href="https://t.me/wiqonlab" target="_blank" rel="noopener">
-        <span class="icono">✈</span><span>Telegram<small>Canal con cada nuevo experimento</small></span></a>
-      <a class="boton" href="https://whatsapp.com/channel/0029Vb8Tk5XCcW4zVk21xx0D" target="_blank" rel="noopener">
-        <span class="icono">🟢</span><span>Canal de WhatsApp<small>Cada experimento, directo en tu WhatsApp</small></span></a>
-      <a class="boton" href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">
-        <span class="icono">💬</span><span>Discord<small>Comunidad: proponé estrategias para probar</small></span></a>
-      <div class="dos">
-        <a class="boton" href="https://www.instagram.com/wiqonlab/" target="_blank" rel="noopener"><span class="icono">📷</span>Instagram</a>
-        <a class="boton" href="https://www.tiktok.com/@wiqonlab" target="_blank" rel="noopener"><span class="icono">♪</span>TikTok</a>
-        <a class="boton" href="https://x.com/wiqonlab" target="_blank" rel="noopener"><span class="icono">𝕏</span>X</a>
-        <a class="boton" href="https://www.linkedin.com/company/wiqonlab" target="_blank" rel="noopener"><span class="icono">in</span>LinkedIn</a>
-        <a class="boton" href="https://www.facebook.com/wiqonlab/" target="_blank" rel="noopener"><span class="icono">f</span>Facebook</a>
-        <a class="boton" href="https://www.threads.net/@wiqonlab" target="_blank" rel="noopener"><span class="icono">@</span>Threads</a>
+<div class="cifras">
+  <div class="contenedor rev">
+    <div class="cifra"><b data-contar="20" data-suf="+">20+</b><span>estrategias probadas</span></div>
+    <div class="cifra"><b data-contar="8">8</b><span>años de datos de BTC</span></div>
+    <div class="cifra"><b data-contar="1">1</b><span>sobrevivió y la operamos</span></div>
+    <div class="cifra"><b data-contar="100" data-suf="%">100%</b><span>código abierto</span></div>
+  </div>
+</div>
+
+<section class="bloque" id="vivo">
+  <div class="contenedor">
+    <div class="titulo rev"><span class="sobre">Estrategia en vivo</span><h2>La única que sobrevivió, operada con dinero real</h2><p>Se recalcula todos los días con datos públicos de Binance. Si cambia la señal, lo ves acá esa misma noche.</p></div>
+    <div class="vivo-grid">
+      <div class="tarjeta rev">
+        <div class="etiqueta"><span class="sello real">REAL</span><span class="punto-vivo"></span>Filtro de tendencia en BTC <span style="margin-left:auto" id="vela">—</span></div>
+        <div class="senal" id="senal">Cargando…</div>
+        <div class="nota" id="desde" style="margin-top:0"></div>
+        <div class="datos">
+          <div class="dato"><b id="cierre">—</b><span>Cierre diario BTC</span></div>
+          <div class="dato"><b id="sma">—</b><span>Media 100 días</span></div>
+          <div class="dato"><b id="dist">—</b><span>Distancia</span></div>
+        </div>
+        <p class="actualizado" id="actualizado"></p>
       </div>
-      <a class="boton" href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">
-        <span class="icono">⌘</span><span>GitHub<small>Código abierto: reproducí cada número</small></span></a>
+      <div class="tarjeta explica rev">
+        <h3>La regla, sin secretos</h3>
+        <div class="regla">si <span class="c">cierre_diario</span> &gt; <span class="c">media_100</span> → <span class="v">EN BTC</span><br>si no → <span class="c">EN USDT</span> (rindiendo en Earn)</div>
+        <p>Decide una vez por día, con la vela <strong>cerrada</strong> (21:00 de Paraguay). La vela de hoy sigue abierta y su precio cambia minuto a minuto: decidir con ella sería usar un dato incompleto.</p>
+        <p>En 8 años de datos (2018-2026), con comisiones: <strong>56,6% anual y caída máxima de 34,7%</strong>, contra 37,3% y 76,6% de comprar y mantener. En mercados que suben sin parar, rinde menos.</p>
+        <p>La operamos con capital real desde septiembre de 2026. No es una recomendación. <a href="https://github.com/wiqon/wiqon.github.io/blob/main/scripts/actualizar_estado.py" target="_blank" rel="noopener">Ver el código que calcula la señal</a>.</p>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <h2>🔬 Experimentos</h2>
-    <a class="tarjeta experimento" href="https://github.com/wiqon/wiqon-lab#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc" target="_blank" rel="noopener">
-      <span class="etiqueta"><span class="sello backtest">BACKTEST</span>8 años · con comisiones</span>
-      <div class="cifra">20+ estrategias, una sobrevivió</div>
-      <p>El filtro de tendencia en BTC: 56.6% anual vs 37.3% de mantener, con la mitad de caída. En mercados alcistas rinde menos.</p>
-    </a>
-    <a class="tarjeta experimento" href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">
-      <span class="etiqueta"><span class="sello backtest">BACKTEST</span>MetaTrader 5 · CFD con swaps reales</span>
-      <div class="cifra">Misma ganancia, casi la mitad de caída</div>
-      <p>La regla llevada a un EA y probada con los costos de un broker real (2022-2026): x2,02 vs x1,96 de mantener, caída 39% vs 67%. Los swaps se llevan un tercio de la ventaja.</p>
-    </a>
-    <a class="tarjeta experimento" href="https://github.com/wiqon/wiqon-lab#2-el-sesgo-de-supervivencia-infla-todo" target="_blank" rel="noopener">
-      <span class="etiqueta"><span class="sello backtest">BACKTEST</span>Sesgo de supervivencia · 5 años</span>
-      <div class="cifra">De 33.7% a 1% anual</div>
-      <p>La misma estrategia de altcoins, con las monedas de hoy y con las que existían en 2021 (LUNA, FTT incluidas).</p>
-    </a>
-    <a class="tarjeta experimento" href="https://github.com/wiqon/wiqon-lab#4-arbitraje-medido-no-supuesto" target="_blank" rel="noopener">
-      <span class="etiqueta"><span class="sello medicion">MEDICIÓN</span>Arbitraje · 24 h · 6 exchanges</span>
-      <div class="cifra">69 oportunidades, casi ninguna real</div>
-      <p>Monedas distintas con el mismo nombre, retiros bloqueados y diferencias que duraban segundos.</p>
-    </a>
-    <p class="nota"><span class="sello real">REAL</span> operado con dinero · <span class="sello backtest">BACKTEST</span> simulado con datos históricos · <span class="sello medicion">MEDICIÓN</span> observado en vivo, sin operar.</p>
-  </section>
-
-  <section>
-    <h2>🇧🇷 WIQON Brasil</h2>
-    <a class="tarjeta brasil experimento" href="br/">
-      <span class="etiqueta">Desde la frontera Paraguay–Brasil</span>
-      <div class="cifra">Brasil: n.º 1 del mundo en adopción cripto</div>
-      <p>Según Chainalysis, Brasil lidera el índice de adopción cripto de base 2026, con una economía cripto de USD 252.500 millones. Por eso producimos contenido nativo en portugués. <strong>Ver versión en portugués →</strong></p>
-      <p class="fuente">Fuente: Chainalysis, <em>2026 Global Crypto Adoption Index</em> (23/09/2026).</p>
-    </a>
-  </section>
-
-  <section id="shield">
-    <h2>🛡 Productos</h2>
-    <div class="tarjeta experimento">
-      <span class="etiqueta"><span class="sello real">NUEVO</span>EA para MetaTrader 5 · Bitcoin</span>
-      <div class="cifra">WIQON Shield: el escudo automático para tu Bitcoin</div>
-      <p>Está comprado mientras BTC sube y sale cuando la tendencia se rompe. Probado con los costos reales de un broker: <strong>ganó lo mismo que mantener, con casi la mitad de la caída</strong> (39% vs 67%, 2022-2026). <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">Ver el informe completo</a>, con lo bueno y lo malo.</p>
-      <ul class="servicios">
-        <li><strong>Demo gratis:</strong> funciona sin licencia en cuentas demo, para que lo pruebes antes.</li>
-        <li><strong>Licencia anual:</strong> USD 99 · <strong>lanzamiento USD 59</strong> (primeros 10 clientes).</li>
-        <li><strong>Vitalicia:</strong> USD 199 · <strong>instalación asistida:</strong> USD 30.</li>
-        <li>Manual en español y portugués · soporte por WhatsApp.</li>
-      </ul>
-      <a class="boton principal whatsapp" style="margin-top:14px" href="https://wa.me/595987685651?text=Hola%20WIQON%2C%20quiero%20probar%20WIQON%20Shield%20(EA%20MT5)." target="_blank" rel="noopener">
-        <span class="icono">🛡</span><span>Quiero probarlo gratis<small>Te enviamos el EA y el manual por WhatsApp</small></span></a>
-      <a class="boton principal" style="margin-top:10px" href="shield/">
-        <span class="icono">💳</span><span>Ver planes y comprar<small>Binance Pay / USDT · transferencia · PYUSD</small></span></a>
-      <p class="nota">Software educativo y de investigación. No es asesoría financiera ni garantiza resultados. En CFD, los swaps del broker reducen el rendimiento: probalo con los costos de tu broker.</p>
+<section class="bloque alt">
+  <div class="contenedor">
+    <div class="titulo centro rev"><span class="sobre">Cómo trabajamos</span><h2>Observar → Cuantificar → Verificar → Automatizar</h2><p>El mismo proceso para cada idea, sea nuestra o de la comunidad. La mayoría no pasa del paso 3.</p></div>
+    <div class="rejilla r4">
+      <div class="tarjeta rev"><div class="paso-n">1</div><h3>Observar</h3><p>Tomamos una idea popular: un indicador, un bot, un “método” que circula en redes.</p></div>
+      <div class="tarjeta rev"><div class="paso-n">2</div><h3>Cuantificar</h3><p>La convertimos en reglas exactas y la medimos con años de datos, comisiones y slippage.</p></div>
+      <div class="tarjeta rev"><div class="paso-n">3</div><h3>Verificar</h3><p>Ventanas fuera de muestra, intervalos de confianza y control del sesgo de supervivencia.</p></div>
+      <div class="tarjeta rev"><div class="paso-n">4</div><h3>Automatizar</h3><p>Solo lo que sobrevive se automatiza y se opera con capital real. Y lo publicamos.</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <h2>💼 Servicios</h2>
-    <div class="tarjeta">
-      <ul class="servicios">
-        <li><strong>Auditoría de estrategias:</strong> backtest de portafolio con costos reales, validación fuera de muestra e intervalos de confianza, antes de arriesgar capital.</li>
-        <li><strong>Bots para Binance:</strong> órdenes protegidas, Earn automático, alertas por Telegram y despliegue 24/7.</li>
-        <li><strong>Dashboards y capacitación</strong> en Python aplicado a mercados.</li>
-      </ul>
-      <a class="boton principal whatsapp" style="margin-top:14px" href="https://wa.me/595987685651?text=Hola%20WIQON%2C%20les%20escribo%20desde%20su%20p%C3%A1gina.%20Quiero%20consultar%20sobre%20" target="_blank" rel="noopener">
-        <span class="icono">💬</span><span>WhatsApp<small>+595 987 685 651 · respondemos a la brevedad</small></span></a>
-      <a class="boton" style="margin-top:10px" href="https://wa.me/c/595987685651" target="_blank" rel="noopener">
-        <span class="icono">🛍</span><span>Ver catálogo de servicios<small>Auditoría · Bots · Capacitación</small></span></a>
-      <a class="boton" style="margin-top:10px" href="mailto:contacto@wiqonlab.com?subject=Consulta%20WIQON">
-        <span class="icono">✉</span><span>Email<small>contacto@wiqonlab.com</small></span></a>
-      <p class="nota">Servicios técnicos de software y datos. No brindamos asesoría financiera ni gestionamos fondos de terceros.</p>
+<section class="bloque" id="experimentos">
+  <div class="contenedor">
+    <div class="titulo rev"><span class="sobre">Experimentos</span><h2>Lo que medimos (y lo que no funcionó)</h2><p>Cada número tiene su código y sus datos en GitHub. Podés reproducirlo.</p></div>
+    <div class="rejilla r3"><a class="tarjeta exp rev" href="https://github.com/wiqon/wiqon-lab#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc" target="_blank" rel="noopener"><div class="etiqueta"><span class="sello backtest">BACKTEST</span>8 años · con comisiones</div><div class="num c">20+ estrategias, una sobrevivió</div><p>Filtro de tendencia en BTC: 56,6% anual vs 37,3% de mantener, con la mitad de caída.</p><span class="leer">Ver el experimento →</span></a><a class="tarjeta exp rev" href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener"><div class="etiqueta"><span class="sello backtest">BACKTEST</span>MT5 · CFD con swaps reales</div><div class="num v">Misma ganancia, casi mitad de caída</div><p>El EA con los costos de un broker real (2022-2026): x2,02 vs x1,96; caída 39% vs 67%. Los swaps se llevan un tercio.</p><span class="leer">Ver el experimento →</span></a><a class="tarjeta exp rev" href="https://github.com/wiqon/wiqon-lab#1-una-estrategia-validada-que-era-ruido" target="_blank" rel="noopener"><div class="etiqueta"><span class="sello backtest">BACKTEST</span>Day trade · 3 años</div><div class="num o">+0,25% … que era suerte</div><p>EMA21 Bounce: en 3 años y 178 operaciones dio +0,71%, contra +9,3% de dejar USDT en Earn.</p><span class="leer">Ver el experimento →</span></a><a class="tarjeta exp rev" href="https://github.com/wiqon/wiqon-lab#2-el-sesgo-de-supervivencia-infla-todo" target="_blank" rel="noopener"><div class="etiqueta"><span class="sello backtest">BACKTEST</span>Altcoins · 5 años</div><div class="num r">De 33,7% a 1% anual</div><p>La misma estrategia con las monedas de hoy y con las que existían en 2021 (LUNA y FTT incluidas).</p><span class="leer">Ver el experimento →</span></a><a class="tarjeta exp rev" href="https://github.com/wiqon/wiqon-lab#4-arbitraje-medido-no-supuesto" target="_blank" rel="noopener"><div class="etiqueta"><span class="sello medicion">MEDICIÓN</span>Arbitraje · 24 h · 6 exchanges</div><div class="num o">69 oportunidades, casi ninguna real</div><p>Monedas distintas con el mismo nombre, retiros bloqueados y diferencias que duraban segundos.</p><span class="leer">Ver el experimento →</span></a><a class="tarjeta exp rev" href="https://github.com/wiqon/wiqon-lab#5-arbitraje-de-funding-cash-and-carry" target="_blank" rel="noopener"><div class="etiqueta"><span class="sello backtest">BACKTEST</span>Funding · 6 años</div><div class="num c">7-10% anual… casi todo de 2021</div><p>Spot comprado + perpetuo vendido. En 2025-26 rinde 2-3% anual: igual o menos que Earn.</p><span class="leer">Ver el experimento →</span></a></div>
+    <div class="leyenda"><span><span class="sello real">REAL</span> operado con dinero</span><span><span class="sello backtest">BACKTEST</span> simulado con datos históricos</span><span><span class="sello medicion">MEDICIÓN</span> observado en vivo, sin operar</span></div>
+  </div>
+</section>
+
+<section class="bloque alt" id="shield">
+  <div class="contenedor producto">
+    <img class="rev" src="assets/shield.png" alt="WIQON Shield" width="1080" height="1350" loading="lazy">
+    <div class="rev"><span class="sobre">Producto · EA para MetaTrader 5</span><h2 style="font-size:clamp(1.8rem,3.2vw,2.6rem);line-height:1.15;margin:10px 0 12px;letter-spacing:-.02em">WIQON Shield: el escudo automático para tu Bitcoin</h2><p style="color:var(--gris)">Está comprado mientras BTC sube y sale cuando la tendencia se rompe. Probado con los spreads y swaps reales de un broker: <strong style="color:var(--texto)">ganó lo mismo que mantener, con casi la mitad de la caída</strong> (39% vs 67%, 2022-2026).</p><div class="planes"><div class="plan"><h4>Demo</h4><div class="precio">Gratis</div><small>Sin licencia en cuentas demo</small></div><div class="plan dest"><span class="cinta-plan">LANZAMIENTO</span><h4>Anual</h4><div class="precio"><s>USD 99</s>59</div><small>Primeros 10 clientes</small></div><div class="plan"><h4>Vitalicia</h4><div class="precio">USD 199</div><small>Sin vencimiento</small></div></div><ul class="lista"><li><strong>Manual en español y portugués</strong> y soporte por WhatsApp</li><li>Pago con <strong>Binance Pay / USDT, transferencia o PYUSD</strong></li><li><a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener" style="color:var(--cian);text-decoration:underline">Informe completo</a>, con lo bueno y lo malo</li></ul><div class="acciones"><a class="btn prim" href="shield/">🛡 Ver planes y comprar</a><a class="btn wa" href="https://wa.me/595987685651?text=Hola%20WIQON%2C%20quiero%20probar%20WIQON%20Shield%20gratis." target="_blank" rel="noopener">💬 Probar gratis</a></div><p class="nota">Software educativo. No es asesoría financiera ni garantiza resultados. En CFD, los swaps del broker reducen el rendimiento.</p></div>
+  </div>
+</section>
+
+<section class="bloque" id="servicios">
+  <div class="contenedor">
+    <div class="titulo rev"><span class="sobre">Servicios</span><h2>¿Tenés una estrategia o un bot? Lo probamos antes de que arriesgues capital</h2><p>Servicios técnicos de software y datos, con la misma metodología del laboratorio.</p></div>
+    <div class="rejilla r3">
+      <div class="tarjeta rev"><div class="icono-g">🔬</div><h3>Auditoría de estrategias</h3><p>Backtest de portafolio con costos reales, validación fuera de muestra e intervalos de confianza. Te decimos si tiene ventaja… o no.</p></div>
+      <div class="tarjeta rev"><div class="icono-g">⚙️</div><h3>Bots para Binance</h3><p>Órdenes protegidas, Earn automático, alertas por Telegram y despliegue 24/7 en tu Raspberry Pi o VPS.</p></div>
+      <div class="tarjeta rev"><div class="icono-g">📊</div><h3>Dashboards y capacitación</h3><p>Paneles con tus datos y clases de Python aplicado a mercados, individuales o grupales.</p></div>
     </div>
-  </section>
+    <div class="acciones rev" style="margin-top:24px">
+      <a class="btn wa" href="https://wa.me/595987685651?text=Hola%20WIQON%2C%20les%20escribo%20desde%20su%20p%C3%A1gina.%20Quiero%20consultar%20sobre%20" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a class="btn" href="https://wa.me/c/595987685651" target="_blank" rel="noopener">🛍 Ver catálogo</a>
+      <a class="btn" href="mailto:contacto@wiqonlab.com?subject=Consulta%20WIQON">✉ contacto@wiqonlab.com</a>
+    </div>
+    <p class="nota rev">No brindamos asesoría financiera ni gestionamos fondos de terceros.</p>
+  </div>
+</section>
 
-  <footer>
-    <p>⚠️ Contenido educativo y de investigación. No es asesoría financiera. Los resultados pasados no garantizan resultados futuros.</p>
-    <p>© <span id="anio">2026</span> WIQON · Paraguay · Brasil</p>
-  </footer>
+<section class="bloque alt" id="herramientas">
+  <div class="contenedor">
+    <div class="titulo rev"><span class="sobre">Herramientas que usamos</span><h2>Lo que usamos todos los días en el laboratorio</h2><p>Solo recomendamos herramientas que usamos de verdad.</p></div>
+    <div class="rejilla r4">
+      <a class="tarjeta herr rev" href="https://www.tradingview.com/?aff_id=1171961&aff_sub=web&source=wiqonlab" target="_blank" rel="sponsored noopener"><div class="icono-g">📈</div><h3>TradingView</h3><p>Gráficos e indicadores para analizar cualquier mercado. Con nuestro enlace recibís un cupón de USD 15 para tu próximo plan.</p><div class="pie-herr"><span class="afil">Afiliado</span><span class="ir">Abrir →</span></div></a>
+      <a class="tarjeta herr rev" href="https://www.binance.com/register?ref=WDAVWR75" target="_blank" rel="sponsored noopener"><div class="icono-g">🟡</div><h3>Binance</h3><p>El exchange donde operamos la estrategia en vivo y de donde salen los datos públicos de esta página.</p><div class="pie-herr"><span class="afil">Referido</span><span class="ir">Abrir →</span></div></a>
+      <a class="tarjeta herr rev" href="https://www.metatrader5.com/" target="_blank" rel="noopener"><div class="icono-g">🖥️</div><h3>MetaTrader 5</h3><p>La plataforma donde corre WIQON Shield. Es gratis y la ofrecen la mayoría de los brokers.</p><div class="pie-herr"><span></span><span class="ir">Abrir →</span></div></a>
+      <a class="tarjeta herr rev" href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener"><div class="icono-g">⌘</div><h3>GitHub · WIQON Lab</h3><p>Todo nuestro código y nuestros resultados, abiertos para que los reproduzcas.</p><div class="pie-herr"><span></span><span class="ir">Abrir →</span></div></a>
+    </div>
+    <p class="aviso-afil rev">🔎 Transparencia: los enlaces marcados como afiliado o referido nos dan una comisión si te registrás o suscribís, sin costo extra para vos. No cambian nuestros análisis: publicamos los resultados igual, sean buenos o malos.</p>
+  </div>
+</section>
 
-</main>
+<section class="bloque">
+  <div class="contenedor rev"><div class="banda-br"><div><span class="sobre" style="color:var(--oro)">🇧🇷 WIQON Brasil</span><h3>Desde la frontera Paraguay–Brasil</h3><p>Brasil lidera el índice de adopción cripto de base 2026, con una economía cripto de USD 252.500 millones. Por eso producimos contenido nativo en portugués.</p><p class="fuente">Fuente: Chainalysis, <a href="https://www.chainalysis.com/blog/2026-global-crypto-adoption-index/" target="_blank" rel="noopener"><em>2026 Global Crypto Adoption Index</em></a> (23/09/2026).</p><div class="acciones" style="margin-top:16px"><a class="btn" href="br/">Ver en portugués →</a></div></div><div class="gran">n.º 1<small>del mundo en adopción cripto</small></div></div></div>
+</section>
+
+<section class="bloque alt" id="comunidad">
+  <div class="contenedor">
+    <div class="titulo centro rev"><span class="sobre">Comunidad</span><h2>Seguí cada experimento</h2><p>Publicamos cada prueba en todas las redes. En Discord podés proponer estrategias para que las probemos.</p></div>
+    <div class="redes rev"><a class="red" href="https://www.youtube.com/@wiqonlab" target="_blank" rel="noopener"><span class="ic">▶</span><span>YouTube<small>@wiqonlab</small></span></a><a class="red" href="https://www.instagram.com/wiqonlab/" target="_blank" rel="noopener"><span class="ic">◎</span><span>Instagram<small>@wiqonlab</small></span></a><a class="red" href="https://www.tiktok.com/@wiqonlab" target="_blank" rel="noopener"><span class="ic">♪</span><span>TikTok<small>@wiqonlab</small></span></a><a class="red" href="https://x.com/wiqonlab" target="_blank" rel="noopener"><span class="ic">𝕏</span><span>X<small>@wiqonlab</small></span></a><a class="red" href="https://t.me/wiqonlab" target="_blank" rel="noopener"><span class="ic">✈</span><span>Telegram<small>Canal</small></span></a><a class="red" href="https://whatsapp.com/channel/0029Vb8Tk5XCcW4zVk21xx0D" target="_blank" rel="noopener"><span class="ic">◉</span><span>WhatsApp<small>Canal</small></span></a><a class="red" href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener"><span class="ic">◆</span><span>Discord<small>Comunidad</small></span></a><a class="red" href="https://www.linkedin.com/company/wiqonlab" target="_blank" rel="noopener"><span class="ic">in</span><span>LinkedIn<small>WIQON</small></span></a><a class="red" href="https://www.facebook.com/wiqonlab/" target="_blank" rel="noopener"><span class="ic">f</span><span>Facebook<small>WIQON</small></span></a><a class="red" href="https://www.threads.net/@wiqonlab" target="_blank" rel="noopener"><span class="ic">@</span><span>Threads<small>@wiqonlab</small></span></a></div>
+  </div>
+</section>
+
+<section class="bloque">
+  <div class="contenedor">
+    <div class="titulo centro rev"><span class="sobre">FAQ</span><h2>Preguntas frecuentes</h2></div>
+    <div class="faq rev"><details><summary>¿Qué es WIQON?</summary><p>Un laboratorio independiente que prueba estrategias de trading con datos reales y publica los resultados, buenos y malos, con el código para reproducirlos.</p></details><details><summary>¿Venden señales o manejan dinero de terceros?</summary><p>No. No vendemos señales ni gestionamos fondos. Publicamos investigación, ofrecemos software (WIQON Shield) y servicios técnicos.</p></details><details><summary>¿Cómo sé que los números son reales?</summary><p>Cada experimento tiene su código y sus datos en <a href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">GitHub</a>. Usamos datos públicos de Binance: cualquiera puede repetir el cálculo.</p></details><details><summary>¿Qué es WIQON Shield?</summary><p>Un Expert Advisor para MetaTrader 5 con la estrategia que sobrevivió a nuestras pruebas. Es gratis en cuentas demo. <a href="shield/">Ver planes</a>.</p></details><details><summary>¿Los enlaces de afiliado influyen en lo que publican?</summary><p>No. Solo recomendamos herramientas que usamos y lo aclaramos en cada enlace. Los resultados se publican igual, sean buenos o malos.</p></details><details><summary>¿Esto es asesoría financiera?</summary><p>No. Es contenido educativo y de investigación. Los resultados pasados no garantizan resultados futuros.</p></details></div>
+  </div>
+</section>
+
+<div class="contenedor">
+  <div class="final rev">
+    <h2>¿Tenés una estrategia que querés probar?</h2>
+    <p>Proponela en nuestra comunidad. Si es medible, la probamos con la misma metodología y publicamos el resultado.</p>
+    <div class="acciones">
+      <a class="btn prim" href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Unirme a Discord</a>
+      <a class="btn" href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">Ver el código en GitHub</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="contenedor">
+    <div class="pie-grid">
+      <div><a class="marca" href="./"><img src="assets/logo.png" alt="WIQON">WIQON</a><p>Laboratorio de trading cuantitativo. Documentar, no prometer.</p></div>
+      <div><h5>Producto</h5><a href="shield/">WIQON Shield</a><a href="#vivo">En vivo</a><a href="#experimentos">Experimentos</a><a href="#servicios">Servicios</a></div>
+      <div><h5>Recursos</h5><a href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">WIQON Lab (GitHub)</a><a href="#herramientas">Herramientas que usamos</a><a href="br/">Versão em português</a></div>
+      <div><h5>Contacto</h5><a href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a><a href="https://wa.me/595987685651?text=Hola%20WIQON" target="_blank" rel="noopener">WhatsApp +595 987 685 651</a><a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a></div>
+    </div>
+    <div class="legal">⚠️ Contenido educativo y de investigación. No es asesoría financiera. Operar en mercados financieros implica riesgo de pérdida; los resultados pasados no garantizan resultados futuros. Algunos enlaces son de afiliado.<br>© <span id="anio">2026</span> WIQON · Paraguay · Brasil</div>
+  </div>
+</footer>
+
 <script src="assets/vivo.js"></script>
+<script src="assets/v2.js"></script>
 </body>
 </html>
