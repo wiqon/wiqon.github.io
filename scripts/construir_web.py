@@ -71,6 +71,7 @@ PLANTILLA = """<!doctype html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{r}}assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
 </head>
 <body data-estado="{{r}}estado.json" data-raiz="{{r}}">
 <a class="oculto" href="#productos">{{saltar}}</a>
@@ -84,6 +85,7 @@ PLANTILLA = """<!doctype html>
     </nav>
     <div class="nav-d">
       <div class="idioma" aria-label="{{idioma_aria}}"><a {{es_on}} href="{{r}}" lang="es">ES</a><a {{br_on}} href="{{r}}br/" lang="pt-BR">PT-BR</a></div>
+      <button class="tema-btn" type="button" aria-label="{{tema_aria}}" aria-pressed="false" title="{{tema_aria}}"><svg class="luna" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg><svg class="sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
       <a class="btn p ch" href="{{cta_nav_href}}">{{cta_nav}}</a>
     </div>
   </div>
@@ -91,6 +93,7 @@ PLANTILLA = """<!doctype html>
 
 <main>
 <section class="hero" aria-labelledby="h1">
+  <canvas id="globo" aria-hidden="true"></canvas>
   <div class="c">
     <div class="ap">
       <div class="sello"><span class="corona l"><img src="{{r}}assets/logo.png" alt="WIQON" width="84" height="84"></span><div class="nombre">WIQON<small>{{sello_sub}}</small></div></div>
@@ -205,6 +208,15 @@ PLANTILLA = """<!doctype html>
 <section class="s" id="mercado" aria-labelledby="mv-t">
   <div class="c">
     <div class="cab"><div><span class="vol">{{mv_vol}}</span><h2 class="t" id="mv-t">{{mv_h2}}</h2></div><p class="der">{{mv_p}}</p></div>
+    <div class="pestanas" role="tablist" aria-label="{{mv_vol}}">
+      <button role="tab" id="t-cripto" aria-controls="p-cripto" aria-selected="true">{{tab_cripto}}</button>
+      <button role="tab" id="t-acciones" aria-controls="p-acciones" aria-selected="false" tabindex="-1">{{tab_acciones}}</button>
+      <button role="tab" id="t-b3" aria-controls="p-b3" aria-selected="false" tabindex="-1">{{tab_b3}}</button>
+      <button role="tab" id="t-futuros" aria-controls="p-futuros" aria-selected="false" tabindex="-1">{{tab_futuros}}</button>
+      <button role="tab" id="t-forex" aria-controls="p-forex" aria-selected="false" tabindex="-1">Forex</button>
+      <button role="tab" id="t-economia" aria-controls="p-economia" aria-selected="false" tabindex="-1">{{tab_economia}}</button>
+    </div>
+    <div class="panel-m" id="p-cripto" role="tabpanel" aria-labelledby="t-cripto">
     <div class="envivo">
       <div class="mercados">
         <table aria-describedby="mv-t">
@@ -216,6 +228,32 @@ PLANTILLA = """<!doctype html>
       <div class="tv" id="tv">
         <div class="tv-cab"><b>{{tv_t}}</b><span class="meta">{{tv_nota}} <a href="{{tv_link}}" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> ({{tv_af}})</span></div>
         <div class="tv-cuerpo" id="tv-cuerpo" data-locale="{{tv_locale}}"><div class="tv-espera">{{cargando}}</div></div>
+      </div>
+    </div>
+    </div>
+    <div class="panel-m" id="p-acciones" role="tabpanel" aria-labelledby="t-acciones" hidden data-cargar="acciones">
+      <div class="widget" id="w-acciones"></div><p class="nota-w">{{nota_acciones}} {{nota_tv}}</p>
+    </div>
+    <div class="panel-m" id="p-b3" role="tabpanel" aria-labelledby="t-b3" hidden data-cargar="b3">
+      <div class="widget" id="w-b3"></div><p class="nota-w">{{nota_b3}} {{nota_tv}}</p>
+    </div>
+    <div class="panel-m" id="p-futuros" role="tabpanel" aria-labelledby="t-futuros" hidden data-cargar="futuros">
+      <div class="widget" id="w-futuros"></div><p class="nota-w">{{nota_futuros}} {{nota_tv}}</p>
+    </div>
+    <div class="panel-m" id="p-forex" role="tabpanel" aria-labelledby="t-forex" hidden data-cargar="forex">
+      <div class="widget" id="w-forex"></div><p class="nota-w">{{nota_forex}} {{nota_tv}}</p>
+    </div>
+    <div class="panel-m" id="p-economia" role="tabpanel" aria-labelledby="t-economia" hidden data-cargar="mapa calendario">
+      <div class="dos">
+        <div class="mapa" id="mapa-inflacion">
+          <h3>{{mapa_t}}</h3><p class="meta">{{mapa_p}}</p>
+          <svg id="mapa-svg" role="img" aria-label="{{mapa_t}}"></svg>
+          <div class="tip" id="mapa-tip" hidden></div>
+          <div class="escala" id="mapa-escala"></div>
+          <ul class="ranking" id="mapa-ranking"></ul>
+          <p class="nota-w" id="mapa-fuente">{{cargando}}</p>
+        </div>
+        <div><div class="widget" id="w-calendario"></div><p class="nota-w">{{nota_cal}} {{nota_tv}}</p></div>
       </div>
     </div>
     <div class="snap" style="margin-top:34px">
@@ -314,6 +352,7 @@ PLANTILLA = """<!doctype html>
 
 <script src="{{r}}assets/vivo.js"></script>
 <script src="{{r}}assets/v4.js"></script>
+<script src="{{r}}assets/mercados.js"></script>
 </body>
 </html>
 """
@@ -370,10 +409,15 @@ def redes(lista):
 
 # ============================================ ESPAÑOL ============================================
 ES = dict(ICONOS,
+    tema_aria="Cambiar entre tema oscuro y claro", tab_cripto="Criptomonedas", tab_acciones="Acciones EE. UU.", tab_b3="Brasil B3", tab_futuros="Futuros", tab_economia="Economía",
+    nota_acciones="Las acciones con más movimiento del día en EE. UU.", nota_b3="Ibovespa, acciones y minicontratos de la B3.",
+    nota_futuros="Minicontratos de la B3 y, como referencia global, índices y materias primas (incluida la soja) en CFD.", nota_forex="Monedas de la región frente al dólar y los pares principales.",
+    nota_cal="Calendario económico: próximos datos e indicadores por país.", nota_tv="Datos de TradingView; algunos mercados se muestran con demora según la bolsa.",
+    mapa_t="Inflación en el mundo", mapa_p="Variación anual de los precios al consumidor por país. Pasá el cursor (o tocá) un país.",
     sello_sub="Market Flow Intelligence", at_a="Resultados abiertos", at_b="EA para MetaTrader 5", at_c="Bots, auditorías, paneles",
     en_vivo="EN VIVO", en_vivo_btn="En vivo", ley_vivo="Velas de 1 minuto, en vivo",
     mv_vol="Mercado en vivo", mv_h2="Así se mueve el mercado <span>ahora</span>",
-    mv_p="Precios en tiempo real desde Binance y un gráfico interactivo para que lo pruebes: cambiá el activo, el período o agregá indicadores.",
+    mv_p="Cripto en tiempo real, acciones de EE. UU. y de la B3, futuros, forex y economía: elegí una pestaña. El gráfico interactivo lo podés usar vos.",
     mv_activo="Activo", mv_precio="Precio", mv_tend="Últimas 24 h", mv_fuente="Precios de Binance en tiempo real. No son recomendaciones.",
     tv_t="Probalo: gráfico interactivo", tv_nota="Gráfico de", tv_af="enlace de afiliado", tv_link=TV, tv_locale="es",
     lang="es", r="", inicio="./", url="https://wiqonlab.com/", og_locale="es_LA", prioridad="PY", canal="wiqonlab",
@@ -484,10 +528,15 @@ ES = dict(ICONOS,
 
 # ============================================ PORTUGUÊS ============================================
 BR = dict(ICONOS,
+    tema_aria="Alternar entre tema escuro e claro", tab_cripto="Criptomoedas", tab_acciones="Ações EUA", tab_b3="Brasil B3", tab_futuros="Futuros", tab_economia="Economia",
+    nota_acciones="As ações com mais movimento do dia nos EUA.", nota_b3="Ibovespa, ações e minicontratos da B3.",
+    nota_futuros="Minicontratos da B3 e, como referência global, índices e commodities (incluindo a soja) em CFD.", nota_forex="Moedas da região frente ao dólar e os pares principais.",
+    nota_cal="Calendário econômico: próximos dados e indicadores por país.", nota_tv="Dados da TradingView; alguns mercados aparecem com atraso conforme a bolsa.",
+    mapa_t="Inflação no mundo", mapa_p="Variação anual dos preços ao consumidor por país. Passe o cursor (ou toque) em um país.",
     sello_sub="Inteligência de Fluxo de Mercado", at_a="Resultados abertos", at_b="EA para MetaTrader 5", at_c="Robôs, auditorias, painéis",
     en_vivo="AO VIVO", en_vivo_btn="Ao vivo", ley_vivo="Candles de 1 minuto, ao vivo",
     mv_vol="Mercado ao vivo", mv_h2="Assim o mercado se move <span>agora</span>",
-    mv_p="Preços em tempo real da Binance e um gráfico interativo para você testar: troque o ativo, o período ou adicione indicadores.",
+    mv_p="Cripto em tempo real, ações dos EUA e da B3, futuros, forex e economia: escolha uma aba. O gráfico interativo é para você usar.",
     mv_activo="Ativo", mv_precio="Preço", mv_tend="Últimas 24 h", mv_fuente="Preços da Binance em tempo real. Não são recomendações.",
     tv_t="Teste: gráfico interativo", tv_nota="Gráfico da", tv_af="link de afiliado", tv_link=TV, tv_locale="br",
     lang="pt-BR", r="../", inicio="./", url="https://wiqonlab.com/br/", og_locale="pt_BR", prioridad="BR", canal="wiqonbr",

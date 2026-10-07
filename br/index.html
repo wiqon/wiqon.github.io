@@ -21,6 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
 </head>
 <body data-estado="../estado.json" data-raiz="../">
 <a class="oculto" href="#productos">Ir para os produtos</a>
@@ -34,6 +35,7 @@
     </nav>
     <div class="nav-d">
       <div class="idioma" aria-label="Idioma"><a  href="../" lang="es">ES</a><a class="on" href="../br/" lang="pt-BR">PT-BR</a></div>
+      <button class="tema-btn" type="button" aria-label="Alternar entre tema escuro e claro" aria-pressed="false" title="Alternar entre tema escuro e claro"><svg class="luna" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg><svg class="sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
       <a class="btn p ch" href="#shield">WIQON Shield</a>
     </div>
   </div>
@@ -41,6 +43,7 @@
 
 <main>
 <section class="hero" aria-labelledby="h1">
+  <canvas id="globo" aria-hidden="true"></canvas>
   <div class="c">
     <div class="ap">
       <div class="sello"><span class="corona l"><img src="../assets/logo.png" alt="WIQON" width="84" height="84"></span><div class="nombre">WIQON<small>Inteligência de Fluxo de Mercado</small></div></div>
@@ -154,7 +157,16 @@
 
 <section class="s" id="mercado" aria-labelledby="mv-t">
   <div class="c">
-    <div class="cab"><div><span class="vol">Mercado ao vivo</span><h2 class="t" id="mv-t">Assim o mercado se move <span>agora</span></h2></div><p class="der">Preços em tempo real da Binance e um gráfico interativo para você testar: troque o ativo, o período ou adicione indicadores.</p></div>
+    <div class="cab"><div><span class="vol">Mercado ao vivo</span><h2 class="t" id="mv-t">Assim o mercado se move <span>agora</span></h2></div><p class="der">Cripto em tempo real, ações dos EUA e da B3, futuros, forex e economia: escolha uma aba. O gráfico interativo é para você usar.</p></div>
+    <div class="pestanas" role="tablist" aria-label="Mercado ao vivo">
+      <button role="tab" id="t-cripto" aria-controls="p-cripto" aria-selected="true">Criptomoedas</button>
+      <button role="tab" id="t-acciones" aria-controls="p-acciones" aria-selected="false" tabindex="-1">Ações EUA</button>
+      <button role="tab" id="t-b3" aria-controls="p-b3" aria-selected="false" tabindex="-1">Brasil B3</button>
+      <button role="tab" id="t-futuros" aria-controls="p-futuros" aria-selected="false" tabindex="-1">Futuros</button>
+      <button role="tab" id="t-forex" aria-controls="p-forex" aria-selected="false" tabindex="-1">Forex</button>
+      <button role="tab" id="t-economia" aria-controls="p-economia" aria-selected="false" tabindex="-1">Economia</button>
+    </div>
+    <div class="panel-m" id="p-cripto" role="tabpanel" aria-labelledby="t-cripto">
     <div class="envivo">
       <div class="mercados">
         <table aria-describedby="mv-t">
@@ -166,6 +178,32 @@
       <div class="tv" id="tv">
         <div class="tv-cab"><b>Teste: gráfico interativo</b><span class="meta">Gráfico da <a href="https://www.tradingview.com/?aff_id=1171961&aff_sub=web&source=wiqonlab" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> (link de afiliado)</span></div>
         <div class="tv-cuerpo" id="tv-cuerpo" data-locale="br"><div class="tv-espera">Carregando…</div></div>
+      </div>
+    </div>
+    </div>
+    <div class="panel-m" id="p-acciones" role="tabpanel" aria-labelledby="t-acciones" hidden data-cargar="acciones">
+      <div class="widget" id="w-acciones"></div><p class="nota-w">As ações com mais movimento do dia nos EUA. Dados da TradingView; alguns mercados aparecem com atraso conforme a bolsa.</p>
+    </div>
+    <div class="panel-m" id="p-b3" role="tabpanel" aria-labelledby="t-b3" hidden data-cargar="b3">
+      <div class="widget" id="w-b3"></div><p class="nota-w">Ibovespa, ações e minicontratos da B3. Dados da TradingView; alguns mercados aparecem com atraso conforme a bolsa.</p>
+    </div>
+    <div class="panel-m" id="p-futuros" role="tabpanel" aria-labelledby="t-futuros" hidden data-cargar="futuros">
+      <div class="widget" id="w-futuros"></div><p class="nota-w">Minicontratos da B3 e, como referência global, índices e commodities (incluindo a soja) em CFD. Dados da TradingView; alguns mercados aparecem com atraso conforme a bolsa.</p>
+    </div>
+    <div class="panel-m" id="p-forex" role="tabpanel" aria-labelledby="t-forex" hidden data-cargar="forex">
+      <div class="widget" id="w-forex"></div><p class="nota-w">Moedas da região frente ao dólar e os pares principais. Dados da TradingView; alguns mercados aparecem com atraso conforme a bolsa.</p>
+    </div>
+    <div class="panel-m" id="p-economia" role="tabpanel" aria-labelledby="t-economia" hidden data-cargar="mapa calendario">
+      <div class="dos">
+        <div class="mapa" id="mapa-inflacion">
+          <h3>Inflação no mundo</h3><p class="meta">Variação anual dos preços ao consumidor por país. Passe o cursor (ou toque) em um país.</p>
+          <svg id="mapa-svg" role="img" aria-label="Inflação no mundo"></svg>
+          <div class="tip" id="mapa-tip" hidden></div>
+          <div class="escala" id="mapa-escala"></div>
+          <ul class="ranking" id="mapa-ranking"></ul>
+          <p class="nota-w" id="mapa-fuente">Carregando…</p>
+        </div>
+        <div><div class="widget" id="w-calendario"></div><p class="nota-w">Calendário econômico: próximos dados e indicadores por país. Dados da TradingView; alguns mercados aparecem com atraso conforme a bolsa.</p></div>
       </div>
     </div>
     <div class="snap" style="margin-top:34px">
@@ -264,5 +302,6 @@
 
 <script src="../assets/vivo.js"></script>
 <script src="../assets/v4.js"></script>
+<script src="../assets/mercados.js"></script>
 </body>
 </html>

@@ -52,7 +52,8 @@
     const min = lo - pad, max = hi + pad, ejeX = W - 50;
     const py = (p) => 6 + (1 - (p - min) / (max - min)) * (H - 14);
     const paso = ejeX / v.length, cuerpo = Math.max(1, paso * 0.62);
-    g.font = "10px JetBrains Mono, monospace"; g.fillStyle = "#5f6e82"; g.strokeStyle = "rgba(26,42,64,.8)"; g.lineWidth = 1;
+    const css = getComputedStyle(document.documentElement);
+    g.font = "10px JetBrains Mono, monospace"; g.fillStyle = css.getPropertyValue("--eje").trim(); g.strokeStyle = css.getPropertyValue("--grilla").trim(); g.lineWidth = 1;
     for (let i = 0; i <= 4; i++) {
       const p = min + ((max - min) * i) / 4, y = py(p);
       g.beginPath(); g.moveTo(0, y); g.lineTo(ejeX, y); g.stroke();
@@ -72,7 +73,7 @@
     }
     // último precio: línea punteada y etiqueta
     const u = v[v.length - 1], yu = py(u.c);
-    g.setLineDash([3, 3]); g.strokeStyle = "rgba(234,240,247,.45)"; g.beginPath(); g.moveTo(0, yu); g.lineTo(ejeX, yu); g.stroke(); g.setLineDash([]);
+    g.setLineDash([3, 3]); g.strokeStyle = css.getPropertyValue("--gris").trim(); g.beginPath(); g.moveTo(0, yu); g.lineTo(ejeX, yu); g.stroke(); g.setLineDash([]);
     g.fillStyle = u.c >= u.o ? "#2fc47f" : "#ef5f67"; g.fillRect(ejeX + 1, yu - 8, 49, 16);
     g.fillStyle = "#04121c"; g.fillText(u.c >= 10000 ? (u.c / 1000).toFixed(2) + "K" : u.c.toFixed(0), ejeX + 4, yu + 3);
   }
@@ -115,6 +116,7 @@
       $$(".rangos button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); dibujar();
     }));
     let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(dibujar, 200); });
+    document.addEventListener("wiqon:tema", dibujar);
   }
   fetch(`${API}/ticker/24hr?symbol=BTCUSDT`).then((r) => r.json()).then((t) => {
     const c = +t.priceChangePercent, txt = `US$ ${num(+t.lastPrice, 0)}`;
@@ -158,22 +160,6 @@
         };
       } catch (e) { /* sin WebSocket: queda el último dato */ }
     }).catch(() => { tbVivo.innerHTML = `<tr><td colspan="4" class="meta">${T.sinDatos}</td></tr>`; });
-  }
-
-  // ================= gráfico interactivo de TradingView (se carga al llegar a la sección) =================
-  const tv = $("#tv-cuerpo");
-  if (tv) {
-    const cargarTV = () => {
-      tv.innerHTML = '<div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div></div>';
-      const sc = document.createElement("script");
-      sc.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"; sc.async = true;
-      sc.text = JSON.stringify({ autosize: true, symbol: "BINANCE:BTCUSDT", interval: "60", timezone: TZ, theme: "dark", style: "1",
-        locale: tv.dataset.locale || "es", backgroundColor: "#0c1624", gridColor: "rgba(26,42,64,.6)", allow_symbol_change: true,
-        hide_side_toolbar: false, calendar: false, support_host: "https://www.tradingview.com" });
-      tv.firstChild.appendChild(sc);
-    };
-    const ot = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { ot.disconnect(); cargarTV(); } }, { rootMargin: "300px" });
-    ot.observe(tv);
   }
 
   // ================= estado de la regla (estado.json) =================
