@@ -80,7 +80,14 @@
     });
   }
   tabs.forEach((t, i) => {
-    t.addEventListener("click", () => abrir(t));
+    t.addEventListener("click", () => {
+      abrir(t);
+      // si la barra ya está flotando, volver al inicio del panel elegido
+      const sec = $("#mercado"), barra = $(".pestanas");
+      if (sec && barra && barra.getBoundingClientRect().top <= 80 && sec.getBoundingClientRect().top < 0) {
+        window.scrollTo({ top: window.scrollY + barra.getBoundingClientRect().top - 76, behavior: reducido ? "auto" : "smooth" });
+      }
+    });
     t.addEventListener("keydown", (e) => {
       const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
       if (d) { e.preventDefault(); abrir(tabs[(i + d + tabs.length) % tabs.length], true); }

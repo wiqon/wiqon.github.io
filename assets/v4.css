@@ -429,3 +429,9 @@ footer { border-top: 1px solid var(--borde); padding: 52px 0 30px; background: v
 .ranking li b { font-family: var(--mono); font-weight: 500; }
 @media (max-width: 1080px) { .panel-m .dos { grid-template-columns: 1fr; } }
 @media (max-width: 680px) { .pestanas { border-radius: 14px; } .pestanas button { padding: 7px 11px; font-size: .8rem; } .panel-m .widget { height: 460px; } }
+
+/* ---------- barra de mercados flotante (queda fija mientras se recorre la sección) ---------- */
+.pestanas { position: sticky; top: 76px; z-index: 30; margin-left: auto; margin-right: auto; background: var(--nav-bg);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+:root[data-tema="claro"] .pestanas { box-shadow: 0 10px 26px rgba(20, 40, 80, .12); }
+@media (max-width: 680px) { .pestanas { top: 70px; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; } .pestanas::-webkit-scrollbar { display: none; } }
