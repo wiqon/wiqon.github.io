@@ -3,80 +3,179 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WIQON — Mercados, datos y contexto desde Paraguay</title>
-<meta name="description" content="Noticias de mercados, fintech y cripto de Paraguay, Brasil e Hispanoamérica, tipo de cambio oficial, investigación con datos reales y WIQON Shield.">
-<meta property="og:title" content="WIQON — Mercados, datos y contexto desde Paraguay">
-<meta property="og:description" content="Noticias de mercados, fintech y cripto de Paraguay, Brasil e Hispanoamérica, tipo de cambio oficial, investigación con datos reales y WIQON Shield.">
+<title>WIQON — Probamos estrategias con datos reales</title>
+<meta name="description" content="Laboratorio de trading de Paraguay y Brasil: probamos estrategias con costos reales, publicamos los resultados y construimos herramientas con lo que sobrevive, como WIQON Shield.">
+<meta property="og:title" content="WIQON — Probamos estrategias con datos reales">
+<meta property="og:description" content="Laboratorio de trading de Paraguay y Brasil: probamos estrategias con costos reales, publicamos los resultados y construimos herramientas con lo que sobrevive, como WIQON Shield.">
 <meta property="og:image" content="https://wiqonlab.com/assets/og.png">
 <meta property="og:url" content="https://wiqonlab.com/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_LA">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#070b10">
+<meta name="theme-color" content="#060b14">
 <link rel="canonical" href="https://wiqonlab.com/">
 <link rel="alternate" hreflang="es" href="https://wiqonlab.com/">
 <link rel="alternate" hreflang="pt-BR" href="https://wiqonlab.com/br/">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/v3.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/v4.css">
 </head>
 <body data-estado="estado.json" data-raiz="">
-<a class="oculto" href="#radar">Saltar al News Radar</a>
+<a class="oculto" href="#productos">Saltar a los productos</a>
 
-<div class="barra" role="region" aria-label="Datos de mercado">
-  <div class="c">
-    <span class="hoy" id="hoy"></span>
-    <span>BTC <b id="b-btc">—</b> <span class="fte">Binance</span></span>
-    <span>USD/PYG <b id="b-pyg">—</b> <span class="fte">BCP</span></span>
-    <span>USD/BRL <b id="b-brl">—</b> <span class="fte">BCB PTAX</span></span>
-  </div>
-</div>
-<div class="franja" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-
-<nav class="nav" aria-label="Navegación principal">
+<header class="nav">
   <div class="c">
     <a class="marca" href="./"><img src="assets/logo.png" alt="">WIQON</a>
-    <div class="nav-l">
-      <a href="#radar">Lo que pasa</a><a href="#cambio">Tipo de cambio</a><a href="#laboratorio">Laboratorio</a>
-      <a href="#shield">Shield</a><a href="#videos-s">Videos</a><a href="#nosotros">Cómo trabajamos</a>
-    </div>
+    <nav class="nav-l" aria-label="Secciones">
+      <a href="#productos">Productos</a><a href="#laboratorio">Laboratorio</a><a href="#mercado">Datos</a>
+      <a href="#servicios">Servicios</a><a href="#radar">Noticias</a>
+    </nav>
     <div class="nav-d">
-      <span class="idioma"><a class="on" href="" lang="es">Español</a> · <a  href="br/" lang="pt-BR">Brasil PT-BR</a></span>
-      <a class="btn p ch" href="#radar">Ver el radar</a>
+      <div class="idioma" aria-label="Idioma"><a class="on" href="" lang="es">ES</a><a  href="br/" lang="pt-BR">PT-BR</a></div>
+      <a class="btn p ch" href="shield/">Probar Shield gratis</a>
     </div>
-  </div>
-</nav>
-
-<main>
-<header class="hero">
-  <div class="c">
-    <div>
-      <span class="lugar">Asunción · Ciudad del Este · Foz do Iguaçu</span>
-      <h1>Entendemos los mercados <em>desde acá.</em></h1>
-      <p class="baj">Noticias, datos y contexto para seguir mercados, trading y activos digitales, mirados desde la frontera entre Paraguay y Brasil. Sin señales de compra, sin promesas: con fuentes.</p>
-      <div class="acc"><a class="btn p" href="#radar">Ver lo que está pasando</a><a class="btn" href="#nosotros">Conocer WIQON</a></div>
-      <div class="dia">
-        <span class="et">Dato del día</span><p id="dato-dia">Cargando…</p><small id="dato-dia-f"></small>
-      </div>
-    </div>
-    <figure class="foto">
-      <img src="assets/fotos/puente2.jpg" alt="Puente de la Amistad sobre el río Paraná, con Ciudad del Este al fondo" width="1600" height="1200">
-      <figcaption>Puente de la Amistad, Ciudad del Este–Foz do Iguaçu. Foto: <a href="https://commons.wikimedia.org/wiki/File:Ciudad_del_Este_puente_de_la_Amistad.jpg" target="_blank" rel="noopener">Ekem</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a> </figcaption>
-    </figure>
   </div>
 </header>
 
+<main>
+<section class="hero" aria-labelledby="h1">
+  <div class="c">
+    <div class="ap">
+      <span class="kicker">Paraguay · Brasil · Mercados</span>
+      <h1 id="h1">Probamos estrategias con datos reales.<br><span>Construimos herramientas con lo que sobrevive.</span></h1>
+      <p class="sub">Investigamos mercados, medimos costos y validamos ideas antes de convertirlas en software, datos o servicios. Si una idea no sobrevive, también lo publicamos.</p>
+      <div class="acc">
+        <a class="btn p" href="#productos">Explorar WIQON <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn" href="#laboratorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg> Ver laboratorio</a>
+      </div>
+    </div>
+    <div class="panel ap" aria-label="Bitcoin y el estado de nuestra regla de tendencia">
+      <div class="grafico">
+        <div class="g-cab">
+          <div><div class="par"><span class="btc" aria-hidden="true">₿</span>BTC/USDT · 1D</div><div class="precio" id="precio-btc">—</div></div>
+          <span class="est est-regla">…</span>
+        </div>
+        <canvas id="lienzo" role="img" aria-label="Velas diarias de Bitcoin con su media de 100 días"></canvas>
+        <div class="rangos" role="group" aria-label="Período del gráfico">
+          <button data-r="30" aria-pressed="false">1M</button><button data-r="90" aria-pressed="true">3M</button>
+          <button data-r="180" aria-pressed="false">6M</button><button data-r="365" aria-pressed="false">1A</button>
+        </div>
+        <div class="leyenda"><span><i style="background:#2fc47f"></i>Velas diarias cerradas</span><span><i style="background:#e7b54a"></i>Media 100 días</span><span>Binance</span></div>
+      </div>
+      <div class="estado">
+        <div class="caja">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px"><span class="est est-regla">…</span><span class="act" id="h-act"></span></div>
+          <div class="fila"><span>Cierre diario</span><b id="h-cierre">—</b></div>
+          <div class="fila"><span>Distancia a la media 100</span><b id="h-dist">—</b></div>
+          <div class="fila"><span>En este estado desde</span><b id="h-desde">—</b></div>
+        </div>
+        <div class="caja">
+          <h4><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg> Nuestra regla</h4>
+          <p>Estar en BTC solo si el cierre diario está sobre la media de 100 días. Si cae debajo, a USDT. La operamos con capital real.</p>
+          <a class="enl" href="#laboratorio">Ver metodología <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="prueba" aria-label="Cómo trabajamos">
+  <div class="c">
+    <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg><div><b>Datos reales</b><span>Precios públicos, años de historia</span></div></div>
+    <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2.5"/></svg><div><b>Costos incluidos</b><span>Comisiones, slippage y swaps</span></div></div>
+    <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15v-3M12 15V9M16 15v-6"/><path d="M14 5h5v5" /></svg><div><b>Fuera de muestra</b><span>Validamos en períodos no vistos</span></div></div>
+    <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg><div><b>Código abierto</b><span>Cualquiera puede repetirlo</span></div></div>
+    <div class="region-foto"><img src="assets/fotos/puente2.jpg" alt="Puente de la Amistad entre Ciudad del Este y Foz do Iguaçu" width="1600" height="1200" loading="lazy"><span>Asunción · Ciudad del Este · Foz do Iguaçu</span></div>
+  </div>
+</div>
+
+<section class="s" id="productos" aria-labelledby="prod-t">
+  <div class="c">
+    <div class="cab"><div><span class="vol">Lo que construimos</span><h2 class="t" id="prod-t">Qué <span>ofrecemos</span></h2></div><p class="der">Investigación abierta, un producto para gestionar el riesgo y servicios técnicos. Todo sale del mismo proceso de pruebas.</p></div>
+    <div class="pilares">
+      <article class="pilar ap">
+        <div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg></span><h3>Laboratorio de estrategias</h3><span class="chip-e ok">Abierto</span></div>
+        <p class="que">Probamos ideas de trading populares con años de datos, costos reales y validación fuera de muestra, y publicamos el resultado.</p>
+        <p class="problema"><b>Para qué sirve:</b> saber si una estrategia tiene ventaja antes de arriesgar dinero en ella.</p>
+        <div class="evid"><div class="comp"><div><span class="lbl">Probadas</span><div class="num">20+</div></div><div><span class="lbl">Sobrevivió</span><div class="num">1</div></div></div><div style="margin-top:12px"><span class="lbl">Filtro de tendencia BTC · 2018-2026, con costos</span><div class="comp" style="margin-top:6px"><div><span class="lbl">Regla</span><div class="num" style="font-size:1.15rem">56,6%<small>anual</small></div><div class="barra-c"><i style="width:100%;background:var(--cian)"></i></div></div><div><span class="lbl">Mantener</span><div class="num" style="font-size:1.15rem">37,3%<small>anual</small></div><div class="barra-c"><i style="width:66%;background:var(--gris2)"></i></div></div></div></div><div class="tags"><span>Costos incluidos</span><span>Fuera de muestra</span><span>Histórico + real</span></div></div>
+        <div class="pie-p"><a class="enl" href="#laboratorio">Ver resultados <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="limite">Resultados pasados no garantizan los futuros.</span></div>
+      </article>
+      <article class="pilar dest ap" id="shield">
+        <div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.8 12.2 2.2 2.2 4.4-4.6"/></svg></span><h3>WIQON Shield</h3><span class="chip-e ok">Expert Advisor · disponible</span></div>
+        <p class="que">Gestión de riesgo automática para MetaTrader 5: mantiene la posición en BTC mientras la tendencia sigue y la cierra cuando se rompe.</p>
+        <p class="problema"><b>Para qué sirve:</b> no quedarse comprado durante una caída larga, con una regla clara y sin decisiones impulsivas.</p>
+        <div class="evid mt5"><div class="t5"><span>MT5 · BTCUSD · D1</span><span>WIQON Shield</span></div><ul><li>Regla: cierre &gt; media 100</li><li>Decide con vela cerrada</li><li>Solo comprado, sin apalancamiento propio</li><li>Panel de estado en el gráfico</li></ul><div class="comp" style="margin-top:12px;font-family:var(--sans)"><div><span class="lbl">Caída máx. Shield</span><div class="num" style="font-size:1.15rem">39%</div><div class="barra-c"><i style="width:58%;background:var(--sube)"></i></div></div><div><span class="lbl">Caída máx. mantener</span><div class="num" style="font-size:1.15rem">67%</div><div class="barra-c"><i style="width:100%;background:var(--baja)"></i></div></div></div><p class="limite" style="margin-top:8px;font-family:var(--sans)">Prueba con costos reales de un broker, 2022-2026. Los swaps redujeron un tercio de la ventaja.</p></div>
+        <div class="pie-p"><a class="btn p ch" href="shield/">Demo gratis y planes</a><span class="limite">No garantiza ganancias.</span></div>
+      </article>
+      <article class="pilar ap" id="servicios">
+        <div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg></span><h3>Datos y automatización</h3><span class="chip-e ok">Servicios</span></div>
+        <p class="que">Bots, auditorías y paneles hechos con la misma metodología del laboratorio.</p>
+        <p class="problema"><b>Para qué sirve:</b> automatizar y medir tu operativa sin depender de promesas.</p>
+        <ul class="servs"><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/><path d="M8.5 11h5"/></svg><span>Auditoría de estrategias</span><span class="chip-e ok">Disponible</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg><span>Bots para Binance</span><span class="chip-e ok">Disponible</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M7 15v-3M11 15V9M15 15v-5M3.5 8h17"/></svg><span>Dashboards y capacitación</span><span class="chip-e ok">Disponible</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8 3 12l4 4M17 8l4 4-4 4"/><circle cx="12" cy="12" r="1.5"/></svg><span>API de datos del laboratorio</span><span class="chip-e pronto">Próximamente</span></li></ul>
+        <div class="pie-p"><a class="btn wa ch" href="https://wa.me/595987685651?text=Hola%20WIQON%2C%20quiero%20consultar%20por%20un%20servicio." target="_blank" rel="noopener">Hablemos</a><a class="enl" href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="laboratorio" aria-labelledby="met-t">
+  <div class="c">
+    <div class="cab"><div><span class="vol">Metodología</span><h2 class="t" id="met-t">Cómo decidimos qué <span>sobrevive</span></h2></div><p class="der">No es suerte, es un proceso. Cada idea pasa por los mismos filtros antes de convertirse en una herramienta o un dato.</p></div>
+    <ol class="metodo"><li class="paso ap"><span class="n">1</span><h3>Hipótesis</h3><p>Tomamos una idea concreta de mercado.</p></li><li class="paso ap"><span class="n">2</span><h3>Reglas exactas</h3><p>Entradas, salidas y tamaño, sin ambigüedad.</p></li><li class="paso ap"><span class="n">3</span><h3>Backtest con costos</h3><p>Años de datos, comisiones, slippage y swaps.</p></li><li class="paso ap"><span class="n">4</span><h3>Fuera de muestra</h3><p>Validamos en períodos que no vimos.</p></li><li class="paso ap"><span class="n">5</span><h3>Real, si sobrevive</h3><p>Recién ahí se convierte en producto o servicio.</p></li></ol>
+    <div class="principios"><span><b>Fuentes primero</b> · cada dato con origen y fecha</span><span><b>Costos reales</b> · sin resultados maquillados</span><span><b>Lo malo también se publica</b> · la mayoría no funciona</span><span><b>Noticias no son señales</b> · informamos, no recomendamos</span><span><b>Código abierto</b> · podés repetirlo</span></div>
+    <div class="lab-g">
+      <div class="ap">
+        <table class="tabla">
+          <caption class="oculto">Resultados publicados del laboratorio</caption>
+          <thead><tr><th>Hipótesis</th><th>Tipo</th><th class="om">Resultado</th><th>Veredicto</th></tr></thead>
+          <tbody><tr><td><a href="https://github.com/wiqon/wiqon-lab#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc" target="_blank" rel="noopener">Filtro de tendencia en BTC</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="om">56,6% anual vs 37,3% de mantener; caída 34,7% vs 76,6% (2018-2026)</td><td class="ver si">Sobrevive</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">La misma regla en MT5 (CFD)</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="om">x2,02 vs x1,96; caída 39% vs 67%. Swaps: un tercio de la ventaja</td><td class="ver ojo">Con reservas</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#1-una-estrategia-validada-que-era-ruido" target="_blank" rel="noopener">Day trade EMA21 Bounce</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="om">+0,71% en 3 años vs +9,3% en Earn</td><td class="ver no">No</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#2-el-sesgo-de-supervivencia-infla-todo" target="_blank" rel="noopener">Rotación de altcoins</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="om">33,7% anual con monedas de hoy; 1,0% con las de 2021</td><td class="ver no">No (sesgo)</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#4-arbitraje-medido-no-supuesto" target="_blank" rel="noopener">Arbitraje entre 6 exchanges</a></td><td><span class="tipo med">MEDICIÓN</span></td><td class="om">69 oportunidades en 24 h; casi ninguna real</td><td class="ver no">No</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#5-arbitraje-de-funding-cash-and-carry" target="_blank" rel="noopener">Funding carry</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="om">7-10% anual, casi todo de 2021; 2-3% en 2025-26</td><td class="ver no">No</td></tr></tbody>
+        </table>
+        <p class="nota">HISTÓRICO: simulado con datos pasados · MEDICIÓN: observado en vivo, sin operar · REAL: operado con dinero.</p>
+      </div>
+      <aside class="vivo ap" aria-label="Estrategia en vivo">
+        <div class="et"><span><span class="tipo real">REAL</span> Filtro de tendencia en BTC</span><span id="vela">—</span></div>
+        <div class="senal" id="senal">Cargando…</div>
+        <div class="meta" id="desde"></div>
+        <div class="datos-v"><div><b id="cierre">—</b><span>Cierre</span></div><div><b id="sma">—</b><span>Media 100</span></div><div><b id="dist">—</b><span>Distancia</span></div></div>
+        <p class="actualizado" id="actualizado"></p>
+        <p class="nota">Se recalcula cada día a las 21:15 (hora de Paraguay) con la vela cerrada. No es una recomendación.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="mercado" aria-labelledby="snap-t">
+  <div class="c">
+    <div class="snap">
+      <div class="intro"><span class="vol">Mercado en contexto</span><h2 id="snap-t">La región también importa</h2><p>Datos de Paraguay y Brasil de fuentes oficiales, con su fecha. Sin señales, sin promesas.</p></div>
+      <div class="dato-m"><span class="q">Bitcoin · BTC/USDT</span><span class="v" id="snap-btc">—</span><span class="f" id="snap-btc-f">Cargando…</span></div>
+      <div class="dato-m"><span class="q"><i>PY</i> USD/PYG</span><span class="v" id="snap-pyg">—</span><span class="f" id="snap-pyg-f">Cargando…</span></div>
+      <div class="dato-m"><span class="q"><i>BR</i> USD/BRL</span><span class="v" id="snap-brl">—</span><span class="f" id="snap-brl-f">Cargando…</span></div>
+      <div class="dato-m"><span class="q"><i>PY·BR</i> BRL/PYG</span><span class="v" id="snap-brlpyg">—</span><span class="f" id="snap-brlpyg-f">Cargando…</span></div>
+    </div>
+    <details class="mas">
+      <summary>Ver todas las cotizaciones oficiales</summary>
+      <table class="tabla" id="tabla-cambio">
+        <thead><tr><th>Moneda</th><th class="v">Valor</th><th class="om">Institución</th><th>Fecha</th></tr></thead>
+        <tbody><tr><td colspan="4" class="u">Cargando…</td></tr></tbody>
+      </table>
+      <p class="nota" id="cambio-act"></p>
+      <p class="nota">Son referencias oficiales (BCP, BCB, BCRA, TRM). Bancos y casas de cambio aplican su propio precio de compra y venta.</p>
+    </details>
+  </div>
+</section>
+
 <section class="s" id="radar" data-prioridad="PY" aria-labelledby="radar-t">
   <div class="c">
-    <div class="cab">
-      <div><span class="vol">News Radar</span><h2 class="t" id="radar-t">Lo que está pasando</h2><p>Negocios, mercados, fintech y criptoactivos. Primero Paraguay, después Brasil y el resto de Hispanoamérica. Cada nota enlaza a su fuente original.</p></div>
+    <div class="radar-cab">
+      <div><span class="vol">News Radar</span><h2 id="radar-t">Contexto de mercado</h2><p>Negocios, fintech y cripto de la región, con la fuente original. Primero Paraguay, después Brasil e Hispanoamérica.</p></div>
       <div class="meta" id="radar-info" aria-live="polite">Cargando…</div>
     </div>
     <div class="filtros" role="group" aria-label="Filtros del radar">
-      <div class="grupo"><span>Región</span>
-        <button class="chip" data-f="region:todas" aria-pressed="true">Todas</button>
+      <div class="grupo"><span>País</span>
+        <button class="chip" data-f="region:todas" aria-pressed="true">Todos</button>
         <button class="chip" data-f="region:PY" aria-pressed="false">Paraguay</button>
         <button class="chip" data-f="region:BR" aria-pressed="false">Brasil</button>
         <button class="chip" data-f="region:LATAM" aria-pressed="false">Hispanoamérica</button>
@@ -87,142 +186,38 @@
         <button class="chip" data-f="horas:168" aria-pressed="false">7 días</button>
       </div>
       <div class="grupo"><label for="f-idioma"><span>Idioma</span></label>
-        <select class="sel" id="f-idioma" data-s="idioma"><option value="todos">Todos</option><option value="es">Español</option><option value="pt">Português</option></select>
-      </div>
-      <div class="grupo"><label for="f-cat"><span>Tema</span></label>
-        <select class="sel" id="f-cat" data-s="cat"><option value="todas">Todos</option><option value="regulacion">Regulación</option><option value="impuestos">Impuestos</option><option value="criptoactivos">Criptoactivos</option><option value="stablecoins">Stablecoins</option><option value="pagos">Pagos</option><option value="fintech">Fintech</option><option value="finanzas">Finanzas</option><option value="mercados">Mercados</option><option value="macroeconomia">Macroeconomía</option><option value="empresas">Empresas</option><option value="seguridad">Seguridad</option></select>
-      </div>
+        <select class="sel" id="f-idioma" data-s="idioma"><option value="todos">Todos</option><option value="es">Español</option><option value="pt">Português</option></select></div>
+      <div class="grupo"><label for="f-cat"><span>Tema</span></label><select class="sel" id="f-cat" data-s="cat"><option value="todas">Todos</option><option value="regulacion">Regulación</option><option value="impuestos">Impuestos</option><option value="criptoactivos">Criptoactivos</option><option value="stablecoins">Stablecoins</option><option value="pagos">Pagos</option><option value="fintech">Fintech</option><option value="finanzas">Finanzas</option><option value="mercados">Mercados</option><option value="macroeconomia">Macroeconomía</option><option value="empresas">Empresas</option><option value="seguridad">Seguridad</option></select></div>
     </div>
     <p class="aviso-r" id="radar-aviso" aria-live="polite"></p>
-    <div class="radar">
-      <div><div class="principal" id="radar-principal"></div><p class="meta" style="margin-top:14px">Las noticias brasileñas se muestran con su título original en portugués. Agrupamos las notas repetidas sobre un mismo hecho. Esto es información, no una recomendación.</p></div>
-      <div><ul class="lista-n" id="radar-lista" aria-live="polite"></ul><button class="btn ch ver-mas" id="radar-mas" hidden>Ver más noticias</button></div>
+    <ul class="notas" id="radar-lista" aria-live="polite"></ul>
+    <div class="radar-pie">
+      <p class="meta">Noticias no son señales. Las notas brasileñas conservan su título en portugués.</p>
+      <div style="display:flex;gap:10px"><button class="btn ch" id="radar-mas" hidden>Ver más</button><button class="btn ch" id="radar-btn" aria-expanded="false" aria-controls="radar-lista">Ver radar completo</button></div>
     </div>
-  </div>
-</section>
-
-<section class="s alt" id="cambio" aria-labelledby="cambio-t">
-  <div class="c">
-    <div class="cab">
-      <div><span class="vol">Tipo de cambio oficial</span><h2 class="t" id="cambio-t">Lo que publican los bancos centrales</h2><p>Solo cotizaciones de instituciones oficiales, con su fecha. No son precios de casas de cambio.</p></div>
-      <div class="meta" id="cambio-act"></div>
-    </div>
-    <div class="cambio-g">
-      <table class="tabla" id="tabla-cambio">
-        <thead><tr><th>Moneda</th><th class="v">Valor</th><th class="ocultar-m">Institución</th><th>Fecha</th></tr></thead>
-        <tbody><tr><td colspan="4" class="u">Cargando…</td></tr></tbody>
-      </table>
-      <div class="nota-c"><p><strong>En la frontera, el real importa tanto como el dólar.</strong> El comercio de Ciudad del Este se mueve con la cotización del real, y los precios de importados con la del dólar.</p><p>Las casas de cambio y los bancos aplican su propio precio de compra y venta: usá esta tabla como referencia, no como precio de operación.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="s" id="observando" aria-labelledby="obs-t">
-  <div class="c">
-    <div class="cab"><div><span class="vol">Lo que estamos viendo</span><h2 class="t" id="obs-t">Las variables que mueven la región</h2><p>No son señales: es lo que miramos todos los días y por qué.</p></div></div>
-    <div class="obs"><article class="ap"><span class="etq pq">Guaraní y dólar</span><h3>El guaraní frente al dólar</h3><p>Referencia oficial del BCP hoy: <span class="vivo-v" data-vivo="pyg">—</span>.</p><p class="pq"><strong>¿Por qué importa?</strong> Define el precio de los importados, el peso de las deudas en dólares y la competitividad de lo que Paraguay vende afuera.</p></article><article class="ap"><span class="etq pq">Brasil em foco</span><h3>El real y el comercio de frontera</h3><p>Hoy: <span class="vivo-v" data-vivo="brl">—</span>.</p><p class="pq"><strong>¿Por qué importa?</strong> Cuando el real se fortalece, el comercio de Ciudad del Este gana compradores brasileños; cuando se debilita, ocurre lo contrario.</p></article><article class="ap"><span class="etq pq">Regulación</span><h3>Cripto: Paraguay y Brasil ajustan reglas</h3><p>En Paraguay, la <a href="https://www.dnit.gov.py/web/portal-institucional/w/la-dnit-establece-obligaci%C3%B3n-de-informar-las-transacciones-con-criptoactivos" target="_blank" rel="noopener">RG DNIT N.º 47/2026</a> pide informar operaciones con criptoactivos. En Brasil, las <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20BCB&numero=520" target="_blank" rel="noopener">resoluciones BCB 519, 520 y 521</a> rigen desde el 1/10/2026.</p><p class="pq"><strong>¿Por qué importa?</strong> Las reglas definen qué plataformas pueden operar y qué tiene que declarar cada persona.</p></article><article class="ap"><span class="etq pq">Bitcoin</span><h3>La tendencia de Bitcoin</h3><p>Cierre diario frente a su media de 100 días: <span class="vivo-v" data-vivo="btc">—</span>.</p><p class="pq"><strong>¿Por qué importa?</strong> Es la regla que investigamos y operamos. Nos dice si el mercado está en tendencia, no adónde va el precio.</p></article><article class="ap"><span class="etq pq">Stablecoins</span><h3>El dólar digital en la región</h3><p>USDT y USDC se usan cada vez más para ahorrar y enviar dinero. En Brasil, la Resolución BCB 521 incluye ciertas operaciones con activos virtuales en el mercado de cambio.</p><p class="pq"><strong>¿Por qué importa?</strong> Cambian cómo se mueven los dólares entre países y qué controles se aplican.</p></article><article class="ap"><span class="etq pq">Tasas y liquidez</span><h3>Política monetaria: BCP y Copom</h3><p>Seguimos las decisiones de tasas del Banco Central del Paraguay y del Copom en Brasil, y su efecto en el crédito y en el tipo de cambio.</p><p class="pq"><strong>¿Por qué importa?</strong> Con tasas altas, ahorrar rinde más y endeudarse cuesta más; eso también mueve las monedas.</p></article></div>
-  </div>
-</section>
-
-<section class="s alt" id="historias" aria-labelledby="hist-t">
-  <div class="c">
-    <div class="cab"><div><span class="vol">Historias de mercado</span><h2 class="t" id="hist-t">Para leer con calma</h2></div></div>
-    <div class="hist">
-      <article class="grande"><img src="assets/fotos/asuncion.jpg" alt="Vista de Asunción desde Chaco'i" width="1600" height="900" loading="lazy"><span class="etq py">En Paraguay</span><h3>Cripto en la declaración jurada: lo que pide la DNIT</h3><p>La Resolución General DNIT N.º 47/2026 obliga a presentar una Declaración Jurada Informativa de Criptoactivos a las plataformas que operan en el país y a las personas y empresas residentes que superen <strong>US$ 5.000 al año</strong> en operaciones, con o sin intermediarios. Se presenta por el sistema Marangatu.</p><p class="firma">Equipo WIQON · 07/10/2026 · Fuente: <a href="https://www.dnit.gov.py/web/portal-institucional/w/la-dnit-establece-obligaci%C3%B3n-de-informar-las-transacciones-con-criptoactivos" target="_blank" rel="noopener">DNIT</a> · Foto: <a href="https://commons.wikimedia.org/wiki/File:Asunci%C3%B3n_skyline_from_Chaco%27i.jpg" target="_blank" rel="noopener">P. S. F. Freitas</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> </p></article>
-      <div><article class="chica ap"><span class="etq br">Brasil em foco</span><h3 lang="pt-BR">Novas regras do BC para prestadoras de ativos virtuais já valem</h3><p>Las resoluciones BCB 519, 520 y 521 rigen desde el 1 de octubre de 2026; el envío de datos de supervisión empieza el 1 de enero de 2027.</p><p class="firma">Equipo WIQON · 07/10/2026 · Fuente: <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20BCB&numero=519" target="_blank" rel="noopener">BCB 519</a>, <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20BCB&numero=520" target="_blank" rel="noopener">520</a>, <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20BCB&numero=521" target="_blank" rel="noopener">521</a></p></article><article class="chica ap"><span class="etq pq">Por qué importa</span><h3>El costo invisible de un robot de CFD</h3><p>Probamos nuestro EA con los costos reales de un broker: ganó US$ 14.475 por precio y pagó US$ 4.241 en swaps. Casi un tercio de la ganancia se fue en financiación.</p><p class="firma">Laboratorio WIQON · <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">informe y datos</a></p></article><article class="chica ap"><span class="etq dato">Dato que vale la pena mirar</span><h3>1 de 6</h3><p>Una estrategia de day trade que parecía ganadora le ganó a dejar el dinero en Earn en solo uno de seis semestres. Con pocas operaciones, "la mejor" suele ser suerte.</p><p class="firma">Laboratorio WIQON · <a href="https://github.com/wiqon/wiqon-lab#1-una-estrategia-validada-que-era-ruido" target="_blank" rel="noopener">ver el experimento</a></p></article></div>
-    </div>
-  </div>
-</section>
-
-<section class="s" id="laboratorio" aria-labelledby="lab-t">
-  <div class="c">
-    <div class="cab"><div><span class="vol">Laboratorio</span><h2 class="t" id="lab-t">Hipótesis, pruebas y resultados</h2><p>Probamos ideas de trading populares con años de datos y costos reales. La mayoría no pasa. Publicamos todo, con el código para repetirlo.</p></div></div>
-    <div class="lab-g">
-      <div>
-        <div class="metodo"><span><b>1</b> Hipótesis</span><span><b>2</b> Reglas exactas</span><span><b>3</b> Backtest con costos</span><span><b>4</b> Fuera de muestra</span><span><b>5</b> Real, si sobrevive</span></div>
-        <table class="tabla exp">
-          <thead><tr><th>Hipótesis</th><th>Tipo</th><th class="ocultar-m">Resultado</th><th>Veredicto</th></tr></thead>
-          <tbody><tr><td><a href="https://github.com/wiqon/wiqon-lab#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc" target="_blank" rel="noopener">Filtro de tendencia en BTC (media 100)</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="ocultar-m">56,6% anual vs 37,3% de mantener; caída 34,7% vs 76,6% (2018-2026, con comisiones)</td><td class="veredicto si">Sobrevive</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">La misma regla en MT5 (CFD)</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="ocultar-m">x2,02 vs x1,96; caída 39% vs 67%. Los swaps se llevan un tercio</td><td class="veredicto ojo">Con reservas</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#1-una-estrategia-validada-que-era-ruido" target="_blank" rel="noopener">Day trade EMA21 Bounce</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="ocultar-m">+0,71% en 3 años vs +9,3% en Earn; media por operación indistinguible de cero</td><td class="veredicto no">No</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#2-el-sesgo-de-supervivencia-infla-todo" target="_blank" rel="noopener">Rotación de altcoins</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="ocultar-m">33,7% anual con monedas de hoy; 1,0% con las que existían en 2021</td><td class="veredicto no">No (sesgo)</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#4-arbitraje-medido-no-supuesto" target="_blank" rel="noopener">Arbitraje entre 6 exchanges</a></td><td><span class="tipo med">MEDICIÓN</span></td><td class="ocultar-m">69 oportunidades en 24 h; casi ninguna real</td><td class="veredicto no">No</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#5-arbitraje-de-funding-cash-and-carry" target="_blank" rel="noopener">Funding carry</a></td><td><span class="tipo hist">HISTÓRICO</span></td><td class="ocultar-m">7-10% anual promedio, casi todo de 2021; 2-3% en 2025-26</td><td class="veredicto no">No</td></tr></tbody>
-        </table>
-        <p class="meta" style="margin-top:14px">HISTÓRICO: simulado con datos pasados · MEDICIÓN: observado en vivo sin operar · REAL: operado con dinero. Un backtest no garantiza resultados futuros.</p>
-      </div>
-      <aside class="vivo" aria-label="Estrategia en vivo">
-        <div class="et"><span><span class="tipo real">REAL</span> Filtro de tendencia en BTC</span><span id="vela">—</span></div>
-        <div class="senal" id="senal">Cargando…</div>
-        <div class="meta" id="desde"></div>
-        <div class="datos-v">
-          <div><b id="cierre">—</b><span>Cierre diario</span></div>
-          <div><b id="sma">—</b><span>Media 100 días</span></div>
-          <div><b id="dist">—</b><span>Distancia</span></div>
-        </div>
-        <p class="actualizado" id="actualizado"></p>
-        <div class="regla">si cierre_diario &gt; media_100 → EN BTC<br>si no → EN USDT</div>
-        <p class="nota">La operamos con capital real desde septiembre de 2026. Se recalcula cada día a las 21:15 (hora de Paraguay) con la vela cerrada. No es una recomendación.</p>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<section class="s alt" id="shield" aria-labelledby="shield-t">
-  <div class="c prod">
-    <div>
-      <span class="vol">Producto · gestión de riesgo</span><h2 class="t" id="shield-t">WIQON Shield</h2>
-      <p style="color:var(--suave);margin-top:12px;max-width:640px">Un Expert Advisor para MetaTrader 5 que aplica la regla de tendencia que sobrevivió a nuestras pruebas: mantiene la posición en BTC mientras la tendencia sigue y la cierra cuando se rompe. Su objetivo es limitar las caídas grandes, no ganar más.</p>
-      <div class="qq"><div><h4 class='si'>Qué hace</h4><ul><li>Decide una vez por día, con la vela cerrada</li><li>Compra si el cierre está sobre la media de 100 períodos y sale si cae debajo</li><li>Opera solo comprado, sin apalancamiento propio</li><li>Muestra su estado en un panel en el gráfico</li></ul><h4 class='n'>Qué datos usa</h4><ul><li>Solo los precios de tu broker en MetaTrader 5</li><li>No envía datos tuyos a WIQON</li></ul></div><div><h4 class='no'>Qué no hace</h4><ul><li>No garantiza ganancias</li><li>No evita los costos del broker: en CFD, los swaps reducen el resultado</li><li>No reacciona a caídas dentro del día</li><li>No rinde más que mantener en mercados que solo suben</li></ul><h4 class='n'>Riesgo que cubre</h4><ul><li>Quedarse comprado durante una caída larga: en la prueba con un broker real (2022-2026), la caída máxima fue 39% contra 67% de mantener</li></ul></div></div>
-    </div>
-    <div class="lado">
-      <img src="assets/shield_resultados.png" alt="Resultados de WIQON Shield frente a comprar y mantener: x2,02 contra x1,96 y caída máxima de 39% contra 67%" width="1080" height="1350" loading="lazy">
-      <ul class='planes'><li><span>Demo<small>Sin licencia en cuentas demo</small></span><b>Gratis</b></li><li><span>Licencia anual<small>Precio de lanzamiento, primeros 10 clientes</small></span><b><s>USD 99</s>USD 59</b></li><li><span>Licencia vitalicia<small>Una cuenta real</small></span><b>USD 199</b></li></ul><div class='contacto'><a class='btn p' href='shield/'>Ver planes</a><a class='btn' href='https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5' target='_blank' rel='noopener'>Informe de prueba</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="s" id="videos-s" aria-labelledby="vid-t">
-  <div class="c">
-    <div class="cab">
-      <div><span class="vol">Videos</span><h2 class="t" id="vid-t">El laboratorio en video</h2><p>Cada experimento explicado en pocos minutos, en nuestro canal de YouTube.</p></div>
-      <a class="btn ch" href="https://www.youtube.com/@wiqonlab?sub_confirmation=1" target="_blank" rel="noopener">Suscribirme</a>
-    </div>
-    <div class="videos" id="videos" data-canal="wiqonlab">
-      <div id="vid-principal"><p class="meta">Cargando…</p></div>
-      <ul class="vid-l" id="vid-lista"></ul>
-    </div>
-  </div>
-</section>
-
-<section class="s alt" id="servicios" aria-labelledby="serv-t">
-  <div class="c dos-col">
-    <div>
-      <span class="vol">Servicios</span><h2 class="t" id="serv-t">Probamos tu estrategia antes de que arriesgues capital</h2>
-      <p style="color:var(--gris);margin:10px 0 18px">Servicios técnicos de software y datos, con la misma metodología del laboratorio. No gestionamos dinero de terceros.</p>
-      <ul class="filas"><li><div><h3>Auditoría de estrategias</h3><p>Backtest de portafolio con costos reales, validación fuera de muestra e intervalos de confianza. Te decimos si tiene ventaja, o si no.</p></div></li><li><div><h3>Bots para Binance</h3><p>Órdenes protegidas, Earn automático, alertas por Telegram y despliegue 24/7 en tu Raspberry Pi o VPS.</p></div></li><li><div><h3>Dashboards y capacitación</h3><p>Paneles con tus datos y clases de Python aplicado a mercados.</p></div></li></ul>
-      <div class="contacto">
-        <a class="btn wa" href="https://wa.me/595987685651?text=Hola%20WIQON%2C%20les%20escribo%20desde%20su%20p%C3%A1gina." target="_blank" rel="noopener">WhatsApp</a>
-        <a class="btn" href="https://wa.me/c/595987685651" target="_blank" rel="noopener">Catálogo</a>
-        <a class="btn" href="mailto:contacto@wiqonlab.com?subject=Consulta%20WIQON">contacto@wiqonlab.com</a>
-      </div>
-    </div>
-    <div id="herramientas">
-      <span class="vol">Herramientas que usamos</span><h2 class="t" style="font-size:1.6rem">Lo que usamos todos los días</h2>
-      <ul class="filas" style="margin-top:18px"><li><a class="ir" href="https://www.tradingview.com/?aff_id=1171961&aff_sub=web&source=wiqonlab" target="_blank" rel="sponsored noopener"><div><h3>TradingView</h3><p>Gráficos e indicadores. Con nuestro enlace recibís un cupón de USD 15 para tu próximo plan.</p></div><span class=marca-af>Afiliado</span></a></li><li><a class="ir" href="https://www.binance.com/register?ref=WDAVWR75" target="_blank" rel="sponsored noopener"><div><h3>Binance</h3><p>Donde operamos la estrategia en vivo y de donde salen los datos de precios de esta página.</p></div><span class=marca-af>Referido</span></a></li><li><a class="ir" href="https://www.metatrader5.com/" target="_blank" rel="noopener"><div><h3>MetaTrader 5</h3><p>La plataforma donde corre WIQON Shield. Gratuita.</p></div></a></li><li><a class="ir" href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener"><div><h3>GitHub · WIQON Lab</h3><p>Todo nuestro código y resultados, abiertos.</p></div></a></li></ul>
-      <p class="transp">Transparencia: los enlaces marcados como afiliado o referido nos dan una comisión si te registrás o suscribís, sin costo extra para vos. No cambian lo que publicamos.</p>
-    </div>
+    <div class="historias"><article class="ap"><span class="etq">En Paraguay</span><h3>Cripto en la declaración jurada: lo que pide la DNIT</h3><p>La RG DNIT N.º 47/2026 obliga a informar operaciones con criptoactivos a quienes superen US$ 5.000 al año y a las plataformas que operan en el país.</p><p class="firma">Equipo WIQON · 07/10/2026 · <a href="https://www.dnit.gov.py/web/portal-institucional/w/la-dnit-establece-obligaci%C3%B3n-de-informar-las-transacciones-con-criptoactivos" target="_blank" rel="noopener">fuente oficial</a></p></article><article class="ap"><span class="etq">Brasil em foco</span><h3 lang="pt-BR">Novas regras do BC para prestadoras de ativos virtuais já valem</h3><p>Las resoluciones BCB 519, 520 y 521 rigen desde el 1/10/2026; el envío de datos de supervisión empieza el 1/1/2027.</p><p class="firma">Equipo WIQON · 07/10/2026 · <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20BCB&numero=520" target="_blank" rel="noopener">fuente oficial</a></p></article><article class="ap"><span class="etq">Por qué importa</span><h3>El costo invisible de un robot de CFD</h3><p>Nuestro EA ganó US$ 14.475 por precio y pagó US$ 4.241 en swaps con un broker real. Casi un tercio se fue en financiación.</p><p class="firma">Laboratorio WIQON · <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">informe</a></p></article></div>
   </div>
 </section>
 
 <section class="s" id="nosotros" aria-labelledby="nos-t">
-  <div class="c nos">
-    <div>
-      <span class="vol">Cómo trabajamos</span><h2 class="t" id="nos-t">Un laboratorio chico, en la frontera</h2>
-      <div style="margin-top:18px"><p>WIQON nace en la frontera entre Paraguay y Brasil, donde el guaraní, el real y el dólar conviven todos los días. Investigamos mercados y estrategias de trading con datos reales y publicamos lo que encontramos, también cuando el resultado es malo.</p><p>No vendemos señales ni administramos dinero. Ofrecemos información con fuentes, investigación abierta, software y servicios técnicos.</p></div>
-      <ol class="criterios"><li><strong>Fuentes primero.</strong> Cada dato muestra de dónde sale y de qué fecha es. En regulación, enlazamos la norma oficial.</li><li><strong>Costos reales.</strong> Ningún resultado sin comisiones, slippage y, si corresponde, swaps.</li><li><strong>Lo malo también se publica.</strong> La mayoría de las ideas que probamos no funcionan, y lo decimos.</li><li><strong>Noticias no son señales.</strong> El radar informa; no recomienda comprar ni vender.</li><li><strong>Código abierto.</strong> Cualquiera puede repetir nuestros números.</li></ol>
+  <div class="c humano">
+    <div class="ap">
+      <span class="vol">Quiénes somos</span>
+      <blockquote id="nos-t">Publicamos lo que encontramos, <span>también cuando el resultado es malo.</span></blockquote>
+      <p>WIQON nace en la frontera entre Paraguay y Brasil, donde el guaraní, el real y el dólar conviven todos los días. Lo probamos, lo medimos y, si no sobrevive, lo publicamos igual.</p><p>No vendemos señales ni administramos dinero de terceros.</p>
+      <div class="fundador"><img src="assets/fotos/fundador.jpg" alt="Avelino González" width="52" height="52" loading="lazy"><div><b>Avelino González</b><span>Fundador e investigador</span></div></div>
       <div class="redes"><a href="https://www.youtube.com/@wiqonlab" target="_blank" rel="noopener">YouTube</a> <a href="https://www.instagram.com/wiqonlab/" target="_blank" rel="noopener">Instagram</a> <a href="https://www.tiktok.com/@wiqonlab" target="_blank" rel="noopener">TikTok</a> <a href="https://x.com/wiqonlab" target="_blank" rel="noopener">X</a> <a href="https://t.me/wiqonlab" target="_blank" rel="noopener">Telegram</a> <a href="https://whatsapp.com/channel/0029Vb8Tk5XCcW4zVk21xx0D" target="_blank" rel="noopener">WhatsApp</a> <a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a> <a href="https://www.linkedin.com/company/wiqonlab" target="_blank" rel="noopener">LinkedIn</a> <a href="https://www.facebook.com/wiqonlab/" target="_blank" rel="noopener">Facebook</a></div>
-      <div class="fundador"><img src="assets/fotos/fundador.jpg" alt="" width="42" height="42" loading="lazy"><span><b>Avelino González</b> · Fundador e investigador</span></div>
+      <div class="faq"><details><summary>¿Venden señales o manejan dinero de terceros?</summary><p>No. Publicamos investigación y ofrecemos software y servicios técnicos.</p></details><details><summary>¿WIQON Shield garantiza ganancias?</summary><p>No. Busca limitar las caídas grandes; en mercados que solo suben rinde menos que mantener.</p></details><details><summary>¿De dónde salen los datos?</summary><p>Precios públicos de Binance, cotizaciones del BCP, BCB, BCRA y TRM, y RSS públicos de medios e instituciones.</p></details></div>
     </div>
-    <div>
-      <figure class="foto"><img src="assets/fotos/cde.jpg" alt="Centro de Ciudad del Este" width="1600" height="948" loading="lazy" style="aspect-ratio:4/3">
-        <figcaption>Ciudad del Este, Alto Paraná. Foto: <a href="https://commons.wikimedia.org/wiki/File:Ciudad_del_Este_downtown_skyline_143945.jpg" target="_blank" rel="noopener">Cmasi</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> </figcaption></figure>
-      <div class="faq" style="margin-top:28px"><details><summary>¿Venden señales o manejan dinero de terceros?</summary><p>No. Publicamos información e investigación, y ofrecemos software y servicios técnicos.</p></details><details><summary>¿Cada cuánto se actualiza el radar?</summary><p>Cada 30 minutos, a partir de RSS públicos de cada medio o institución. Si una fuente no responde, mostramos sus últimas noticias con la hora real.</p></details><details><summary>¿De dónde sale el tipo de cambio?</summary><p>Del Banco Central del Paraguay, el Banco Central do Brasil (PTAX), el BCRA y la Superfinanciera de Colombia (TRM), con la fecha que publica cada uno.</p></details><details><summary>¿Esto es asesoría financiera?</summary><p>No. Es información y análisis educativo. Operar en mercados implica riesgo de pérdida.</p></details></div>
+    <div class="ap">
+      <span class="vol">El laboratorio en video</span>
+      <div class="videos" id="videos" data-canal="wiqonlab">
+        <div id="vid-principal"><p class="meta">Cargando…</p></div>
+        <ul class="vid-l" id="vid-lista"></ul>
+      </div>
+      <p style="margin-top:14px"><a class="enl" href="https://www.youtube.com/@wiqonlab?sub_confirmation=1" target="_blank" rel="noopener">Suscribirme al canal <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+      <figure style="margin-top:26px"><img src="assets/fotos/cde.jpg" alt="Centro de Ciudad del Este" width="1600" height="948" loading="lazy" style="border-radius:12px;aspect-ratio:16/9;object-fit:cover">
+        <figcaption class="nota">Ciudad del Este, Alto Paraná. Foto: <a href="https://commons.wikimedia.org/wiki/File:Ciudad_del_Este_downtown_skyline_143945.jpg" target="_blank" rel="noopener">Cmasi</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Puente de la Amistad: <a href="https://commons.wikimedia.org/wiki/File:Ciudad_del_Este_puente_de_la_Amistad.jpg" target="_blank" rel="noopener">Ekem</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
     </div>
   </div>
 </section>
@@ -231,23 +226,24 @@
 <footer>
   <div class="c">
     <div class="pie">
-      <div><a class="marca" href="./"><img src="assets/logo.png" alt="">WIQON</a><p>Mercados, datos y contexto desde la frontera Paraguay–Brasil.</p>
+      <div><a class="marca" href="./"><img src="assets/logo.png" alt="">WIQON</a><p>Laboratorio de trading y datos de mercado, desde la frontera Paraguay–Brasil.</p>
         <p><a href="" lang="es" style="display:inline">Español</a> · <a href="br/" lang="pt-BR" style="display:inline">Português (Brasil)</a></p></div>
-      <div><h5>Secciones</h5><a href="#radar">News Radar</a><a href="#cambio">Tipo de cambio</a><a href="#laboratorio">Laboratorio</a><a href="#shield">WIQON Shield</a><a href="#videos-s">Videos</a></div>
-      <div><h5>Fuentes de datos</h5><a href="https://www.bcp.gov.py/webapps/web/cotizacion/monedas" target="_blank" rel="noopener">Banco Central del Paraguay</a><a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noopener">Banco Central do Brasil</a><a href="https://www.bcra.gob.ar/PublicacionesEstadisticas/Tipos_de_cambios.asp" target="_blank" rel="noopener">BCRA</a><a href="https://www.datos.gov.co/Econom-a-y-Finanzas/Tasa-de-Cambio-Representativa-del-Mercado-TRM/32sa-8pi3" target="_blank" rel="noopener">TRM · datos.gov.co</a><a href="https://www.dnit.gov.py/" target="_blank" rel="noopener">DNIT</a><a href="https://www.gov.br/cvm/" target="_blank" rel="noopener">CVM</a><a href="https://data-api.binance.vision" target="_blank" rel="noopener">Binance (datos públicos)</a></div>
+      <div><h5>Productos</h5><a href="#laboratorio">Laboratorio de estrategias</a><a href="shield/">WIQON Shield</a><a href="#servicios">Datos y automatización</a><a href="#radar">News Radar</a></div>
+      <div><h5>Fuentes de datos</h5><a href="https://www.bcp.gov.py/webapps/web/cotizacion/monedas" target="_blank" rel="noopener">Banco Central del Paraguay</a><a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noopener">Banco Central do Brasil</a><a href="https://www.bcra.gob.ar/PublicacionesEstadisticas/Tipos_de_cambios.asp" target="_blank" rel="noopener">BCRA · TRM Colombia</a><a href="https://www.dnit.gov.py/" target="_blank" rel="noopener">DNIT · CVM</a><a href="https://data-api.binance.vision" target="_blank" rel="noopener">Binance (datos públicos)</a></div>
+      <div><h5>Herramientas que usamos</h5><a href="https://www.tradingview.com/?aff_id=1171961&aff_sub=web&source=wiqonlab" target="_blank" rel="sponsored noopener">TradingView<span class="af">afiliado</span></a><a href="https://www.binance.com/register?ref=WDAVWR75" target="_blank" rel="sponsored noopener">Binance<span class="af">referido</span></a><a href="https://www.metatrader5.com/" target="_blank" rel="noopener">MetaTrader 5</a><a href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">WIQON Lab (GitHub)</a></div>
       <div><h5>Contacto</h5><a href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a><a href="https://wa.me/595987685651?text=Hola%20WIQON" target="_blank" rel="noopener">WhatsApp +595 987 685 651</a><a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a><a href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">GitHub</a></div>
     </div>
     <div class="legal">
-      <p><b>Actualización de datos.</b> News Radar: cada 30 minutos. Tipo de cambio oficial: cada hora (cada institución publica en su horario). Estrategia en vivo: todos los días a las 21:15 (hora de Paraguay). Precio de BTC en la barra: al abrir la página.</p>
-      <p><b>Metodología.</b> El radar usa solo RSS públicos: mostramos título, fuente, fecha y enlace, nunca el texto completo de los artículos. Los resultados del laboratorio incluyen costos y su código está en GitHub.</p>
-      <p><b>Privacidad.</b> No usamos cookies ni herramientas de analítica. Los videos de YouTube se cargan solo si tocás reproducir (modo de privacidad mejorada). Las tipografías se cargan desde Google Fonts.</p>
-      <p><b>Aviso de riesgo.</b> Contenido informativo y educativo. No es asesoría financiera ni recomendación de inversión. Operar en mercados financieros implica riesgo de pérdida; los resultados pasados no garantizan resultados futuros. Algunos enlaces son de afiliado.</p>
-      <p>© <span id="anio">2026</span> WIQON · Paraguay · Brasil</p>
+      <p><b>Actualización.</b> Noticias: cada 30 minutos. Tipo de cambio oficial: cada hora (cada institución publica en su horario). Estrategia: todos los días a las 21:15 (hora de Paraguay). Precio de BTC: al abrir la página.</p>
+      <p><b>Metodología.</b> Resultados con costos y código en GitHub. El radar usa solo RSS públicos: título, fuente, fecha y enlace, nunca el texto de los artículos.</p>
+      <p><b>Privacidad.</b> Sin cookies ni analítica. Los videos de YouTube se cargan solo al tocar reproducir. Las tipografías vienen de Google Fonts.</p>
+      <p><b>Aviso de riesgo.</b> Contenido informativo y educativo; no es asesoría financiera. Operar implica riesgo de pérdida y los resultados pasados no garantizan los futuros. Los enlaces marcados como afiliado o referido nos dan una comisión sin costo extra para vos.</p>
+      <p>© <span id="anio">2026</span> WIQON · Asunción · Ciudad del Este · Foz do Iguaçu</p>
     </div>
   </div>
 </footer>
 
 <script src="assets/vivo.js"></script>
-<script src="assets/v3.js"></script>
+<script src="assets/v4.js"></script>
 </body>
 </html>
