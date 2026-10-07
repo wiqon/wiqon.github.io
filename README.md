@@ -1,4 +1,4 @@
-# wiqon.github.io
+# wiqonlab.com
 
 Página principal de **WIQON — Market Flow Intelligence**: enlaces a todas las
 redes, estado en vivo de la estrategia, experimentos y servicios.
