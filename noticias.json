@@ -1,0 +1,761 @@
+{
+ "actualizado_utc": "2026-10-07T16:47:27Z",
+ "ventana_dias": 7,
+ "fuentes": [
+  {
+   "id": "abc",
+   "nombre": "ABC Color",
+   "web": "https://www.abc.com.py",
+   "region": "PY",
+   "tipo": "medio",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 100
+  },
+  {
+   "id": "lanacion",
+   "nombre": "La Nación",
+   "web": "https://www.lanacion.com.py",
+   "region": "PY",
+   "tipo": "medio",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 100
+  },
+  {
+   "id": "ip",
+   "nombre": "Agencia IP",
+   "web": "https://www.ip.gov.py",
+   "region": "PY",
+   "tipo": "oficial",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 10
+  },
+  {
+   "id": "bcb",
+   "nombre": "Banco Central do Brasil",
+   "web": "https://www.bcb.gov.br",
+   "region": "BR",
+   "tipo": "oficial",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 10
+  },
+  {
+   "id": "cvm",
+   "nombre": "CVM",
+   "web": "https://www.gov.br/cvm",
+   "region": "BR",
+   "tipo": "oficial",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 15
+  },
+  {
+   "id": "infomoney",
+   "nombre": "InfoMoney",
+   "web": "https://www.infomoney.com.br",
+   "region": "BR",
+   "tipo": "medio",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 10
+  },
+  {
+   "id": "livecoins",
+   "nombre": "Livecoins",
+   "web": "https://livecoins.com.br",
+   "region": "BR",
+   "tipo": "medio",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 10
+  },
+  {
+   "id": "criptonoticias",
+   "nombre": "CriptoNoticias",
+   "web": "https://www.criptonoticias.com",
+   "region": "LATAM",
+   "tipo": "medio",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 10
+  },
+  {
+   "id": "diariobitcoin",
+   "nombre": "DiarioBitcoin",
+   "web": "https://www.diariobitcoin.com",
+   "region": "LATAM",
+   "tipo": "medio",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 20
+  },
+  {
+   "id": "ambito",
+   "nombre": "Ámbito",
+   "web": "https://www.ambito.com",
+   "region": "LATAM",
+   "tipo": "medio",
+   "ok": true,
+   "ultima_ok": "2026-10-07T16:47:27Z",
+   "leidas": 20
+  }
+ ],
+ "noticias": [
+  {
+   "id": "5d84ceca5963",
+   "titulo": "Mipymes fortalecen su participación en Hambre Cero y dinamizan economías locales",
+   "url": "http://www.lanacion.com.py/negocios/2026/10/07/mipymes-fortalecen-su-participacion-en-hambre-cero-y-dinamizan-economias-locales/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T16:36:01Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "4a97f63f0dbe",
+   "titulo": "Fortalecimiento del guaraní frente al dólar ayudó a contener precios, según entidad bancaria",
+   "url": "http://www.lanacion.com.py/negocios/2026/10/07/fortalecimiento-del-guarani-frente-al-dolar-ayudo-a-contener-precios-segun-entidad-bancaria/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas",
+    "mercados"
+   ],
+   "publicado_utc": "2026-10-07T16:03:52Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "542d25e1f113",
+   "titulo": "Fusiones y adquisiciones de empresas locales están en aumento, confirma ministro Riquelme",
+   "url": "http://www.lanacion.com.py/negocios/2026/10/07/fusiones-y-adquisiciones-de-empresas-locales-estan-en-aumento-confirma-ministro-riquelme/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "empresas"
+   ],
+   "publicado_utc": "2026-10-07T15:23:01Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "1bad8dd98408",
+   "titulo": "Ueno Bank: “Bachi” asegura que hoy recibirán respuesta del BCP y evita responder sobre informe secreto",
+   "url": "https://www.abc.com.py/politica/2026/10/07/ueno-bank-bachi-asegura-que-hoy-recibiran-respuesta-del-bcp-y-evita-responder-sobre-informe-secreto/",
+   "idioma": "es",
+   "fuente_id": "abc",
+   "fuente": "ABC Color",
+   "fuente_web": "https://www.abc.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T14:59:28Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "b1f1253204f9",
+   "titulo": "Giménez insta a confiar en la solidez del sistema financiero local",
+   "url": "http://www.lanacion.com.py/negocios/2026/10/07/gimenez-insta-a-confiar-en-la-solidez-del-sistema-financiero-local/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T13:42:48Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "96b9f2e780c7",
+   "titulo": "La IA puede agravar la desigualdad al dejar atrás a la mayoría de países, alerta el FMI",
+   "url": "http://www.lanacion.com.py/mundo/2026/10/07/la-ia-puede-agravar-la-desigualdad-al-dejar-atras-a-la-mayoria-de-paises-alerta-el-fmi/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T13:09:57Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "ca4002688a7c",
+   "titulo": "BCP descarta intervención y ratifica solidez del sistema financiero",
+   "url": "http://www.lanacion.com.py/negocios/2026/10/07/bcp-descarta-intervencion-y-ratifica-solidez-del-sistema-financiero/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T12:02:32Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "0ad67e1ea01a",
+   "titulo": "Histórico: titular del BCP encabezará el máximo foro del FMI y el Banco Mundial",
+   "url": "http://www.lanacion.com.py/negocios/2026/10/07/historico-titular-del-bcp-encabezara-el-maximo-foro-del-fmi-y-el-banco-mundial/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas",
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T10:03:16Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "b0f993239d38",
+   "titulo": "Gigantes de la IA se endeudan masivamente y tensionan los mercados financieros",
+   "url": "http://www.lanacion.com.py/mundo/2026/10/07/gigantes-de-la-ia-se-endeudan-masivamente-y-tensionan-los-mercados-financieros/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T09:22:58Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "50e8cf7ae04e",
+   "titulo": "Banco Mundial: América Latina crecerá 2,2 % en 2026 con Paraguay y El Salvador al frente",
+   "url": "http://www.lanacion.com.py/mundo/2026/10/07/banco-mundial-america-latina-crecera-22-en-2026-con-paraguay-y-el-salvador-al-frente/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas",
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T09:03:02Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "17ff1985a33d",
+   "titulo": "Suace impulsa inclusión financiera",
+   "url": "http://www.lanacion.com.py/negocios_edicion_impresa/2026/10/07/suace-impulsa-inclusion-financiera/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T03:02:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "8c18e8351cc5",
+   "titulo": "ueno bank: 5 claves sobre sus depósitos, patrimonio y utilidades",
+   "url": "http://www.lanacion.com.py/negocios_edicion_impresa/2026/10/07/ueno-bank-5-claves-sobre-sus-depositos-patrimonio-y-utilidades/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "PY",
+   "pais": "PY",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T03:02:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Paraguay"
+  },
+  {
+   "id": "894b59f98bc6",
+   "titulo": "Flávio promete rever split payment da reforma tributária se for eleito",
+   "url": "https://www.infomoney.com.br/politica/flavio-promete-rever-split-payment-da-reforma-tributaria-se-for-eleito/",
+   "idioma": "pt",
+   "fuente_id": "infomoney",
+   "fuente": "InfoMoney",
+   "fuente_web": "https://www.infomoney.com.br",
+   "tipo": "medio",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "impuestos"
+   ],
+   "publicado_utc": "2026-10-07T16:21:06Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "85680d1a4b13",
+   "titulo": "Europol alerta que Bitcoin precisa se preparar para ataques quânticos",
+   "url": "https://livecoins.com.br/europol-alerta-que-bitcoin-precisa-se-preparar-para-ataques-quanticos/",
+   "idioma": "pt",
+   "fuente_id": "livecoins",
+   "fuente": "Livecoins",
+   "fuente_web": "https://livecoins.com.br",
+   "tipo": "medio",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "criptoactivos",
+    "seguridad"
+   ],
+   "publicado_utc": "2026-10-07T15:10:32Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "ee843d0f7ab8",
+   "titulo": "Bitcoin cai abaixo dos US$ 83.500 enquanto mais de 100 mil traders são liquidados",
+   "url": "https://livecoins.com.br/bitcoin-cai-abaixo-dos-us-83-500-enquanto-mais-de-100-mil-traders-sao-liquidados/",
+   "idioma": "pt",
+   "fuente_id": "livecoins",
+   "fuente": "Livecoins",
+   "fuente_web": "https://livecoins.com.br",
+   "tipo": "medio",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "criptoactivos"
+   ],
+   "publicado_utc": "2026-10-07T14:13:32Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "ad7c464b0906",
+   "titulo": "Méliuz aprova redução de capital de R$ 160 milhões para compor reserva financeira",
+   "url": "https://livecoins.com.br/meliuz-aprova-reducao-de-capital-de-r-160-milhoes-para-compor-reserva-financeira/",
+   "idioma": "pt",
+   "fuente_id": "livecoins",
+   "fuente": "Livecoins",
+   "fuente_web": "https://livecoins.com.br",
+   "tipo": "medio",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T13:29:49Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "7afdfdbc4829",
+   "titulo": "Ministério da Agricultura apresenta requisitos para credenciar empresas de tecnologia blockchain para monitorar produção de soja e milho",
+   "url": "https://livecoins.com.br/ministerio-da-agricultura-apresenta-requisitos-para-credenciar-empresas-de-tecnologia-blockchain-para-monitorar-producao-de-soja-e-milho/",
+   "idioma": "pt",
+   "fuente_id": "livecoins",
+   "fuente": "Livecoins",
+   "fuente_web": "https://livecoins.com.br",
+   "tipo": "medio",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "criptoactivos"
+   ],
+   "publicado_utc": "2026-10-07T12:11:38Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "27fd75cad2fc",
+   "titulo": "ETF DIGY11 anuncia mais de R$ 524 mil em rendimentos na primeira distribuição aos cotistas",
+   "url": "https://livecoins.com.br/etf-digy11-anuncia-mais-de-r-524-mil-em-rendimentos-na-primeira-distribuicao-aos-cotistas/",
+   "idioma": "pt",
+   "fuente_id": "livecoins",
+   "fuente": "Livecoins",
+   "fuente_web": "https://livecoins.com.br",
+   "tipo": "medio",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "criptoactivos"
+   ],
+   "publicado_utc": "2026-10-07T10:01:37Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "03818816c25e",
+   "titulo": "BC passa a divulgar mensalmente indicadores de reajustes salariais negociados",
+   "url": "https://www.bcb.gov.br/detalhenoticia/21280/noticia",
+   "idioma": "pt",
+   "fuente_id": "bcb",
+   "fuente": "Banco Central do Brasil",
+   "fuente_web": "https://www.bcb.gov.br",
+   "tipo": "oficial",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "mercados"
+   ],
+   "publicado_utc": "2026-10-06T10:34:47Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "5506a592b104",
+   "titulo": "BC moderniza apresentação de dados sobre atuação no mercado de câmbio",
+   "url": "https://www.bcb.gov.br/detalhenoticia/21279/noticia",
+   "idioma": "pt",
+   "fuente_id": "bcb",
+   "fuente": "Banco Central do Brasil",
+   "fuente_web": "https://www.bcb.gov.br",
+   "tipo": "oficial",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "mercados"
+   ],
+   "publicado_utc": "2026-10-05T11:30:53Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "dfd8533a36a3",
+   "titulo": "Pix amplia funcionalidades e reforça segurança com nova rodada de aperfeiçoamentos regulatórios",
+   "url": "https://www.bcb.gov.br/detalhenoticia/21278/noticia",
+   "idioma": "pt",
+   "fuente_id": "bcb",
+   "fuente": "Banco Central do Brasil",
+   "fuente_web": "https://www.bcb.gov.br",
+   "tipo": "oficial",
+   "region": "BR",
+   "pais": "BR",
+   "categorias": [
+    "pagos"
+   ],
+   "publicado_utc": "2026-10-05T11:30:44Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "b270c6aafbb7",
+   "titulo": "El Gobierno fijó en $27.200 millones el tope para que las empresas de servicios públicos subsidiadas recuperen saldos de IVA",
+   "url": "https://www.ambito.com/economia/el-gobierno-fijo-27200-millones-el-tope-que-las-empresas-servicios-publicos-subsidiadas-recuperen-saldos-iva-n6330956",
+   "idioma": "es",
+   "fuente_id": "ambito",
+   "fuente": "Ámbito",
+   "fuente_web": "https://www.ambito.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "AR",
+   "categorias": [
+    "impuestos"
+   ],
+   "publicado_utc": "2026-10-07T11:08:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Argentina"
+  },
+  {
+   "id": "40f04f3725be",
+   "titulo": "Recaudación disociada del PBI: por qué los ingresos tributarios no acompañan el crecimiento económico",
+   "url": "https://www.ambito.com/economia/recaudacion-disociada-del-pbi-que-los-ingresos-tributarios-no-acompanan-el-crecimiento-economico-n6330727",
+   "idioma": "es",
+   "fuente_id": "ambito",
+   "fuente": "Ámbito",
+   "fuente_web": "https://www.ambito.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "AR",
+   "categorias": [
+    "impuestos",
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T10:00:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Argentina"
+  },
+  {
+   "id": "fef2ac966bee",
+   "titulo": "Justin Drake insta a la industria de bitcoin a activar el modo búnker ante avances de IA",
+   "url": "https://www.criptonoticias.com/seguridad-bitcoin/justin-drake-bitcoin-activar-modo-bunker-ia/",
+   "idioma": "es",
+   "fuente_id": "criptonoticias",
+   "fuente": "CriptoNoticias",
+   "fuente_web": "https://www.criptonoticias.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "LATAM",
+   "categorias": [
+    "criptoactivos"
+   ],
+   "publicado_utc": "2026-10-07T16:45:27Z",
+   "relacionadas": [],
+   "pais_nombre": "Regional"
+  },
+  {
+   "id": "85b7e99df5be",
+   "titulo": "Actualización Glamsterdam de Ethereum llegó a red de pruebas Sepolia",
+   "url": "https://www.criptonoticias.com/tecnologia/actualizacion-glamsterdam-ethereum-red-pruebas-sepolia/",
+   "idioma": "es",
+   "fuente_id": "criptonoticias",
+   "fuente": "CriptoNoticias",
+   "fuente_web": "https://www.criptonoticias.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "LATAM",
+   "categorias": [
+    "criptoactivos"
+   ],
+   "publicado_utc": "2026-10-07T16:21:41Z",
+   "relacionadas": [],
+   "pais_nombre": "Regional"
+  },
+  {
+   "id": "705c6e8f272f",
+   "titulo": "Maahsa inicia exportaciones a México y amplía su presencia regional",
+   "url": "http://www.lanacion.com.py/negocios/2026/10/07/maahsa-inicia-exportaciones-a-mexico-y-amplia-su-presencia-regional/",
+   "idioma": "es",
+   "fuente_id": "lanacion",
+   "fuente": "La Nación",
+   "fuente_web": "https://www.lanacion.com.py",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "MX",
+   "categorias": [
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T15:06:48Z",
+   "relacionadas": [],
+   "pais_nombre": "México"
+  },
+  {
+   "id": "98d169329744",
+   "titulo": "FMI: Panamá es una economía sólida pero debe mejorar la educación y lucha anticorrupción",
+   "url": "https://www.abc.com.py/internacionales/2026/10/07/fmi-panama-es-una-economia-solida-pero-debe-mejorar-la-educacion-y-lucha-anticorrupcion/",
+   "idioma": "es",
+   "fuente_id": "abc",
+   "fuente": "ABC Color",
+   "fuente_web": "https://www.abc.com.py",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "PA",
+   "categorias": [
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T14:45:06Z",
+   "relacionadas": [],
+   "pais_nombre": "Panamá"
+  },
+  {
+   "id": "958619487540",
+   "titulo": "Bitcoin cotiza por debajo de 84.000 dólares: ¿hasta dónde puede extenderse esta caída?",
+   "url": "https://www.criptonoticias.com/mercados/bitcoin-84000-dolares-caida-precio/",
+   "idioma": "es",
+   "fuente_id": "criptonoticias",
+   "fuente": "CriptoNoticias",
+   "fuente_web": "https://www.criptonoticias.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "LATAM",
+   "categorias": [
+    "criptoactivos"
+   ],
+   "publicado_utc": "2026-10-07T13:45:20Z",
+   "relacionadas": [],
+   "pais_nombre": "Regional"
+  },
+  {
+   "id": "91bdfbcb6a11",
+   "titulo": "Créditos hipotecarios: ¿cuánto dinero exacto necesitás para comprar una propiedad?",
+   "url": "https://www.ambito.com/economia/creditos-hipotecarios-cuanto-dinero-exacto-necesitas-comprar-una-propiedad-n6330918",
+   "idioma": "es",
+   "fuente_id": "ambito",
+   "fuente": "Ámbito",
+   "fuente_web": "https://www.ambito.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "AR",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T13:30:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Argentina"
+  },
+  {
+   "id": "93ab4b309875",
+   "titulo": "Ledger presenta función de préstamos respaldados por bitcoin",
+   "url": "https://www.criptonoticias.com/tecnologia/ledger-prestamos-respaldados-bitcoin/",
+   "idioma": "es",
+   "fuente_id": "criptonoticias",
+   "fuente": "CriptoNoticias",
+   "fuente_web": "https://www.criptonoticias.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "LATAM",
+   "categorias": [
+    "criptoactivos"
+   ],
+   "publicado_utc": "2026-10-07T12:39:29Z",
+   "relacionadas": [],
+   "pais_nombre": "Regional"
+  },
+  {
+   "id": "5b670105b85a",
+   "titulo": "El FMI pidió más ajuste y alertó por los precios de la energía y las deudas públicas récord",
+   "url": "https://www.ambito.com/economia/el-fmi-pidio-mas-ajuste-y-alerto-los-precios-la-energia-y-las-deudas-publicas-record-n6330982",
+   "idioma": "es",
+   "fuente_id": "ambito",
+   "fuente": "Ámbito",
+   "fuente_web": "https://www.ambito.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "AR",
+   "categorias": [
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T12:22:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Argentina"
+  },
+  {
+   "id": "f0b058a05973",
+   "titulo": "Reporte WAGMI: Crisis habitacional, mercado inmobiliario y criptomonedas",
+   "url": "https://www.criptonoticias.com/negocios/crisis-habitacional-mercado-inmobiliario-bitcoin-criptomonedas/",
+   "idioma": "es",
+   "fuente_id": "criptonoticias",
+   "fuente": "CriptoNoticias",
+   "fuente_web": "https://www.criptonoticias.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "LATAM",
+   "categorias": [
+    "criptoactivos"
+   ],
+   "publicado_utc": "2026-10-07T12:00:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Regional"
+  },
+  {
+   "id": "9911325fcc22",
+   "titulo": "USDT llega a 1.000 bolívares en plataformas P2P de Venezuela",
+   "url": "https://www.criptonoticias.com/mercados/usdt-1000-bolivares-plataformas-p2p-venezuela/",
+   "idioma": "es",
+   "fuente_id": "criptonoticias",
+   "fuente": "CriptoNoticias",
+   "fuente_web": "https://www.criptonoticias.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "VE",
+   "categorias": [
+    "stablecoins"
+   ],
+   "publicado_utc": "2026-10-07T11:56:15Z",
+   "relacionadas": [],
+   "pais_nombre": "Venezuela"
+  },
+  {
+   "id": "a3f8b0432d31",
+   "titulo": "El déficit con Brasil se redujo 91% anual en septiembre ante derrumbe de las importaciones: qué factores influyeron",
+   "url": "https://www.ambito.com/economia/el-deficit-brasil-se-redujo-91-anual-septiembre-derrumbe-las-importaciones-que-factores-influyeron-n6330894",
+   "idioma": "es",
+   "fuente_id": "ambito",
+   "fuente": "Ámbito",
+   "fuente_web": "https://www.ambito.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "BR",
+   "categorias": [
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-07T03:00:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Brasil"
+  },
+  {
+   "id": "2db720401a49",
+   "titulo": "Créditos hipotecarios UVA: el cambio clave que permite a más familias acceder a un préstamo",
+   "url": "https://www.ambito.com/economia/creditos-hipotecarios-uva-el-cambio-clave-que-permite-mas-familias-acceder-un-prestamo-n6330655",
+   "idioma": "es",
+   "fuente_id": "ambito",
+   "fuente": "Ámbito",
+   "fuente_web": "https://www.ambito.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "AR",
+   "categorias": [
+    "finanzas"
+   ],
+   "publicado_utc": "2026-10-07T01:00:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Argentina"
+  },
+  {
+   "id": "267dfc73a271",
+   "titulo": "REM de septiembre: para el mercado la economía ya entró en recesión y ahora prevén que el PBI crecerá solo 1,5% en 2026",
+   "url": "https://www.ambito.com/economia/rem-septiembre-el-mercado-la-ya-entro-recesion-y-ahora-preve-que-el-pbi-crecera-solo-15-2026-n6330834",
+   "idioma": "es",
+   "fuente_id": "ambito",
+   "fuente": "Ámbito",
+   "fuente_web": "https://www.ambito.com",
+   "tipo": "medio",
+   "region": "LATAM",
+   "pais": "AR",
+   "categorias": [
+    "macroeconomia"
+   ],
+   "publicado_utc": "2026-10-06T22:30:00Z",
+   "relacionadas": [],
+   "pais_nombre": "Argentina"
+  }
+ ]
+}

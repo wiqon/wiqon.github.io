@@ -1,0 +1,95 @@
+{
+ "actualizado_utc": "2026-10-07T16:47:23Z",
+ "fuentes": [
+  {
+   "id": "bcp",
+   "pais": "PY",
+   "institucion": "Banco Central del Paraguay",
+   "serie": "Cotización referencial diaria",
+   "url": "https://www.bcp.gov.py/webapps/web/cotizacion/monedas",
+   "fecha": "2026-10-07",
+   "valores": [
+    {
+     "moneda": "USD",
+     "nombre": "Dólar estadounidense",
+     "valor": 5751.99,
+     "unidad": "₲ por 1 USD"
+    },
+    {
+     "moneda": "BRL",
+     "nombre": "Real brasileño",
+     "valor": 1151.43,
+     "unidad": "₲ por 1 BRL"
+    },
+    {
+     "moneda": "ARS",
+     "nombre": "Peso argentino",
+     "valor": 3.78,
+     "unidad": "₲ por 1 ARS"
+    },
+    {
+     "moneda": "EUR",
+     "nombre": "Euro",
+     "valor": 6439.35,
+     "unidad": "₲ por 1 EUR"
+    }
+   ],
+   "ok": true,
+   "consultado_utc": "2026-10-07T16:47:23Z"
+  },
+  {
+   "id": "bcb",
+   "pais": "BR",
+   "institucion": "Banco Central do Brasil",
+   "serie": "PTAX (fechamento)",
+   "url": "https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes",
+   "fecha": "2026-10-07",
+   "valores": [
+    {
+     "moneda": "USD",
+     "nombre": "Dólar (venta)",
+     "valor": 4.9935,
+     "unidad": "R$ por 1 USD"
+    }
+   ],
+   "ok": true,
+   "consultado_utc": "2026-10-07T16:47:23Z"
+  },
+  {
+   "id": "bcra",
+   "pais": "AR",
+   "institucion": "Banco Central de la República Argentina",
+   "serie": "Tipo de cambio de referencia",
+   "url": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Tipos_de_cambios.asp",
+   "fecha": "2026-10-06",
+   "valores": [
+    {
+     "moneda": "USD",
+     "nombre": "Dólar",
+     "valor": 1520.0,
+     "unidad": "AR$ por 1 USD"
+    }
+   ],
+   "ok": true,
+   "consultado_utc": "2026-10-07T16:47:23Z"
+  },
+  {
+   "id": "trm",
+   "pais": "CO",
+   "institucion": "Superintendencia Financiera de Colombia",
+   "serie": "TRM (datos.gov.co)",
+   "url": "https://www.datos.gov.co/Econom-a-y-Finanzas/Tasa-de-Cambio-Representativa-del-Mercado-TRM/32sa-8pi3",
+   "fecha": "2026-10-07",
+   "valores": [
+    {
+     "moneda": "USD",
+     "nombre": "Dólar (TRM)",
+     "valor": 3216.01,
+     "unidad": "COP por 1 USD"
+    }
+   ],
+   "ok": true,
+   "consultado_utc": "2026-10-07T16:47:23Z"
+  }
+ ]
+}
