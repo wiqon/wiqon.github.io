@@ -39,24 +39,24 @@
     return `${T.hace} ${Math.round(m / 1440)} ${T.d}`;
   }
 
-  // ================= portada: velas de BTC + media 100 (solo velas cerradas) =================
+  // ================= portada: BTC en vivo (velas de 1 min) o diario con media 100 =================
   const lienzo = $("#lienzo");
-  let velas = null, sma = null, rango = 90;
-  function dibujar() {
-    if (!velas || !lienzo) return;
+  let diarias = null, smaDia = null, minutos = null, rango = "vivo", wsVivo = null;
+  function pintarVelas(v, m) {
+    if (!v || !lienzo) return;
     const dpr = window.devicePixelRatio || 1, W = lienzo.clientWidth, H = lienzo.clientHeight;
     lienzo.width = W * dpr; lienzo.height = H * dpr;
     const g = lienzo.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
-    const v = velas.slice(-rango), m = sma.slice(-rango);
-    const lo = Math.min(...v.map((x) => x.l), ...m.filter(Boolean)), hi = Math.max(...v.map((x) => x.h), ...m.filter(Boolean));
-    const pad = (hi - lo) * 0.06, min = lo - pad, max = hi + pad, ejeX = W - 46;
+    const vals = v.flatMap((x) => [x.l, x.h]).concat((m || []).filter(Boolean));
+    const lo = Math.min(...vals), hi = Math.max(...vals), pad = (hi - lo) * 0.08 || 1;
+    const min = lo - pad, max = hi + pad, ejeX = W - 50;
     const py = (p) => 6 + (1 - (p - min) / (max - min)) * (H - 14);
     const paso = ejeX / v.length, cuerpo = Math.max(1, paso * 0.62);
     g.font = "10px JetBrains Mono, monospace"; g.fillStyle = "#5f6e82"; g.strokeStyle = "rgba(26,42,64,.8)"; g.lineWidth = 1;
     for (let i = 0; i <= 4; i++) {
       const p = min + ((max - min) * i) / 4, y = py(p);
       g.beginPath(); g.moveTo(0, y); g.lineTo(ejeX, y); g.stroke();
-      g.fillText((p / 1000).toFixed(0) + "K", ejeX + 6, y + 3);
+      g.fillText(p >= 10000 ? (p / 1000).toFixed(1) + "K" : p.toFixed(0), ejeX + 6, y + 3);
     }
     v.forEach((c, i) => {
       const x = i * paso + paso / 2, col = c.c >= c.o ? "#2fc47f" : "#ef5f67";
@@ -65,29 +65,116 @@
       const y1 = py(Math.max(c.o, c.c)), y2 = py(Math.min(c.o, c.c));
       g.fillRect(x - cuerpo / 2, y1, cuerpo, Math.max(1, y2 - y1));
     });
-    g.strokeStyle = "#e7b54a"; g.lineWidth = 1.8; g.beginPath(); let ini = false;
-    m.forEach((val, i) => { if (!val) return; const x = i * paso + paso / 2; ini ? g.lineTo(x, py(val)) : g.moveTo(x, py(val)); ini = true; });
-    g.stroke();
+    if (m) {
+      g.strokeStyle = "#e7b54a"; g.lineWidth = 1.8; g.beginPath(); let ini = false;
+      m.forEach((val, i) => { if (!val) return; const x = i * paso + paso / 2; ini ? g.lineTo(x, py(val)) : g.moveTo(x, py(val)); ini = true; });
+      g.stroke();
+    }
+    // último precio: línea punteada y etiqueta
+    const u = v[v.length - 1], yu = py(u.c);
+    g.setLineDash([3, 3]); g.strokeStyle = "rgba(234,240,247,.45)"; g.beginPath(); g.moveTo(0, yu); g.lineTo(ejeX, yu); g.stroke(); g.setLineDash([]);
+    g.fillStyle = u.c >= u.o ? "#2fc47f" : "#ef5f67"; g.fillRect(ejeX + 1, yu - 8, 49, 16);
+    g.fillStyle = "#04121c"; g.fillText(u.c >= 10000 ? (u.c / 1000).toFixed(2) + "K" : u.c.toFixed(0), ejeX + 4, yu + 3);
+  }
+  function dibujar() {
+    const vivo = rango === "vivo";
+    const vb = $("#vivo-b"); if (vb) vb.hidden = !vivo;
+    const lv = $("#ley-velas"); if (lv) lv.textContent = vivo ? lv.dataset.vivo : lv.dataset.dia;
+    const lm = $("#ley-media"); if (lm) lm.hidden = vivo;
+    if (vivo) pintarVelas(minutos, null);
+    else if (diarias) pintarVelas(diarias.slice(-rango), smaDia.slice(-rango));
+  }
+  const vela = (x) => ({ t: +x[0], o: +x[1], h: +x[2], l: +x[3], c: +x[4] });
+  function conectarVivo() {
+    if (wsVivo || !("WebSocket" in window)) return;
+    try {
+      wsVivo = new WebSocket("wss://data-stream.binance.vision/ws/btcusdt@kline_1m");
+      let pendiente = false;
+      wsVivo.onmessage = (ev) => {
+        const k = JSON.parse(ev.data).k, n = { t: k.t, o: +k.o, h: +k.h, l: +k.l, c: +k.c };
+        if (!minutos) return;
+        const ult = minutos[minutos.length - 1];
+        if (ult.t === n.t) minutos[minutos.length - 1] = n; else { minutos.push(n); if (minutos.length > 120) minutos.shift(); }
+        const p = $("#precio-num"); if (p) p.textContent = `US$ ${num(n.c, 0)}`;
+        if (!pendiente && rango === "vivo") { pendiente = true; requestAnimationFrame(() => { dibujar(); pendiente = false; }); }
+      };
+      wsVivo.onclose = () => { wsVivo = null; setTimeout(conectarVivo, 5000); };
+    } catch (e) { wsVivo = null; }
   }
   if (lienzo) {
+    fetch(`${API}/klines?symbol=BTCUSDT&interval=1m&limit=120`).then((r) => r.json()).then((k) => { minutos = k.map(vela); dibujar(); conectarVivo(); })
+      .catch(() => { lienzo.replaceWith(Object.assign(document.createElement("p"), { className: "meta", textContent: T.sinDatos })); });
     fetch(`${API}/klines?symbol=BTCUSDT&interval=1d&limit=500`).then((r) => r.json()).then((k) => {
-      const cerradas = k.slice(0, -1); // la última vela sigue abierta: la regla solo usa velas cerradas
-      velas = cerradas.map((x) => ({ o: +x[1], h: +x[2], l: +x[3], c: +x[4] }));
-      const cs = velas.map((x) => x.c);
-      sma = cs.map((_, i) => (i < 99 ? null : cs.slice(i - 99, i + 1).reduce((a, b) => a + b, 0) / 100));
+      diarias = k.slice(0, -1).map(vela); // la última vela diaria sigue abierta: la regla solo usa velas cerradas
+      const cs = diarias.map((x) => x.c);
+      smaDia = cs.map((_, i) => (i < 99 ? null : cs.slice(i - 99, i + 1).reduce((a, b) => a + b, 0) / 100));
       dibujar();
-    }).catch(() => { lienzo.replaceWith(Object.assign(document.createElement("p"), { className: "meta", textContent: T.sinDatos })); });
+    }).catch(() => {});
     $$(".rangos button").forEach((b) => b.addEventListener("click", () => {
-      rango = +b.dataset.r; $$(".rangos button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); dibujar();
+      rango = b.dataset.r === "vivo" ? "vivo" : +b.dataset.r;
+      $$(".rangos button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); dibujar();
     }));
     let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(dibujar, 200); });
   }
   fetch(`${API}/ticker/24hr?symbol=BTCUSDT`).then((r) => r.json()).then((t) => {
     const c = +t.priceChangePercent, txt = `US$ ${num(+t.lastPrice, 0)}`;
-    const var24 = `<small class="${c >= 0 ? "sube" : "baja"}">${c >= 0 ? "▲ +" : "▼ "}${num(c, 2)}% (24 h)</small>`;
-    const p = $("#precio-btc"); if (p) p.innerHTML = txt + var24;
+    const p = $("#precio-btc");
+    if (p) p.innerHTML = `<span id="precio-num">${txt}</span><small class="${c >= 0 ? "sube" : "baja"}">${c >= 0 ? "▲ +" : "▼ "}${num(c, 2)}% (24 h)</small>`;
     const s = $("#snap-btc"); if (s) { s.textContent = txt; $("#snap-btc-f").innerHTML = `Binance · ${hora(new Date().toISOString())} · <span class="${c >= 0 ? "sube" : "baja"}">${c >= 0 ? "+" : ""}${num(c, 2)}% 24 h</span>`; }
   }).catch(() => { const s = $("#snap-btc"); if (s) s.textContent = "—"; });
+
+  // ================= mercado en vivo: tabla de precios en tiempo real =================
+  const tbVivo = $("#mercados-vivo");
+  if (tbVivo) {
+    const ACT = [["BTC", "Bitcoin", "#f7931a"], ["ETH", "Ethereum", "#8c9eff"], ["SOL", "Solana", "#14f195"], ["BNB", "BNB", "#f3ba2f"], ["XRP", "XRP", "#c2ccd8"], ["DOGE", "Dogecoin", "#c2a633"]];
+    const dec = (p) => (p >= 1000 ? 2 : p >= 1 ? 2 : 4);
+    const spark = (cs) => {
+      const lo = Math.min(...cs), hi = Math.max(...cs), W = 90, H = 28;
+      const pts = cs.map((c, i) => `${((i / (cs.length - 1)) * W).toFixed(1)},${(H - 2 - ((c - lo) / (hi - lo || 1)) * (H - 4)).toFixed(1)}`).join(" ");
+      const col = cs[cs.length - 1] >= cs[0] ? "#2fc47f" : "#ef5f67";
+      return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.6"/></svg>`;
+    };
+    const simbolos = encodeURIComponent(JSON.stringify(ACT.map((a) => a[0] + "USDT")));
+    fetch(`${API}/ticker/24hr?symbols=${simbolos}`).then((r) => r.json()).then((lista) => {
+      const datos = Object.fromEntries(lista.map((t) => [t.symbol.replace("USDT", ""), t]));
+      tbVivo.innerHTML = ACT.map(([s, n, col]) => {
+        const t = datos[s]; if (!t) return "";
+        const c = +t.priceChangePercent;
+        return `<tr><td><span class="sim"><i style="background:${col}">${s.slice(0, 1)}</i><span>${s}<small>${n}</small></span></span></td>
+          <td class="p" id="mv-${s}">${num(+t.lastPrice, dec(+t.lastPrice))}</td>
+          <td class="ch ${c >= 0 ? "sube" : "baja"}" id="mvc-${s}">${c >= 0 ? "+" : ""}${num(c, 2)}%</td><td class="om" id="mvs-${s}"></td></tr>`;
+      }).join("");
+      ACT.forEach(([s]) => fetch(`${API}/klines?symbol=${s}USDT&interval=1h&limit=24`).then((r) => r.json())
+        .then((k) => { const el = $("#mvs-" + s); if (el) el.innerHTML = spark(k.map((x) => +x[4])); }).catch(() => {}));
+      try {
+        const ws = new WebSocket(`wss://data-stream.binance.vision/stream?streams=${ACT.map((a) => a[0].toLowerCase() + "usdt@miniTicker").join("/")}`);
+        ws.onmessage = (ev) => {
+          const d = JSON.parse(ev.data).data, s = d.s.replace("USDT", ""), p = +d.c, c = ((p - +d.o) / +d.o) * 100;
+          const el = $("#mv-" + s), ec = $("#mvc-" + s); if (!el) return;
+          const ant = parseFloat(el.dataset.v || p);
+          el.dataset.v = p; el.textContent = num(p, dec(p));
+          if (p !== ant) { el.classList.remove("sube-f", "baja-f"); void el.offsetWidth; el.classList.add(p > ant ? "sube-f" : "baja-f"); setTimeout(() => el.classList.remove("sube-f", "baja-f"), 700); }
+          ec.textContent = `${c >= 0 ? "+" : ""}${num(c, 2)}%`; ec.className = "ch " + (c >= 0 ? "sube" : "baja");
+        };
+      } catch (e) { /* sin WebSocket: queda el último dato */ }
+    }).catch(() => { tbVivo.innerHTML = `<tr><td colspan="4" class="meta">${T.sinDatos}</td></tr>`; });
+  }
+
+  // ================= gráfico interactivo de TradingView (se carga al llegar a la sección) =================
+  const tv = $("#tv-cuerpo");
+  if (tv) {
+    const cargarTV = () => {
+      tv.innerHTML = '<div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div></div>';
+      const sc = document.createElement("script");
+      sc.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"; sc.async = true;
+      sc.text = JSON.stringify({ autosize: true, symbol: "BINANCE:BTCUSDT", interval: "60", timezone: TZ, theme: "dark", style: "1",
+        locale: tv.dataset.locale || "es", backgroundColor: "#0c1624", gridColor: "rgba(26,42,64,.6)", allow_symbol_change: true,
+        hide_side_toolbar: false, calendar: false, support_host: "https://www.tradingview.com" });
+      tv.firstChild.appendChild(sc);
+    };
+    const ot = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { ot.disconnect(); cargarTV(); } }, { rootMargin: "300px" });
+    ot.observe(tv);
+  }
 
   // ================= estado de la regla (estado.json) =================
   json("estado.json").then((e) => {

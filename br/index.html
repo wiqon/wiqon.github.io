@@ -27,7 +27,7 @@
 
 <header class="nav">
   <div class="c">
-    <a class="marca" href="./"><img src="../assets/logo.png" alt="">WIQON</a>
+    <a class="marca" href="./"><span class="corona s"><img src="../assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
     <nav class="nav-l" aria-label="Seções">
       <a href="#productos">Produtos</a><a href="#laboratorio">Laboratório</a><a href="#mercado">Dados</a>
       <a href="#servicios">Serviços</a><a href="#radar">Notícias</a>
@@ -43,26 +43,32 @@
 <section class="hero" aria-labelledby="h1">
   <div class="c">
     <div class="ap">
-      <span class="kicker">Brasil · Paraguai · Mercados</span>
+      <div class="sello"><span class="corona l"><img src="../assets/logo.png" alt="WIQON" width="84" height="84"></span><div class="nombre">WIQON<small>Inteligência de Fluxo de Mercado</small></div></div>
+      <span class="kicker" style="margin-top:22px">Brasil · Paraguai · Mercados</span>
       <h1 id="h1">Testamos estratégias com dados reais.<br><span>Construímos ferramentas com o que sobrevive.</span></h1>
       <p class="sub">Pesquisamos mercados, medimos custos e validamos ideias antes de transformá-las em software, dados ou serviços. Se uma ideia não sobrevive, também publicamos.</p>
       <div class="acc">
         <a class="btn p" href="#productos">Explorar a WIQON <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn" href="#laboratorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg> Ver laboratório</a>
       </div>
+      <nav class="atajos" aria-label="Produtos">
+        <a class="atajo" href="#productos"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg><div><b>Laboratório de estratégias</b><span>Resultados abertos</span></div></a>
+        <a class="atajo" href="#shield"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.8 12.2 2.2 2.2 4.4-4.6"/></svg><div><b>WIQON Shield</b><span>EA para MetaTrader 5</span></div></a>
+        <a class="atajo" href="#servicios"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg><div><b>Dados e automação</b><span>Robôs, auditorias, painéis</span></div></a>
+      </nav>
     </div>
     <div class="panel ap" aria-label="Bitcoin e o estado da nossa regra de tendência">
       <div class="grafico">
         <div class="g-cab">
-          <div><div class="par"><span class="btc" aria-hidden="true">₿</span>BTC/USDT · 1D</div><div class="precio" id="precio-btc">—</div></div>
+          <div><div class="par"><span class="btc" aria-hidden="true">₿</span>BTC/USDT</div><div class="precio" id="precio-btc">—</div><span class="vivo-b" id="vivo-b">AO VIVO</span></div>
           <span class="est est-regla">…</span>
         </div>
         <canvas id="lienzo" role="img" aria-label="Candles diários do Bitcoin com a média de 100 dias"></canvas>
         <div class="rangos" role="group" aria-label="Período do gráfico">
-          <button data-r="30" aria-pressed="false">1M</button><button data-r="90" aria-pressed="true">3M</button>
+          <button data-r="vivo" aria-pressed="true">Ao vivo</button><button data-r="30" aria-pressed="false">1M</button><button data-r="90" aria-pressed="false">3M</button>
           <button data-r="180" aria-pressed="false">6M</button><button data-r="365" aria-pressed="false">1A</button>
         </div>
-        <div class="leyenda"><span><i style="background:#2fc47f"></i>Candles diários fechados</span><span><i style="background:#e7b54a"></i>Média de 100 dias</span><span>Binance</span></div>
+        <div class="leyenda"><span id="ley-velas" data-vivo="Candles de 1 minuto, ao vivo" data-dia="Candles diários fechados">Candles de 1 minuto, ao vivo</span><span id="ley-media" hidden><i style="background:#e7b54a"></i>Média de 100 dias</span><span>Binance</span></div>
       </div>
       <div class="estado">
         <div class="caja">
@@ -87,7 +93,7 @@
     <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2.5"/></svg><div><b>Custos incluídos</b><span>Taxas, slippage e swaps</span></div></div>
     <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15v-3M12 15V9M16 15v-6"/><path d="M14 5h5v5" /></svg><div><b>Fora da amostra</b><span>Validamos em períodos não vistos</span></div></div>
     <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg><div><b>Código aberto</b><span>Qualquer pessoa pode refazer</span></div></div>
-    <div class="region-foto"><img src="../assets/fotos/puente2.jpg" alt="Ponte da Amizade entre Foz do Iguaçu e Ciudad del Este" width="1600" height="1200" loading="lazy"><span>Foz do Iguaçu · Ciudad del Este · Asunción</span></div>
+    <div class="region-foto"><img src="../assets/frontera.svg" alt="Ponte da Amizade entre Foz do Iguaçu e Ciudad del Este" width="1600" height="560" loading="lazy"><span>Foz do Iguaçu · Ciudad del Este · Asunción</span></div>
   </div>
 </div>
 
@@ -146,9 +152,23 @@
   </div>
 </section>
 
-<section class="s" id="mercado" aria-labelledby="snap-t">
+<section class="s" id="mercado" aria-labelledby="mv-t">
   <div class="c">
-    <div class="snap">
+    <div class="cab"><div><span class="vol">Mercado ao vivo</span><h2 class="t" id="mv-t">Assim o mercado se move <span>agora</span></h2></div><p class="der">Preços em tempo real da Binance e um gráfico interativo para você testar: troque o ativo, o período ou adicione indicadores.</p></div>
+    <div class="envivo">
+      <div class="mercados">
+        <table aria-describedby="mv-t">
+          <thead><tr><th>Ativo</th><th class="r">Preço</th><th class="r">24 h</th><th class="r om">Últimas 24 h</th></tr></thead>
+          <tbody id="mercados-vivo"><tr><td colspan="4" class="meta">Carregando…</td></tr></tbody>
+        </table>
+        <p class="meta" style="padding:8px 12px"><span class="vivo-b">AO VIVO</span> Preços da Binance em tempo real. Não são recomendações.</p>
+      </div>
+      <div class="tv" id="tv">
+        <div class="tv-cab"><b>Teste: gráfico interativo</b><span class="meta">Gráfico da <a href="https://www.tradingview.com/?aff_id=1171961&aff_sub=web&source=wiqonlab" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> (link de afiliado)</span></div>
+        <div class="tv-cuerpo" id="tv-cuerpo" data-locale="br"><div class="tv-espera">Carregando…</div></div>
+      </div>
+    </div>
+    <div class="snap" style="margin-top:34px">
       <div class="intro"><span class="vol">Mercado em contexto</span><h2 id="snap-t">A região também importa</h2><p>Dados do Brasil e do Paraguai de fontes oficiais, com a data. Sem sinais, sem promessas.</p></div>
       <div class="dato-m"><span class="q">Bitcoin · BTC/USDT</span><span class="v" id="snap-btc">—</span><span class="f" id="snap-btc-f">Carregando…</span></div>
       <div class="dato-m"><span class="q"><i>PY</i> USD/PYG</span><span class="v" id="snap-pyg">—</span><span class="f" id="snap-pyg-f">Carregando…</span></div>
@@ -205,7 +225,6 @@
       <span class="vol">Quem somos</span>
       <blockquote id="nos-t">Publicamos o que encontramos, <span>inclusive quando o resultado é ruim.</span></blockquote>
       <p>A WIQON nasceu na fronteira entre o Brasil e o Paraguai, onde o real, o guaraní e o dólar convivem todos os dias. A gente testa, mede e, se não sobrevive, publica do mesmo jeito.</p><p>Não vendemos sinais nem administramos dinheiro de terceiros.</p>
-      <div class="fundador"><img src="../assets/fotos/fundador.jpg" alt="Avelino González" width="52" height="52" loading="lazy"><div><b>Avelino González</b><span>Fundador e pesquisador</span></div></div>
       <div class="redes"><a href="https://www.youtube.com/@wiqonbr" target="_blank" rel="noopener">YouTube</a> <a href="https://www.instagram.com/wiqonbr/" target="_blank" rel="noopener">Instagram</a> <a href="https://www.tiktok.com/@wiqonbr" target="_blank" rel="noopener">TikTok</a> <a href="https://x.com/wiqonbr" target="_blank" rel="noopener">X</a> <a href="https://t.me/wiqonlab" target="_blank" rel="noopener">Telegram</a> <a href="https://whatsapp.com/channel/0029Vb8Tk5XCcW4zVk21xx0D" target="_blank" rel="noopener">WhatsApp</a> <a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a> <a href="https://www.linkedin.com/company/wiqonlab" target="_blank" rel="noopener">LinkedIn</a></div>
       <div class="faq"><details><summary>Vocês vendem sinais ou administram dinheiro de terceiros?</summary><p>Não. Publicamos pesquisa e oferecemos software e serviços técnicos.</p></details><details><summary>O WIQON Shield garante lucro?</summary><p>Não. Ele busca limitar as grandes quedas; em mercados que só sobem, rende menos que segurar.</p></details><details><summary>De onde vêm os dados?</summary><p>Preços públicos da Binance, cotações do BCB, BCP, BCRA e TRM, e RSS públicos de veículos e instituições.</p></details></div>
     </div>
@@ -216,8 +235,7 @@
         <ul class="vid-l" id="vid-lista"></ul>
       </div>
       <p style="margin-top:14px"><a class="enl" href="https://www.youtube.com/@wiqonbr?sub_confirmation=1" target="_blank" rel="noopener">Inscrever-me no canal <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
-      <figure style="margin-top:26px"><img src="../assets/fotos/cde.jpg" alt="Centro de Ciudad del Este" width="1600" height="948" loading="lazy" style="border-radius:12px;aspect-ratio:16/9;object-fit:cover">
-        <figcaption class="nota">Ciudad del Este, Alto Paraná (Paraguai). Foto: <a href="https://commons.wikimedia.org/wiki/File:Ciudad_del_Este_downtown_skyline_143945.jpg" target="_blank" rel="noopener">Cmasi</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Ponte da Amizade: <a href="https://commons.wikimedia.org/wiki/File:Ciudad_del_Este_puente_de_la_Amistad.jpg" target="_blank" rel="noopener">Ekem</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
+      <img class="ilus" src="../assets/frontera.svg" alt="Ponte da Amizade entre Foz do Iguaçu e Ciudad del Este" width="1600" height="560" loading="lazy" style="margin-top:26px">
     </div>
   </div>
 </section>
@@ -226,7 +244,7 @@
 <footer>
   <div class="c">
     <div class="pie">
-      <div><a class="marca" href="./"><img src="../assets/logo.png" alt="">WIQON</a><p>Laboratório de trading e dados de mercado, direto da fronteira Brasil–Paraguai.</p>
+      <div><a class="marca" href="./"><span class="corona m"><img src="../assets/logo.png" alt="" width="50" height="50"></span><span>WIQON</span></a><p>Laboratório de trading e dados de mercado, direto da fronteira Brasil–Paraguai.</p>
         <p><a href="../" lang="es" style="display:inline">Español</a> · <a href="../br/" lang="pt-BR" style="display:inline">Português (Brasil)</a></p></div>
       <div><h5>Produtos</h5><a href="#laboratorio">Laboratório de estratégias</a><a href="https://wa.me/595987685651?text=Ol%C3%A1%20WIQON%2C%20quero%20entrar%20na%20lista%20do%20WIQON%20Shield.">WIQON Shield</a><a href="#servicios">Dados e automação</a><a href="#radar">News Radar</a></div>
       <div><h5>Fontes de dados</h5><a href="https://www.bcp.gov.py/webapps/web/cotizacion/monedas" target="_blank" rel="noopener">Banco Central del Paraguay</a><a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noopener">Banco Central do Brasil</a><a href="https://www.bcra.gob.ar/PublicacionesEstadisticas/Tipos_de_cambios.asp" target="_blank" rel="noopener">BCRA · TRM Colombia</a><a href="https://www.dnit.gov.py/" target="_blank" rel="noopener">DNIT · CVM</a><a href="https://data-api.binance.vision" target="_blank" rel="noopener">Binance (datos públicos)</a></div>
@@ -236,8 +254,9 @@
     <div class="legal">
       <p><b>Atualização.</b> Notícias: a cada 30 minutos. Câmbio oficial: a cada hora (cada instituição publica no seu horário). Estratégia: todo dia às 21h15 (Brasília). Preço do BTC: ao abrir a página.</p>
       <p><b>Metodologia.</b> Resultados com custos e código no GitHub. O radar usa só RSS públicos: título, fonte, data e link, nunca o texto das matérias.</p>
-      <p><b>Privacidade.</b> Sem cookies nem ferramentas de análise. Os vídeos do YouTube só carregam ao tocar em reproduzir. As fontes vêm do Google Fonts.</p>
+      <p><b>Privacidade.</b> Sem cookies nem ferramentas de análise. Os vídeos do YouTube só carregam ao tocar em reproduzir. O gráfico interativo é fornecido pela TradingView e carrega ao chegar nessa seção. As fontes vêm do Google Fonts.</p>
       <p><b>Aviso de risco.</b> Conteúdo informativo e educacional; não é recomendação de investimento. Operar envolve risco de perda e resultados passados não garantem os futuros. Os links marcados como afiliado ou indicação nos dão uma comissão sem custo extra para você.</p>
+      <div class="pie-fund"><img src="../assets/fotos/fundador.jpg" alt="" width="30" height="30" loading="lazy"><span><b style="color:var(--suave)">Ing. Avelino González</b> · Fundador e pesquisador</span></div>
       <p>© <span id="anio">2026</span> WIQON · Asunción · Ciudad del Este · Foz do Iguaçu</p>
     </div>
   </div>

@@ -77,7 +77,7 @@ PLANTILLA = """<!doctype html>
 
 <header class="nav">
   <div class="c">
-    <a class="marca" href="{{inicio}}"><img src="{{r}}assets/logo.png" alt="">WIQON</a>
+    <a class="marca" href="{{inicio}}"><span class="corona s"><img src="{{r}}assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
     <nav class="nav-l" aria-label="{{nav_aria}}">
       <a href="#productos">{{n_prod}}</a><a href="#laboratorio">{{n_lab}}</a><a href="#mercado">{{n_datos}}</a>
       <a href="#servicios">{{n_serv}}</a><a href="#radar">{{n_noticias}}</a>
@@ -93,26 +93,32 @@ PLANTILLA = """<!doctype html>
 <section class="hero" aria-labelledby="h1">
   <div class="c">
     <div class="ap">
-      <span class="kicker">{{kicker}}</span>
+      <div class="sello"><span class="corona l"><img src="{{r}}assets/logo.png" alt="WIQON" width="84" height="84"></span><div class="nombre">WIQON<small>{{sello_sub}}</small></div></div>
+      <span class="kicker" style="margin-top:22px">{{kicker}}</span>
       <h1 id="h1">{{h1a}}<br><span>{{h1b}}</span></h1>
       <p class="sub">{{sub}}</p>
       <div class="acc">
         <a class="btn p" href="#productos">{{cta1}} {{ic_flecha}}</a>
         <a class="btn" href="#laboratorio">{{ic_matraz}} {{cta2}}</a>
       </div>
+      <nav class="atajos" aria-label="{{n_prod}}">
+        <a class="atajo" href="#productos">{{ic_matraz}}<div><b>{{a_t}}</b><span>{{at_a}}</span></div></a>
+        <a class="atajo" href="#shield">{{ic_escudo}}<div><b>WIQON Shield</b><span>{{at_b}}</span></div></a>
+        <a class="atajo" href="#servicios">{{ic_datos}}<div><b>{{c_t}}</b><span>{{at_c}}</span></div></a>
+      </nav>
     </div>
     <div class="panel ap" aria-label="{{panel_aria}}">
       <div class="grafico">
         <div class="g-cab">
-          <div><div class="par"><span class="btc" aria-hidden="true">₿</span>BTC/USDT · 1D</div><div class="precio" id="precio-btc">—</div></div>
+          <div><div class="par"><span class="btc" aria-hidden="true">₿</span>BTC/USDT</div><div class="precio" id="precio-btc">—</div><span class="vivo-b" id="vivo-b">{{en_vivo}}</span></div>
           <span class="est est-regla">…</span>
         </div>
         <canvas id="lienzo" role="img" aria-label="{{graf_aria}}"></canvas>
         <div class="rangos" role="group" aria-label="{{rango_aria}}">
-          <button data-r="30" aria-pressed="false">1M</button><button data-r="90" aria-pressed="true">3M</button>
+          <button data-r="vivo" aria-pressed="true">{{en_vivo_btn}}</button><button data-r="30" aria-pressed="false">1M</button><button data-r="90" aria-pressed="false">3M</button>
           <button data-r="180" aria-pressed="false">6M</button><button data-r="365" aria-pressed="false">1A</button>
         </div>
-        <div class="leyenda"><span><i style="background:#2fc47f"></i>{{ley_velas}}</span><span><i style="background:#e7b54a"></i>{{ley_media}}</span><span>Binance</span></div>
+        <div class="leyenda"><span id="ley-velas" data-vivo="{{ley_vivo}}" data-dia="{{ley_velas}}">{{ley_vivo}}</span><span id="ley-media" hidden><i style="background:#e7b54a"></i>{{ley_media}}</span><span>Binance</span></div>
       </div>
       <div class="estado">
         <div class="caja">
@@ -137,7 +143,7 @@ PLANTILLA = """<!doctype html>
     <div class="pr">{{ic_costos}}<div><b>{{p2}}</b><span>{{p2s}}</span></div></div>
     <div class="pr">{{ic_muestra}}<div><b>{{p3}}</b><span>{{p3s}}</span></div></div>
     <div class="pr">{{ic_codigo}}<div><b>{{p4}}</b><span>{{p4s}}</span></div></div>
-    <div class="region-foto"><img src="{{r}}assets/fotos/puente2.jpg" alt="{{foto_alt}}" width="1600" height="1200" loading="lazy"><span>{{ciudades}}</span></div>
+    <div class="region-foto"><img src="{{r}}assets/frontera.svg" alt="{{foto_alt}}" width="1600" height="560" loading="lazy"><span>{{ciudades}}</span></div>
   </div>
 </div>
 
@@ -196,9 +202,23 @@ PLANTILLA = """<!doctype html>
   </div>
 </section>
 
-<section class="s" id="mercado" aria-labelledby="snap-t">
+<section class="s" id="mercado" aria-labelledby="mv-t">
   <div class="c">
-    <div class="snap">
+    <div class="cab"><div><span class="vol">{{mv_vol}}</span><h2 class="t" id="mv-t">{{mv_h2}}</h2></div><p class="der">{{mv_p}}</p></div>
+    <div class="envivo">
+      <div class="mercados">
+        <table aria-describedby="mv-t">
+          <thead><tr><th>{{mv_activo}}</th><th class="r">{{mv_precio}}</th><th class="r">24 h</th><th class="r om">{{mv_tend}}</th></tr></thead>
+          <tbody id="mercados-vivo"><tr><td colspan="4" class="meta">{{cargando}}</td></tr></tbody>
+        </table>
+        <p class="meta" style="padding:8px 12px"><span class="vivo-b">{{en_vivo}}</span> {{mv_fuente}}</p>
+      </div>
+      <div class="tv" id="tv">
+        <div class="tv-cab"><b>{{tv_t}}</b><span class="meta">{{tv_nota}} <a href="{{tv_link}}" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> ({{tv_af}})</span></div>
+        <div class="tv-cuerpo" id="tv-cuerpo" data-locale="{{tv_locale}}"><div class="tv-espera">{{cargando}}</div></div>
+      </div>
+    </div>
+    <div class="snap" style="margin-top:34px">
       <div class="intro"><span class="vol">{{snap_vol}}</span><h2 id="snap-t">{{snap_h2}}</h2><p>{{snap_p}}</p></div>
       <div class="dato-m"><span class="q">Bitcoin · BTC/USDT</span><span class="v" id="snap-btc">—</span><span class="f" id="snap-btc-f">{{cargando}}</span></div>
       <div class="dato-m"><span class="q"><i>PY</i> USD/PYG</span><span class="v" id="snap-pyg">—</span><span class="f" id="snap-pyg-f">{{cargando}}</span></div>
@@ -255,7 +275,6 @@ PLANTILLA = """<!doctype html>
       <span class="vol">{{nos_vol}}</span>
       <blockquote id="nos-t">{{cita}}</blockquote>
       {{nos_texto}}
-      <div class="fundador"><img src="{{r}}assets/fotos/fundador.jpg" alt="Avelino González" width="52" height="52" loading="lazy"><div><b>Avelino González</b><span>{{fundador_rol}}</span></div></div>
       <div class="redes">{{redes}}</div>
       <div class="faq">{{faq}}</div>
     </div>
@@ -266,8 +285,7 @@ PLANTILLA = """<!doctype html>
         <ul class="vid-l" id="vid-lista"></ul>
       </div>
       <p style="margin-top:14px"><a class="enl" href="https://www.youtube.com/@{{canal}}?sub_confirmation=1" target="_blank" rel="noopener">{{vid_sub}} {{ic_flecha}}</a></p>
-      <figure style="margin-top:26px"><img src="{{r}}assets/fotos/cde.jpg" alt="{{foto2_alt}}" width="1600" height="948" loading="lazy" style="border-radius:12px;aspect-ratio:16/9;object-fit:cover">
-        <figcaption class="nota">{{foto2_cap}} {{foto2_cred}} · {{foto1_cred}}</figcaption></figure>
+      <img class="ilus" src="{{r}}assets/frontera.svg" alt="{{foto_alt}}" width="1600" height="560" loading="lazy" style="margin-top:26px">
     </div>
   </div>
 </section>
@@ -276,7 +294,7 @@ PLANTILLA = """<!doctype html>
 <footer>
   <div class="c">
     <div class="pie">
-      <div><a class="marca" href="{{inicio}}"><img src="{{r}}assets/logo.png" alt="">WIQON</a><p>{{pie_desc}}</p>
+      <div><a class="marca" href="{{inicio}}"><span class="corona m"><img src="{{r}}assets/logo.png" alt="" width="50" height="50"></span><span>WIQON</span></a><p>{{pie_desc}}</p>
         <p><a href="{{r}}" lang="es" style="display:inline">Español</a> · <a href="{{r}}br/" lang="pt-BR" style="display:inline">Português (Brasil)</a></p></div>
       <div><h5>{{n_prod}}</h5><a href="#laboratorio">{{a_t}}</a><a href="{{b_href}}">WIQON Shield</a><a href="#servicios">{{c_t}}</a><a href="#radar">News Radar</a></div>
       <div><h5>{{pie_fuentes}}</h5>{{pie_fuentes_links}}</div>
@@ -288,6 +306,7 @@ PLANTILLA = """<!doctype html>
       <p><b>{{pie_met_t}}</b> {{pie_met}}</p>
       <p><b>{{pie_priv_t}}</b> {{pie_priv}}</p>
       <p><b>{{pie_riesgo_t}}</b> {{pie_riesgo}}</p>
+      <div class="pie-fund"><img src="{{r}}assets/fotos/fundador.jpg" alt="" width="30" height="30" loading="lazy"><span><b style="color:var(--suave)">Ing. Avelino González</b> · {{fundador_rol}}</span></div>
       <p>© <span id="anio">2026</span> WIQON · Asunción · Ciudad del Este · Foz do Iguaçu</p>
     </div>
   </div>
@@ -351,6 +370,12 @@ def redes(lista):
 
 # ============================================ ESPAÑOL ============================================
 ES = dict(ICONOS,
+    sello_sub="Market Flow Intelligence", at_a="Resultados abiertos", at_b="EA para MetaTrader 5", at_c="Bots, auditorías, paneles",
+    en_vivo="EN VIVO", en_vivo_btn="En vivo", ley_vivo="Velas de 1 minuto, en vivo",
+    mv_vol="Mercado en vivo", mv_h2="Así se mueve el mercado <span>ahora</span>",
+    mv_p="Precios en tiempo real desde Binance y un gráfico interactivo para que lo pruebes: cambiá el activo, el período o agregá indicadores.",
+    mv_activo="Activo", mv_precio="Precio", mv_tend="Últimas 24 h", mv_fuente="Precios de Binance en tiempo real. No son recomendaciones.",
+    tv_t="Probalo: gráfico interactivo", tv_nota="Gráfico de", tv_af="enlace de afiliado", tv_link=TV, tv_locale="es",
     lang="es", r="", inicio="./", url="https://wiqonlab.com/", og_locale="es_LA", prioridad="PY", canal="wiqonlab",
     titulo="WIQON — Probamos estrategias con datos reales",
     descripcion="Laboratorio de trading de Paraguay y Brasil: probamos estrategias con costos reales, publicamos los resultados y construimos herramientas con lo que sobrevive, como WIQON Shield.",
@@ -453,12 +478,18 @@ ES = dict(ICONOS,
     pie_her_links=herr("afiliado", "referido"), pie_cont="Contacto", pie_fuentes_links=FUENTES_PIE, wa_hola=f"{WA}?text=Hola%20WIQON", lab=LAB,
     pie_act_t="Actualización.", pie_act="Noticias: cada 30 minutos. Tipo de cambio oficial: cada hora (cada institución publica en su horario). Estrategia: todos los días a las 21:15 (hora de Paraguay). Precio de BTC: al abrir la página.",
     pie_met_t="Metodología.", pie_met="Resultados con costos y código en GitHub. El radar usa solo RSS públicos: título, fuente, fecha y enlace, nunca el texto de los artículos.",
-    pie_priv_t="Privacidad.", pie_priv="Sin cookies ni analítica. Los videos de YouTube se cargan solo al tocar reproducir. Las tipografías vienen de Google Fonts.",
+    pie_priv_t="Privacidad.", pie_priv="Sin cookies ni analítica. Los videos de YouTube se cargan solo al tocar reproducir. El gráfico interactivo lo provee TradingView y se carga al llegar a esa sección. Las tipografías vienen de Google Fonts.",
     pie_riesgo_t="Aviso de riesgo.", pie_riesgo="Contenido informativo y educativo; no es asesoría financiera. Operar implica riesgo de pérdida y los resultados pasados no garantizan los futuros. Los enlaces marcados como afiliado o referido nos dan una comisión sin costo extra para vos.",
 )
 
 # ============================================ PORTUGUÊS ============================================
 BR = dict(ICONOS,
+    sello_sub="Inteligência de Fluxo de Mercado", at_a="Resultados abertos", at_b="EA para MetaTrader 5", at_c="Robôs, auditorias, painéis",
+    en_vivo="AO VIVO", en_vivo_btn="Ao vivo", ley_vivo="Candles de 1 minuto, ao vivo",
+    mv_vol="Mercado ao vivo", mv_h2="Assim o mercado se move <span>agora</span>",
+    mv_p="Preços em tempo real da Binance e um gráfico interativo para você testar: troque o ativo, o período ou adicione indicadores.",
+    mv_activo="Ativo", mv_precio="Preço", mv_tend="Últimas 24 h", mv_fuente="Preços da Binance em tempo real. Não são recomendações.",
+    tv_t="Teste: gráfico interativo", tv_nota="Gráfico da", tv_af="link de afiliado", tv_link=TV, tv_locale="br",
     lang="pt-BR", r="../", inicio="./", url="https://wiqonlab.com/br/", og_locale="pt_BR", prioridad="BR", canal="wiqonbr",
     titulo="WIQON Brasil — Testamos estratégias com dados reais",
     descripcion="Laboratório de trading da fronteira Brasil–Paraguai: testamos estratégias com custos reais, publicamos os resultados e construímos ferramentas com o que sobrevive, como o WIQON Shield.",
@@ -561,7 +592,7 @@ BR = dict(ICONOS,
     pie_her_links=herr("afiliado", "indicação"), pie_cont="Contato", pie_fuentes_links=FUENTES_PIE, wa_hola=f"{WA}?text=Ol%C3%A1%20WIQON", lab=LAB,
     pie_act_t="Atualização.", pie_act="Notícias: a cada 30 minutos. Câmbio oficial: a cada hora (cada instituição publica no seu horário). Estratégia: todo dia às 21h15 (Brasília). Preço do BTC: ao abrir a página.",
     pie_met_t="Metodologia.", pie_met="Resultados com custos e código no GitHub. O radar usa só RSS públicos: título, fonte, data e link, nunca o texto das matérias.",
-    pie_priv_t="Privacidade.", pie_priv="Sem cookies nem ferramentas de análise. Os vídeos do YouTube só carregam ao tocar em reproduzir. As fontes vêm do Google Fonts.",
+    pie_priv_t="Privacidade.", pie_priv="Sem cookies nem ferramentas de análise. Os vídeos do YouTube só carregam ao tocar em reproduzir. O gráfico interativo é fornecido pela TradingView e carrega ao chegar nessa seção. As fontes vêm do Google Fonts.",
     pie_riesgo_t="Aviso de risco.", pie_riesgo="Conteúdo informativo e educacional; não é recomendação de investimento. Operar envolve risco de perda e resultados passados não garantem os futuros. Os links marcados como afiliado ou indicação nos dão uma comissão sem custo extra para você.",
 )
 
