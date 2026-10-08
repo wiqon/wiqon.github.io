@@ -435,3 +435,43 @@ footer { border-top: 1px solid var(--borde); padding: 52px 0 30px; background: v
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
 :root[data-tema="claro"] .pestanas { box-shadow: 0 10px 26px rgba(20, 40, 80, .12); }
 @media (max-width: 680px) { .pestanas { top: 70px; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; } .pestanas::-webkit-scrollbar { display: none; } }
+
+/* ---------- cuentas: qué ve el visitante y qué ve el usuario registrado ---------- */
+:root:not(.logueado) .privado { display: none !important; }
+:root.logueado .solo-visitante, :root.logueado .bloqueo { display: none !important; }
+:root:not(.logueado) .solo-usuario { display: none !important; }
+.bloqueo { border: 1px dashed var(--borde2); border-radius: 14px; padding: 26px; display: flex; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--sup); }
+.bloqueo .txt { display: flex; gap: 14px; align-items: center; }
+.bloqueo .candado { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--fondo2); border: 1px solid var(--borde2); color: var(--cian); flex: none; }
+.bloqueo b { display: block; font-size: 1rem; }
+.bloqueo span { font-size: .86rem; color: var(--gris); }
+.usuario { display: flex; align-items: center; gap: 8px; }
+.usuario .ini { width: 32px; height: 32px; border-radius: 50%; background: var(--cian); color: #04121c; display: grid; place-items: center; font-weight: 800; font-size: .9rem; }
+.usuario button { font: 600 .8rem var(--sans); background: none; border: 1px solid var(--borde2); color: var(--suave); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.registro { border: 1px solid rgba(34, 195, 238, .35); border-radius: 18px; padding: 38px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; align-items: center;
+  background: radial-gradient(ellipse 80% 120% at 100% 0%, rgba(34, 195, 238, .10), transparent 60%), var(--sup); }
+.registro h2 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+.registro h2 span { color: var(--cian); }
+.registro p { color: var(--suave); margin-top: 10px; }
+.registro ul { list-style: none; display: grid; gap: 8px; }
+.registro li { display: flex; gap: 10px; align-items: flex-start; font-size: .92rem; color: var(--suave); }
+.registro li::before { content: "✓"; color: var(--sube); font-weight: 800; }
+.registro li.pronto::before { content: "◷"; color: var(--oro); }
+dialog.acceso { border: 1px solid var(--borde2); border-radius: 18px; padding: 0; background: var(--sup); color: var(--texto); width: min(440px, calc(100vw - 32px)); box-shadow: 0 30px 80px rgba(0, 0, 0, .55); }
+dialog.acceso::backdrop { background: rgba(2, 6, 12, .7); backdrop-filter: blur(4px); }
+.acceso .cuerpo { padding: 28px; }
+.acceso .cab-d { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.acceso h3 { font-size: 1.35rem; }
+.acceso .cerrar { background: none; border: 0; color: var(--gris); font-size: 1.4rem; cursor: pointer; line-height: 1; }
+.acceso p { color: var(--gris); font-size: .9rem; }
+.acceso label.campo { display: block; font-size: .8rem; color: var(--suave); margin: 18px 0 6px; font-weight: 600; }
+.acceso input[type=email] { width: 100%; font: 1rem var(--sans); padding: 12px 14px; border-radius: 10px; border: 1px solid var(--borde2); background: var(--fondo2); color: var(--texto); }
+.acceso input[type=email]:focus { outline: 2px solid var(--cian); outline-offset: 1px; }
+.acceso .check { display: flex; gap: 10px; align-items: flex-start; font-size: .82rem; color: var(--suave); margin-top: 12px; }
+.acceso .check input { margin-top: 3px; accent-color: var(--cian); }
+.acceso .check a { color: var(--cian); }
+.acceso .btn { width: 100%; margin-top: 18px; }
+.acceso .msg { margin-top: 14px; font-size: .88rem; }
+.acceso .msg.ok { color: var(--sube); } .acceso .msg.error { color: var(--baja); }
+.acceso .pie-d { margin-top: 16px; font-size: .74rem; color: var(--gris2); }
+@media (max-width: 860px) { .registro { grid-template-columns: 1fr; padding: 26px; } }

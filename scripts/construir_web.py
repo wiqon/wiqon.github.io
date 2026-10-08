@@ -71,7 +71,7 @@ PLANTILLA = """<!doctype html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{r}}assets/v4.css">
-<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;if(localStorage.getItem("wiqon-sesion")==="1")document.documentElement.classList.add("logueado");}catch(e){}</script>
 </head>
 <body data-estado="{{r}}estado.json" data-raiz="{{r}}">
 <a class="oculto" href="#productos">{{saltar}}</a>
@@ -86,7 +86,9 @@ PLANTILLA = """<!doctype html>
     <div class="nav-d">
       <div class="idioma" aria-label="{{idioma_aria}}"><a {{es_on}} href="{{r}}" lang="es">ES</a><a {{br_on}} href="{{r}}br/" lang="pt-BR">PT-BR</a></div>
       <button class="tema-btn" type="button" aria-label="{{tema_aria}}" aria-pressed="false" title="{{tema_aria}}"><svg class="luna" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg><svg class="sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
-      <a class="btn p ch" href="{{cta_nav_href}}">{{cta_nav}}</a>
+      <button class="btn ch solo-visitante" type="button" data-acceso>{{ingresar}}</button>
+      <button class="btn p ch solo-visitante" type="button" data-acceso>{{crear_cuenta}}</button>
+      <div class="usuario solo-usuario" id="usuario"><span class="ini" aria-hidden="true">W</span><button type="button" id="salir">{{salir}}</button></div>
     </div>
   </div>
 </header>
@@ -96,13 +98,13 @@ PLANTILLA = """<!doctype html>
   <canvas id="globo" aria-hidden="true"></canvas>
   <div class="c">
     <div class="ap">
-      <div class="sello"><span class="corona l"><img src="{{r}}assets/logo.png" alt="WIQON" width="84" height="84"></span><div class="nombre">WIQON<small>{{sello_sub}}</small></div></div>
-      <span class="kicker" style="margin-top:22px">{{kicker}}</span>
+      <span class="kicker">{{kicker}}</span>
       <h1 id="h1">{{h1a}}<br><span>{{h1b}}</span></h1>
       <p class="sub">{{sub}}</p>
       <div class="acc">
-        <a class="btn p" href="#productos">{{cta1}} {{ic_flecha}}</a>
-        <a class="btn" href="#laboratorio">{{ic_matraz}} {{cta2}}</a>
+        <button class="btn p solo-visitante" type="button" data-acceso>{{crear_cuenta}} {{ic_flecha}}</button>
+        <a class="btn p solo-usuario" href="#mercado">{{ver_mercados}} {{ic_flecha}}</a>
+        <a class="btn" href="#productos">{{cta1}}</a>
       </div>
       <nav class="atajos" aria-label="{{n_prod}}">
         <a class="atajo" href="#productos">{{ic_matraz}}<div><b>{{a_t}}</b><span>{{at_a}}</span></div></a>
@@ -135,6 +137,61 @@ PLANTILLA = """<!doctype html>
           <p>{{regla_p}}</p>
           <a class="enl" href="#laboratorio">{{regla_link}} {{ic_flecha}}</a>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="mercado" aria-labelledby="mv-t" style="padding-top:44px">
+  <div class="c">
+    <div class="cab"><div><span class="vol">{{mv_vol}}</span><h2 class="t" id="mv-t">{{mv_h2}}</h2></div><p class="der">{{mv_p}}</p></div>
+    <div class="pestanas" role="tablist" aria-label="{{mv_vol}}">
+      <button role="tab" id="t-cripto" aria-controls="p-cripto" aria-selected="true">{{tab_cripto}}</button>
+      <button role="tab" id="t-acciones" aria-controls="p-acciones" aria-selected="false" tabindex="-1">{{tab_acciones}}</button>
+      <button role="tab" id="t-b3" aria-controls="p-b3" aria-selected="false" tabindex="-1">{{tab_b3}}</button>
+      <button role="tab" id="t-futuros" aria-controls="p-futuros" aria-selected="false" tabindex="-1">{{tab_futuros}}</button>
+      <button role="tab" id="t-forex" aria-controls="p-forex" aria-selected="false" tabindex="-1">Forex</button>
+      <button role="tab" id="t-economia" aria-controls="p-economia" aria-selected="false" tabindex="-1">{{tab_economia}}</button>
+    </div>
+    <div class="panel-m" id="p-cripto" role="tabpanel" aria-labelledby="t-cripto">
+    <div class="envivo">
+      <div class="mercados">
+        <table aria-describedby="mv-t">
+          <thead><tr><th>{{mv_activo}}</th><th class="r">{{mv_precio}}</th><th class="r">24 h</th><th class="r om">{{mv_tend}}</th></tr></thead>
+          <tbody id="mercados-vivo"><tr><td colspan="4" class="meta">{{cargando}}</td></tr></tbody>
+        </table>
+        <p class="meta" style="padding:8px 12px"><span class="vivo-b">{{en_vivo}}</span> {{mv_fuente}}</p>
+      </div>
+      <div class="tv" id="tv">
+        <div class="tv-cab"><b>{{tv_t}}</b><span class="meta">{{tv_nota}} <a href="{{tv_link}}" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> ({{tv_af}})</span></div>
+        <div class="tv-cuerpo" id="tv-cuerpo" data-locale="{{tv_locale}}"><div class="tv-espera">{{cargando}}</div></div>
+      </div>
+    </div>
+    </div>
+    <div class="panel-m" id="p-acciones" role="tabpanel" aria-labelledby="t-acciones" hidden data-cargar="acciones">
+      <div class="widget" id="w-acciones"></div><p class="nota-w">{{nota_acciones}} {{nota_tv}}</p>
+    </div>
+    <div class="panel-m" id="p-b3" role="tabpanel" aria-labelledby="t-b3" hidden data-cargar="b3">
+      <div class="widget" id="w-b3"></div><p class="nota-w">{{nota_b3}} {{nota_tv}}</p>
+    </div>
+    <div class="panel-m" id="p-futuros" role="tabpanel" aria-labelledby="t-futuros" hidden data-cargar="futuros">
+      <div class="widget" id="w-futuros"></div><p class="nota-w">{{nota_futuros}} {{nota_tv}}</p>
+    </div>
+    <div class="panel-m" id="p-forex" role="tabpanel" aria-labelledby="t-forex" hidden data-cargar="forex">
+      <div class="widget" id="w-forex"></div><p class="nota-w">{{nota_forex}} {{nota_tv}}</p>
+    </div>
+    <div class="panel-m" id="p-economia" role="tabpanel" aria-labelledby="t-economia" hidden data-cargar="mapa calendario">
+      <div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>{{bl_eco_t}}</b><span>{{bl_eco}}</span></div></div><button class="btn p ch" type="button" data-acceso>{{crear_cuenta}}</button></div>
+      <div class="dos privado">
+        <div class="mapa" id="mapa-inflacion">
+          <h3>{{mapa_t}}</h3><p class="meta">{{mapa_p}}</p>
+          <svg id="mapa-svg" role="img" aria-label="{{mapa_t}}"></svg>
+          <div class="tip" id="mapa-tip" hidden></div>
+          <div class="escala" id="mapa-escala"></div>
+          <ul class="ranking" id="mapa-ranking"></ul>
+          <p class="nota-w" id="mapa-fuente">{{cargando}}</p>
+        </div>
+        <div><div class="widget" id="w-calendario"></div><p class="nota-w">{{nota_cal}} {{nota_tv}}</p></div>
       </div>
     </div>
   </div>
@@ -184,7 +241,8 @@ PLANTILLA = """<!doctype html>
     <div class="cab"><div><span class="vol">{{met_vol}}</span><h2 class="t" id="met-t">{{met_h2}}</h2></div><p class="der">{{met_p}}</p></div>
     <ol class="metodo">{{pasos}}</ol>
     <div class="principios">{{principios}}</div>
-    <div class="lab-g">
+    <div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>{{bl_lab_t}}</b><span>{{bl_lab}}</span></div></div><button class="btn p ch" type="button" data-acceso>{{crear_cuenta}}</button></div>
+    <div class="lab-g privado">
       <div class="ap">
         <table class="tabla">
           <caption class="oculto">{{tabla_cap}}</caption>
@@ -205,58 +263,9 @@ PLANTILLA = """<!doctype html>
   </div>
 </section>
 
-<section class="s" id="mercado" aria-labelledby="mv-t">
+<section class="s privado" id="contexto" aria-labelledby="snap-t">
   <div class="c">
-    <div class="cab"><div><span class="vol">{{mv_vol}}</span><h2 class="t" id="mv-t">{{mv_h2}}</h2></div><p class="der">{{mv_p}}</p></div>
-    <div class="pestanas" role="tablist" aria-label="{{mv_vol}}">
-      <button role="tab" id="t-cripto" aria-controls="p-cripto" aria-selected="true">{{tab_cripto}}</button>
-      <button role="tab" id="t-acciones" aria-controls="p-acciones" aria-selected="false" tabindex="-1">{{tab_acciones}}</button>
-      <button role="tab" id="t-b3" aria-controls="p-b3" aria-selected="false" tabindex="-1">{{tab_b3}}</button>
-      <button role="tab" id="t-futuros" aria-controls="p-futuros" aria-selected="false" tabindex="-1">{{tab_futuros}}</button>
-      <button role="tab" id="t-forex" aria-controls="p-forex" aria-selected="false" tabindex="-1">Forex</button>
-      <button role="tab" id="t-economia" aria-controls="p-economia" aria-selected="false" tabindex="-1">{{tab_economia}}</button>
-    </div>
-    <div class="panel-m" id="p-cripto" role="tabpanel" aria-labelledby="t-cripto">
-    <div class="envivo">
-      <div class="mercados">
-        <table aria-describedby="mv-t">
-          <thead><tr><th>{{mv_activo}}</th><th class="r">{{mv_precio}}</th><th class="r">24 h</th><th class="r om">{{mv_tend}}</th></tr></thead>
-          <tbody id="mercados-vivo"><tr><td colspan="4" class="meta">{{cargando}}</td></tr></tbody>
-        </table>
-        <p class="meta" style="padding:8px 12px"><span class="vivo-b">{{en_vivo}}</span> {{mv_fuente}}</p>
-      </div>
-      <div class="tv" id="tv">
-        <div class="tv-cab"><b>{{tv_t}}</b><span class="meta">{{tv_nota}} <a href="{{tv_link}}" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> ({{tv_af}})</span></div>
-        <div class="tv-cuerpo" id="tv-cuerpo" data-locale="{{tv_locale}}"><div class="tv-espera">{{cargando}}</div></div>
-      </div>
-    </div>
-    </div>
-    <div class="panel-m" id="p-acciones" role="tabpanel" aria-labelledby="t-acciones" hidden data-cargar="acciones">
-      <div class="widget" id="w-acciones"></div><p class="nota-w">{{nota_acciones}} {{nota_tv}}</p>
-    </div>
-    <div class="panel-m" id="p-b3" role="tabpanel" aria-labelledby="t-b3" hidden data-cargar="b3">
-      <div class="widget" id="w-b3"></div><p class="nota-w">{{nota_b3}} {{nota_tv}}</p>
-    </div>
-    <div class="panel-m" id="p-futuros" role="tabpanel" aria-labelledby="t-futuros" hidden data-cargar="futuros">
-      <div class="widget" id="w-futuros"></div><p class="nota-w">{{nota_futuros}} {{nota_tv}}</p>
-    </div>
-    <div class="panel-m" id="p-forex" role="tabpanel" aria-labelledby="t-forex" hidden data-cargar="forex">
-      <div class="widget" id="w-forex"></div><p class="nota-w">{{nota_forex}} {{nota_tv}}</p>
-    </div>
-    <div class="panel-m" id="p-economia" role="tabpanel" aria-labelledby="t-economia" hidden data-cargar="mapa calendario">
-      <div class="dos">
-        <div class="mapa" id="mapa-inflacion">
-          <h3>{{mapa_t}}</h3><p class="meta">{{mapa_p}}</p>
-          <svg id="mapa-svg" role="img" aria-label="{{mapa_t}}"></svg>
-          <div class="tip" id="mapa-tip" hidden></div>
-          <div class="escala" id="mapa-escala"></div>
-          <ul class="ranking" id="mapa-ranking"></ul>
-          <p class="nota-w" id="mapa-fuente">{{cargando}}</p>
-        </div>
-        <div><div class="widget" id="w-calendario"></div><p class="nota-w">{{nota_cal}} {{nota_tv}}</p></div>
-      </div>
-    </div>
-    <div class="snap" style="margin-top:34px">
+    <div class="snap">
       <div class="intro"><span class="vol">{{snap_vol}}</span><h2 id="snap-t">{{snap_h2}}</h2><p>{{snap_p}}</p></div>
       <div class="dato-m"><span class="q">Bitcoin · BTC/USDT</span><span class="v" id="snap-btc">—</span><span class="f" id="snap-btc-f">{{cargando}}</span></div>
       <div class="dato-m"><span class="q"><i>PY</i> USD/PYG</span><span class="v" id="snap-pyg">—</span><span class="f" id="snap-pyg-f">{{cargando}}</span></div>
@@ -277,6 +286,8 @@ PLANTILLA = """<!doctype html>
 
 <section class="s" id="radar" data-prioridad="{{prioridad}}" aria-labelledby="radar-t">
   <div class="c">
+    <div class="solo-visitante"><div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>{{bl_radar_t}}</b><span>{{bl_radar}}</span></div></div><button class="btn p ch" type="button" data-acceso>{{crear_cuenta}}</button></div></div>
+    <div class="privado">
     <div class="radar-cab">
       <div><span class="vol">{{radar_vol}}</span><h2 id="radar-t">{{radar_h2}}</h2><p>{{radar_p}}</p></div>
       <div class="meta" id="radar-info" aria-live="polite">{{cargando}}</div>
@@ -304,6 +315,7 @@ PLANTILLA = """<!doctype html>
       <div style="display:flex;gap:10px"><button class="btn ch" id="radar-mas" hidden>{{ver_mas}}</button><button class="btn ch" id="radar-btn" aria-expanded="false" aria-controls="radar-lista">{{ver_completo}}</button></div>
     </div>
     <div class="historias">{{historias}}</div>
+    </div>
   </div>
 </section>
 
@@ -327,6 +339,13 @@ PLANTILLA = """<!doctype html>
     </div>
   </div>
 </section>
+<section class="s solo-visitante" id="registro" aria-labelledby="reg-t">
+  <div class="c"><div class="registro">
+    <div><span class="vol">{{reg_vol}}</span><h2 id="reg-t">{{reg_h2}}</h2><p>{{reg_p}}</p>
+      <div class="acc" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:22px"><button class="btn p" type="button" data-acceso>{{crear_cuenta}} {{ic_flecha}}</button></div></div>
+    <ul>{{reg_lista}}</ul>
+  </div></div>
+</section>
 </main>
 
 <footer>
@@ -337,7 +356,7 @@ PLANTILLA = """<!doctype html>
       <div><h5>{{n_prod}}</h5><a href="#laboratorio">{{a_t}}</a><a href="{{b_href}}">WIQON Shield</a><a href="#servicios">{{c_t}}</a><a href="#radar">News Radar</a></div>
       <div><h5>{{pie_fuentes}}</h5>{{pie_fuentes_links}}</div>
       <div><h5>{{pie_her}}</h5>{{pie_her_links}}</div>
-      <div><h5>{{pie_cont}}</h5><a href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a><a href="{{wa_hola}}" target="_blank" rel="noopener">WhatsApp +595 987 685 651</a><a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a><a href="{{lab}}" target="_blank" rel="noopener">GitHub</a></div>
+      <div><h5>{{pie_cont}}</h5><a href="{{priv_url}}">{{priv_txt}}</a><a href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a><a href="{{wa_hola}}" target="_blank" rel="noopener">WhatsApp +595 987 685 651</a><a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a><a href="{{lab}}" target="_blank" rel="noopener">GitHub</a></div>
     </div>
     <div class="legal">
       <p><b>{{pie_act_t}}</b> {{pie_act}}</p>
@@ -350,6 +369,21 @@ PLANTILLA = """<!doctype html>
   </div>
 </footer>
 
+<dialog class="acceso" id="acceso" aria-labelledby="acc-t">
+  <form class="cuerpo" id="acc-form" novalidate>
+    <div class="cab-d"><h3 id="acc-t">{{acc_t}}</h3><button class="cerrar" type="button" aria-label="{{cerrar}}">×</button></div>
+    <p>{{acc_p}}</p>
+    <label class="campo" for="acc-email">Email</label>
+    <input type="email" id="acc-email" name="email" autocomplete="email" required placeholder="{{acc_ph}}">
+    <label class="check"><input type="checkbox" id="acc-priv" required> <span>{{acc_priv}}</span></label>
+    <label class="check"><input type="checkbox" id="acc-nov"> <span>{{acc_nov}}</span></label>
+    <button class="btn p" type="submit">{{acc_btn}}</button>
+    <p class="msg" id="acc-msg" role="status" aria-live="polite"></p>
+    <p class="pie-d">{{acc_pie}}</p>
+  </form>
+</dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="{{r}}assets/cuenta.js"></script>
 <script src="{{r}}assets/vivo.js"></script>
 <script src="{{r}}assets/v4.js"></script>
 <script src="{{r}}assets/mercados.js"></script>
@@ -409,6 +443,16 @@ def redes(lista):
 
 # ============================================ ESPAÑOL ============================================
 ES = dict(ICONOS,
+    ingresar="Ingresar", crear_cuenta="Crear cuenta gratis", salir="Salir", ver_mercados="Ver mercados", cerrar="Cerrar",
+    bl_lab_t="Resultados completos y estrategia en vivo", bl_lab="Con tu cuenta gratis ves la tabla de experimentos y nuestra regla operando en vivo.",
+    bl_radar_t="Radar de noticias y tipo de cambio oficial", bl_radar="Noticias de Paraguay, Brasil e Hispanoamérica cada 30 minutos, y las cotizaciones del BCP, BCB, BCRA y TRM.",
+    bl_eco_t="Mapa de inflación y calendario económico", bl_eco="La inflación de cada país (datos del FMI) y los próximos indicadores, con tu cuenta gratis.",
+    reg_vol="Cuenta gratuita", reg_h2="Creá tu cuenta y <span>mirá todo el laboratorio</span>",
+    reg_p="Solo tu email: te enviamos un enlace para entrar, sin contraseñas. Gratis y sin compromiso.",
+    reg_lista="<li>Resultados completos del laboratorio y la estrategia en vivo</li><li>Radar de noticias de la región, cada 30 minutos</li><li>Tipo de cambio oficial (BCP, BCB, BCRA, TRM)</li><li>Mapa de inflación mundial y calendario económico</li><li class=\"pronto\">Próximamente: alertas por email y lista de seguimiento</li>",
+    acc_t="Entrá a WIQON", acc_p="Escribí tu email y te mandamos un enlace para entrar. No usamos contraseñas.", acc_ph="tu@email.com",
+    acc_priv='Acepto la <a href="privacidad/" target="_blank">política de privacidad</a>.', acc_nov="Quiero recibir novedades de WIQON (opcional, me puedo dar de baja cuando quiera).",
+    acc_btn="Enviar enlace de acceso", acc_pie="Si ya tenés cuenta, el mismo enlace te hace entrar.", priv_url="privacidad/", priv_txt="Política de privacidad",
     tema_aria="Cambiar entre tema oscuro y claro", tab_cripto="Criptomonedas", tab_acciones="Acciones EE. UU.", tab_b3="Brasil B3", tab_futuros="Futuros", tab_economia="Economía",
     nota_acciones="Las acciones con más movimiento del día en EE. UU.", nota_b3="Ibovespa, acciones y minicontratos de la B3.",
     nota_futuros="Minicontratos de la B3 y, como referencia global, índices y materias primas (incluida la soja) en CFD.", nota_forex="Monedas de la región frente al dólar y los pares principales.",
@@ -528,6 +572,16 @@ ES = dict(ICONOS,
 
 # ============================================ PORTUGUÊS ============================================
 BR = dict(ICONOS,
+    ingresar="Entrar", crear_cuenta="Criar conta grátis", salir="Sair", ver_mercados="Ver mercados", cerrar="Fechar",
+    bl_lab_t="Resultados completos e estratégia ao vivo", bl_lab="Com a sua conta grátis você vê a tabela de experimentos e a nossa regra operando ao vivo.",
+    bl_radar_t="Radar de notícias e câmbio oficial", bl_radar="Notícias do Brasil, Paraguai e América hispânica a cada 30 minutos, e as cotações do BCB, BCP, BCRA e TRM.",
+    bl_eco_t="Mapa da inflação e calendário econômico", bl_eco="A inflação de cada país (dados do FMI) e os próximos indicadores, com a sua conta grátis.",
+    reg_vol="Conta gratuita", reg_h2="Crie a sua conta e <span>veja todo o laboratório</span>",
+    reg_p="Só o seu e-mail: enviamos um link para entrar, sem senha. Grátis e sem compromisso.",
+    reg_lista="<li>Resultados completos do laboratório e a estratégia ao vivo</li><li>Radar de notícias da região, a cada 30 minutos</li><li>Câmbio oficial (BCB, BCP, BCRA, TRM)</li><li>Mapa da inflação mundial e calendário econômico</li><li class=\"pronto\">Em breve: alertas por e-mail e lista de acompanhamento</li>",
+    acc_t="Entre na WIQON", acc_p="Digite o seu e-mail e enviamos um link para entrar. Não usamos senha.", acc_ph="voce@email.com",
+    acc_priv='Aceito a <a href="privacidade/" target="_blank">política de privacidade</a>.', acc_nov="Quero receber novidades da WIQON (opcional, posso cancelar quando quiser).",
+    acc_btn="Enviar link de acesso", acc_pie="Se você já tem conta, o mesmo link faz você entrar.", priv_url="privacidade/", priv_txt="Política de privacidade",
     tema_aria="Alternar entre tema escuro e claro", tab_cripto="Criptomoedas", tab_acciones="Ações EUA", tab_b3="Brasil B3", tab_futuros="Futuros", tab_economia="Economia",
     nota_acciones="As ações com mais movimento do dia nos EUA.", nota_b3="Ibovespa, ações e minicontratos da B3.",
     nota_futuros="Minicontratos da B3 e, como referência global, índices e commodities (incluindo a soja) em CFD.", nota_forex="Moedas da região frente ao dólar e os pares principais.",
