@@ -397,9 +397,12 @@ footer { border-top: 1px solid var(--borde); padding: 52px 0 30px; background: v
 
 /* ---------- planeta de fondo en la portada ---------- */
 .hero { overflow: hidden; }
-#globo { position: absolute; z-index: 0; pointer-events: none; width: 900px; height: 900px; right: -140px; bottom: -500px; opacity: .7; }
-:root[data-tema="claro"] #globo { opacity: .35; }
-@media (max-width: 680px) { #globo { width: 520px; height: 520px; right: -180px; bottom: -300px; opacity: .35; } }
+#globo { position: absolute; z-index: 0; pointer-events: none; width: 820px; height: 820px; right: max(-60px, calc(50% - 680px)); top: 50%; transform: translateY(-50%); opacity: .95; transition: opacity .6s; }
+:root.logueado #globo { opacity: .45; }
+.hero { min-height: 640px; }
+:root[data-tema="claro"] #globo { opacity: .7; }
+@media (max-width: 1080px) { #globo { top: 30px; transform: none; right: 50%; margin-right: -380px; width: 760px; height: 760px; opacity: .5; } .hero { min-height: 0; } }
+@media (max-width: 680px) { #globo { width: 560px; height: 560px; margin-right: -280px; opacity: .4; } }
 
 /* ---------- barra de mercados con pestañas ---------- */
 .pestanas { display: flex; gap: 6px; flex-wrap: wrap; padding: 6px; border: 1px solid var(--borde); border-radius: 999px; background: var(--sup); width: fit-content; max-width: 100%; margin-bottom: 18px; }
@@ -475,3 +478,11 @@ dialog.acceso::backdrop { background: rgba(2, 6, 12, .7); backdrop-filter: blur(
 .acceso .msg.ok { color: var(--sube); } .acceso .msg.error { color: var(--baja); }
 .acceso .pie-d { margin-top: 16px; font-size: .74rem; color: var(--gris2); }
 @media (max-width: 860px) { .registro { grid-template-columns: 1fr; padding: 26px; } }
+
+/* planeta visible detrás del panel de la portada */
+#globo { width: 980px; height: 980px; right: max(0px, calc(50% - 760px)); }
+.hero .panel { background: rgba(10, 19, 32, .58); backdrop-filter: blur(2.5px); -webkit-backdrop-filter: blur(2.5px); }
+.hero .panel .caja { background: rgba(6, 11, 20, .45); }
+:root[data-tema="claro"] .hero .panel { background: rgba(255, 255, 255, .62); }
+:root[data-tema="claro"] .hero .panel .caja { background: rgba(247, 249, 252, .6); }
+:root.logueado .hero .panel { background: linear-gradient(180deg, var(--sup2), var(--sup)); backdrop-filter: none; }

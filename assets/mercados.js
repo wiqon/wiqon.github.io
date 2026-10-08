@@ -145,37 +145,105 @@
     }).catch(() => { $("#mapa-fuente").textContent = PT ? "Não foi possível carregar o mapa agora." : "No pudimos cargar el mapa ahora."; });
   }
 
-  // ---------------- planeta de la portada ----------------
+  // ---------------- planeta de la portada, entero, con el satélite WIQON en órbita ----------------
   const globo = $("#globo");
   if (globo) {
+    const logo = new Image(); logo.src = RAIZ + "assets/logo.png";
     const arrancar = () => geo().then((mundo) => {
       const tierra = topojson.feature(mundo, mundo.objects.countries);
-      const dpr = Math.min(2, window.devicePixelRatio || 1), S = globo.clientWidth;
-      globo.width = S * dpr; globo.height = S * dpr;
-      const g = globo.getContext("2d"); g.scale(dpr, dpr);
-      const proy = d3.geoOrthographic().scale(S / 2 - 6).translate([S / 2, S / 2]).clipAngle(90);
-      const camino = d3.geoPath(proy, g), grilla = d3.geoGraticule10();
-      const PY = [-57.6, -25.3], destinos = [[-74, 40.7], [-0.1, 51.5], [139.7, 35.7], [-46.6, -23.5], [-58.4, -34.6]];
-      let rot = 40, visible = true;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      let S = 0, g = null, R = 0, cx = 0, cy = 0;
+      const proy = d3.geoOrthographic().clipAngle(90);
+      const camino = d3.geoPath(proy);
+      function medir() {
+        S = globo.clientWidth; globo.width = S * dpr; globo.height = S * dpr;
+        g = globo.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+        R = S * 0.30; cx = S / 2; cy = S / 2;
+        proy.scale(R).translate([cx, cy]); camino.context(g);
+      }
+      medir();
+      let t;
+      window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(medir, 200); });
+      const grilla = d3.geoGraticule10();
+      const PY = [-57.6, -25.3], destinos = [[-74, 40.7], [-0.1, 51.5], [139.7, 35.7], [-46.6, -23.5], [-58.4, -34.6], [103.8, 1.35]];
+      const INCL = -0.38; // inclinación de la órbita (radianes)
+      let rot = 40, ang = 0.6, visible = true;
       new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(globo);
+
+      const orbita = (a) => { // punto de la órbita elíptica inclinada; z>0 = delante del planeta
+        const ox = Math.cos(a) * R * 1.34, oy = Math.sin(a) * R * 0.40;
+        return { x: cx + ox * Math.cos(INCL) - oy * Math.sin(INCL), y: cy + ox * Math.sin(INCL) + oy * Math.cos(INCL), z: Math.sin(a) };
+      };
+      function trazoOrbita(delante, claro) {
+        g.beginPath(); let primero = true;
+        for (let a = 0; a <= Math.PI * 2 + 0.01; a += 0.04) {
+          const p = orbita(a);
+          if ((p.z >= 0) !== delante) { primero = true; continue; }
+          primero ? g.moveTo(p.x, p.y) : g.lineTo(p.x, p.y); primero = false;
+        }
+        g.setLineDash([2, 6]); g.lineWidth = 1.2;
+        g.strokeStyle = claro ? "rgba(10,143,184,.45)" : `rgba(95,214,243,${delante ? .55 : .25})`; g.stroke(); g.setLineDash([]);
+      }
+      function satelite(claro) {
+        const p = orbita(ang), esc = 0.75 + 0.25 * (p.z + 1) / 2, r = S * 0.045 * esc;
+        g.save(); g.globalAlpha = p.z >= 0 ? 1 : 0.55;
+        // estela
+        for (let i = 1; i <= 10; i++) {
+          const q = orbita(ang - i * 0.035);
+          g.beginPath(); g.arc(q.x, q.y, r * (1 - i / 12) * 0.35, 0, 7); g.fillStyle = `rgba(95,214,243,${0.22 * (1 - i / 11)})`; g.fill();
+        }
+        // corona resplandeciente
+        const halo = g.createRadialGradient(p.x, p.y, r * 0.6, p.x, p.y, r * 2.2);
+        halo.addColorStop(0, "rgba(139,92,246,.55)"); halo.addColorStop(0.5, "rgba(34,195,238,.25)"); halo.addColorStop(1, "rgba(34,195,238,0)");
+        g.beginPath(); g.arc(p.x, p.y, r * 2.2, 0, 7); g.fillStyle = halo; g.fill();
+        const anillo = g.createConicGradient ? g.createConicGradient(rot / 30, p.x, p.y) : null;
+        if (anillo) { ["#22c3ee", "#2f6bff", "#8b5cf6", "#d946ef", "#22c3ee"].forEach((c, i) => anillo.addColorStop(i / 4, c)); }
+        g.beginPath(); g.arc(p.x, p.y, r * 1.12, 0, 7); g.fillStyle = anillo || "#22c3ee"; g.fill();
+        // paneles solares
+        g.fillStyle = claro ? "rgba(10,60,90,.6)" : "rgba(95,214,243,.55)";
+        g.fillRect(p.x - r * 2.1, p.y - r * 0.18, r * 0.8, r * 0.36); g.fillRect(p.x + r * 1.3, p.y - r * 0.18, r * 0.8, r * 0.36);
+        // logo
+        g.beginPath(); g.arc(p.x, p.y, r, 0, 7); g.fillStyle = "#000"; g.fill();
+        if (logo.complete && logo.naturalWidth) { g.save(); g.beginPath(); g.arc(p.x, p.y, r * 0.92, 0, 7); g.clip(); g.drawImage(logo, p.x - r * 0.92, p.y - r * 0.92, r * 1.84, r * 1.84); g.restore(); }
+        g.restore();
+        return p.z >= 0;
+      }
       function cuadro() {
         const claro = document.documentElement.dataset.tema === "claro";
-        proy.rotate([rot, 18]);
         g.clearRect(0, 0, S, S);
-        g.beginPath(); camino({ type: "Sphere" }); g.fillStyle = claro ? "rgba(10,143,184,.06)" : "rgba(34,195,238,.05)"; g.fill();
-        g.lineWidth = 1; g.strokeStyle = claro ? "rgba(10,143,184,.35)" : "rgba(34,195,238,.35)"; g.stroke();
-        g.beginPath(); camino(grilla); g.strokeStyle = claro ? "rgba(10,143,184,.12)" : "rgba(34,195,238,.10)"; g.lineWidth = .6; g.stroke();
-        g.beginPath(); camino(tierra); g.fillStyle = claro ? "rgba(10,60,90,.18)" : "rgba(95,214,243,.16)"; g.fill();
-        g.strokeStyle = claro ? "rgba(10,60,90,.25)" : "rgba(95,214,243,.25)"; g.lineWidth = .5; g.stroke();
-        destinos.forEach((d) => { g.beginPath(); camino({ type: "LineString", coordinates: [PY, d] }); g.strokeStyle = claro ? "rgba(154,116,40,.6)" : "rgba(231,181,74,.55)"; g.lineWidth = 1.2; g.stroke(); });
-        const p = proy(PY), dentro = d3.geoDistance(PY, [-rot, -18]) < Math.PI / 2;
-        if (p && dentro) { g.beginPath(); g.arc(p[0], p[1], 4, 0, 7); g.fillStyle = "#e7b54a"; g.fill(); g.beginPath(); g.arc(p[0], p[1], 9, 0, 7); g.strokeStyle = "rgba(231,181,74,.5)"; g.stroke(); }
-        if (!reducido && visible) rot = (rot + 0.08) % 360;
+        // atmósfera
+        const atm = g.createRadialGradient(cx, cy, R * 0.9, cx, cy, R * 1.25);
+        atm.addColorStop(0, claro ? "rgba(10,143,184,.18)" : "rgba(34,195,238,.28)"); atm.addColorStop(1, "rgba(34,195,238,0)");
+        g.beginPath(); g.arc(cx, cy, R * 1.25, 0, 7); g.fillStyle = atm; g.fill();
+        trazoOrbita(false, claro);
+        if (orbita(ang).z < 0) satelite(claro);
+        proy.rotate([rot, 18]);
+        const mar = g.createRadialGradient(cx - R * .35, cy - R * .35, R * .1, cx, cy, R);
+        mar.addColorStop(0, claro ? "#e8f4fa" : "#0f2a44"); mar.addColorStop(1, claro ? "#c9e2ee" : "#07121f");
+        g.beginPath(); camino({ type: "Sphere" }); g.fillStyle = mar; g.fill();
+        g.lineWidth = 1.2; g.strokeStyle = claro ? "rgba(10,143,184,.5)" : "rgba(34,195,238,.55)"; g.stroke();
+        g.beginPath(); camino(grilla); g.strokeStyle = claro ? "rgba(10,143,184,.15)" : "rgba(34,195,238,.12)"; g.lineWidth = .6; g.stroke();
+        g.beginPath(); camino(tierra); g.fillStyle = claro ? "rgba(10,90,120,.35)" : "rgba(95,214,243,.30)"; g.fill();
+        g.strokeStyle = claro ? "rgba(10,60,90,.35)" : "rgba(95,214,243,.45)"; g.lineWidth = .5; g.stroke();
+        destinos.forEach((d) => { g.beginPath(); camino({ type: "LineString", coordinates: [PY, d] }); g.strokeStyle = claro ? "rgba(154,116,40,.75)" : "rgba(231,181,74,.75)"; g.lineWidth = 1.3; g.stroke(); });
+        const p = proy(PY);
+        if (p && d3.geoDistance(PY, [-rot, -18]) < Math.PI / 2) {
+          const pulso = 6 + 4 * Math.abs(Math.sin(Date.now() / 600));
+          g.beginPath(); g.arc(p[0], p[1], 4, 0, 7); g.fillStyle = "#e7b54a"; g.fill();
+          g.beginPath(); g.arc(p[0], p[1], pulso + 4, 0, 7); g.strokeStyle = "rgba(231,181,74,.5)"; g.lineWidth = 1.5; g.stroke();
+        }
+        // brillo del lado iluminado
+        const luz = g.createRadialGradient(cx - R * .5, cy - R * .5, 0, cx - R * .5, cy - R * .5, R * 1.3);
+        luz.addColorStop(0, "rgba(255,255,255,.10)"); luz.addColorStop(1, "rgba(255,255,255,0)");
+        g.beginPath(); g.arc(cx, cy, R, 0, 7); g.fillStyle = luz; g.fill();
+        trazoOrbita(true, claro);
+        if (orbita(ang).z >= 0) satelite(claro);
+        if (!reducido && visible) { rot = (rot + 0.08) % 360; ang = (ang + 0.006) % (Math.PI * 2); }
         if (!reducido) requestAnimationFrame(cuadro);
       }
+      logo.onload = () => { if (reducido) cuadro(); };
       cuadro();
     }).catch(() => globo.remove());
-    // se dibuja cuando el navegador está libre, para no demorar la carga de la página
     if ("requestIdleCallback" in window) requestIdleCallback(arrancar, { timeout: 1500 }); else setTimeout(arrancar, 600);
   }
 
