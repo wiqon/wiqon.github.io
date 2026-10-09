@@ -242,7 +242,7 @@ PLANTILLA = """<!doctype html>
     <ol class="metodo">{{pasos}}</ol>
     <div class="principios">{{principios}}</div>
     <div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>{{bl_lab_t}}</b><span>{{bl_lab}}</span></div></div><button class="btn p ch" type="button" data-acceso>{{crear_cuenta}}</button></div>
-    <div class="lab-g privado">
+    <div class="lab-g vista-previa">
       <div class="ap">
         <table class="tabla">
           <caption class="oculto">{{tabla_cap}}</caption>
@@ -316,6 +316,13 @@ PLANTILLA = """<!doctype html>
     </div>
     <div class="historias">{{historias}}</div>
     </div>
+  </div>
+</section>
+
+<section class="s solo-usuario" id="descargas" aria-labelledby="desc-t">
+  <div class="c">
+    <div class="cab"><div><span class="vol">{{desc_vol}}</span><h2 class="t" id="desc-t">{{desc_h2}}</h2></div><p class="der">{{desc_p}}</p></div>
+    <div class="pilares">{{descargas}}</div>
   </div>
 </section>
 
@@ -449,10 +456,11 @@ ES = dict(ICONOS,
     bl_eco_t="Mapa de inflación y calendario económico", bl_eco="La inflación de cada país (datos del FMI) y los próximos indicadores, con tu cuenta gratis.",
     reg_vol="Cuenta gratuita", reg_h2="Creá tu cuenta y <span>mirá todo el laboratorio</span>",
     reg_p="Solo tu email: te enviamos un enlace para entrar, sin contraseñas. Gratis y sin compromiso.",
-    reg_lista="<li>Resultados completos del laboratorio y la estrategia en vivo</li><li>Radar de noticias de la región, cada 30 minutos</li><li>Tipo de cambio oficial (BCP, BCB, BCRA, TRM)</li><li>Mapa de inflación mundial y calendario económico</li><li class=\"pronto\">Próximamente: alertas por email y lista de seguimiento</li>",
+    reg_lista="<li>Resultados completos del laboratorio y la estrategia en vivo</li><li>Radar de noticias de la región, cada 30 minutos</li><li>Tipo de cambio oficial (BCP, BCB, BCRA, TRM)</li><li>Mapa de inflación mundial y calendario económico</li><li>3 informes en PDF: 20+ ideas probadas, costo de los swaps y guía DNIT 47/2026</li><li class=\"pronto\">Próximamente: alertas por email y lista de seguimiento</li>",
     acc_t="Entrá a WIQON", acc_p="Escribí tu email y te mandamos un enlace para entrar. No usamos contraseñas.", acc_ph="tu@email.com",
     acc_priv='Acepto la <a href="privacidad/" target="_blank">política de privacidad</a>.', acc_nov="Quiero recibir novedades de WIQON (opcional, me puedo dar de baja cuando quiera).",
     acc_btn="Enviar enlace de acceso", acc_pie="Si ya tenés cuenta, el mismo enlace te hace entrar.", priv_url="privacidad/", priv_txt="Política de privacidad",
+    desc_vol="Descargas", desc_h2="Informes del laboratorio", desc_p="Material en PDF para leer con calma, con fuentes y fechas. Exclusivo para cuentas registradas.", desc_btn="Descargar PDF", descargas='<a class="pilar" href="{{r}}descargas/20-ideas-probadas.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">20+ ideas probadas: cuál sobrevivió</h3></div><p class="que">22 familias de estrategias, 84 variantes y la única regla que pasó todas las pruebas.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/informe-swaps.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">El costo invisible de un robot de CFD</h3></div><p class="que">Cuánto se llevaron los swaps de un broker real en 4 años, y qué revisar antes de usar un EA.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/guia-dnit-47-2026.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">Guía RG DNIT 47/2026</h3></div><p class="que">Quién tiene que declarar criptoactivos en Paraguay, desde qué monto, y un checklist para prepararte.</p><span class="enl">{{desc_btn}} ↓</span></a>',
     tema_aria="Cambiar entre tema oscuro y claro", tab_cripto="Criptomonedas", tab_acciones="Acciones EE. UU.", tab_b3="Brasil B3", tab_futuros="Futuros", tab_economia="Economía",
     nota_acciones="Las acciones con más movimiento del día en EE. UU.", nota_b3="Ibovespa, acciones y minicontratos de la B3.",
     nota_futuros="Minicontratos de la B3 y, como referencia global, índices y materias primas (incluida la soja) en CFD.", nota_forex="Monedas de la región frente al dólar y los pares principales.",
@@ -578,10 +586,11 @@ BR = dict(ICONOS,
     bl_eco_t="Mapa da inflação e calendário econômico", bl_eco="A inflação de cada país (dados do FMI) e os próximos indicadores, com a sua conta grátis.",
     reg_vol="Conta gratuita", reg_h2="Crie a sua conta e <span>veja todo o laboratório</span>",
     reg_p="Só o seu e-mail: enviamos um link para entrar, sem senha. Grátis e sem compromisso.",
-    reg_lista="<li>Resultados completos do laboratório e a estratégia ao vivo</li><li>Radar de notícias da região, a cada 30 minutos</li><li>Câmbio oficial (BCB, BCP, BCRA, TRM)</li><li>Mapa da inflação mundial e calendário econômico</li><li class=\"pronto\">Em breve: alertas por e-mail e lista de acompanhamento</li>",
+    reg_lista="<li>Resultados completos do laboratório e a estratégia ao vivo</li><li>Radar de notícias da região, a cada 30 minutos</li><li>Câmbio oficial (BCB, BCP, BCRA, TRM)</li><li>Mapa da inflação mundial e calendário econômico</li><li>3 relatórios em PDF: 20+ ideias testadas, custo dos swaps e guia BCB 519-521</li><li class=\"pronto\">Em breve: alertas por e-mail e lista de acompanhamento</li>",
     acc_t="Entre na WIQON", acc_p="Digite o seu e-mail e enviamos um link para entrar. Não usamos senha.", acc_ph="voce@email.com",
     acc_priv='Aceito a <a href="privacidade/" target="_blank">política de privacidade</a>.', acc_nov="Quero receber novidades da WIQON (opcional, posso cancelar quando quiser).",
     acc_btn="Enviar link de acesso", acc_pie="Se você já tem conta, o mesmo link faz você entrar.", priv_url="privacidade/", priv_txt="Política de privacidade",
+    desc_vol="Downloads", desc_h2="Relatórios do laboratório", desc_p="Material em PDF para ler com calma, com fontes e datas. Exclusivo para contas cadastradas.", desc_btn="Baixar PDF", descargas='<a class="pilar" href="{{r}}descargas/20-ideias-testadas.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">20+ ideias testadas: qual sobreviveu</h3></div><p class="que">22 famílias de estratégias, 84 variações e a única regra que passou em todos os testes.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/relatorio-swaps.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">O custo invisível de um robô de CFD</h3></div><p class="que">Quanto os swaps de uma corretora real levaram em 4 anos, e o que revisar antes de usar um EA.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/guia-bcb-519-520-521.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">Guia Resoluções BCB 519, 520 e 521</h3></div><p class="que">As novas regras do Banco Central para cripto, desde quando valem e o que muda para você.</p><span class="enl">{{desc_btn}} ↓</span></a>',
     tema_aria="Alternar entre tema escuro e claro", tab_cripto="Criptomoedas", tab_acciones="Ações EUA", tab_b3="Brasil B3", tab_futuros="Futuros", tab_economia="Economia",
     nota_acciones="As ações com mais movimento do dia nos EUA.", nota_b3="Ibovespa, ações e minicontratos da B3.",
     nota_futuros="Minicontratos da B3 e, como referência global, índices e commodities (incluindo a soja) em CFD.", nota_forex="Moedas da região frente ao dólar e os pares principais.",

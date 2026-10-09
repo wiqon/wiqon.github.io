@@ -47,6 +47,9 @@ jobs:
       - name: Inflación por país (FMI)
         run: python scripts/actualizar_inflacion.py
         continue-on-error: true
+      - name: Páginas SEO con los valores actuales
+        run: python scripts/construir_seo.py
+        continue-on-error: true
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

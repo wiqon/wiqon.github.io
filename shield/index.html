@@ -3,117 +3,186 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WIQON Shield — EA para MetaTrader 5</title>
-<meta name="description" content="WIQON Shield: el escudo automático para tu Bitcoin en MetaTrader 5. Probado con costos reales de broker. Demo gratis, licencia anual desde USD 59.">
-<meta property="og:title" content="WIQON Shield — el escudo automático para tu Bitcoin">
-<meta property="og:description" content="Misma ganancia que mantener BTC, con casi la mitad de la caída (probado con costos reales de broker, 2022-2026). Demo gratis.">
+<title>WIQON Shield — EA de gestión de riesgo para MetaTrader 5</title>
+<meta name="description" content="WIQON Shield: EA para MetaTrader 5 que mantiene BTC en tendencia y sale cuando se rompe. Probado con costos reales de broker: caída máxima 39% vs 67% de mantener. Demo gratis, licencia anual desde USD 59.">
+<meta property="og:title" content="WIQON Shield — gestión de riesgo para tu Bitcoin">
+<meta property="og:description" content="Misma ganancia que mantener BTC, con casi la mitad de la caída (costos reales de broker, 2022-2026). Demo gratis.">
 <meta property="og:image" content="https://wiqonlab.com/assets/shield.png">
 <meta property="og:url" content="https://wiqonlab.com/shield/">
 <meta property="og:type" content="product">
 <meta property="og:locale" content="es_LA">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#060b14">
+<link rel="canonical" href="https://wiqonlab.com/shield/">
 <link rel="icon" href="../assets/favicon.png">
-<link rel="stylesheet" href="../assets/estilo.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
 <style>
-  .volver { font-size: .85rem; color: var(--cian); }
-  .hero { text-align: center; margin: 14px 0 6px; }
-  .hero img { width: 100%; height: auto; max-width: 420px; border-radius: 16px; border: 1px solid var(--borde); }
-  .paso { display: flex; align-items: center; gap: 10px; margin: 26px 0 10px; }
-  .paso b { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; flex: none;
-            background: linear-gradient(135deg, var(--azul), var(--cian)); color: #fff; font-size: .9rem; }
-  .paso h2 { margin: 0; font-size: 1.05rem; }
-  .opciones { display: grid; gap: 10px; }
+  .sh { max-width: 1080px; margin: 0 auto; padding: 40px 24px 70px; }
+  .sh-hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+  .sh-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; margin: 14px 0; }
+  .sh-hero h1 span { color: var(--cian); }
+  .sh-hero p { color: var(--suave); font-size: 1.05rem; }
+  .sh-hero img { width: 100%; max-width: 380px; margin: 0 auto; border-radius: 16px; border: 1px solid var(--borde2); }
+  .bloque { margin-top: 56px; }
+  .bloque h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -.01em; margin-bottom: 14px; }
+  .caja-s { background: var(--sup); border: 1px solid var(--borde); border-radius: 14px; padding: 22px; }
+  .comp { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  .comp th { text-align: left; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gris2); padding: 10px; border-bottom: 1px solid var(--borde2); }
+  .comp td { padding: 13px 10px; border-bottom: 1px solid var(--borde); color: var(--suave); }
+  .comp td.n { font-family: var(--mono); color: var(--texto); }
+  .comp tr.dest td { background: rgba(34,195,238,.06); color: var(--texto); font-weight: 600; }
+  .dos-s { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .lista-s { list-style: none; } .lista-s li { padding: 7px 0 7px 26px; position: relative; color: var(--suave); }
+  .lista-s.si li::before { content: "✓"; position: absolute; left: 0; color: var(--sube); font-weight: 800; }
+  .lista-s.no li::before { content: "!"; position: absolute; left: 4px; color: var(--aviso); font-weight: 800; }
+  .ruta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .ruta .caja-s b { display: block; margin: 8px 0 4px; }
+  .ruta .caja-s p { color: var(--gris); font-size: .9rem; }
+  /* compra */
+  .paso { display: flex; align-items: center; gap: 10px; margin: 26px 0 12px; }
+  .sh .paso::after { content: none; } .sh .paso { padding: 0; }
+  .paso b { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; flex: none; border: 1.5px solid var(--cian); color: var(--cian); font-size: .9rem; }
+  .paso h3 { margin: 0; font-size: 1.05rem; }
+  .opciones { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .opcion { display: block; cursor: pointer; }
   .opcion input { position: absolute; opacity: 0; pointer-events: none; }
-  .opcion .tarjeta { display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: border-color .15s; }
-  .opcion input:checked + .tarjeta { border-color: var(--cian); background: #0b1630; box-shadow: 0 0 0 1px var(--cian) inset; }
+  .opcion .tarjeta { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--sup); border: 1px solid var(--borde); border-radius: 12px; padding: 16px; height: 100%; transition: border-color .15s; }
+  .opcion input:checked + .tarjeta { border-color: var(--cian); box-shadow: 0 0 0 1px var(--cian) inset; }
   .opcion input:focus-visible + .tarjeta { outline: 2px solid var(--cian); outline-offset: 2px; }
-  .opcion.inactiva { cursor: not-allowed; opacity: .55; }
-  .opcion strong { display: block; }
-  .opcion small { color: var(--gris); font-size: .8rem; display: block; }
-  .precio { text-align: right; white-space: nowrap; font-weight: 700; font-size: 1.15rem; color: var(--cian); }
-  .precio s { color: var(--gris); font-weight: 400; font-size: .85rem; display: block; }
-  .precio.gratis { color: var(--verde); }
-  .medios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .medios .tarjeta { flex-direction: column; align-items: flex-start; gap: 2px; padding: 14px; }
-  .resumen { margin-top: 18px; font-size: .9rem; color: var(--gris); }
-  .resumen b { color: var(--texto); }
-  .pasos-lista { margin: 10px 0 0 18px; color: var(--gris); font-size: .88rem; }
-  .pasos-lista li { margin-bottom: 4px; }
-  .pasos-lista strong { color: var(--texto); }
-  h2.seccion { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gris); margin: 30px 0 10px; }
-  .faq details { border-top: 1px solid var(--borde); padding: 10px 0; }
-  .faq summary { cursor: pointer; font-weight: 600; font-size: .92rem; }
-  .faq p { color: var(--gris); font-size: .86rem; margin-top: 6px; }
-  .faq a { color: var(--cian); text-decoration: underline; }
+  .opcion.inactiva { cursor: not-allowed; opacity: .5; }
+  .opcion strong { display: block; } .opcion small { color: var(--gris); font-size: .8rem; display: block; }
+  .precio { text-align: right; white-space: nowrap; font-weight: 800; font-size: 1.2rem; color: var(--cian); font-family: var(--mono); }
+  .precio s { color: var(--gris); font-weight: 400; font-size: .82rem; display: block; }
+  .precio.gratis { color: var(--sube); }
+  .medios .tarjeta { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .resumen { margin-top: 16px; color: var(--gris); } .resumen b { color: var(--texto); }
+  .pasos-lista { margin: 12px 0 0 18px; color: var(--gris); font-size: .9rem; } .pasos-lista li { margin-bottom: 4px; } .pasos-lista strong { color: var(--texto); }
+  .faq details { border-bottom: 1px solid var(--borde); padding: 12px 0; }
+  .faq summary { cursor: pointer; font-weight: 600; }
+  .faq p { color: var(--gris); margin-top: 6px; } .faq a { color: var(--cian); }
+  @media (max-width: 820px) { .sh-hero, .dos-s, .ruta, .opciones { grid-template-columns: 1fr; } .sh { padding: 26px 16px 60px; } }
 </style>
 </head>
 <body>
-<main>
-  <a class="volver" href="../">← wiqonlab.com</a>
+<header class="nav"><div class="c">
+  <a class="marca" href="../"><span class="corona s"><img src="../assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
+  <div class="nav-d"><a class="btn ch" href="../">← wiqonlab.com</a><a class="btn p ch" href="#comprar">Demo gratis y planes</a></div>
+</div></header>
 
-  <div class="hero"><img src="../assets/shield.png" alt="WIQON Shield: el escudo automático para tu Bitcoin, EA para MetaTrader 5" width="1080" height="1350"></div>
-
-  <div class="tarjeta" style="margin-top:14px">
-    <span class="etiqueta"><span class="sello backtest">BACKTEST</span>Probador MT5 · broker real · 2022-2026</span>
-    <p style="margin-top:8px">Con los spreads y swaps reales de un broker, WIQON Shield <strong>ganó lo mismo que mantener BTC (x2,02 vs x1,96), con casi la mitad de la caída (39% vs 67%)</strong>. Lo malo también: en CFD los swaps se llevaron un tercio de la ventaja.
-    <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener" style="color:var(--cian);text-decoration:underline">Ver el informe completo</a>.</p>
-  </div>
-
-  <div class="paso"><b>1</b><h2>Elegí tu plan</h2></div>
-  <div class="opciones" role="radiogroup" aria-label="Plan">
-    <label class="opcion"><input type="radio" name="plan" value="Demo gratis" data-precio="0">
-      <span class="tarjeta"><span><strong>Demo</strong><small>Funciona sin licencia en cuentas demo. Probalo todo lo que quieras.</small></span><span class="precio gratis">Gratis</span></span></label>
-    <label class="opcion"><input type="radio" name="plan" value="Licencia anual (lanzamiento)" data-precio="59" checked>
-      <span class="tarjeta"><span><strong>Licencia anual</strong><small>1 cuenta real · 12 meses · soporte por WhatsApp. Precio de lanzamiento: primeros 10 clientes.</small></span><span class="precio"><s>USD 99</s>USD 59</span></span></label>
-    <label class="opcion"><input type="radio" name="plan" value="Licencia vitalicia" data-precio="199">
-      <span class="tarjeta"><span><strong>Licencia vitalicia</strong><small>1 cuenta real · sin vencimiento.</small></span><span class="precio">USD 199</span></span></label>
-    <label class="opcion"><input type="radio" name="plan" value="Instalación asistida" data-precio="30">
-      <span class="tarjeta"><span><strong>Instalación asistida</strong><small>Videollamada: lo instalamos y configuramos con vos (MT5 o VPS). Se suma a cualquier plan.</small></span><span class="precio">USD 30</span></span></label>
-  </div>
-
-  <div id="bloque-pago">
-    <div class="paso"><b>2</b><h2>Elegí cómo pagar</h2></div>
-    <div class="opciones medios" role="radiogroup" aria-label="Medio de pago">
-      <label class="opcion"><input type="radio" name="medio" value="Binance Pay / USDT" checked>
-        <span class="tarjeta"><strong>₮ Binance Pay / USDT</strong><small>Sin comisión entre usuarios de Binance · TRC20 o BEP20</small></span></label>
-      <label class="opcion"><input type="radio" name="medio" value="Transferencia en Paraguay">
-        <span class="tarjeta"><strong>🇵🇾 Transferencia</strong><small>Banco (SIPAP) o billetera, en guaraníes al cambio del día</small></span></label>
-      <label class="opcion"><input type="radio" name="medio" value="PYUSD (PayPal) por Solana">
-        <span class="tarjeta"><strong>🅿 PayPal · PYUSD</strong><small>Dólar digital de PayPal, red Solana · desde cualquier país</small></span></label>
-      <label class="opcion inactiva"><input type="radio" name="medio" value="Tarjeta" disabled>
-        <span class="tarjeta"><strong>💳 Tarjeta</strong><small>Próximamente</small></span></label>
+<main class="sh">
+  <section class="sh-hero">
+    <div>
+      <span class="kicker">Producto · gestión de riesgo · MetaTrader 5</span>
+      <h1>WIQON Shield: <span>no te quedes comprado durante una caída larga.</span></h1>
+      <p>Un EA que mantiene tu posición en BTC mientras la tendencia sigue y la cierra cuando se rompe. Una regla, sin decisiones impulsivas, probada con los costos reales de un broker.</p>
+      <div class="acc" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
+        <a class="btn p" href="#comprar">Probar Shield en demo, gratis</a>
+        <a class="btn" href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">Ver el informe de prueba</a>
+      </div>
     </div>
-  </div>
+    <img src="../assets/shield_resultados.png" alt="WIQON Shield frente a comprar y mantener: x2,02 contra x1,96 y caída máxima de 39% contra 67%" width="1080" height="1350">
+  </section>
 
-  <div class="paso"><b id="num-pedir">3</b><h2>Hacé tu pedido</h2></div>
-  <p class="resumen" id="resumen"></p>
-  <a class="boton principal whatsapp" id="pedir" style="margin-top:12px" href="https://wa.me/595987685651" target="_blank" rel="noopener">
-    <span class="icono">💬</span><span id="pedir-texto">Pedir por WhatsApp<small>Se abre con tu pedido ya escrito</small></span></a>
-  <ol class="pasos-lista" id="que-sigue">
-    <li>Te respondemos con los <strong>datos de pago</strong> del medio que elegiste.</li>
-    <li>Pagás y nos enviás el <strong>comprobante</strong> y tu <strong>número de cuenta REAL de MT5</strong>.</li>
-    <li>Recibís el <strong>EA, el manual en PDF y tu clave</strong> en menos de 24 horas.</li>
-  </ol>
-  <p class="nota">🔒 Los datos de pago se envían <strong>solo</strong> desde nuestro WhatsApp oficial <strong>+595 987 685 651</strong>. Si alguien te escribe desde otro número pidiendo pagos a nombre de WIQON, no es nuestro.</p>
+  <section class="bloque" aria-labelledby="t-evid">
+    <h2 id="t-evid">La evidencia</h2>
+    <div class="caja-s">
+      <table class="comp">
+        <thead><tr><th>Misma ventana: 23/03/2022 → 25/09/2026 · 10.000 USD</th><th>Resultado</th><th>Caída máxima</th></tr></thead>
+        <tbody>
+          <tr class="dest"><td>WIQON Shield en CFD (spread y swaps reales, Exness demo)</td><td class="n">x2,02</td><td class="n">39%</td></tr>
+          <tr><td>Comprar y mantener BTC</td><td class="n">x1,96</td><td class="n">67%</td></tr>
+          <tr><td>La misma regla en BTC spot (Binance, con comisiones)</td><td class="n">x2,67</td><td class="n">37%</td></tr>
+        </tbody>
+      </table>
+      <p class="nota">Probador de Estrategias de MetaTrader 5, 33 operaciones. Fuente: <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener" style="color:var(--cian)">WIQON Lab, informe MT5</a> (octubre de 2026). Resultados pasados no garantizan rendimientos futuros.</p>
+    </div>
+  </section>
 
-  <h2 class="seccion">Preguntas frecuentes</h2>
-  <div class="faq">
-    <details><summary>¿Qué hace exactamente?</summary>
-      <p>Compra BTC cuando el cierre diario está sobre la media móvil de 100 días y cierra la posición cuando cae debajo. Decide una vez por día, con la vela cerrada. Solo opera comprado y no usa apalancamiento.</p></details>
-    <details><summary>¿Garantiza ganancias?</summary>
-      <p>No. Ningún software puede garantizarlas. Su valor está en <strong>proteger en las caídas</strong>; en mercados que suben sin parar rinde menos que mantener. Publicamos los resultados buenos y malos en el <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">informe</a>.</p></details>
-    <details><summary>¿Qué necesito?</summary>
-      <p>MetaTrader 5 (gratis) y una cuenta en un broker que ofrezca BTCUSD. Para operar 24/7 conviene una PC encendida o un VPS. Probalo antes en demo con los costos (swaps) de tu broker.</p></details>
-    <details><summary>¿La licencia sirve en varias cuentas?</summary>
-      <p>Cada clave funciona en <strong>una</strong> cuenta real. Si cambiás de cuenta o broker, te generamos una nueva gratis una vez por año.</p></details>
-    <details><summary>¿Hay reembolso?</summary>
-      <p>Como la demo es gratis y sin límite de tiempo, te pedimos que la pruebes antes de comprar: una vez emitida la clave para tu cuenta, la licencia no se reembolsa.</p></details>
-    <details><summary>¿Y en Brasil?</summary>
-      <p>La versión para Brasil llega pronto. <a href="../br/#shield">Entrá a la lista de espera</a>.</p></details>
-  </div>
+  <section class="bloque dos-s" aria-label="Qué hace y limitaciones">
+    <div class="caja-s"><h2 style="font-size:1.2rem">Qué hace</h2>
+      <ul class="lista-s si">
+        <li>Decide una vez por día, con la vela diaria cerrada</li>
+        <li>Compra si el cierre está sobre la media de 100 períodos y sale si cae debajo</li>
+        <li>Opera solo comprado, sin apalancamiento propio</li>
+        <li>Muestra su estado en un panel en el gráfico</li>
+        <li>No envía tus datos a WIQON: usa solo los precios de tu broker</li>
+      </ul></div>
+    <div class="caja-s"><h2 style="font-size:1.2rem">Limitaciones honestas</h2>
+      <ul class="lista-s no">
+        <li><strong>No garantiza ganancias.</strong> Su objetivo es limitar las caídas grandes.</li>
+        <li><strong>Rinde menos que mantener</strong> en mercados que solo suben.</li>
+        <li><strong>En CFD, los swaps reducen la ventaja:</strong> en la prueba se llevaron cerca de un tercio de la ganancia.</li>
+        <li>No reacciona a caídas dentro del día.</li>
+        <li>Pierde en la mayoría de las operaciones (21% ganadoras): gana con pocas subidas grandes.</li>
+      </ul></div>
+  </section>
 
-  <p class="nota" style="margin-top:24px">WIQON Shield es software educativo y de investigación. No es asesoría financiera ni garantiza resultados. Operar CFD con apalancamiento puede generar pérdidas mayores a lo invertido. © 2026 WIQON.</p>
+  <section class="bloque" aria-labelledby="t-ruta">
+    <h2 id="t-ruta">Lo que viene</h2>
+    <div class="ruta">
+      <div class="caja-s"><span class="chip-e ok">Disponible</span><b>Shield para MetaTrader 5</b><p>Demo gratis sin límite de tiempo y licencias para cuentas reales.</p></div>
+      <div class="caja-s"><span class="chip-e pronto">Próximamente</span><b>Versión Binance spot</b><p>La misma regla en spot, sin swaps: en la prueba dio x2,67 contra x2,02 en CFD.</p></div>
+      <div class="caja-s"><span class="chip-e pronto">Próximamente</span><b>Seguimiento verificado</b><p>Una cuenta con Shield corriendo en vivo, auditada por un servicio externo.</p></div>
+    </div>
+  </section>
+
+  <section class="bloque" id="comprar" aria-labelledby="t-comprar">
+    <h2 id="t-comprar">Planes</h2>
+    <div class="paso"><b>1</b><h3>Elegí tu plan</h3></div>
+    <div class="opciones" role="radiogroup" aria-label="Plan">
+      <label class="opcion"><input type="radio" name="plan" value="Demo gratis" data-precio="0">
+        <span class="tarjeta"><span><strong>Demo</strong><small>Funciona sin licencia en cuentas demo. Probalo todo lo que quieras.</small></span><span class="precio gratis">Gratis</span></span></label>
+      <label class="opcion"><input type="radio" name="plan" value="Licencia anual (lanzamiento)" data-precio="59" checked>
+        <span class="tarjeta"><span><strong>Licencia anual</strong><small>1 cuenta real · 12 meses · soporte por WhatsApp. Precio de lanzamiento: primeros 10 clientes.</small></span><span class="precio"><s>USD 99</s>USD 59</span></span></label>
+      <label class="opcion"><input type="radio" name="plan" value="Licencia vitalicia" data-precio="199">
+        <span class="tarjeta"><span><strong>Licencia vitalicia</strong><small>1 cuenta real · sin vencimiento.</small></span><span class="precio">USD 199</span></span></label>
+      <label class="opcion"><input type="radio" name="plan" value="Instalación asistida" data-precio="30">
+        <span class="tarjeta"><span><strong>Instalación asistida</strong><small>Videollamada: lo instalamos y configuramos con vos (MT5 o VPS). Se suma a cualquier plan.</small></span><span class="precio">USD 30</span></span></label>
+    </div>
+
+    <div id="bloque-pago">
+      <div class="paso"><b>2</b><h3>Elegí cómo pagar</h3></div>
+      <div class="opciones medios" role="radiogroup" aria-label="Medio de pago">
+        <label class="opcion"><input type="radio" name="medio" value="Binance Pay / USDT" checked>
+          <span class="tarjeta"><strong>₮ Binance Pay / USDT</strong><small>Sin comisión entre usuarios de Binance · TRC20</small></span></label>
+        <label class="opcion"><input type="radio" name="medio" value="Transferencia en Paraguay">
+          <span class="tarjeta"><strong>Transferencia en Paraguay</strong><small>SIPAP, en guaraníes al cambio del día</small></span></label>
+        <label class="opcion"><input type="radio" name="medio" value="PYUSD (PayPal) por Solana">
+          <span class="tarjeta"><strong>PayPal · PYUSD</strong><small>Dólar digital de PayPal, red Solana · desde cualquier país</small></span></label>
+        <label class="opcion inactiva"><input type="radio" name="medio" value="Tarjeta" disabled>
+          <span class="tarjeta"><strong>Tarjeta</strong><small>Próximamente</small></span></label>
+      </div>
+    </div>
+
+    <div class="paso"><b id="num-pedir">3</b><h3>Hacé tu pedido</h3></div>
+    <p class="resumen" id="resumen"></p>
+    <a class="btn wa" id="pedir" style="margin-top:12px" href="https://wa.me/595987685651" target="_blank" rel="noopener"><span id="pedir-texto">Pedir por WhatsApp</span></a>
+    <ol class="pasos-lista" id="que-sigue">
+      <li>Te respondemos con los <strong>datos de pago</strong> del medio que elegiste.</li>
+      <li>Pagás y nos enviás el <strong>comprobante</strong> y tu <strong>número de cuenta REAL de MT5</strong>.</li>
+      <li>Recibís el <strong>EA, el manual en PDF y tu clave</strong> en menos de 24 horas.</li>
+    </ol>
+    <p class="nota">🔒 Los datos de pago se envían <strong>solo</strong> desde nuestro WhatsApp oficial <strong>+595 987 685 651</strong>. Si alguien te escribe desde otro número pidiendo pagos a nombre de WIQON, no es nuestro.</p>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-faq">
+    <h2 id="t-faq">Preguntas frecuentes</h2>
+    <div class="faq">
+      <details><summary>¿Qué necesito para usarlo?</summary>
+        <p>MetaTrader 5 (gratis) y una cuenta en un broker que ofrezca BTCUSD. Para que opere todos los días conviene una PC encendida o un VPS. Probalo antes en demo con los costos (swaps) de tu broker.</p></details>
+      <details><summary>¿Garantiza ganancias?</summary>
+        <p>No. Ningún software puede garantizarlas. Su objetivo es limitar las caídas grandes; en mercados que solo suben rinde menos que mantener. Publicamos los resultados buenos y malos en el <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">informe</a>.</p></details>
+      <details><summary>¿Por qué no hay reembolso?</summary>
+        <p>Porque la demo es gratis y sin límite de tiempo: podés probarlo todo lo que quieras antes de pagar. Una vez emitida la clave para tu cuenta, la licencia no se reembolsa.</p></details>
+      <details><summary>¿La licencia sirve en varias cuentas?</summary>
+        <p>Cada clave funciona en <strong>una</strong> cuenta real. Si cambiás de cuenta o broker, te generamos una nueva gratis una vez por año.</p></details>
+      <details><summary>¿Y en Brasil?</summary>
+        <p>La versión para Brasil llega pronto. <a href="../br/#shield">Entrá a la lista de espera</a>.</p></details>
+    </div>
+  </section>
+
+  <p class="nota" style="margin-top:34px">WIQON Shield es software educativo y de investigación. No es asesoría financiera ni garantiza resultados. Resultados pasados no garantizan rendimientos futuros. Operar CFD con apalancamiento puede generar pérdidas mayores a lo invertido. © 2026 WIQON · <a href="../privacidad/" style="color:var(--gris)">Política de privacidad</a></p>
 </main>
 <script>
   // Arma el pedido de WhatsApp con el plan y el medio de pago elegidos
@@ -136,7 +205,7 @@
     }
     $("#resumen").innerHTML = resumen;
     $("#pedir").href = `https://wa.me/${NUMERO}?text=${encodeURIComponent(texto)}`;
-    $("#pedir-texto").firstChild.textContent = gratis ? "Pedir la demo gratis" : "Pedir por WhatsApp";
+    $("#pedir-texto").textContent = gratis ? "Pedir la demo gratis por WhatsApp" : "Pedir por WhatsApp";
   }
   document.querySelectorAll('input[name="plan"], input[name="medio"]').forEach((el) => el.addEventListener("change", actualizar));
   actualizar();
