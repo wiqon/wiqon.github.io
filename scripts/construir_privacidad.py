@@ -34,6 +34,7 @@ BASE = """<!doctype html>
 <main class="legal-p">
 {cuerpo}
 </main>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "c394b4ca4e5144b19a861d3203511d84"}}'></script>
 </body>
 </html>
 """
@@ -74,7 +75,7 @@ ES = """<h1>Política de privacidad</h1>
 </ul>
 
 <h2>6. Almacenamiento en tu navegador</h2>
-<p>No usamos cookies de publicidad ni herramientas de analítica. Guardamos en tu navegador (almacenamiento local) solo tu sesión, el tema claro u oscuro y si estás logueado, para que la página funcione.</p>
+<p>No usamos cookies. Para saber cuántas personas visitan el sitio usamos <strong>Cloudflare Web Analytics</strong>, que no usa cookies ni guarda datos que te identifiquen (cuenta visitas, páginas y país de forma agregada). Guardamos en tu navegador (almacenamiento local) solo tu sesión, el tema claro u oscuro y si estás logueado, para que la página funcione.</p>
 
 <h2>7. Cuánto tiempo</h2>
 <p>Mientras tu cuenta exista. Si pedís borrarla, eliminamos tus datos en un plazo de 15 días, salvo lo que la ley nos obligue a conservar.</p>
@@ -125,7 +126,7 @@ PT = """<h1>Política de privacidade</h1>
 </ul>
 
 <h2>6. Armazenamento no seu navegador</h2>
-<p>Não usamos cookies de publicidade nem ferramentas de análise. Guardamos no seu navegador (armazenamento local) só a sua sessão, o tema claro ou escuro e se você está logado, para a página funcionar.</p>
+<p>Não usamos cookies. Para saber quantas pessoas visitam o site usamos o <strong>Cloudflare Web Analytics</strong>, que não usa cookies nem guarda dados que identifiquem você (conta visitas, páginas e país de forma agregada). Guardamos no seu navegador (armazenamento local) só a sua sessão, o tema claro ou escuro e se você está logado, para a página funcionar.</p>
 
 <h2>7. Por quanto tempo</h2>
 <p>Enquanto a sua conta existir. Se você pedir a exclusão, apagamos os seus dados em até 15 dias, exceto o que a lei nos obrigue a manter.</p>

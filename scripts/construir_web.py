@@ -394,6 +394,7 @@ PLANTILLA = """<!doctype html>
 <script src="{{r}}assets/vivo.js"></script>
 <script src="{{r}}assets/v4.js"></script>
 <script src="{{r}}assets/mercados.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
 </body>
 </html>
 """
@@ -574,7 +575,7 @@ ES = dict(ICONOS,
     pie_her_links=herr("afiliado", "referido"), pie_cont="Contacto", pie_fuentes_links=FUENTES_PIE, wa_hola=f"{WA}?text=Hola%20WIQON", lab=LAB,
     pie_act_t="Actualización.", pie_act="Noticias: cada 30 minutos. Tipo de cambio oficial: cada hora (cada institución publica en su horario). Estrategia: todos los días a las 21:15 (hora de Paraguay). Precio de BTC: al abrir la página.",
     pie_met_t="Metodología.", pie_met="Resultados con costos y código en GitHub. El radar usa solo RSS públicos: título, fuente, fecha y enlace, nunca el texto de los artículos.",
-    pie_priv_t="Privacidad.", pie_priv="Sin cookies ni analítica. Los videos de YouTube se cargan solo al tocar reproducir. El gráfico interactivo lo provee TradingView y se carga al llegar a esa sección. Las tipografías vienen de Google Fonts.",
+    pie_priv_t="Privacidad.", pie_priv="Sin cookies. Medimos visitas con Cloudflare Web Analytics, que no usa cookies ni identifica personas. Los videos de YouTube se cargan solo al tocar reproducir. El gráfico interactivo lo provee TradingView y se carga al llegar a esa sección. Las tipografías vienen de Google Fonts.",
     pie_riesgo_t="Aviso de riesgo.", pie_riesgo="Contenido informativo y educativo; no es asesoría financiera. Operar implica riesgo de pérdida y los resultados pasados no garantizan los futuros. Los enlaces marcados como afiliado o referido nos dan una comisión sin costo extra para vos.",
 )
 
@@ -704,7 +705,7 @@ BR = dict(ICONOS,
     pie_her_links=herr("afiliado", "indicação"), pie_cont="Contato", pie_fuentes_links=FUENTES_PIE, wa_hola=f"{WA}?text=Ol%C3%A1%20WIQON", lab=LAB,
     pie_act_t="Atualização.", pie_act="Notícias: a cada 30 minutos. Câmbio oficial: a cada hora (cada instituição publica no seu horário). Estratégia: todo dia às 21h15 (Brasília). Preço do BTC: ao abrir a página.",
     pie_met_t="Metodologia.", pie_met="Resultados com custos e código no GitHub. O radar usa só RSS públicos: título, fonte, data e link, nunca o texto das matérias.",
-    pie_priv_t="Privacidade.", pie_priv="Sem cookies nem ferramentas de análise. Os vídeos do YouTube só carregam ao tocar em reproduzir. O gráfico interativo é fornecido pela TradingView e carrega ao chegar nessa seção. As fontes vêm do Google Fonts.",
+    pie_priv_t="Privacidade.", pie_priv="Sem cookies. Medimos visitas com o Cloudflare Web Analytics, que não usa cookies nem identifica pessoas. Os vídeos do YouTube só carregam ao tocar em reproduzir. O gráfico interativo é fornecido pela TradingView e carrega ao chegar nessa seção. As fontes vêm do Google Fonts.",
     pie_riesgo_t="Aviso de risco.", pie_riesgo="Conteúdo informativo e educacional; não é recomendação de investimento. Operar envolve risco de perda e resultados passados não garantem os futuros. Os links marcados como afiliado ou indicação nos dão uma comissão sem custo extra para você.",
 )
 

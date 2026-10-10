@@ -238,6 +238,7 @@ PAGINA = """<!doctype html>
 <p class="nota" style="margin-top:30px">{aviso}</p>
 </main>
 {script}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "c394b4ca4e5144b19a861d3203511d84"}}'></script>
 </body>
 </html>
 """

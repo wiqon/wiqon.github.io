@@ -48,5 +48,6 @@
 <p class="nota" style="margin-top:30px">Información de referencia; no es asesoría financiera, legal ni tributaria.</p>
 </main>
 <script>fetch("https://wiqonlab.com/cambio.json?t="+Math.floor(Date.now()/36e5)).then(r=>r.json()).then(d=>{const f=d.fuentes.find(x=>x.id==="bcra");const v=f&&f.valores.find(x=>x.moneda==="USD");if(!v)return;document.getElementById("valor").textContent="AR$ "+v.valor.toLocaleString("es-PY",{minimumFractionDigits:2,maximumFractionDigits:2});const[a,m,dd]=f.fecha.split("-");document.getElementById("fecha").textContent=dd+"/"+m+"/"+a;}).catch(()=>{});</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
 </body>
 </html>
