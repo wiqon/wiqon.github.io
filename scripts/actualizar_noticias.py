@@ -58,7 +58,7 @@ FUENTES = [
 # Temas (español y portugués). El orden importa: el primero que coincide es la categoría principal.
 TEMAS = {
     "regulacion": r"regula|\bley\b|\blei\b|normativ|resoluci|resolu[cç][aã]o|decreto|supervis|autoriza|sanci[oó]n|multa|marco legal|seprelad|\bcoaf\b|\bcvm\b|\bcnv\b",
-    "impuestos": r"impuest|tribut|\biva\b|\birp\b|declaraci[oó]n jurada|imposto|receita federal|evasi[oó]n fiscal|fisco|arancel|recaudaci",
+    "impuestos": r"impuest|tributari|tributa[cç]|tributar|cobro de tributos|tributos (internos|municipales|fiscales|federais)|\biva\b|\birp\b|declaraci[oó]n jurada|imposto|receita federal|evasi[oó]n fiscal|fisco|arancel|recaudaci",
     "criptoactivos": r"bitcoin|\bbtc\b|cripto|crypto|ethereum|blockchain|miner[ií]a de (bitcoin|cripto)|minera[cç][aã]o|binance|\betf\b|altcoin|solana",
     "stablecoins": r"stablecoin|\busdt\b|tether|\busdc\b|\bdrex\b|moneda digital|d[oó]lar digital|real digital",
     "pagos": r"\bpix\b|pagos? (digital|electr[oó]nic|instant)|billetera (digital|electr[oó]nica)|carteira digital|\bsipap\b|\bqr\b|remesas?|tarjetas? de cr[eé]dito|cart[aã]o de cr[eé]dito|meios de pagamento|medios de pago",
@@ -70,7 +70,7 @@ TEMAS = {
     "seguridad": r"hacke|estafa|fraude|golpe financeiro|phishing|ciberataque|ciberseg|lavado de dinero|lavagem de dinheiro|qu[aâ]ntic",
 }
 # Para que "regulación" cuente, el título tiene que ser financiero.
-CONTEXTO_REGULACION = r"financ|banc|cripto|bitcoin|tribut|impuest|mercado|fintech|pago|bolsa|valores|\bbcp\b|\bbcb\b|\bcvm\b|\bcnv\b|cambio|seguro|ativos virtuais|activos virtuales|stablecoin|lavado|lavagem|\bdnit\b"
+CONTEXTO_REGULACION = r"financ|banc|cripto|bitcoin|tributari|tributa[cç]|impuest|mercado|fintech|pago|bolsa|valores|\bbcp\b|\bbcb\b|\bcvm\b|\bcnv\b|cambio|seguro|ativos virtuais|activos virtuales|stablecoin|lavado|lavagem|\bdnit\b"
 EXCLUIR = r"predicci[oó]n|previs[aã]o de pre[cç]o|podr[ií]a (llegar|alcanzar|subir)|pode chegar|chegar[aá] a|llegar[aá] a|vai explodir|explotar[aá]|\bpatrocinad|publicidad|\bpromo|cupom|cup[oó]n|precio de .* hoy|pre[cç]o do .* hoje|hor[oó]scopo|\bsorteo\b|ap[uú]esta|\bf[uú]tbol\b|futebol|mega-?sena|lotof[aá]cil|novela|\bbbb\b|\b(sube|cae|avanza|retrocede|repunta|rebota|cai|sobe|salta|se desploma)\b[^%]{0,40}\d+[.,]\d+ ?%|\bel \d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\b|\bem \d{1,2} de (janeiro|fevereiro|mar[cç]o|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\b|el precio (retrocede|avanza|sube|cae)|se[nñ]ales t[eé]cnicas"
 # Notas internacionales (sin vínculo regional): solo pasan si son de cripto/stablecoins.
 INTERNACIONAL = r"wall street|nasdaq|\bg20\b|\bonu\b|guterres|\brusi|ucrani|\bchina\b|chinos|xi jinping|\beeuu\b|estados unidos|trump|europa|\bue\b|israel|gaza|ir[aá]n|jap[oó]n|india|alemania|francia|reino unido"
