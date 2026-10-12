@@ -50,6 +50,9 @@ jobs:
       - name: Páginas SEO con los valores actuales
         run: python scripts/construir_seo.py
         continue-on-error: true
+      - name: Portada con los últimos datos (sin JavaScript también se ven)
+        run: python scripts/rellenar_inicio.py
+        continue-on-error: true
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

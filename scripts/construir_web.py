@@ -499,7 +499,7 @@ ES = dict(ICONOS,
     a_que="Probamos ideas de trading populares con años de datos, costos reales y validación fuera de muestra, y publicamos el resultado.",
     a_prob="saber si una estrategia tiene ventaja antes de arriesgar dinero en ella.",
     a_evid=('<div class="comp"><div><span class="lbl">Probadas</span><div class="num">20+</div></div><div><span class="lbl">Sobrevivió</span><div class="num">1</div></div></div>'
-            '<div style="margin-top:12px"><span class="lbl">Filtro de tendencia BTC · 2018-2026, con costos</span>'
+            '<div style="margin-top:12px"><span class="lbl"><span class="tipo hist">HISTÓRICO</span> Filtro de tendencia BTC · 2018-2026, con costos</span>'
             '<div class="comp" style="margin-top:6px"><div><span class="lbl">Regla</span><div class="num" style="font-size:1.15rem">56,6%<small>anual</small></div><div class="barra-c"><i style="width:100%;background:var(--cian)"></i></div></div>'
             '<div><span class="lbl">Mantener</span><div class="num" style="font-size:1.15rem">37,3%<small>anual</small></div><div class="barra-c"><i style="width:66%;background:var(--gris2)"></i></div></div></div></div>'
             '<div class="tags"><span>Costos incluidos</span><span>Fuera de muestra</span><span>Histórico + real</span></div>'),
@@ -629,7 +629,7 @@ BR = dict(ICONOS,
     a_que="Testamos ideias populares de trading com anos de dados, custos reais e validação fora da amostra, e publicamos o resultado.",
     a_prob="saber se uma estratégia tem vantagem antes de arriscar dinheiro nela.",
     a_evid=('<div class="comp"><div><span class="lbl">Testadas</span><div class="num">20+</div></div><div><span class="lbl">Sobreviveu</span><div class="num">1</div></div></div>'
-            '<div style="margin-top:12px"><span class="lbl">Filtro de tendência BTC · 2018-2026, com custos</span>'
+            '<div style="margin-top:12px"><span class="lbl"><span class="tipo hist">HISTÓRICO</span> Filtro de tendência BTC · 2018-2026, com custos</span>'
             '<div class="comp" style="margin-top:6px"><div><span class="lbl">Regra</span><div class="num" style="font-size:1.15rem">56,6%<small>ao ano</small></div><div class="barra-c"><i style="width:100%;background:var(--cian)"></i></div></div>'
             '<div><span class="lbl">Segurar</span><div class="num" style="font-size:1.15rem">37,3%<small>ao ano</small></div><div class="barra-c"><i style="width:66%;background:var(--gris2)"></i></div></div></div></div>'
             '<div class="tags"><span>Custos incluídos</span><span>Fora da amostra</span><span>Histórico + real</span></div>'),
