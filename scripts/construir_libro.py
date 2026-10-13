@@ -17,7 +17,7 @@ WHATSAPP = "595987685651"
 BEACON = '<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=\'{"token": "c394b4ca4e5144b19a861d3203511d84"}\'></script>'
 
 # Links de pago con tarjeta: se completan cuando existan (vacío = "próximamente")
-COMPRA = {"es": "", "pt": "https://pay.hotmart.com/Y108004979L", "en": ""}
+COMPRA = {"es": "https://pay.hotmart.com/K108005565Y", "pt": "https://pay.hotmart.com/Y108004979L", "en": "https://pay.hotmart.com/G108005645T"}
 
 T = {
     "es": dict(
@@ -34,7 +34,7 @@ T = {
                  "Un checklist para imprimir y un semáforo para decidir"],
         datos="16 páginas · PDF · Edición octubre 2026 · Ing. Avelino González",
         precio="USD 9,99", comprar_wa="Comprar por WhatsApp", wa_texto="Hola WIQON, quiero el libro ¿Ventaja o suerte?",
-        medios="Transferencia en Paraguay (en guaraníes), Binance / USDT o PYUSD. Recibís el PDF por WhatsApp apenas confirmamos el pago.",
+        medios="Tarjeta de crédito o débito por Hotmart (entrega automática del PDF por correo). También por WhatsApp: transferencia en Paraguay (en guaraníes), Binance / USDT o PYUSD.",
         tarjeta="💳 Pago con tarjeta: muy pronto", tarjeta_btn="Pagar con tarjeta",
         muestra_t="Mirá algunas páginas", otros="También disponible en", otros_l=[("Português", "../br/livro/"), ("English", "../en/book/")],
         aviso="Material educativo. No es asesoría financiera ni garantiza resultados.", volver="← Volver a wiqonlab.com"),
@@ -70,7 +70,7 @@ T = {
                  "A printable checklist and a traffic light to decide"],
         datos="16 pages · PDF · October 2026 edition · Avelino González, Eng.",
         precio="USD 9.99", comprar_wa="Buy via WhatsApp", wa_texto="Hi WIQON, I want the book Edge or Luck?",
-        medios="USDT (TRC20) or PYUSD (Solana). You get the PDF on WhatsApp as soon as we confirm the payment.",
+        medios="Card payment through Hotmart, with instant delivery of the PDF by email. You can also pay with USDT (TRC20) or PYUSD (Solana) via WhatsApp.",
         tarjeta="💳 Card payments: coming soon", tarjeta_btn="Pay by card",
         muestra_t="Take a look inside", otros="Also available in", otros_l=[("Español", "../../libro/"), ("Português", "../../br/livro/")],
         aviso="Educational material. Not financial advice and no guaranteed results.", volver="← Back to wiqonlab.com"),
