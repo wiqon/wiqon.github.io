@@ -17,7 +17,7 @@ WHATSAPP = "595987685651"
 BEACON = '<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=\'{"token": "c394b4ca4e5144b19a861d3203511d84"}\'></script>'
 
 # Links de pago con tarjeta: se completan cuando existan (vacío = "próximamente")
-COMPRA = {"es": "", "pt": "", "en": ""}
+COMPRA = {"es": "", "pt": "https://pay.hotmart.com/Y108004979L", "en": ""}
 
 T = {
     "es": dict(
@@ -52,8 +52,8 @@ T = {
                  "Um checklist para imprimir e um semáforo para decidir"],
         datos="16 páginas · PDF · Edição outubro 2026 · Eng. Avelino González",
         precio="USD 9,99", comprar_wa="Comprar pelo WhatsApp", wa_texto="Olá WIQON, quero o livro Vantagem ou sorte?",
-        medios="USDT (rede TRC20) ou PYUSD (rede Solana). Você recebe o PDF pelo WhatsApp assim que confirmamos o pagamento.",
-        tarjeta="💳 Pagamento com cartão e PIX: em breve", tarjeta_btn="Pagar com cartão",
+        medios="Cartão ou PIX pela Hotmart (R$ 49,90, entrega automática do PDF). Também aceitamos USDT (rede TRC20) ou PYUSD (rede Solana) pelo WhatsApp.",
+        tarjeta="💳 Pagamento com cartão e PIX: em breve", tarjeta_btn="Pagar com cartão ou PIX",
         muestra_t="Veja algumas páginas", otros="Também disponível em", otros_l=[("Español", "../../libro/"), ("English", "../../en/book/")],
         aviso="Material educativo. Não é recomendação de investimento nem garante resultados.", volver="← Voltar para wiqonlab.com/br"),
     "en": dict(
