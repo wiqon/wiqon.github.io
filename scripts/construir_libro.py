@@ -33,7 +33,7 @@ T = {
                  "Un protocolo de 7 pasos para auditar antes de arriesgar",
                  "Un checklist para imprimir y un semáforo para decidir"],
         datos="16 páginas · PDF · Edición octubre 2026 · Ing. Avelino González",
-        precio="USD 19", comprar_wa="Comprar por WhatsApp", wa_texto="Hola WIQON, quiero el libro ¿Ventaja o suerte?",
+        precio="USD 9,99", comprar_wa="Comprar por WhatsApp", wa_texto="Hola WIQON, quiero el libro ¿Ventaja o suerte?",
         medios="Transferencia en Paraguay (en guaraníes), Binance / USDT o PYUSD. Recibís el PDF por WhatsApp apenas confirmamos el pago.",
         tarjeta="💳 Pago con tarjeta: muy pronto", tarjeta_btn="Pagar con tarjeta",
         muestra_t="Mirá algunas páginas", otros="También disponible en", otros_l=[("Português", "../br/livro/"), ("English", "../en/book/")],
@@ -51,7 +51,7 @@ T = {
                  "Um protocolo de 7 passos para auditar antes de arriscar",
                  "Um checklist para imprimir e um semáforo para decidir"],
         datos="16 páginas · PDF · Edição outubro 2026 · Eng. Avelino González",
-        precio="USD 19", comprar_wa="Comprar pelo WhatsApp", wa_texto="Olá WIQON, quero o livro Vantagem ou sorte?",
+        precio="USD 9,99", comprar_wa="Comprar pelo WhatsApp", wa_texto="Olá WIQON, quero o livro Vantagem ou sorte?",
         medios="USDT (rede TRC20) ou PYUSD (rede Solana). Você recebe o PDF pelo WhatsApp assim que confirmamos o pagamento.",
         tarjeta="💳 Pagamento com cartão e PIX: em breve", tarjeta_btn="Pagar com cartão",
         muestra_t="Veja algumas páginas", otros="Também disponível em", otros_l=[("Español", "../../libro/"), ("English", "../../en/book/")],
@@ -69,7 +69,7 @@ T = {
                  "A 7-step protocol to audit before you risk",
                  "A printable checklist and a traffic light to decide"],
         datos="16 pages · PDF · October 2026 edition · Avelino González, Eng.",
-        precio="USD 19", comprar_wa="Buy via WhatsApp", wa_texto="Hi WIQON, I want the book Edge or Luck?",
+        precio="USD 9.99", comprar_wa="Buy via WhatsApp", wa_texto="Hi WIQON, I want the book Edge or Luck?",
         medios="USDT (TRC20) or PYUSD (Solana). You get the PDF on WhatsApp as soon as we confirm the payment.",
         tarjeta="💳 Card payments: coming soon", tarjeta_btn="Pay by card",
         muestra_t="Take a look inside", otros="Also available in", otros_l=[("Español", "../../libro/"), ("Português", "../../br/livro/")],
@@ -131,7 +131,7 @@ def pagina(cod):
 <meta property="og:image" content="https://wiqonlab.com/libro/img/{t['img']}_p01.jpg"><meta property="og:url" content="{url}">
 <link rel="icon" href="{t['raiz']}assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
-<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Book","name":"{esc(t['titulo'])}","inLanguage":"{t['lang']}","author":{{"@type":"Person","name":"Avelino González"}},"publisher":{{"@type":"Organization","name":"WIQON Lab","url":"https://wiqonlab.com"}},"numberOfPages":16,"bookFormat":"https://schema.org/EBook","offers":{{"@type":"Offer","price":"19","priceCurrency":"USD","availability":"https://schema.org/InStock"}}}}</script>
+<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Book","name":"{esc(t['titulo'])}","inLanguage":"{t['lang']}","author":{{"@type":"Person","name":"Avelino González"}},"publisher":{{"@type":"Organization","name":"WIQON Lab","url":"https://wiqonlab.com"}},"numberOfPages":16,"bookFormat":"https://schema.org/EBook","offers":{{"@type":"Offer","price":"9.99","priceCurrency":"USD","availability":"https://schema.org/InStock"}}}}</script>
 <style>{CSS}</style></head><body>
 <div class="cab"><div class="in"><a href="{t['raiz']}">WIQON LAB</a><small>{t["lema_marca"]}</small></div></div>
 <section class="hero"><div class="in">
