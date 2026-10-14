@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contacto — WIQON</title>
+<meta name="description" content="Contacto de WIQON: correo, WhatsApp, redes y formulario.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://wiqonlab.com/contacto/">
+<link rel="icon" href="../assets/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+<style>
+  .legal-p { max-width: 780px; margin: 0 auto; padding: 48px 20px 80px; }
+  .legal-p h1 { font-size: 2rem; font-weight: 800; letter-spacing: -.02em; }
+  .legal-p h2 { font-size: 1.15rem; margin: 30px 0 8px; }
+  .legal-p p, .legal-p li, .legal-p td, .legal-p th { color: var(--suave); font-size: .95rem; line-height: 1.7; }
+  .legal-p ul, .legal-p ol { padding-left: 20px; }
+  .legal-p a { color: var(--cian); }
+  .legal-p .meta { margin-top: 6px; }
+  .legal-p table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+  .legal-p th, .legal-p td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+  .legal-p .tit { border: 1px solid var(--borde); border-radius: 12px; padding: 14px 18px; margin: 18px 0; }
+  .legal-p .redes-l a { margin-right: 14px; display: inline-block; }
+  .form-c { display: grid; gap: 12px; margin-top: 14px; }
+  .form-c label { font-weight: 600; font-size: .9rem; }
+  .form-c input, .form-c textarea { width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--borde2); background: var(--fondo2); color: var(--texto); font: 1rem var(--sans); }
+  .form-c input:focus, .form-c textarea:focus { outline: 2px solid var(--cian); outline-offset: 1px; }
+  .form-c textarea { min-height: 150px; resize: vertical; }
+  .form-c .trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-c .estado { min-height: 1.4em; font-weight: 600; }
+  .form-c .estado.ok { color: var(--sube); }
+  .form-c .estado.error { color: #e5484d; }
+  .pie-l { max-width: 780px; margin: 0 auto; padding: 0 20px 50px; font-size: .85rem; color: var(--gris); }
+  .pie-l a { color: var(--gris); margin-right: 14px; }
+</style>
+</head>
+<body>
+<header class="nav"><div class="c"><a class="marca" href="../"><span class="corona s"><img src="../assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
+<div class="nav-d"><a class="btn ch" href="../">Volver a WIQON</a></div></div></header>
+<main class="legal-p">
+<h1>Contacto</h1>
+<p>Escribinos por el canal que prefieras. Respondemos personalmente, normalmente en menos de 24 horas hábiles (horario de Paraguay).</p>
+<table>
+<tr><th>Correo</th><td><a href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a></td></tr>
+<tr><th>WhatsApp</th><td><a href="https://wa.me/595987685651?text=Hola%20WIQON" target="_blank" rel="noopener">+595 987 685 651</a></td></tr>
+<tr><th>Redes</th><td class="redes-l"><a href="https://www.facebook.com/wiqonlab/" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/wiqonlab/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@wiqonlab" target="_blank" rel="noopener">YouTube</a><a href="https://t.me/wiqonlab" target="_blank" rel="noopener">Telegram</a><a href="https://www.tiktok.com/@wiqonlab" target="_blank" rel="noopener">TikTok</a><a href="https://x.com/wiqonlab" target="_blank" rel="noopener">X</a><a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a></td></tr>
+<tr><th>Ubicación</th><td>Paraguay (Asunción · Ciudad del Este)</td></tr>
+</table>
+<h2>Formulario de contacto</h2>
+<form class="form-c" id="form-c" novalidate>
+  <label for="fc-nombre">Nombre</label>
+  <input id="fc-nombre" name="nombre" autocomplete="name" required maxlength="120">
+  <label for="fc-email">Correo electrónico</label>
+  <input id="fc-email" name="email" type="email" autocomplete="email" required maxlength="200">
+  <label for="fc-mensaje">Mensaje</label>
+  <textarea id="fc-mensaje" name="mensaje" required maxlength="5000"></textarea>
+  <div class="trampa" aria-hidden="true"><label for="fc-web">Web</label><input id="fc-web" name="web" tabindex="-1" autocomplete="off"></div>
+  <p class="meta">Usamos tus datos solo para responderte (ver <a href="../privacidad/">política de privacidad</a>).</p>
+  <button class="btn p" type="submit">Enviar mensaje</button>
+  <p class="estado" id="fc-estado" role="status" aria-live="polite"></p>
+</form>
+<script>
+(function () {
+  var f = document.getElementById('form-c'), e = document.getElementById('fc-estado'), inicio = Date.now();
+  f.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var d = new FormData(f), nombre = (d.get('nombre') || '').trim(), email = (d.get('email') || '').trim(), mensaje = (d.get('mensaje') || '').trim();
+    e.className = 'estado error';
+    if (!nombre || !mensaje || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { e.textContent = 'Completá tu nombre, un correo válido y el mensaje.'; return; }
+    var b = f.querySelector('button'); b.disabled = true; e.className = 'estado'; e.textContent = 'Enviando…';
+    var datos = new URLSearchParams({ nombre: nombre, email: email, mensaje: mensaje, web: d.get('web') || '', segundos: String(Math.round((Date.now() - inicio) / 1000)), idioma: 'es', pagina: location.pathname });
+    fetch('https://n8n.wiqonlab.com/webhook/contacto-web', { method: 'POST', body: datos })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); e.className = 'estado ok'; e.textContent = '¡Mensaje enviado! Te respondemos por correo, normalmente en menos de 24 horas hábiles.'; f.reset(); })
+      .catch(function () { e.className = 'estado error'; e.textContent = 'No se pudo enviar. Probá de nuevo o escribinos a contacto@wiqonlab.com.'; })
+      .finally(function () { b.disabled = false; });
+  });
+})();
+</script>
+<div class="tit"><p><strong>Titular:</strong> Avelino González Melgarejo · Cédula de identidad (Paraguay) N.º 4.690.007 · persona física que opera bajo el nombre comercial <strong>WIQON</strong>.<br>
+<strong>Contacto:</strong> <a href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a> · WhatsApp <a href="https://wa.me/595987685651" target="_blank" rel="noopener">+595 987 685 651</a> · <a href="../contacto/">formulario de contacto</a></p></div>
+
+</main>
+<footer class="pie-l"><a href="../terminos/">Términos y condiciones</a><a href="../devoluciones/">Entregas y devoluciones</a><a href="../privacidad/">Privacidad</a><a href="../contacto/">Contacto</a><br>© 2026 WIQON · Avelino González Melgarejo · C.I. 4.690.007 · Paraguay</footer>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
+</body>
+</html>

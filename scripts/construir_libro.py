@@ -113,6 +113,13 @@ footer{border-top:1px solid var(--linea);color:var(--gris);font-size:.82rem;text
 """
 
 
+LEGALES = {  # páginas legales (pedidas por los procesadores de pago); en inglés se enlazan las de español
+    "es": '<a href="{r}terminos/">Términos y condiciones</a> · <a href="{r}devoluciones/">Entregas y devoluciones</a> · <a href="{r}contacto/">Contacto</a>',
+    "pt": '<a href="{r}br/termos/">Termos e condições</a> · <a href="{r}br/devolucoes/">Entregas e devoluções</a> · <a href="{r}br/contato/">Contato</a>',
+    "en": '<a href="{r}terminos/">Terms (Spanish)</a> · <a href="{r}devoluciones/">Delivery &amp; refunds (Spanish)</a> · <a href="{r}contacto/">Contact</a>',
+}
+
+
 def pagina(cod):
     t = T[cod]
     esc = html.escape
@@ -152,7 +159,7 @@ def pagina(cod):
  <p class="otros">{t['otros']}: {''.join(f'<a href="{h}">{n}</a>' for n, h in t['otros_l'])}</p>
  <p><a href="{t['raiz']}{'br/' if cod == 'pt' else ''}">{t['volver']}</a></p>
 </main>
-<footer>{esc(t['aviso'])}<br>© 2026 WIQON · contacto@wiqonlab.com</footer>
+<footer>{esc(t['aviso'])}<br>{LEGALES[cod].format(r=t['raiz'])}<br>© 2026 WIQON · Avelino González Melgarejo · C.I. 4.690.007 · contacto@wiqonlab.com</footer>
 {BEACON}
 </body></html>
 """
