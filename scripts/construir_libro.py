@@ -18,6 +18,7 @@ BEACON = '<script defer src="https://static.cloudflareinsights.com/beacon.min.js
 
 # Links de pago con tarjeta: se completan cuando existan (vacío = "próximamente")
 COMPRA = {"es": "https://pay.hotmart.com/K108005565Y", "pt": "https://pay.hotmart.com/Y108004979L", "en": "https://pay.hotmart.com/G108005645T"}
+AMAZON = {"es": "", "pt": "", "en": ""}  # enlace de la edición Kindle de cada idioma; vacío = no se muestra el botón
 
 T = {
     "es": dict(
@@ -35,7 +36,8 @@ T = {
         datos="16 páginas · PDF · Edición octubre 2026 · Ing. Avelino González",
         precio="USD 9,99", comprar_wa="Comprar por WhatsApp", wa_texto="Hola WIQON, quiero el libro ¿Ventaja o suerte?",
         medios="Tarjeta de crédito o débito por Hotmart (entrega automática del PDF por correo). También por WhatsApp: transferencia en Paraguay (en guaraníes), Binance / USDT o PYUSD.",
-        tarjeta="💳 Pago con tarjeta: muy pronto", tarjeta_btn="Pagar con tarjeta",
+        tarjeta="💳 Pago con tarjeta: muy pronto", tarjeta_btn="Pagar con tarjeta", amazon_btn="Comprar en Amazon (Kindle)",
+        leer="📱 Leelo donde quieras: el PDF se abre en el celular, la tablet o la computadora, y también podés subirlo a tu biblioteca de Google Play Libros o enviarlo a tu Kindle.",
         muestra_t="Mirá algunas páginas", otros="También disponible en", otros_l=[("Português", "../br/livro/"), ("English", "../en/book/")],
         aviso="Material educativo. No es asesoría financiera ni garantiza resultados.", volver="← Volver a wiqonlab.com"),
     "pt": dict(
@@ -53,7 +55,8 @@ T = {
         datos="16 páginas · PDF · Edição outubro 2026 · Eng. Avelino González",
         precio="USD 9,99", comprar_wa="Comprar pelo WhatsApp", wa_texto="Olá WIQON, quero o livro Vantagem ou sorte?",
         medios="Cartão ou PIX pela Hotmart (R$ 49,90, entrega automática do PDF). Também aceitamos USDT (rede TRC20) ou PYUSD (rede Solana) pelo WhatsApp.",
-        tarjeta="💳 Pagamento com cartão e PIX: em breve", tarjeta_btn="Pagar com cartão ou PIX",
+        tarjeta="💳 Pagamento com cartão e PIX: em breve", tarjeta_btn="Pagar com cartão ou PIX", amazon_btn="Comprar na Amazon (Kindle)",
+        leer="📱 Leia onde quiser: o PDF abre no celular, no tablet ou no computador, e você também pode enviá-lo para sua biblioteca do Google Play Livros ou para o seu Kindle.",
         muestra_t="Veja algumas páginas", otros="Também disponível em", otros_l=[("Español", "../../libro/"), ("English", "../../en/book/")],
         aviso="Material educativo. Não é recomendação de investimento nem garante resultados.", volver="← Voltar para wiqonlab.com/br"),
     "en": dict(
@@ -71,7 +74,8 @@ T = {
         datos="16 pages · PDF · October 2026 edition · Avelino González, Eng.",
         precio="USD 9.99", comprar_wa="Buy via WhatsApp", wa_texto="Hi WIQON, I want the book Edge or Luck?",
         medios="Card payment through Hotmart, with instant delivery of the PDF by email. You can also pay with USDT (TRC20) or PYUSD (Solana) via WhatsApp.",
-        tarjeta="💳 Card payments: coming soon", tarjeta_btn="Pay by card",
+        tarjeta="💳 Card payments: coming soon", tarjeta_btn="Pay by card", amazon_btn="Buy on Amazon (Kindle)",
+        leer="📱 Read it anywhere: the PDF opens on your phone, tablet or computer, and you can also upload it to your Google Play Books library or send it to your Kindle.",
         muestra_t="Take a look inside", otros="Also available in", otros_l=[("Español", "../../libro/"), ("Português", "../../br/livro/")],
         aviso="Educational material. Not financial advice and no guaranteed results.", volver="← Back to wiqonlab.com"),
 }
@@ -97,6 +101,8 @@ h1{font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.02;margin:.3em 0 .25em;font-
 .btn{display:inline-block;background:var(--naranja);color:#fff;text-decoration:none;font-weight:900;padding:14px 22px;border-radius:8px;margin:6px 8px 6px 0}
 .btn.sec{background:transparent;border:1px solid #3a4a63;color:#d7dee6;cursor:default}
 .medios{font-size:.88rem;color:#aebbc9;max-width:520px}
+.medios.leer{margin-top:-4px}
+.btn.amz{background:#232f3e;border:1px solid #febd69}
 main{max-width:1080px;margin:0 auto;padding:40px 16px}
 h2{font-size:1.6rem;margin:0 0 .6em;font-weight:900}
 .intro{font-size:1.12rem;max-width:760px}
@@ -126,6 +132,8 @@ def pagina(cod):
     wa = f"https://wa.me/{WHATSAPP}?text={quote(t['wa_texto'])}"
     tarjeta = (f'<a class="btn" href="{esc(COMPRA[cod])}" target="_blank" rel="noopener">{t["tarjeta_btn"]}</a>' if COMPRA[cod]
                else f'<span class="btn sec">{t["tarjeta"]}</span>')
+    if AMAZON.get(cod):
+        tarjeta += f'<a class="btn amz" href="{esc(AMAZON[cod])}" target="_blank" rel="noopener">{t["amazon_btn"]}</a>'
     url = f"https://wiqonlab.com/{t['ruta']}/"
     portada = f"{t['raiz']}libro/img/{t['img']}_p01.jpg"
     return f"""<!doctype html>
@@ -147,7 +155,8 @@ def pagina(cod):
   <div class="lema">{esc(t['lema'])}</div>
   <div class="precio">{t['precio']}</div>
   <a class="btn" href="{wa}" target="_blank" rel="noopener">{t['comprar_wa']}</a>{tarjeta}
-  <p class="medios">{esc(t['medios'])}</p></div>
+  <p class="medios">{esc(t['medios'])}</p>
+  <p class="medios leer">{esc(t['leer'])}</p></div>
 </div></section>
 <main>
  <p class="intro">{esc(t['intro'])}</p>
