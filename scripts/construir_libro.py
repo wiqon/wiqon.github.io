@@ -18,7 +18,7 @@ BEACON = '<script defer src="https://static.cloudflareinsights.com/beacon.min.js
 
 # Links de pago con tarjeta: se completan cuando existan (vacío = "próximamente")
 COMPRA = {"es": "https://pay.hotmart.com/K108005565Y", "pt": "https://pay.hotmart.com/Y108004979L", "en": "https://pay.hotmart.com/G108005645T"}
-AMAZON = {"es": "", "pt": "", "en": ""}  # enlace de la edición Kindle de cada idioma; vacío = no se muestra el botón
+AMAZON = {"es": "https://www.amazon.com/dp/B0HN54PLCW", "pt": "", "en": "https://www.amazon.com/dp/B0HN4MB7YQ"}  # enlace de la edición Kindle de cada idioma; vacío = no se muestra el botón
 
 T = {
     "es": dict(
