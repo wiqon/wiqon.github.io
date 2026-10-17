@@ -492,3 +492,54 @@ dialog.acceso::backdrop { background: rgba(2, 6, 12, .7); backdrop-filter: blur(
 :root:not(.logueado) .vista-previa tbody tr:nth-child(n+3), :root:not(.logueado) .vista-previa .vivo { filter: blur(5px); user-select: none; pointer-events: none; }
 :root:not(.logueado) .vista-previa .nota { visibility: hidden; }
 :root:not(.logueado) .vista-previa::after { content: ""; position: absolute; inset: 40% 0 0 0; background: linear-gradient(180deg, transparent, var(--fondo) 85%); pointer-events: none; }
+
+/* ---------- refinamiento visual (octubre 2026) ----------
+   Ideas tomadas de una guía de estilo de referencia, manteniendo los colores de la marca:
+   dos radios (6 px controles, 16 px tarjetas), profundidad sin sombras, títulos de peso medio
+   con letras más juntas, cifras clave grandes, más aire entre secciones. */
+
+/* 1. dos radios: 6 px para controles y etiquetas, 16 px para tarjetas y paneles */
+.btn, .tema-btn, .idioma, .idioma a, .rangos button, .chip-e, .tags span, .tipo, .sel, .usuario button,
+.servs li, .datos-v div, .mapa .tip, .idi, .pie a .af, .p-ic, .atajo, .bloqueo .candado, .dato-m .q i,
+.est, .chip, .pestanas, .pestanas button, .principios span { border-radius: 6px; }
+.panel, .caja, .pilar, .evid, .vivo, .dato-m, .nota-n, .esq, .vid, .mercados, .tv, .ilus,
+.panel-m .widget, .mapa, .bloqueo, .registro { border-radius: 16px; }
+
+/* 2. profundidad por escalones de fondo, sin sombras ni degradados en las superficies */
+.panel, :root[data-tema="claro"] .panel { box-shadow: none; background: var(--sup); }
+:root:not([data-tema="claro"]) .pilar, :root:not([data-tema="claro"]) .caja,
+:root:not([data-tema="claro"]) .vivo, :root:not([data-tema="claro"]) .mercados { border-color: rgba(255, 255, 255, .06); }
+:root:not([data-tema="claro"]) .pilar { background: var(--sup); }
+
+/* 3. títulos de peso medio con espaciado negativo: más "instrumento", menos "aviso" */
+.hero h1 { font-weight: 600; letter-spacing: -.035em; line-height: 1.04; }
+h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { font-weight: 600; letter-spacing: -.03em; line-height: 1.08; }
+.pilar h3, .historias h3 { font-weight: 600; letter-spacing: -.01em; }
+.humano blockquote { font-weight: 500; letter-spacing: -.02em; }
+.senal { font-weight: 600; letter-spacing: -.02em; }
+
+/* etiquetas de sección: mayúsculas con espaciado amplio, como rótulos de instrumento */
+.vol, .kicker { letter-spacing: .16em; font-weight: 600; }
+
+/* 4. cifras clave grandes, en cian claro */
+.pilar .comp .num { font-size: 2.4rem !important; font-weight: 600; letter-spacing: -.03em; line-height: 1; color: var(--cian2); }
+.pilar .comp .num small { display: inline-block; font-size: .8rem; font-weight: 500; letter-spacing: 0; color: var(--gris); margin-left: 6px; }
+.pilar .comp .lbl { letter-spacing: .12em; }
+:root[data-tema="claro"] .pilar .comp .num { color: var(--cian); }
+
+/* 5. más aire entre secciones y textos en columnas más angostas */
+section.s { padding: 96px 0; }
+section.s + section.s { border-top-color: rgba(255, 255, 255, .04); }
+:root[data-tema="claro"] section.s + section.s { border-top-color: var(--borde); }
+.hero { padding: 72px 0 56px; }
+.hero .sub, .intro p { max-width: 600px; }
+
+/* 6. flecha en un botón cuadrado para los enlaces "ir a" */
+.enl svg.ic { width: 28px; height: 28px; padding: 6px; border-radius: 6px; background: rgba(34, 195, 238, .12); transition: background .15s; }
+.enl:hover { text-decoration: none; }
+.enl:hover svg.ic { background: rgba(34, 195, 238, .24); }
+
+@media (max-width: 680px) {
+  section.s { padding: 64px 0; }
+  .pilar .comp .num { font-size: 2rem !important; }
+}
