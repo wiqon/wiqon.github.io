@@ -10,7 +10,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 TITULAR, CI = "Avelino González Melgarejo", "4.690.007"
 EMAIL, WA_TXT, WA = "contacto@wiqonlab.com", "+595 987 685 651", "https://wa.me/595987685651"
 FORM_URL = "https://n8n.wiqonlab.com/webhook/contacto-web"
-FECHA_ES, FECHA_PT = "14 de octubre de 2026", "14 de outubro de 2026"
+FECHA_ES, FECHA_PT = "17 de octubre de 2026", "17 de outubro de 2026"
 REDES_ES = [("Facebook", "https://www.facebook.com/wiqonlab/"), ("Instagram", "https://www.instagram.com/wiqonlab/"),
             ("YouTube", "https://www.youtube.com/@wiqonlab"), ("Telegram", "https://t.me/wiqonlab"),
             ("TikTok", "https://www.tiktok.com/@wiqonlab"), ("X", "https://x.com/wiqonlab"), ("Discord", "https://discord.gg/8GDqe8H7R7")]
@@ -108,7 +108,7 @@ TERMINOS_ES = f"""<h1>Términos y condiciones</h1>
 <ul>
 <li>La licencia es personal, no exclusiva e intransferible, y funciona en la cuenta de MetaTrader 5 que nos indicaste. La anual dura 12 meses desde la entrega; la vitalicia no vence.</li>
 <li>No está permitido revender, compartir, publicar ni descompilar el software o la clave.</li>
-<li>Si necesitás usarla en otra cuenta, escribinos y lo evaluamos caso por caso.</li>
+<li>Si cambiás de cuenta o de broker, te generamos una clave nueva gratis una vez por año.</li>
 <li>La demo es el mismo programa, gratis y sin límite de tiempo en cuentas demo, para que lo pruebes antes de comprar.</li>
 </ul>
 
@@ -267,6 +267,7 @@ TERMOS_PT = f"""<h1>Termos e condições</h1>
 <ul>
 <li>A licença é pessoal, não exclusiva e intransferível, e funciona na conta de MetaTrader 5 informada. A anual vale 12 meses a partir da entrega; a vitalícia não vence.</li>
 <li>Não é permitido revender, compartilhar, publicar ou descompilar o software ou a chave.</li>
+<li>Se você trocar de conta ou de corretora, geramos uma chave nova grátis uma vez por ano.</li>
 <li>A demo é o mesmo programa, grátis e sem limite de tempo em contas demo, para você testar antes de comprar.</li>
 </ul>
 
@@ -372,7 +373,7 @@ TERMS_EN = f"""<h1>Terms and conditions</h1>
 <ul>
 <li>The license is personal, non-exclusive and non-transferable, and works on the MetaTrader 5 account you gave us. The annual license lasts 12 months from delivery; the lifetime license does not expire.</li>
 <li>You may not resell, share, publish or decompile the software or the key.</li>
-<li>If you need to use it on another account, write to us and we will review it case by case.</li>
+<li>If you change account or broker, we generate a new key for free once a year.</li>
 <li>The demo is the same program, free and with no time limit on demo accounts, so you can try it before buying.</li>
 </ul>
 
