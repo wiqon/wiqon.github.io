@@ -2,7 +2,8 @@
 // del FMI y planeta de la portada. Los widgets se cargan recién cuando se abre cada pestaña.
 (function () {
   const PT = document.documentElement.lang.toLowerCase().startsWith("pt");
-  const LOC = PT ? "pt-BR" : "es-PY";
+  const EN = document.documentElement.lang.toLowerCase().startsWith("en");
+  const LOC = (PT ? "pt-BR" : EN ? "en-US" : "es-PY");
   const RAIZ = document.body.dataset.raiz || "";
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -25,7 +26,7 @@
       el.innerHTML = '<div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div></div>';
       const sc = document.createElement("script");
       sc.src = `https://s3.tradingview.com/external-embedding/${archivo}`; sc.async = true;
-      sc.text = JSON.stringify(Object.assign({ locale: PT ? "br" : "es", colorTheme: tema(), theme: tema(), isTransparent: true, width: "100%", height: "100%" }, config()));
+      sc.text = JSON.stringify(Object.assign({ locale: (PT ? "br" : EN ? "en" : "es"), colorTheme: tema(), theme: tema(), isTransparent: true, width: "100%", height: "100%" }, config()));
       el.firstChild.appendChild(sc);
     };
     cargados.set(el, dibujar); dibujar();
@@ -35,24 +36,24 @@
   const q = (s, n) => ({ name: s, displayName: n });
   const WIDGETS = {
     "tv-cuerpo": () => widget($("#tv-cuerpo"), "embed-widget-advanced-chart.js", () => ({
-      autosize: true, symbol: "BINANCE:BTCUSDT", interval: "60", timezone: PT ? "America/Sao_Paulo" : "America/Asuncion", style: "1",
+      autosize: true, symbol: "BINANCE:BTCUSDT", interval: "60", timezone: (PT ? "America/Sao_Paulo" : EN ? "America/Asuncion" : "America/Asuncion"), style: "1",
       allow_symbol_change: true, calendar: false, isTransparent: false, backgroundColor: tema() === "dark" ? "#0c1624" : "#ffffff", support_host: "https://www.tradingview.com" })),
     acciones: () => widget($("#w-acciones"), "embed-widget-hotlists.js", () => ({ dateRange: "1D", exchange: "US", showChart: true, showSymbolLogo: true, showFloatingTooltip: false })),
     b3: () => widget($("#w-b3"), "embed-widget-market-quotes.js", () => ({ showSymbolLogo: true, symbolsGroups: [
-      { name: PT ? "Índices e ações" : "Índices y acciones", symbols: [q("BMFBOVESPA:IBOV", "Ibovespa"), q("BMFBOVESPA:PETR4", "Petrobras PN"), q("BMFBOVESPA:VALE3", "Vale ON"),
+      { name: (PT ? "Índices e ações" : EN ? "Indices and stocks" : "Índices y acciones"), symbols: [q("BMFBOVESPA:IBOV", "Ibovespa"), q("BMFBOVESPA:PETR4", "Petrobras PN"), q("BMFBOVESPA:VALE3", "Vale ON"),
         q("BMFBOVESPA:ITUB4", "Itaú Unibanco PN"), q("BMFBOVESPA:BBAS3", "Banco do Brasil ON"), q("BMFBOVESPA:BBDC4", "Bradesco PN"), q("BMFBOVESPA:WEGE3", "WEG ON")] },
-      { name: PT ? "Futuros B3" : "Futuros B3", symbols: [q("BMFBOVESPA:WIN1!", PT ? "Mini Índice" : "Mini Índice (WIN)"), q("BMFBOVESPA:WDO1!", PT ? "Mini Dólar" : "Mini Dólar (WDO)"), q("BMFBOVESPA:IND1!", PT ? "Índice cheio" : "Índice Bovespa (IND)"), q("BMFBOVESPA:DOL1!", PT ? "Dólar cheio" : "Dólar (DOL)")] },
+      { name: (PT ? "Futuros B3" : EN ? "B3 futures" : "Futuros B3"), symbols: [q("BMFBOVESPA:WIN1!", (PT ? "Mini Índice" : EN ? "Mini Index (WIN)" : "Mini Índice (WIN)")), q("BMFBOVESPA:WDO1!", (PT ? "Mini Dólar" : EN ? "Mini Dollar (WDO)" : "Mini Dólar (WDO)")), q("BMFBOVESPA:IND1!", (PT ? "Índice cheio" : EN ? "Bovespa Index (IND)" : "Índice Bovespa (IND)")), q("BMFBOVESPA:DOL1!", (PT ? "Dólar cheio" : EN ? "Dollar (DOL)" : "Dólar (DOL)"))] },
     ] })),
     futuros: () => widget($("#w-futuros"), "embed-widget-market-quotes.js", () => ({ showSymbolLogo: true, symbolsGroups: [
-      { name: PT ? "Futuros B3" : "Futuros B3", symbols: [q("BMFBOVESPA:WIN1!", "Mini Índice"), q("BMFBOVESPA:WDO1!", "Mini Dólar"), q("BMFBOVESPA:IND1!", PT ? "Índice cheio" : "Índice Bovespa"), q("BMFBOVESPA:DOL1!", PT ? "Dólar cheio" : "Dólar")] },
-      { name: PT ? "Índices globais (CFD)" : "Índices globales (CFD)", symbols: [q("FOREXCOM:SPXUSD", "S&P 500"), q("FOREXCOM:NSXUSD", "Nasdaq 100"), q("FOREXCOM:DJI", "Dow Jones")] },
-      { name: PT ? "Commodities (CFD)" : "Materias primas (CFD)", symbols: [q("OANDA:XAUUSD", PT ? "Ouro" : "Oro"), q("OANDA:XAGUSD", PT ? "Prata" : "Plata"), q("TVC:USOIL", "Petróleo WTI"),
-        q("OANDA:SOYBNUSD", "Soja"), q("OANDA:CORNUSD", PT ? "Milho" : "Maíz"), q("OANDA:WHEATUSD", PT ? "Trigo" : "Trigo")] },
+      { name: (PT ? "Futuros B3" : EN ? "B3 futures" : "Futuros B3"), symbols: [q("BMFBOVESPA:WIN1!", "Mini Índice"), q("BMFBOVESPA:WDO1!", "Mini Dólar"), q("BMFBOVESPA:IND1!", (PT ? "Índice cheio" : EN ? "Bovespa Index" : "Índice Bovespa")), q("BMFBOVESPA:DOL1!", (PT ? "Dólar cheio" : EN ? "Dollar" : "Dólar"))] },
+      { name: (PT ? "Índices globais (CFD)" : EN ? "Global indices (CFD)" : "Índices globales (CFD)"), symbols: [q("FOREXCOM:SPXUSD", "S&P 500"), q("FOREXCOM:NSXUSD", "Nasdaq 100"), q("FOREXCOM:DJI", "Dow Jones")] },
+      { name: (PT ? "Commodities (CFD)" : EN ? "Commodities (CFD)" : "Materias primas (CFD)"), symbols: [q("OANDA:XAUUSD", (PT ? "Ouro" : EN ? "Gold" : "Oro")), q("OANDA:XAGUSD", (PT ? "Prata" : EN ? "Silver" : "Plata")), q("TVC:USOIL", "Petróleo WTI"),
+        q("OANDA:SOYBNUSD", "Soja"), q("OANDA:CORNUSD", (PT ? "Milho" : EN ? "Corn" : "Maíz")), q("OANDA:WHEATUSD", (PT ? "Trigo" : EN ? "Wheat" : "Trigo"))] },
     ] })),
     forex: () => widget($("#w-forex"), "embed-widget-market-quotes.js", () => ({ showSymbolLogo: true, symbolsGroups: [
-      { name: PT ? "América do Sul" : "Sudamérica", symbols: [q("FX_IDC:USDBRL", "USD/BRL"), q("FX_IDC:USDPYG", "USD/PYG"), q("FX_IDC:USDARS", "USD/ARS"),
+      { name: (PT ? "América do Sul" : EN ? "South America" : "Sudamérica"), symbols: [q("FX_IDC:USDBRL", "USD/BRL"), q("FX_IDC:USDPYG", "USD/PYG"), q("FX_IDC:USDARS", "USD/ARS"),
         q("FX_IDC:USDCLP", "USD/CLP"), q("FX_IDC:USDCOP", "USD/COP"), q("FX_IDC:USDUYU", "USD/UYU")] },
-      { name: PT ? "Principais" : "Principales", symbols: [q("FX:EURUSD", "EUR/USD"), q("FX:GBPUSD", "GBP/USD"), q("FX:USDJPY", "USD/JPY"), q("CAPITALCOM:DXY", PT ? "Índice dólar (DXY)" : "Índice dólar (DXY)")] },
+      { name: (PT ? "Principais" : EN ? "Majors" : "Principales"), symbols: [q("FX:EURUSD", "EUR/USD"), q("FX:GBPUSD", "GBP/USD"), q("FX:USDJPY", "USD/JPY"), q("CAPITALCOM:DXY", (PT ? "Índice dólar (DXY)" : EN ? "Dollar index (DXY)" : "Índice dólar (DXY)"))] },
     ] })),
     calendario: () => widget($("#w-calendario"), "embed-widget-events.js", () => ({ importanceFilter: "0,1", countryFilter: "br,ar,us,eu,cl,co,mx,cn" })),
   };
@@ -108,7 +109,7 @@
     const caja = $("#mapa-inflacion"), svgEl = $("#mapa-svg"), tip = $("#mapa-tip");
     Promise.all([geo(), fetch(RAIZ + "inflacion.json?t=" + Math.floor(Date.now() / 3600e3)).then((r) => r.json())]).then(([mundo, inf]) => {
       // nombres de país en el idioma de la página (código ISO de 2 letras; si no hay, el nombre del FMI)
-      let dn = null; try { dn = new Intl.DisplayNames([PT ? "pt-BR" : "es"], { type: "region" }); } catch (e) { dn = null; }
+      let dn = null; try { dn = new Intl.DisplayNames([(PT ? "pt-BR" : EN ? "en" : "es")], { type: "region" }); } catch (e) { dn = null; }
       Object.values(inf.paises).forEach((p) => { try { if (dn && p.iso2) p.nombre = dn.of(p.iso2) || p.nombre; } catch (e) { /* queda el nombre del FMI */ } });
       const paises = topojson.feature(mundo, mundo.objects.countries).features.filter((f) => f.id !== "010"); // sin Antártida
       const W = 960, H = 470;
@@ -140,9 +141,9 @@
       const region = ["PRY", "BRA", "ARG", "URY", "BOL", "CHL", "PER", "COL", "MEX", "USA"];
       const lista = Object.values(inf.paises).filter((p) => region.includes(p.iso3)).sort((a, b) => region.indexOf(a.iso3) - region.indexOf(b.iso3));
       $("#mapa-ranking").innerHTML = lista.map((p) => `<li><span>${p.nombre}</span><b>${fmt(p.valor)}</b></li>`).join("");
-      $("#mapa-fuente").innerHTML = `${PT ? "Fonte" : "Fuente"}: <a href="${inf.fuente_url}" target="_blank" rel="noopener">${inf.fuente}</a>. ` +
-        (PT ? `Valores de ${inf.anio}: estimativas do FMI para o ano em curso.` : inf.nota);
-    }).catch(() => { $("#mapa-fuente").textContent = PT ? "Não foi possível carregar o mapa agora." : "No pudimos cargar el mapa ahora."; });
+      $("#mapa-fuente").innerHTML = `${(PT ? "Fonte" : EN ? "Source" : "Fuente")}: <a href="${inf.fuente_url}" target="_blank" rel="noopener">${inf.fuente}</a>. ` +
+        (PT ? `Valores de ${inf.anio}: estimativas do FMI para o ano em curso.` : EN ? `${inf.anio} values: IMF estimates for the current year.` : inf.nota);
+    }).catch(() => { $("#mapa-fuente").textContent = (PT ? "Não foi possível carregar o mapa agora." : EN ? "We couldn't load the map right now." : "No pudimos cargar el mapa ahora."); });
   }
 
   // ---------------- planeta de la portada, entero, con el satélite WIQON en órbita ----------------

@@ -335,11 +335,173 @@ CONTATO_PT = f"""<h1>Contato</h1>
 {TITULAR_PT}
 """
 
+# ============================================ ENGLISH ============================================
+FECHA_EN = "October 17, 2026"
+REDES_EN = REDES_ES
+TITULAR_EN = f"""<div class="tit"><p><strong>Owner:</strong> {TITULAR} · Paraguayan identity card No. {CI} · individual (sole proprietor) trading as <strong>WIQON</strong> (Paraguay).<br>
+<strong>Contact:</strong> <a href="mailto:{EMAIL}">{EMAIL}</a> · WhatsApp <a href="{WA}" target="_blank" rel="noopener">{WA_TXT}</a> · <a href="../contact/">contact form</a></p></div>"""
+
+TERMS_EN = f"""<h1>Terms and conditions</h1>
+<p class="meta">Last updated: {FECHA_EN}</p>
+{TITULAR_EN}
+
+<h2>1. What WIQON is</h2>
+<p>WIQON (wiqonlab.com) is a trading research and market data lab based in Paraguay. We publish our experiments, market data and guides for free, and we sell software for MetaTrader 5, a digital book and personalized services. By buying or using the site you accept these terms.</p>
+
+<h2>2. Products and services</h2>
+<table>
+<tr><th>Product or service</th><th>Type</th><th>Price</th></tr>
+<tr><td><strong>WIQON Shield</strong> · demo</td><td>Software (EA for MetaTrader 5), demo accounts only</td><td>Free</td></tr>
+<tr><td><strong>WIQON Shield</strong> · annual license</td><td>12-month software license</td><td>USD 59 (launch price; regular price USD 99)</td></tr>
+<tr><td><strong>WIQON Shield</strong> · lifetime license</td><td>Software license with no expiry</td><td>USD 199</td></tr>
+<tr><td><strong>Book "Edge or Luck?"</strong></td><td>Digital book in PDF (English, Spanish or Portuguese)</td><td>USD 9.99</td></tr>
+<tr><td><strong>Assisted installation</strong></td><td>Personalized service (about 30 minutes)</td><td>USD 30</td></tr>
+<tr><td><strong>Strategy audit</strong></td><td>Personalized service with a written report</td><td>Free initial diagnosis · basic from USD 80 · full from USD 200</td></tr>
+</table>
+<p>Prices are in US dollars. For now, WIQON Shield is not sold to residents of Brazil (the demo remains free).</p>
+
+<h2>3. How to buy</h2>
+<ol>
+<li><strong>Choose</strong> the product on the site or by messaging us on WhatsApp. An automatic assistant shows you options and prices; you can ask to talk to a person at any time.</li>
+<li><strong>Pay</strong> with the method you prefer: credit or debit card through enabled payment processors (for example Hotmart for the book, or Amazon Kindle), Binance Pay or USDT (TRC20 network), PYUSD (Solana network) or SIPAP bank transfer in Paraguay.</li>
+<li><strong>Send us the receipt</strong> (not needed for card payments). We verify every payment manually.</li>
+<li><strong>Receive the product</strong> within the times in the <a href="../refunds/">delivery and refund policy</a>. For a Shield license we ask for your real MetaTrader 5 account number, because the license is tied to that account.</li>
+</ol>
+
+<h2>4. WIQON Shield license</h2>
+<ul>
+<li>The license is personal, non-exclusive and non-transferable, and works on the MetaTrader 5 account you gave us. The annual license lasts 12 months from delivery; the lifetime license does not expire.</li>
+<li>You may not resell, share, publish or decompile the software or the key.</li>
+<li>If you need to use it on another account, write to us and we will review it case by case.</li>
+<li>The demo is the same program, free and with no time limit on demo accounts, so you can try it before buying.</li>
+</ul>
+
+<h2>5. Personalized services</h2>
+<p><strong>Assisted installation.</strong> We agree on a day and time via WhatsApp. Over a video call or remote access, with your authorization and in your presence, we install and configure the EA in your MetaTrader 5 with the license active and explain how to read it.</p>
+<p><strong>Strategy audit.</strong> 1) Free 20-30 minute initial diagnosis to understand your strategy or bot. 2) We send you the scope, price and timeline in writing; you only pay if you accept. 3) You share the rules, code or trade history needed. 4) We deliver a report with the methodology (real costs, out-of-sample tests, parameter robustness) and the conclusion, even if the conclusion is that the strategy has no edge. We treat your strategy and data as confidential.</p>
+<p><strong>Security:</strong> we never ask for your bank or exchange passwords, or for API keys with withdrawal permission.</p>
+
+<h2>6. Risk and liability</h2>
+<ul>
+<li>All content, software and services are informational and educational: they are not financial advice or investment recommendations.</li>
+<li>WIQON does not manage third-party money, does not receive funds to invest and does not sell buy or sell signals.</li>
+<li>Trading financial markets involves risk of loss. Past results, including ours, do not guarantee future results. Trading decisions are each user's own.</li>
+<li>Our maximum liability to a customer is limited to the amount paid for the product or service in question.</li>
+</ul>
+
+<h2>7. Intellectual property and privacy</h2>
+<p>The WIQON brand, texts, book, WIQON Shield software and site designs belong to the owner. The lab code published on <a href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">GitHub</a> is governed by the license stated in that repository. How we handle your data is explained in the <a href="../privacy/">privacy policy</a>.</p>
+
+<h2>8. Changes and governing law</h2>
+<p>We may update these terms; the version in force is the one published on this page with its date. Purchases already made are governed by the terms in force at the time of purchase. The laws of the Republic of Paraguay apply, without prejudice to any consumer rights that apply to you. For any claim, please write to <a href="mailto:{EMAIL}">{EMAIL}</a> first: we reply within 48 business hours. This English version is a translation; the <a href="../../terminos/">Spanish version</a> prevails in case of discrepancy.</p>
+"""
+
+REFUNDS_EN = f"""<h1>Delivery and refund policy</h1>
+<p class="meta">Last updated: {FECHA_EN}</p>
+{TITULAR_EN}
+
+<h2>1. Delivery</h2>
+<p>All our products are digital: we don't ship physical items or charge shipping.</p>
+<table>
+<tr><th>Product</th><th>How it is delivered</th><th>Time</th></tr>
+<tr><td>Book "Edge or Luck?" by card (Hotmart)</td><td>Hotmart emails you the PDF</td><td>Immediate, automatic</td></tr>
+<tr><td>Book on Amazon (Kindle)</td><td>Amazon delivers it to your Kindle account</td><td>Immediate, under Amazon's terms</td></tr>
+<tr><td>Book paid with crypto or bank transfer</td><td>PDF via WhatsApp</td><td>Under 1 hour during Paraguay business hours; at most 24 business hours after we verify the payment</td></tr>
+<tr><td>WIQON Shield license</td><td>Download link (EA + manual) and license key via WhatsApp</td><td>At most 24 business hours after we verify the payment and receive your MT5 account number</td></tr>
+<tr><td>Assisted installation</td><td>Video call or remote access</td><td>On the agreed day and time</td></tr>
+<tr><td>Strategy audit</td><td>Written report by email or WhatsApp</td><td>Within the timeline in the accepted proposal</td></tr>
+</table>
+<p>If you haven't received your purchase within those times, write to <a href="mailto:{EMAIL}">{EMAIL}</a> or WhatsApp {WA_TXT}.</p>
+
+<h2>2. Returns and refunds</h2>
+<p>Requests must be made within <strong>7 calendar days</strong> of delivery.</p>
+<p><strong>Digital book.</strong> Full refund if the file doesn't open or is incomplete and we can't send you a correct one, or if you were charged twice. Purchases made on Hotmart are also covered by Hotmart's guarantee, requested from your Hotmart account within the period shown there; Amazon purchases follow Amazon's return policy.</p>
+<p><strong>WIQON Shield license.</strong> Since the demo is the same program, free and with no time limit, there are no change-of-mind refunds once the key has been delivered. You do get a full refund if the license doesn't work on the account you gave us and we don't fix it within 7 days of your claim, if you were charged twice, or if you paid and haven't received the key yet (you can cancel before delivery). When a license is refunded, the key is void and must not be used.</p>
+<p><strong>Assisted installation.</strong> Full refund if it wasn't carried out, or if for reasons on our side the EA isn't left working. You can reschedule with notice.</p>
+<p><strong>Strategy audit.</strong> Full refund if you cancel before we start. If you cancel once work has begun, we refund the part not done according to the accepted proposal.</p>
+
+<h2>3. How to request a refund</h2>
+<p>Write to <a href="mailto:{EMAIL}">{EMAIL}</a> or WhatsApp {WA_TXT} with your name, the product, the date and the payment receipt. We reply within 48 business hours and, where applicable, refund through the same payment method within 10 business days. See also the <a href="../terms/">terms and conditions</a>.</p>
+"""
+
+PRIVACY_EN = f"""<h1>Privacy policy</h1>
+<p class="meta">Last updated: {FECHA_EN}</p>
+
+<h2>1. Who we are</h2>
+<p>WIQON (wiqonlab.com) is a market research and software lab based in Paraguay. Data controller: {TITULAR}, on behalf of WIQON. Contact for any privacy matter: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+
+<h2>2. What data we keep</h2>
+<ul>
+<li><strong>If you create an account:</strong> your email, the date you accepted this policy, the page language and whether you agreed to receive news. The authentication service also records the creation date and last sign-in.</li>
+<li><strong>We don't ask</strong> for your name, ID, phone, bank details or passwords.</li>
+<li><strong>If you write to us</strong> by email, WhatsApp or the contact form, we keep that conversation to answer you.</li>
+</ul>
+
+<h2>3. What we use it for</h2>
+<ul>
+<li>Giving you access to the sections for registered users (legal basis: performing the service you requested).</li>
+<li>Sending you WIQON news, only if you ticked that box (legal basis: your consent, which you can withdraw at any time).</li>
+<li>We don't sell or rent your data, and we don't use it for third-party advertising.</li>
+</ul>
+
+<h2>4. Who processes the data</h2>
+<ul>
+<li><strong>Supabase</strong> hosts the accounts and sends the sign-in links, as a data processor.</li>
+<li><strong>GitHub Pages</strong> and <strong>Cloudflare</strong> serve the site and the domain.</li>
+<li>These providers may process data outside Paraguay or Brazil, with their own security measures.</li>
+</ul>
+
+<h2>5. Third-party services on the site</h2>
+<ul>
+<li>Interactive charts and market tables are provided by <strong>TradingView</strong> and load when you reach those sections.</li>
+<li><strong>YouTube</strong> videos load only if you press play (privacy-enhanced mode).</li>
+<li>Live prices come from <strong>Binance</strong>'s public servers; fonts from <strong>Google Fonts</strong>.</li>
+<li>When that content loads, your browser connects to those services, which have their own policies.</li>
+</ul>
+
+<h2>6. Storage in your browser</h2>
+<p>We don't use cookies. To know how many people visit the site we use <strong>Cloudflare Web Analytics</strong>, which uses no cookies and keeps no data that identifies you (it counts visits, pages and country in aggregate). We store in your browser (local storage) only your session, the light or dark theme and whether you're signed in, so the page works.</p>
+
+<h2>7. How long</h2>
+<p>For as long as your account exists. If you ask us to delete it, we erase your data within 15 days, except what the law requires us to keep.</p>
+
+<h2>8. Your rights</h2>
+<p>You can ask at any time for access to your data, correction, account deletion, portability, or to withdraw your consent to receive news. If you are in Brazil, these rights are provided by the General Data Protection Law (LGPD, Law 13,709/2018). Write to <a href="mailto:{EMAIL}">{EMAIL}</a> from your account's email and we reply within 15 days.</p>
+
+<h2>9. Minors</h2>
+<p>Accounts are for people over 18. If we detect an account belonging to a minor, we delete it.</p>
+
+<h2>10. Changes</h2>
+<p>If we change this policy, we update the date above and, if the change is significant, we notify registered users.</p>
+"""
+
+FORM_EN = dict(nombre="Name", email="Email", mensaje="Message", enviar="Send message", idioma="en",
+               aviso='We use your data only to reply to you (see the <a href="../privacy/">privacy policy</a>).',
+               falta="Please enter your name, a valid email and your message.", enviando="Sending…",
+               ok="Message sent! We'll reply by email, usually within 24 business hours.",
+               error=f"We couldn't send it. Please try again or write to {EMAIL}.")
+
+CONTACT_EN = f"""<h1>Contact</h1>
+<p>Reach us through whichever channel you prefer. We reply personally, usually within 24 business hours (Paraguay time).</p>
+<table>
+<tr><th>Email</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
+<tr><th>WhatsApp</th><td><a href="{WA}?text=Hi%20WIQON" target="_blank" rel="noopener">{WA_TXT}</a></td></tr>
+<tr><th>Social</th><td class="redes-l">{enlaces(REDES_EN)}</td></tr>
+<tr><th>Location</th><td>Paraguay (Asunción · Ciudad del Este)</td></tr>
+</table>
+<h2>Contact form</h2>
+{formulario(FORM_EN)}
+{TITULAR_EN}
+"""
+
 
 def pie(lang):
     if lang == "es":
         return (f'<a href="../terminos/">Términos y condiciones</a><a href="../devoluciones/">Entregas y devoluciones</a>'
                 f'<a href="../privacidad/">Privacidad</a><a href="../contacto/">Contacto</a><br>© 2026 WIQON · {TITULAR} · C.I. {CI} · Paraguay')
+    if lang == "en":
+        return (f'<a href="../terms/">Terms and conditions</a><a href="../refunds/">Delivery and refunds</a>'
+                f'<a href="../privacy/">Privacy</a><a href="../contact/">Contact</a><br>© 2026 WIQON · {TITULAR} · ID {CI} · Paraguay')
     return (f'<a href="../termos/">Termos e condições</a><a href="../devolucoes/">Entregas e devoluções</a>'
             f'<a href="../privacidade/">Privacidade</a><a href="../contato/">Contato</a><br>© 2026 WIQON · {TITULAR} · C.I. {CI} · Paraguai')
 
@@ -351,6 +513,10 @@ PAGINAS = [
     ("br/termos", "pt", "Termos e condições", "Termos e condições da WIQON: produtos, como comprar, licenças e serviços.", TERMOS_PT),
     ("br/devolucoes", "pt", "Política de entregas e devoluções", "Como e quando os produtos digitais da WIQON são entregues e quando cabe reembolso.", DEVOLUCOES_PT),
     ("br/contato", "pt", "Contato", "Contato da WIQON: e-mail, WhatsApp, redes e formulário.", CONTATO_PT),
+    ("en/terms", "en", "Terms and conditions", "WIQON terms and conditions: products, how to buy, licenses and personalized services.", TERMS_EN),
+    ("en/refunds", "en", "Delivery and refund policy", "How and when WIQON digital products are delivered and when a refund applies.", REFUNDS_EN),
+    ("en/privacy", "en", "Privacy policy", "How WIQON handles your data.", PRIVACY_EN),
+    ("en/contact", "en", "Contact", "Contact WIQON: email, WhatsApp, social media and form.", CONTACT_EN),
 ]
 
 if __name__ == "__main__":
@@ -358,7 +524,7 @@ if __name__ == "__main__":
         r = "../" * (ruta.count("/") + 1)
         destino = RAIZ / ruta / "index.html"
         destino.parent.mkdir(parents=True, exist_ok=True)
-        destino.write_text(BASE.format(lang="es" if lang == "es" else "pt-BR", titulo=titulo, desc=desc, ruta=ruta + "/", r=r,
-                                       inicio="../" if lang == "es" else "../", volver="Volver a WIQON" if lang == "es" else "Voltar para a WIQON",
+        destino.write_text(BASE.format(lang={"es": "es", "pt": "pt-BR", "en": "en"}[lang], titulo=titulo, desc=desc, ruta=ruta + "/", r=r,
+                                       inicio="../" if lang == "es" else "../", volver={"es": "Volver a WIQON", "pt": "Voltar para a WIQON", "en": "Back to WIQON"}[lang],
                                        cuerpo=cuerpo, pie=pie(lang)), encoding="utf-8")
         print("ok", destino.relative_to(RAIZ))

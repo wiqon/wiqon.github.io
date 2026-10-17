@@ -3,8 +3,9 @@
 // Nunca se inventa un valor ni una hora: si falta un dato se dice.
 (function () {
   const PT = document.documentElement.lang.toLowerCase().startsWith("pt");
-  const LOC = PT ? "pt-BR" : "es-PY";
-  const TZ = PT ? "America/Sao_Paulo" : "America/Asuncion";
+  const EN = document.documentElement.lang.toLowerCase().startsWith("en");
+  const LOC = (PT ? "pt-BR" : EN ? "en-US" : "es-PY");
+  const TZ = (PT ? "America/Sao_Paulo" : EN ? "America/Asuncion" : "America/Asuncion");
   const RAIZ = document.body.dataset.raiz || "";
   const API = "https://data-api.binance.vision/api/v3";
   const $ = (s, r = document) => r.querySelector(s);
@@ -22,6 +23,14 @@
     completo: "Ver radar completo", menos: "Ver menos", masN: "Ver mais notícias", play: "Reproduzir",
     cats: { regulacion: "Regulação", impuestos: "Impostos", criptoactivos: "Criptoativos", stablecoins: "Stablecoins", pagos: "Pagamentos", fintech: "Fintech",
             finanzas: "Finanças", mercados: "Mercados", macroeconomia: "Macroeconomia", empresas: "Empresas", seguridad: "Segurança" },
+  } : EN ? {
+    hace: "", min: "min ago", h: "h ago", d: "d ago", ahora: "just now", act: "Updated", ult: "Last update", fuentes: "active sources",
+    viejo: "The data may be out of date.", caidas: "source(s) not responding; showing their latest known news:",
+    vacio: "No news with these filters in this period.", error: "We couldn't load this right now. Try reloading the page.",
+    mas: "more source(s)", sinDatos: "Data not available right now", ultConocido: "last known value", enBtc: "IN BTC", enUsdt: "IN USDT",
+    completo: "See full radar", menos: "See less", masN: "See more news", play: "Play",
+    cats: { regulacion: "Regulation", impuestos: "Taxes", criptoactivos: "Crypto assets", stablecoins: "Stablecoins", pagos: "Payments", fintech: "Fintech",
+            finanzas: "Finance", mercados: "Markets", macroeconomia: "Macroeconomics", empresas: "Companies", seguridad: "Security" },
   } : {
     hace: "hace", min: "min", h: "h", d: "d", ahora: "recién", act: "Actualizado", ult: "Última actualización", fuentes: "fuentes activas",
     viejo: "El dato puede estar desactualizado.", caidas: "fuente(s) sin responder; mostramos sus últimas noticias conocidas:",
@@ -34,9 +43,9 @@
   function hace(iso) {
     const m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
     if (m < 2) return T.ahora;
-    if (m < 60) return `${T.hace} ${m} ${T.min}`;
-    if (m < 1440) return `${T.hace} ${Math.round(m / 60)} ${T.h}`;
-    return `${T.hace} ${Math.round(m / 1440)} ${T.d}`;
+    if (m < 60) return T.hace ? `${T.hace} ${m} ${T.min}` : `${m} ${T.min}`;
+    if (m < 1440) return T.hace ? `${T.hace} ${Math.round(m / 60)} ${T.h}` : `${Math.round(m / 60)} ${T.h}`;
+    return T.hace ? `${T.hace} ${Math.round(m / 1440)} ${T.d}` : `${Math.round(m / 1440)} ${T.d}`;
   }
 
   // ================= portada: BTC en vivo (velas de 1 min) o diario con media 100 =================
@@ -170,7 +179,7 @@
     set("#h-cierre", `US$ ${num(e.cierre, 0)}`);
     set("#h-dist", `<span class="${e.distancia_pct >= 0 ? "sube" : "baja"}">${e.distancia_pct >= 0 ? "+" : ""}${num(e.distancia_pct, 1)}%</span>`);
     set("#h-desde", fecha(e.desde));
-    set("#h-act", `${T.act} ${hora(e.actualizado_utc.replace(" ", "T") + ":00Z")} · ${PT ? "candle de" : "vela del"} ${fecha(e.vela)}`);
+    set("#h-act", `${T.act} ${hora(e.actualizado_utc.replace(" ", "T") + ":00Z")} · ${(PT ? "candle de" : EN ? "candle of" : "vela del")} ${fecha(e.vela)}`);
   }).catch(() => { const el = $("#h-act"); if (el) el.textContent = T.sinDatos; });
 
   // ================= snapshot + tabla de cambio oficial (cambio.json) =================
@@ -190,7 +199,8 @@
     if (tb) {
       const nombrePT = { "Dólar estadounidense": "Dólar americano", "Real brasileño": "Real brasileiro", "Dólar (venta)": "Dólar (venda)" };
       tb.innerHTML = c.fuentes.flatMap((f) => f.valores.map((v) => {
-        const nombre = PT ? nombrePT[v.nombre] || v.nombre : v.nombre;
+        const nombreEN = { "Dólar estadounidense": "US dollar", "Real brasileño": "Brazilian real", "Dólar (venta)": "Dollar (sell)", "Peso argentino": "Argentine peso", "Peso colombiano": "Colombian peso", "Euro": "Euro", "Guaraní": "Guarani" };
+        const nombre = PT ? nombrePT[v.nombre] || v.nombre : EN ? nombreEN[v.nombre] || v.nombre : v.nombre;
         return `<tr><td>${esc(nombre)} <span class="u">· ${esc(v.unidad)}</span></td><td class="v">${num(v.valor, v.valor >= 100 ? 2 : 4)}</td>
           <td class="om"><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.institucion)}</a> <span class="u">· ${esc(f.serie)}</span></td>
           <td>${fecha(f.fecha)}${f.ok ? "" : ` <span class="u">(${T.ultConocido})</span>`}</td></tr>`;

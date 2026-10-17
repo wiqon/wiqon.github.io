@@ -122,7 +122,7 @@ footer{border-top:1px solid var(--linea);color:var(--gris);font-size:.82rem;text
 LEGALES = {  # páginas legales (pedidas por los procesadores de pago); en inglés se enlazan las de español
     "es": '<a href="{r}terminos/">Términos y condiciones</a> · <a href="{r}devoluciones/">Entregas y devoluciones</a> · <a href="{r}contacto/">Contacto</a>',
     "pt": '<a href="{r}br/termos/">Termos e condições</a> · <a href="{r}br/devolucoes/">Entregas e devoluções</a> · <a href="{r}br/contato/">Contato</a>',
-    "en": '<a href="{r}terminos/">Terms (Spanish)</a> · <a href="{r}devoluciones/">Delivery &amp; refunds (Spanish)</a> · <a href="{r}contacto/">Contact</a>',
+    "en": '<a href="{r}en/terms/">Terms and conditions</a> · <a href="{r}en/refunds/">Delivery &amp; refunds</a> · <a href="{r}en/contact/">Contact</a>',
 }
 
 

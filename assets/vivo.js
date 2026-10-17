@@ -2,12 +2,19 @@
 // de la página (atributo lang del <html>): "es" o "pt-BR".
 (function () {
   const pt = document.documentElement.lang.toLowerCase().startsWith("pt");
+  const en = document.documentElement.lang.toLowerCase().startsWith("en");
   const T = pt ? {
     btc: "EM BTC", usdt: "EM USDT", desde: "Desde ",
     sobre: " · o fechamento está acima da média", bajo: " · o fechamento está abaixo da média",
     vela: "Candle ", actualizado: "🕒 Atualizado: ", sin: "⚠️ Sem atualização desde ",
     viejo: ". O dado pode estar desatualizado.", zona: " (horário de Brasília)",
     tz: "America/Sao_Paulo", locale: "pt-BR", error: "Indisponível",
+  } : en ? {
+    btc: "IN BTC", usdt: "IN USDT", desde: "Since ",
+    sobre: " · the close is above the average", bajo: " · the close is below the average",
+    vela: "Candle ", actualizado: "🕒 Updated: ", sin: "⚠️ Not updated since ",
+    viejo: ". The data may be out of date.", zona: " (Paraguay time)",
+    tz: "America/Asuncion", locale: "en-US", error: "Not available",
   } : {
     btc: "EN BTC", usdt: "EN USDT", desde: "Desde el ",
     sobre: " · el cierre está sobre la media", bajo: " · el cierre está debajo de la media",

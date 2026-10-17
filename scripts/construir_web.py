@@ -66,6 +66,8 @@ PLANTILLA = """<!doctype html>
 <link rel="canonical" href="{{url}}">
 <link rel="alternate" hreflang="es" href="https://wiqonlab.com/">
 <link rel="alternate" hreflang="pt-BR" href="https://wiqonlab.com/br/">
+<link rel="alternate" hreflang="en" href="https://wiqonlab.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://wiqonlab.com/">
 <link rel="icon" href="{{r}}assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,7 +86,7 @@ PLANTILLA = """<!doctype html>
       <a href="#servicios">{{n_serv}}</a><a href="#radar">{{n_noticias}}</a>
     </nav>
     <div class="nav-d">
-      <div class="idioma" aria-label="{{idioma_aria}}"><a {{es_on}} href="{{r}}" lang="es">ES</a><a {{br_on}} href="{{r}}br/" lang="pt-BR">PT-BR</a></div>
+      <div class="idioma" aria-label="{{idioma_aria}}"><a {{es_on}} href="{{r}}" lang="es">ES</a><a {{br_on}} href="{{r}}br/" lang="pt-BR">PT-BR</a><a {{en_on}} href="{{r}}en/" lang="en">EN</a></div>
       <button class="tema-btn" type="button" aria-label="{{tema_aria}}" aria-pressed="false" title="{{tema_aria}}"><svg class="luna" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg><svg class="sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
       <button class="btn ch solo-visitante" type="button" data-acceso>{{ingresar}}</button>
       <button class="btn p ch solo-visitante" type="button" data-acceso>{{crear_cuenta}}</button>
@@ -121,7 +123,7 @@ PLANTILLA = """<!doctype html>
         <canvas id="lienzo" role="img" aria-label="{{graf_aria}}"></canvas>
         <div class="rangos" role="group" aria-label="{{rango_aria}}">
           <button data-r="vivo" aria-pressed="true">{{en_vivo_btn}}</button><button data-r="30" aria-pressed="false">1M</button><button data-r="90" aria-pressed="false">3M</button>
-          <button data-r="180" aria-pressed="false">6M</button><button data-r="365" aria-pressed="false">1A</button>
+          <button data-r="180" aria-pressed="false">6M</button><button data-r="365" aria-pressed="false">{{r_1a}}</button>
         </div>
         <div class="leyenda"><span id="ley-velas" data-vivo="{{ley_vivo}}" data-dia="{{ley_velas}}">{{ley_vivo}}</span><span id="ley-media" hidden><i style="background:#e7b54a"></i>{{ley_media}}</span><span>Binance</span></div>
       </div>
@@ -359,7 +361,7 @@ PLANTILLA = """<!doctype html>
   <div class="c">
     <div class="pie">
       <div><a class="marca" href="{{inicio}}"><span class="corona m"><img src="{{r}}assets/logo.png" alt="" width="50" height="50"></span><span>WIQON</span></a><p>{{pie_desc}}</p>
-        <p><a href="{{r}}" lang="es" style="display:inline">Español</a> · <a href="{{r}}br/" lang="pt-BR" style="display:inline">Português (Brasil)</a></p></div>
+        <p><a href="{{r}}" lang="es" style="display:inline">Español</a> · <a href="{{r}}br/" lang="pt-BR" style="display:inline">Português (Brasil)</a> · <a href="{{r}}en/" lang="en" style="display:inline">English</a></p></div>
       <div><h5>{{n_prod}}</h5><a href="#laboratorio">{{a_t}}</a><a href="{{b_href}}">WIQON Shield</a><a href="#servicios">{{c_t}}</a><a href="#radar">News Radar</a></div>
       <div><h5>{{pie_fuentes}}</h5>{{pie_fuentes_links}}</div>
       <div><h5>{{pie_her}}</h5>{{pie_her_links}}</div>
@@ -482,7 +484,7 @@ ES = dict(ICONOS,
     descripcion="Laboratorio de trading de Paraguay y Brasil: probamos estrategias con costos reales, publicamos los resultados y construimos herramientas con lo que sobrevive, como WIQON Shield.",
     saltar="Saltar a los productos", nav_aria="Secciones", idioma_aria="Idioma",
     n_prod="Productos", n_lab="Laboratorio", n_datos="Datos", n_serv="Servicios", n_noticias="Noticias",
-    es_on='class="on"', br_on="", cta_nav="Probar Shield gratis", cta_nav_href="shield/",
+    es_on='class="on"', br_on="", en_on="", r_1a="1A", cta_nav="Probar Shield gratis", cta_nav_href="shield/",
     kicker="Paraguay · Brasil · Mercados",
     h1a="Probamos estrategias con datos reales.", h1b="Construimos herramientas con lo que sobrevive.",
     sub="Investigamos mercados, medimos costos y validamos ideas antes de convertirlas en software, datos o servicios. Si una idea no sobrevive, también lo publicamos.",
@@ -614,7 +616,7 @@ BR = dict(ICONOS,
     descripcion="Laboratório de trading da fronteira Brasil–Paraguai: testamos estratégias com custos reais, publicamos os resultados e construímos ferramentas com o que sobrevive, como o WIQON Shield.",
     saltar="Ir para os produtos", nav_aria="Seções", idioma_aria="Idioma",
     n_prod="Produtos", n_lab="Laboratório", n_datos="Dados", n_serv="Serviços", n_noticias="Notícias",
-    es_on="", br_on='class="on"', cta_nav="WIQON Shield", cta_nav_href="#shield",
+    es_on="", br_on='class="on"', en_on="", r_1a="1A", cta_nav="WIQON Shield", cta_nav_href="#shield",
     kicker="Brasil · Paraguai · Mercados",
     h1a="Testamos estratégias com dados reais.", h1b="Construímos ferramentas com o que sobrevive.",
     sub="Pesquisamos mercados, medimos custos e validamos ideias antes de transformá-las em software, dados ou serviços. Se uma ideia não sobrevive, também publicamos.",
@@ -715,6 +717,146 @@ BR = dict(ICONOS,
     pie_riesgo_t="Aviso de risco.", pie_riesgo="Conteúdo informativo e educacional; não é recomendação de investimento. Operar envolve risco de perda e resultados passados não garantem os futuros. Os links marcados como afiliado ou indicação nos dão uma comissão sem custo extra para você.",
 )
 
+# ============================================ ENGLISH ============================================
+CAT_EN = ["Regulation", "Taxes", "Crypto assets", "Stablecoins", "Payments", "Fintech", "Finance", "Markets", "Macroeconomics", "Companies", "Security"]
+EN = dict(ES,
+    ingresar="Sign in", crear_cuenta="Create free account", salir="Sign out", ver_mercados="See markets", cerrar="Close",
+    bl_lab_t="Full results and live strategy", bl_lab="With your free account you see the experiments table and our rule running live.",
+    bl_radar_t="News radar and official exchange rates", bl_radar="News from Paraguay, Brazil and Latin America every 30 minutes, plus official rates from the BCP, BCB, BCRA and TRM.",
+    bl_eco_t="Inflation map and economic calendar", bl_eco="Inflation in every country (IMF data) and upcoming indicators, with your free account.",
+    reg_vol="Free account", reg_h2="Create your account and <span>see the whole lab</span>",
+    reg_p="Just your email: we send you a link to sign in, no passwords. Free, no strings attached.",
+    reg_lista="<li>Full lab results and the live strategy</li><li>Regional news radar, every 30 minutes</li><li>Official exchange rates (BCP, BCB, BCRA, TRM)</li><li>World inflation map and economic calendar</li><li>3 PDF reports (in Spanish): 20+ tested ideas, the cost of swaps and the DNIT 47/2026 guide</li><li class=\"pronto\">Coming soon: email alerts and watchlist</li>",
+    acc_t="Sign in to WIQON", acc_p="Enter your email and we will send you a link to sign in. We don't use passwords.", acc_ph="you@email.com",
+    acc_priv='I accept the <a href="privacy/" target="_blank">privacy policy</a>.', acc_nov="I want to receive WIQON news (optional, I can unsubscribe anytime).",
+    acc_btn="Send sign-in link", acc_pie="If you already have an account, the same link signs you in.", priv_url="privacy/", priv_txt="Privacy policy",
+    cont_url="contact/", cont_txt="Contact form", term_url="terms/", term_txt="Terms and conditions", dev_url="refunds/", dev_txt="Delivery and refunds",
+    pie_redes_t="Social.", pie_tit_t="Owner.", pie_tit="individual (sole proprietor), trade name WIQON, Paraguay.",
+    desc_vol="Downloads", desc_h2="Lab reports", desc_p="PDF material to read calmly, with sources and dates. For registered accounts only.", desc_btn="Download PDF",
+    descargas=ES["descargas"].replace("WIQON Shield · demo gratis", "WIQON Shield · free demo")
+        .replace("El EA completo para MetaTrader 5 + manual. Uso libre en cuentas demo; en cuentas reales pide licencia.", "The full EA for MetaTrader 5 + manual (English included). Free on demo accounts; real accounts need a license.")
+        .replace("Descargar demo (.zip) ↓", "Download demo (.zip) ↓")
+        .replace("20+ ideas probadas: cuál sobrevivió", "20+ tested ideas: which one survived (Spanish)")
+        .replace("22 familias de estrategias, 84 variantes y la única regla que pasó todas las pruebas.", "22 strategy families, 84 variants and the only rule that passed every test.")
+        .replace("El costo invisible de un robot de CFD", "The hidden cost of a CFD robot (Spanish)")
+        .replace("Cuánto se llevaron los swaps de un broker real en 4 años, y qué revisar antes de usar un EA.", "How much a real broker's swaps took over 4 years, and what to check before using an EA.")
+        .replace("Guía RG DNIT 47/2026", "DNIT 47/2026 guide (Spanish)")
+        .replace("Quién tiene que declarar criptoactivos en Paraguay, desde qué monto, y un checklist para prepararte.", "Who has to report crypto assets in Paraguay, from what amount, and a checklist to get ready."),
+    tema_aria="Switch between dark and light theme", tab_cripto="Crypto", tab_acciones="US stocks", tab_b3="Brazil B3", tab_futuros="Futures", tab_economia="Economy",
+    nota_acciones="The most active US stocks of the day.", nota_b3="Ibovespa, stocks and B3 mini contracts.",
+    nota_futuros="B3 mini contracts and, as a global reference, indices and commodities (including soybeans) as CFDs.", nota_forex="Regional currencies against the dollar and the major pairs.",
+    nota_cal="Economic calendar: upcoming data and indicators by country.", nota_tv="Data from TradingView; some markets are delayed depending on the exchange.",
+    mapa_t="Inflation around the world", mapa_p="Annual change in consumer prices by country. Hover over (or tap) a country.",
+    at_a="Open results", at_b="EA for MetaTrader 5", at_c="Bots, audits, dashboards",
+    en_vivo="LIVE", en_vivo_btn="Live", ley_vivo="1-minute candles, live",
+    mv_vol="Live market", mv_h2="How the market is moving <span>now</span>",
+    mv_p="Real-time crypto, US and B3 stocks, futures, forex and the economy: pick a tab. You can use the interactive chart yourself.",
+    mv_activo="Asset", mv_precio="Price", mv_tend="Last 24 h", mv_fuente="Real-time Binance prices. Not recommendations.",
+    tv_t="Try it: interactive chart", tv_nota="Chart by", tv_af="affiliate link", tv_locale="en",
+    lang="en", r="../", inicio="./", url="https://wiqonlab.com/en/", og_locale="en_US", prioridad="PY", canal="wiqonlab",
+    titulo="WIQON — We test trading strategies with real data",
+    descripcion="A trading lab from Paraguay and Brazil: we test strategies with real costs, publish the results and build tools from what survives, like WIQON Shield.",
+    saltar="Skip to products", nav_aria="Sections", idioma_aria="Language",
+    n_prod="Products", n_lab="Lab", n_datos="Data", n_serv="Services", n_noticias="News",
+    es_on="", br_on="", en_on='class="on"', r_1a="1Y", cta_nav="Try Shield free", cta_nav_href="../shield/",
+    kicker="Paraguay · Brazil · Markets",
+    h1a="We test strategies with real data.", h1b="We build tools from what survives.",
+    sub="We research markets, measure costs and validate ideas before turning them into software, data or services. If an idea doesn't survive, we publish that too.",
+    cta1="Explore WIQON", cta2="See the lab",
+    panel_aria="Bitcoin and the state of our trend rule", graf_aria="Bitcoin daily candles with their 100-day average",
+    rango_aria="Chart period", ley_velas="Closed daily candles", ley_media="100-day average",
+    h_cierre="Daily close", h_dist="Distance to the 100-day average", h_desde="In this state since",
+    regla_t="Our rule", regla_p="Hold BTC only while the daily close is above the 100-day average. If it falls below, switch to USDT. We run it with real money.",
+    regla_link="See methodology",
+    prueba_aria="How we work", p1="Real data", p1s="Public prices, years of history",
+    p2="Costs included", p2s="Fees, slippage and swaps", p3="Out of sample", p3s="Validated on unseen periods",
+    p4="Open source", p4s="Anyone can reproduce it",
+    foto_alt="Friendship Bridge between Ciudad del Este and Foz do Iguaçu",
+    prod_vol="What we build", prod_h2="What we <span>offer</span>",
+    prod_p="Open research, a risk-management product and technical services. Everything comes from the same testing process.",
+    problema="What it's for:",
+    a_t="Strategy lab", a_chip="Open",
+    a_que="We test popular trading ideas with years of data, real costs and out-of-sample validation, and we publish the result.",
+    a_prob="knowing whether a strategy has an edge before risking money on it.",
+    a_evid=ES["a_evid"].replace("Probadas", "Tested").replace("Sobrevivió", "Survived").replace("HISTÓRICO", "HISTORICAL")
+        .replace("Filtro de tendencia BTC · 2018-2026, con costos", "BTC trend filter · 2018-2026, with costs").replace(">Regla<", ">Rule<")
+        .replace("56,6%<small>anual", "56.6%<small>per year").replace("37,3%<small>anual", "37.3%<small>per year").replace(">Mantener<", ">Buy &amp; hold<")
+        .replace("Costos incluidos", "Costs included").replace("Fuera de muestra", "Out of sample").replace("Histórico + real", "Historical + live"),
+    a_cta="See results", a_lim="Past results do not guarantee future results.",
+    b_chip="Expert Advisor · available",
+    b_que="Automatic risk management for MetaTrader 5: it keeps the BTC position while the trend holds and closes it when the trend breaks.",
+    b_prob="not staying long through a long crash, with a clear rule and no impulsive decisions.",
+    b_evid=ES["b_evid"].replace("Regla: cierre &gt; media 100", "Rule: close &gt; 100-day average").replace("Decide con vela cerrada", "Decides on the closed candle")
+        .replace("Solo comprado, sin apalancamiento propio", "Long only, no leverage of its own").replace("Panel de estado en el gráfico", "Status panel on the chart")
+        .replace("Caída máx. Shield", "Max drawdown Shield").replace("Caída máx. mantener", "Max drawdown buy &amp; hold")
+        .replace("Prueba con costos reales de un broker, 2022-2026. Los swaps redujeron un tercio de la ventaja.", "Test with a real broker's costs, 2022-2026. Swaps cut the edge by a third."),
+    b_href="../shield/", b_cta="Free demo and plans (page in Spanish)", b_lim="Does not guarantee profits.",
+    c_t="Data and automation", c_chip="Services",
+    c_que="Bots, audits and dashboards built with the same methodology as the lab.",
+    c_prob="automating and measuring your trading without relying on promises.",
+    c_lista="".join([serv("lupa", "Strategy audits", "Available", "ok"), serv("bot", "Binance bots", "Available", "ok"),
+                     serv("panel", "Dashboards and training", "Available", "ok"), serv("api", "Lab data API", "Coming soon", "pronto")]),
+    c_href=f"{WA}?text=Hi%20WIQON%2C%20I%27d%20like%20to%20ask%20about%20a%20service.", c_cta="Let's talk",
+    met_vol="Methodology", met_h2="How we decide what <span>survives</span>",
+    met_p="It's not luck, it's a process. Every idea goes through the same filters before it becomes a tool or a data point.",
+    pasos=pasos([("Hypothesis", "We take a concrete market idea."), ("Exact rules", "Entries, exits and size, with no ambiguity."),
+                 ("Backtest with costs", "Years of data, fees, slippage and swaps."), ("Out of sample", "We validate on periods we haven't seen."),
+                 ("Live, if it survives", "Only then does it become a product or service.")]),
+    principios="".join(f"<span><b>{a}</b> · {b}</span>" for a, b in [("Sources first", "every data point with origin and date"), ("Real costs", "no polished results"),
+                 ("The bad stuff gets published too", "most ideas don't work"), ("News is not a signal", "we inform, we don't recommend"), ("Open source", "you can reproduce it")]),
+    tabla_cap="Published lab results", lx_hip="Hypothesis", lx_tipo="Type", lx_res="Result", lx_ver="Verdict",
+    experimentos="".join([
+        exp("Trend filter on BTC", "hist", "HISTORICAL", "56.6% per year vs 37.3% buy &amp; hold; drawdown 34.7% vs 76.6% (2018-2026)", "Survives", "si", f"{LAB}#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc"),
+        exp("The same rule on MT5 (CFD)", "hist", "HISTORICAL", "x2.02 vs x1.96; drawdown 39% vs 67%. Swaps: a third of the edge", "With caveats", "ojo", f"{LAB}/tree/main/resultados/mt5"),
+        exp("Day trade EMA21 Bounce", "hist", "HISTORICAL", "+0.71% in 3 years vs +9.3% in Earn", "No", "no", f"{LAB}#1-una-estrategia-validada-que-era-ruido"),
+        exp("Altcoin rotation", "hist", "HISTORICAL", "33.7% per year with today's coins; 1.0% with 2021's", "No (bias)", "no", f"{LAB}#2-el-sesgo-de-supervivencia-infla-todo"),
+        exp("Arbitrage across 6 exchanges", "med", "MEASURED", "69 opportunities in 24 h; almost none real", "No", "no", f"{LAB}#4-arbitraje-medido-no-supuesto"),
+        exp("Funding carry", "hist", "HISTORICAL", "7-10% per year, almost all from 2021; 2-3% in 2025-26", "No", "no", f"{LAB}#5-arbitraje-de-funding-cash-and-carry"),
+    ]),
+    lab_ley="HISTORICAL: simulated on past data · MEASURED: observed live, without trading · LIVE: traded with real money.",
+    vivo_aria="Live strategy", vivo_nombre="BTC trend filter", cargando="Loading…",
+    d_cierre="Close", d_media="100-day avg", d_dist="Distance",
+    vivo_nota="Recalculated every day at 21:15 (Paraguay time) on the closed candle. Not a recommendation.",
+    snap_vol="Market context", snap_h2="The region matters too",
+    snap_p="Data from Paraguay and Brazil from official sources, with their dates. No signals, no promises.",
+    snap_mas="See all official rates", tc_moneda="Currency", tc_valor="Value", tc_fuente="Institution", tc_fecha="Date",
+    cambio_nota="These are official references (BCP, BCB, BCRA, TRM). Banks and exchange houses apply their own buy and sell prices.",
+    radar_vol="News Radar", radar_h2="Market context",
+    radar_p="Business, fintech and crypto news from the region, with the original source. Paraguay first, then Brazil and Latin America (news in Spanish and Portuguese).",
+    filtros_aria="Radar filters", f_region="Country", f_todas="All", f_la="Latin America", f_periodo="Period", f_3d="3 days", f_7d="7 days",
+    f_idioma="Language", f_todos="All", f_cat="Topic", opciones_cat=opciones("All", CAT_EN),
+    radar_nota="News is not a signal. Headlines keep their original language.", ver_mas="See more", ver_completo="See full radar",
+    historias="".join([
+        historia("In Paraguay", "Crypto in your tax return: what the DNIT requires",
+                 "DNIT General Resolution No. 47/2026 requires anyone above US$ 5,000 a year in crypto transactions, and the platforms operating in the country, to report them.",
+                 f'WIQON team · 10/07/2026 · <a href="{DNIT_RG47}" target="_blank" rel="noopener">official source</a>'),
+        historia("Brazil in focus", "New central bank rules for virtual asset providers are now in force",
+                 "BCB resolutions 519, 520 and 521 apply from 10/1/2026; supervision data reporting starts on 1/1/2027.",
+                 f'WIQON team · 10/07/2026 · <a href="{BCB_RES.format(n=520)}" target="_blank" rel="noopener">official source</a>'),
+        historia("Why it matters", "The hidden cost of a CFD robot",
+                 "Our EA made US$ 14,475 on price and paid US$ 4,241 in swaps with a real broker. Almost a third went to financing.",
+                 f'WIQON Lab · <a href="{LAB}/tree/main/resultados/mt5" target="_blank" rel="noopener">report</a>'),
+    ]),
+    nos_vol="About us", cita="We publish what we find, <span>even when the result is bad.</span>",
+    nos_texto=("<p>WIQON was born on the border between Paraguay and Brazil, where the guarani, the real and the dollar meet every day. We test it, we measure it and, if it doesn't survive, we publish it anyway.</p>"
+               "<p>We don't sell signals or manage other people's money.</p>"),
+    fundador_rol="Founder and researcher",
+    redes=redes([("YouTube", "https://www.youtube.com/@wiqonlab"), ("Instagram", "https://www.instagram.com/wiqonlab/"), ("TikTok", "https://www.tiktok.com/@wiqonlab"),
+                 ("X", "https://x.com/wiqonlab"), ("Telegram", "https://t.me/wiqonlab"), ("WhatsApp", f"{WA}?text=Hi%20WIQON"),
+                 ("Discord", "https://discord.gg/8GDqe8H7R7"), ("LinkedIn", "https://www.linkedin.com/company/wiqonlab"), ("Facebook", "https://www.facebook.com/wiqonlab/")]),
+    faq=faq([("Do you sell signals or manage other people's money?", "No. We publish research and offer software and technical services."),
+             ("Does WIQON Shield guarantee profits?", "No. It aims to limit large drawdowns; in markets that only go up it earns less than buy and hold."),
+             ("Where does the data come from?", "Public Binance prices, official rates from the BCP, BCB, BCRA and TRM, and public RSS feeds from media and institutions.")]),
+    vid_vol="The lab on video (Spanish)", vid_sub="Subscribe to the channel",
+    foto2_alt="Downtown Ciudad del Este", foto2_cap="Ciudad del Este, Alto Paraná.", foto2_cred=credito("cde", "Photo"), foto1_cred=credito("puente2", "Friendship Bridge"),
+    pie_desc="Trading lab and market data, from the Paraguay–Brazil border.", pie_fuentes="Data sources", pie_her="Tools we use",
+    pie_her_links=herr("affiliate", "referral"), pie_cont="Contact", wa_hola=f"{WA}?text=Hi%20WIQON",
+    pie_act_t="Updates.", pie_act="News: every 30 minutes. Official exchange rates: every hour (each institution publishes on its own schedule). Strategy: every day at 21:15 (Paraguay time). BTC price: when you open the page.",
+    pie_met_t="Methodology.", pie_met="Results with costs and code on GitHub. The radar only uses public RSS feeds: headline, source, date and link, never the article text.",
+    pie_priv_t="Privacy.", pie_priv="No cookies. We measure visits with Cloudflare Web Analytics, which uses no cookies and doesn't identify people. YouTube videos load only when you press play. The interactive chart is provided by TradingView and loads when you reach that section. Fonts come from Google Fonts.",
+    pie_riesgo_t="Risk notice.", pie_riesgo="Informational and educational content; not financial advice. Trading involves risk of loss and past results do not guarantee future results. Links marked as affiliate or referral earn us a commission at no extra cost to you.",
+)
+
 
 def construir(textos, destino):
     def reemplazo(m):
@@ -733,3 +875,4 @@ def construir(textos, destino):
 if __name__ == "__main__":
     construir(ES, RAIZ / "index.html")
     construir(BR, RAIZ / "br" / "index.html")
+    construir(EN, RAIZ / "en" / "index.html")

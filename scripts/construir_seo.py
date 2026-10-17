@@ -306,7 +306,8 @@ def main():
 
     hoy = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     principales = [f"{SITIO}/", f"{SITIO}/br/", f"{SITIO}/shield/", f"{SITIO}/libro/", f"{SITIO}/br/livro/", f"{SITIO}/en/book/", f"{SITIO}/privacidad/", f"{SITIO}/br/privacidade/",
-                  f"{SITIO}/contacto/", f"{SITIO}/terminos/", f"{SITIO}/devoluciones/", f"{SITIO}/br/contato/", f"{SITIO}/br/termos/", f"{SITIO}/br/devolucoes/"]
+                  f"{SITIO}/contacto/", f"{SITIO}/terminos/", f"{SITIO}/devoluciones/", f"{SITIO}/br/contato/", f"{SITIO}/br/termos/", f"{SITIO}/br/devolucoes/",
+                  f"{SITIO}/en/", f"{SITIO}/en/terms/", f"{SITIO}/en/refunds/", f"{SITIO}/en/privacy/", f"{SITIO}/en/contact/"]
     mapa = "".join(f"<url><loc>{u}</loc><lastmod>{hoy}</lastmod></url>" for u in principales + urls)
     escribir(RAIZ / "sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{mapa}</urlset>\n')
     escribir(RAIZ / "robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITIO}/sitemap.xml\n")

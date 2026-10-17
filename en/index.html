@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIQON — We test trading strategies with real data</title>
+<meta name="description" content="A trading lab from Paraguay and Brazil: we test strategies with real costs, publish the results and build tools from what survives, like WIQON Shield.">
+<meta property="og:title" content="WIQON — We test trading strategies with real data">
+<meta property="og:description" content="A trading lab from Paraguay and Brazil: we test strategies with real costs, publish the results and build tools from what survives, like WIQON Shield.">
+<meta property="og:image" content="https://wiqonlab.com/assets/og.png">
+<meta property="og:url" content="https://wiqonlab.com/en/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#060b14">
+<link rel="canonical" href="https://wiqonlab.com/en/">
+<link rel="alternate" hreflang="es" href="https://wiqonlab.com/">
+<link rel="alternate" hreflang="pt-BR" href="https://wiqonlab.com/br/">
+<link rel="alternate" hreflang="en" href="https://wiqonlab.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://wiqonlab.com/">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;if(localStorage.getItem("wiqon-sesion")==="1")document.documentElement.classList.add("logueado");}catch(e){}</script>
+</head>
+<body data-estado="../estado.json" data-raiz="../">
+<a class="oculto" href="#productos">Skip to products</a>
+
+<header class="nav">
+  <div class="c">
+    <a class="marca" href="./"><span class="corona s"><img src="../assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
+    <nav class="nav-l" aria-label="Sections">
+      <a href="#productos">Products</a><a href="#laboratorio">Lab</a><a href="#mercado">Data</a>
+      <a href="#servicios">Services</a><a href="#radar">News</a>
+    </nav>
+    <div class="nav-d">
+      <div class="idioma" aria-label="Language"><a  href="../" lang="es">ES</a><a  href="../br/" lang="pt-BR">PT-BR</a><a class="on" href="../en/" lang="en">EN</a></div>
+      <button class="tema-btn" type="button" aria-label="Switch between dark and light theme" aria-pressed="false" title="Switch between dark and light theme"><svg class="luna" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg><svg class="sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="btn ch solo-visitante" type="button" data-acceso>Sign in</button>
+      <button class="btn p ch solo-visitante" type="button" data-acceso>Create free account</button>
+      <div class="usuario solo-usuario" id="usuario"><span class="ini" aria-hidden="true">W</span><button type="button" id="salir">Sign out</button></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="h1">
+  <canvas id="globo" aria-hidden="true"></canvas>
+  <div class="c">
+    <div class="ap">
+      <span class="kicker">Paraguay · Brazil · Markets</span>
+      <h1 id="h1">We test strategies with real data.<br><span>We build tools from what survives.</span></h1>
+      <p class="sub">We research markets, measure costs and validate ideas before turning them into software, data or services. If an idea doesn't survive, we publish that too.</p>
+      <div class="acc">
+        <button class="btn p solo-visitante" type="button" data-acceso>Create free account <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <a class="btn p solo-usuario" href="#mercado">See markets <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn" href="#productos">Explore WIQON</a>
+      </div>
+      <nav class="atajos" aria-label="Products">
+        <a class="atajo" href="#productos"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg><div><b>Strategy lab</b><span>Open results</span></div></a>
+        <a class="atajo" href="#shield"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.8 12.2 2.2 2.2 4.4-4.6"/></svg><div><b>WIQON Shield</b><span>EA for MetaTrader 5</span></div></a>
+        <a class="atajo" href="#servicios"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg><div><b>Data and automation</b><span>Bots, audits, dashboards</span></div></a>
+      </nav>
+    </div>
+    <div class="panel ap" aria-label="Bitcoin and the state of our trend rule">
+      <div class="grafico">
+        <div class="g-cab">
+          <div><div class="par"><span class="btc" aria-hidden="true">₿</span>BTC/USDT</div><div class="precio" id="precio-btc">—</div><span class="vivo-b" id="vivo-b">LIVE</span></div>
+          <span class="est est-regla">…</span>
+        </div>
+        <canvas id="lienzo" role="img" aria-label="Bitcoin daily candles with their 100-day average"></canvas>
+        <div class="rangos" role="group" aria-label="Chart period">
+          <button data-r="vivo" aria-pressed="true">Live</button><button data-r="30" aria-pressed="false">1M</button><button data-r="90" aria-pressed="false">3M</button>
+          <button data-r="180" aria-pressed="false">6M</button><button data-r="365" aria-pressed="false">1Y</button>
+        </div>
+        <div class="leyenda"><span id="ley-velas" data-vivo="1-minute candles, live" data-dia="Closed daily candles">1-minute candles, live</span><span id="ley-media" hidden><i style="background:#e7b54a"></i>100-day average</span><span>Binance</span></div>
+      </div>
+      <div class="estado">
+        <div class="caja">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px"><span class="est est-regla">…</span><span class="act" id="h-act"></span></div>
+          <div class="fila"><span>Daily close</span><b id="h-cierre">—</b></div>
+          <div class="fila"><span>Distance to the 100-day average</span><b id="h-dist">—</b></div>
+          <div class="fila"><span>In this state since</span><b id="h-desde">—</b></div>
+        </div>
+        <div class="caja">
+          <h4><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg> Our rule</h4>
+          <p>Hold BTC only while the daily close is above the 100-day average. If it falls below, switch to USDT. We run it with real money.</p>
+          <a class="enl" href="#laboratorio">See methodology <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="mercado" aria-labelledby="mv-t" style="padding-top:44px">
+  <div class="c">
+    <div class="cab"><div><span class="vol">Live market</span><h2 class="t" id="mv-t">How the market is moving <span>now</span></h2></div><p class="der">Real-time crypto, US and B3 stocks, futures, forex and the economy: pick a tab. You can use the interactive chart yourself.</p></div>
+    <div class="pestanas" role="tablist" aria-label="Live market">
+      <button role="tab" id="t-cripto" aria-controls="p-cripto" aria-selected="true">Crypto</button>
+      <button role="tab" id="t-acciones" aria-controls="p-acciones" aria-selected="false" tabindex="-1">US stocks</button>
+      <button role="tab" id="t-b3" aria-controls="p-b3" aria-selected="false" tabindex="-1">Brazil B3</button>
+      <button role="tab" id="t-futuros" aria-controls="p-futuros" aria-selected="false" tabindex="-1">Futures</button>
+      <button role="tab" id="t-forex" aria-controls="p-forex" aria-selected="false" tabindex="-1">Forex</button>
+      <button role="tab" id="t-economia" aria-controls="p-economia" aria-selected="false" tabindex="-1">Economy</button>
+    </div>
+    <div class="panel-m" id="p-cripto" role="tabpanel" aria-labelledby="t-cripto">
+    <div class="envivo">
+      <div class="mercados">
+        <table aria-describedby="mv-t">
+          <thead><tr><th>Asset</th><th class="r">Price</th><th class="r">24 h</th><th class="r om">Last 24 h</th></tr></thead>
+          <tbody id="mercados-vivo"><tr><td colspan="4" class="meta">Loading…</td></tr></tbody>
+        </table>
+        <p class="meta" style="padding:8px 12px"><span class="vivo-b">LIVE</span> Real-time Binance prices. Not recommendations.</p>
+      </div>
+      <div class="tv" id="tv">
+        <div class="tv-cab"><b>Try it: interactive chart</b><span class="meta">Chart by <a href="https://www.tradingview.com/?aff_id=1171961&aff_sub=web&source=wiqonlab" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> (affiliate link)</span></div>
+        <div class="tv-cuerpo" id="tv-cuerpo" data-locale="en"><div class="tv-espera">Loading…</div></div>
+      </div>
+    </div>
+    </div>
+    <div class="panel-m" id="p-acciones" role="tabpanel" aria-labelledby="t-acciones" hidden data-cargar="acciones">
+      <div class="widget" id="w-acciones"></div><p class="nota-w">The most active US stocks of the day. Data from TradingView; some markets are delayed depending on the exchange.</p>
+    </div>
+    <div class="panel-m" id="p-b3" role="tabpanel" aria-labelledby="t-b3" hidden data-cargar="b3">
+      <div class="widget" id="w-b3"></div><p class="nota-w">Ibovespa, stocks and B3 mini contracts. Data from TradingView; some markets are delayed depending on the exchange.</p>
+    </div>
+    <div class="panel-m" id="p-futuros" role="tabpanel" aria-labelledby="t-futuros" hidden data-cargar="futuros">
+      <div class="widget" id="w-futuros"></div><p class="nota-w">B3 mini contracts and, as a global reference, indices and commodities (including soybeans) as CFDs. Data from TradingView; some markets are delayed depending on the exchange.</p>
+    </div>
+    <div class="panel-m" id="p-forex" role="tabpanel" aria-labelledby="t-forex" hidden data-cargar="forex">
+      <div class="widget" id="w-forex"></div><p class="nota-w">Regional currencies against the dollar and the major pairs. Data from TradingView; some markets are delayed depending on the exchange.</p>
+    </div>
+    <div class="panel-m" id="p-economia" role="tabpanel" aria-labelledby="t-economia" hidden data-cargar="mapa calendario">
+      <div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>Inflation map and economic calendar</b><span>Inflation in every country (IMF data) and upcoming indicators, with your free account.</span></div></div><button class="btn p ch" type="button" data-acceso>Create free account</button></div>
+      <div class="dos privado">
+        <div class="mapa" id="mapa-inflacion">
+          <h3>Inflation around the world</h3><p class="meta">Annual change in consumer prices by country. Hover over (or tap) a country.</p>
+          <svg id="mapa-svg" role="img" aria-label="Inflation around the world"></svg>
+          <div class="tip" id="mapa-tip" hidden></div>
+          <div class="escala" id="mapa-escala"></div>
+          <ul class="ranking" id="mapa-ranking"></ul>
+          <p class="nota-w" id="mapa-fuente">Loading…</p>
+        </div>
+        <div><div class="widget" id="w-calendario"></div><p class="nota-w">Economic calendar: upcoming data and indicators by country. Data from TradingView; some markets are delayed depending on the exchange.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="prueba" aria-label="How we work">
+  <div class="c">
+    <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg><div><b>Real data</b><span>Public prices, years of history</span></div></div>
+    <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2.5"/></svg><div><b>Costs included</b><span>Fees, slippage and swaps</span></div></div>
+    <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15v-3M12 15V9M16 15v-6"/><path d="M14 5h5v5" /></svg><div><b>Out of sample</b><span>Validated on unseen periods</span></div></div>
+    <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg><div><b>Open source</b><span>Anyone can reproduce it</span></div></div>
+    <div class="region-foto"><img src="../assets/frontera.svg" alt="Friendship Bridge between Ciudad del Este and Foz do Iguaçu" width="1600" height="560" loading="lazy"><span>Asunción · Ciudad del Este · Foz do Iguaçu</span></div>
+  </div>
+</div>
+
+<section class="s" id="productos" aria-labelledby="prod-t">
+  <div class="c">
+    <div class="cab"><div><span class="vol">What we build</span><h2 class="t" id="prod-t">What we <span>offer</span></h2></div><p class="der">Open research, a risk-management product and technical services. Everything comes from the same testing process.</p></div>
+    <div class="pilares">
+      <article class="pilar ap">
+        <div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg></span><h3>Strategy lab</h3><span class="chip-e ok">Open</span></div>
+        <p class="que">We test popular trading ideas with years of data, real costs and out-of-sample validation, and we publish the result.</p>
+        <p class="problema"><b>What it's for:</b> knowing whether a strategy has an edge before risking money on it.</p>
+        <div class="evid"><div class="comp"><div><span class="lbl">Tested</span><div class="num">20+</div></div><div><span class="lbl">Survived</span><div class="num">1</div></div></div><div style="margin-top:12px"><span class="lbl"><span class="tipo hist">HISTORICAL</span> BTC trend filter · 2018-2026, with costs</span><div class="comp" style="margin-top:6px"><div><span class="lbl">Rule</span><div class="num" style="font-size:1.15rem">56.6%<small>per year</small></div><div class="barra-c"><i style="width:100%;background:var(--cian)"></i></div></div><div><span class="lbl">Buy &amp; hold</span><div class="num" style="font-size:1.15rem">37.3%<small>per year</small></div><div class="barra-c"><i style="width:66%;background:var(--gris2)"></i></div></div></div></div><div class="tags"><span>Costs included</span><span>Out of sample</span><span>Historical + live</span></div></div>
+        <div class="pie-p"><a class="enl" href="#laboratorio">See results <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="limite">Past results do not guarantee future results.</span></div>
+      </article>
+      <article class="pilar dest ap" id="shield">
+        <div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.8 12.2 2.2 2.2 4.4-4.6"/></svg></span><h3>WIQON Shield</h3><span class="chip-e ok">Expert Advisor · available</span></div>
+        <p class="que">Automatic risk management for MetaTrader 5: it keeps the BTC position while the trend holds and closes it when the trend breaks.</p>
+        <p class="problema"><b>What it's for:</b> not staying long through a long crash, with a clear rule and no impulsive decisions.</p>
+        <div class="evid mt5"><div class="t5"><span>MT5 · BTCUSD · D1</span><span>WIQON Shield</span></div><ul><li>Rule: close &gt; 100-day average</li><li>Decides on the closed candle</li><li>Long only, no leverage of its own</li><li>Status panel on the chart</li></ul><div class="comp" style="margin-top:12px;font-family:var(--sans)"><div><span class="lbl">Max drawdown Shield</span><div class="num" style="font-size:1.15rem">39%</div><div class="barra-c"><i style="width:58%;background:var(--sube)"></i></div></div><div><span class="lbl">Max drawdown buy &amp; hold</span><div class="num" style="font-size:1.15rem">67%</div><div class="barra-c"><i style="width:100%;background:var(--baja)"></i></div></div></div><p class="limite" style="margin-top:8px;font-family:var(--sans)">Test with a real broker's costs, 2022-2026. Swaps cut the edge by a third.</p></div>
+        <div class="pie-p"><a class="btn p ch" href="../shield/">Free demo and plans (page in Spanish)</a><span class="limite">Does not guarantee profits.</span></div>
+      </article>
+      <article class="pilar ap" id="servicios">
+        <div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg></span><h3>Data and automation</h3><span class="chip-e ok">Services</span></div>
+        <p class="que">Bots, audits and dashboards built with the same methodology as the lab.</p>
+        <p class="problema"><b>What it's for:</b> automating and measuring your trading without relying on promises.</p>
+        <ul class="servs"><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/><path d="M8.5 11h5"/></svg><span>Strategy audits</span><span class="chip-e ok">Available</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg><span>Binance bots</span><span class="chip-e ok">Available</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M7 15v-3M11 15V9M15 15v-5M3.5 8h17"/></svg><span>Dashboards and training</span><span class="chip-e ok">Available</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8 3 12l4 4M17 8l4 4-4 4"/><circle cx="12" cy="12" r="1.5"/></svg><span>Lab data API</span><span class="chip-e pronto">Coming soon</span></li></ul>
+        <div class="pie-p"><a class="btn wa ch" href="https://wa.me/595987685651?text=Hi%20WIQON%2C%20I%27d%20like%20to%20ask%20about%20a%20service." target="_blank" rel="noopener">Let's talk</a><a class="enl" href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="laboratorio" aria-labelledby="met-t">
+  <div class="c">
+    <div class="cab"><div><span class="vol">Methodology</span><h2 class="t" id="met-t">How we decide what <span>survives</span></h2></div><p class="der">It's not luck, it's a process. Every idea goes through the same filters before it becomes a tool or a data point.</p></div>
+    <ol class="metodo"><li class="paso ap"><span class="n">1</span><h3>Hypothesis</h3><p>We take a concrete market idea.</p></li><li class="paso ap"><span class="n">2</span><h3>Exact rules</h3><p>Entries, exits and size, with no ambiguity.</p></li><li class="paso ap"><span class="n">3</span><h3>Backtest with costs</h3><p>Years of data, fees, slippage and swaps.</p></li><li class="paso ap"><span class="n">4</span><h3>Out of sample</h3><p>We validate on periods we haven't seen.</p></li><li class="paso ap"><span class="n">5</span><h3>Live, if it survives</h3><p>Only then does it become a product or service.</p></li></ol>
+    <div class="principios"><span><b>Sources first</b> · every data point with origin and date</span><span><b>Real costs</b> · no polished results</span><span><b>The bad stuff gets published too</b> · most ideas don't work</span><span><b>News is not a signal</b> · we inform, we don't recommend</span><span><b>Open source</b> · you can reproduce it</span></div>
+    <div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>Full results and live strategy</b><span>With your free account you see the experiments table and our rule running live.</span></div></div><button class="btn p ch" type="button" data-acceso>Create free account</button></div>
+    <div class="lab-g vista-previa">
+      <div class="ap">
+        <table class="tabla">
+          <caption class="oculto">Published lab results</caption>
+          <thead><tr><th>Hypothesis</th><th>Type</th><th class="om">Result</th><th>Verdict</th></tr></thead>
+          <tbody><tr><td><a href="https://github.com/wiqon/wiqon-lab#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc" target="_blank" rel="noopener">Trend filter on BTC</a></td><td><span class="tipo hist">HISTORICAL</span></td><td class="om">56.6% per year vs 37.3% buy &amp; hold; drawdown 34.7% vs 76.6% (2018-2026)</td><td class="ver si">Survives</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">The same rule on MT5 (CFD)</a></td><td><span class="tipo hist">HISTORICAL</span></td><td class="om">x2.02 vs x1.96; drawdown 39% vs 67%. Swaps: a third of the edge</td><td class="ver ojo">With caveats</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#1-una-estrategia-validada-que-era-ruido" target="_blank" rel="noopener">Day trade EMA21 Bounce</a></td><td><span class="tipo hist">HISTORICAL</span></td><td class="om">+0.71% in 3 years vs +9.3% in Earn</td><td class="ver no">No</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#2-el-sesgo-de-supervivencia-infla-todo" target="_blank" rel="noopener">Altcoin rotation</a></td><td><span class="tipo hist">HISTORICAL</span></td><td class="om">33.7% per year with today's coins; 1.0% with 2021's</td><td class="ver no">No (bias)</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#4-arbitraje-medido-no-supuesto" target="_blank" rel="noopener">Arbitrage across 6 exchanges</a></td><td><span class="tipo med">MEASURED</span></td><td class="om">69 opportunities in 24 h; almost none real</td><td class="ver no">No</td></tr><tr><td><a href="https://github.com/wiqon/wiqon-lab#5-arbitraje-de-funding-cash-and-carry" target="_blank" rel="noopener">Funding carry</a></td><td><span class="tipo hist">HISTORICAL</span></td><td class="om">7-10% per year, almost all from 2021; 2-3% in 2025-26</td><td class="ver no">No</td></tr></tbody>
+        </table>
+        <p class="nota">HISTORICAL: simulated on past data · MEASURED: observed live, without trading · LIVE: traded with real money.</p>
+      </div>
+      <aside class="vivo ap" aria-label="Live strategy">
+        <div class="et"><span><span class="tipo real">REAL</span> BTC trend filter</span><span id="vela">—</span></div>
+        <div class="senal" id="senal">Loading…</div>
+        <div class="meta" id="desde"></div>
+        <div class="datos-v"><div><b id="cierre">—</b><span>Close</span></div><div><b id="sma">—</b><span>100-day avg</span></div><div><b id="dist">—</b><span>Distance</span></div></div>
+        <p class="actualizado" id="actualizado"></p>
+        <p class="nota">Recalculated every day at 21:15 (Paraguay time) on the closed candle. Not a recommendation.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="s privado" id="contexto" aria-labelledby="snap-t">
+  <div class="c">
+    <div class="snap">
+      <div class="intro"><span class="vol">Market context</span><h2 id="snap-t">The region matters too</h2><p>Data from Paraguay and Brazil from official sources, with their dates. No signals, no promises.</p></div>
+      <div class="dato-m"><span class="q">Bitcoin · BTC/USDT</span><span class="v" id="snap-btc">—</span><span class="f" id="snap-btc-f">Loading…</span></div>
+      <div class="dato-m"><span class="q"><i>PY</i> USD/PYG</span><span class="v" id="snap-pyg">—</span><span class="f" id="snap-pyg-f">Loading…</span></div>
+      <div class="dato-m"><span class="q"><i>BR</i> USD/BRL</span><span class="v" id="snap-brl">—</span><span class="f" id="snap-brl-f">Loading…</span></div>
+      <div class="dato-m"><span class="q"><i>PY·BR</i> BRL/PYG</span><span class="v" id="snap-brlpyg">—</span><span class="f" id="snap-brlpyg-f">Loading…</span></div>
+    </div>
+    <details class="mas">
+      <summary>See all official rates</summary>
+      <table class="tabla" id="tabla-cambio">
+        <thead><tr><th>Currency</th><th class="v">Value</th><th class="om">Institution</th><th>Date</th></tr></thead>
+        <tbody><tr><td colspan="4" class="u">Loading…</td></tr></tbody>
+      </table>
+      <p class="nota" id="cambio-act"></p>
+      <p class="nota">These are official references (BCP, BCB, BCRA, TRM). Banks and exchange houses apply their own buy and sell prices.</p>
+    </details>
+  </div>
+</section>
+
+<section class="s" id="radar" data-prioridad="PY" aria-labelledby="radar-t">
+  <div class="c">
+    <div class="solo-visitante"><div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>News radar and official exchange rates</b><span>News from Paraguay, Brazil and Latin America every 30 minutes, plus official rates from the BCP, BCB, BCRA and TRM.</span></div></div><button class="btn p ch" type="button" data-acceso>Create free account</button></div></div>
+    <div class="privado">
+    <div class="radar-cab">
+      <div><span class="vol">News Radar</span><h2 id="radar-t">Market context</h2><p>Business, fintech and crypto news from the region, with the original source. Paraguay first, then Brazil and Latin America (news in Spanish and Portuguese).</p></div>
+      <div class="meta" id="radar-info" aria-live="polite">Loading…</div>
+    </div>
+    <div class="filtros" role="group" aria-label="Radar filters">
+      <div class="grupo"><span>Country</span>
+        <button class="chip" data-f="region:todas" aria-pressed="true">All</button>
+        <button class="chip" data-f="region:PY" aria-pressed="false">Paraguay</button>
+        <button class="chip" data-f="region:BR" aria-pressed="false">Brasil</button>
+        <button class="chip" data-f="region:LATAM" aria-pressed="false">Latin America</button>
+      </div>
+      <div class="grupo"><span>Period</span>
+        <button class="chip" data-f="horas:24" aria-pressed="false">24 h</button>
+        <button class="chip" data-f="horas:72" aria-pressed="true">3 days</button>
+        <button class="chip" data-f="horas:168" aria-pressed="false">7 days</button>
+      </div>
+      <div class="grupo"><label for="f-idioma"><span>Language</span></label>
+        <select class="sel" id="f-idioma" data-s="idioma"><option value="todos">All</option><option value="es">Español</option><option value="pt">Português</option></select></div>
+      <div class="grupo"><label for="f-cat"><span>Topic</span></label><select class="sel" id="f-cat" data-s="cat"><option value="todas">All</option><option value="regulacion">Regulation</option><option value="impuestos">Taxes</option><option value="criptoactivos">Crypto assets</option><option value="stablecoins">Stablecoins</option><option value="pagos">Payments</option><option value="fintech">Fintech</option><option value="finanzas">Finance</option><option value="mercados">Markets</option><option value="macroeconomia">Macroeconomics</option><option value="empresas">Companies</option><option value="seguridad">Security</option></select></div>
+    </div>
+    <p class="aviso-r" id="radar-aviso" aria-live="polite"></p>
+    <ul class="notas" id="radar-lista" aria-live="polite"></ul>
+    <div class="radar-pie">
+      <p class="meta">News is not a signal. Headlines keep their original language.</p>
+      <div style="display:flex;gap:10px"><button class="btn ch" id="radar-mas" hidden>See more</button><button class="btn ch" id="radar-btn" aria-expanded="false" aria-controls="radar-lista">See full radar</button></div>
+    </div>
+    <div class="historias"><article class="ap"><span class="etq">In Paraguay</span><h3>Crypto in your tax return: what the DNIT requires</h3><p>DNIT General Resolution No. 47/2026 requires anyone above US$ 5,000 a year in crypto transactions, and the platforms operating in the country, to report them.</p><p class="firma">WIQON team · 10/07/2026 · <a href="https://www.dnit.gov.py/web/portal-institucional/w/la-dnit-establece-obligaci%C3%B3n-de-informar-las-transacciones-con-criptoactivos" target="_blank" rel="noopener">official source</a></p></article><article class="ap"><span class="etq">Brazil in focus</span><h3>New central bank rules for virtual asset providers are now in force</h3><p>BCB resolutions 519, 520 and 521 apply from 10/1/2026; supervision data reporting starts on 1/1/2027.</p><p class="firma">WIQON team · 10/07/2026 · <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20BCB&numero=520" target="_blank" rel="noopener">official source</a></p></article><article class="ap"><span class="etq">Why it matters</span><h3>The hidden cost of a CFD robot</h3><p>Our EA made US$ 14,475 on price and paid US$ 4,241 in swaps with a real broker. Almost a third went to financing.</p><p class="firma">WIQON Lab · <a href="https://github.com/wiqon/wiqon-lab/tree/main/resultados/mt5" target="_blank" rel="noopener">report</a></p></article></div>
+    </div>
+  </div>
+</section>
+
+<section class="s solo-usuario" id="descargas" aria-labelledby="desc-t">
+  <div class="c">
+    <div class="cab"><div><span class="vol">Downloads</span><h2 class="t" id="desc-t">Lab reports</h2></div><p class="der">PDF material to read calmly, with sources and dates. For registered accounts only.</p></div>
+    <div class="pilares"><a class="pilar" href="../descargas/wiqon-shield-demo.zip" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><h3 style="font-size:1.05rem">WIQON Shield · free demo</h3></div><p class="que">The full EA for MetaTrader 5 + manual (English included). Free on demo accounts; real accounts need a license.</p><span class="enl">Download demo (.zip) ↓</span></a><a class="pilar" href="../descargas/20-ideas-probadas.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">20+ tested ideas: which one survived (Spanish)</h3></div><p class="que">22 strategy families, 84 variants and the only rule that passed every test.</p><span class="enl">Download PDF ↓</span></a><a class="pilar" href="../descargas/informe-swaps.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">The hidden cost of a CFD robot (Spanish)</h3></div><p class="que">How much a real broker's swaps took over 4 years, and what to check before using an EA.</p><span class="enl">Download PDF ↓</span></a><a class="pilar" href="../descargas/guia-dnit-47-2026.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">DNIT 47/2026 guide (Spanish)</h3></div><p class="que">Who has to report crypto assets in Paraguay, from what amount, and a checklist to get ready.</p><span class="enl">Download PDF ↓</span></a></div>
+  </div>
+</section>
+
+<section class="s" id="nosotros" aria-labelledby="nos-t">
+  <div class="c humano">
+    <div class="ap">
+      <span class="vol">About us</span>
+      <blockquote id="nos-t">We publish what we find, <span>even when the result is bad.</span></blockquote>
+      <p>WIQON was born on the border between Paraguay and Brazil, where the guarani, the real and the dollar meet every day. We test it, we measure it and, if it doesn't survive, we publish it anyway.</p><p>We don't sell signals or manage other people's money.</p>
+      <div class="redes"><a href="https://www.youtube.com/@wiqonlab" target="_blank" rel="noopener">YouTube</a> <a href="https://www.instagram.com/wiqonlab/" target="_blank" rel="noopener">Instagram</a> <a href="https://www.tiktok.com/@wiqonlab" target="_blank" rel="noopener">TikTok</a> <a href="https://x.com/wiqonlab" target="_blank" rel="noopener">X</a> <a href="https://t.me/wiqonlab" target="_blank" rel="noopener">Telegram</a> <a href="https://wa.me/595987685651?text=Hi%20WIQON" target="_blank" rel="noopener">WhatsApp</a> <a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a> <a href="https://www.linkedin.com/company/wiqonlab" target="_blank" rel="noopener">LinkedIn</a> <a href="https://www.facebook.com/wiqonlab/" target="_blank" rel="noopener">Facebook</a></div>
+      <div class="faq"><details><summary>Do you sell signals or manage other people's money?</summary><p>No. We publish research and offer software and technical services.</p></details><details><summary>Does WIQON Shield guarantee profits?</summary><p>No. It aims to limit large drawdowns; in markets that only go up it earns less than buy and hold.</p></details><details><summary>Where does the data come from?</summary><p>Public Binance prices, official rates from the BCP, BCB, BCRA and TRM, and public RSS feeds from media and institutions.</p></details></div>
+    </div>
+    <div class="ap">
+      <span class="vol">The lab on video (Spanish)</span>
+      <div class="videos" id="videos" data-canal="wiqonlab">
+        <div id="vid-principal"><p class="meta">Loading…</p></div>
+        <ul class="vid-l" id="vid-lista"></ul>
+      </div>
+      <p style="margin-top:14px"><a class="enl" href="https://www.youtube.com/@wiqonlab?sub_confirmation=1" target="_blank" rel="noopener">Subscribe to the channel <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+      <img class="ilus" src="../assets/frontera.svg" alt="Friendship Bridge between Ciudad del Este and Foz do Iguaçu" width="1600" height="560" loading="lazy" style="margin-top:26px">
+    </div>
+  </div>
+</section>
+<section class="s solo-visitante" id="registro" aria-labelledby="reg-t">
+  <div class="c"><div class="registro">
+    <div><span class="vol">Free account</span><h2 id="reg-t">Create your account and <span>see the whole lab</span></h2><p>Just your email: we send you a link to sign in, no passwords. Free, no strings attached.</p>
+      <div class="acc" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:22px"><button class="btn p" type="button" data-acceso>Create free account <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div>
+    <ul><li>Full lab results and the live strategy</li><li>Regional news radar, every 30 minutes</li><li>Official exchange rates (BCP, BCB, BCRA, TRM)</li><li>World inflation map and economic calendar</li><li>3 PDF reports (in Spanish): 20+ tested ideas, the cost of swaps and the DNIT 47/2026 guide</li><li class="pronto">Coming soon: email alerts and watchlist</li></ul>
+  </div></div>
+</section>
+</main>
+
+<footer>
+  <div class="c">
+    <div class="pie">
+      <div><a class="marca" href="./"><span class="corona m"><img src="../assets/logo.png" alt="" width="50" height="50"></span><span>WIQON</span></a><p>Trading lab and market data, from the Paraguay–Brazil border.</p>
+        <p><a href="../" lang="es" style="display:inline">Español</a> · <a href="../br/" lang="pt-BR" style="display:inline">Português (Brasil)</a> · <a href="../en/" lang="en" style="display:inline">English</a></p></div>
+      <div><h5>Products</h5><a href="#laboratorio">Strategy lab</a><a href="../shield/">WIQON Shield</a><a href="#servicios">Data and automation</a><a href="#radar">News Radar</a></div>
+      <div><h5>Data sources</h5><a href="https://www.bcp.gov.py/webapps/web/cotizacion/monedas" target="_blank" rel="noopener">Banco Central del Paraguay</a><a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noopener">Banco Central do Brasil</a><a href="https://www.bcra.gob.ar/PublicacionesEstadisticas/Tipos_de_cambios.asp" target="_blank" rel="noopener">BCRA · TRM Colombia</a><a href="https://www.dnit.gov.py/" target="_blank" rel="noopener">DNIT · CVM</a><a href="https://data-api.binance.vision" target="_blank" rel="noopener">Binance (datos públicos)</a></div>
+      <div><h5>Tools we use</h5><a href="https://www.tradingview.com/?aff_id=1171961&aff_sub=web&source=wiqonlab" target="_blank" rel="sponsored noopener">TradingView<span class="af">affiliate</span></a><a href="https://www.binance.com/register?ref=WDAVWR75" target="_blank" rel="sponsored noopener">Binance<span class="af">referral</span></a><a href="https://www.metatrader5.com/" target="_blank" rel="noopener">MetaTrader 5</a><a href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">WIQON Lab (GitHub)</a></div>
+      <div><h5>Contact</h5><a href="contact/">Contact form</a><a href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a><a href="https://wa.me/595987685651?text=Hi%20WIQON" target="_blank" rel="noopener">WhatsApp +595 987 685 651</a><a href="terms/">Terms and conditions</a><a href="refunds/">Delivery and refunds</a><a href="privacy/">Privacy policy</a></div>
+    </div>
+    <div class="legal">
+      <p><b>Updates.</b> News: every 30 minutes. Official exchange rates: every hour (each institution publishes on its own schedule). Strategy: every day at 21:15 (Paraguay time). BTC price: when you open the page.</p>
+      <p><b>Methodology.</b> Results with costs and code on GitHub. The radar only uses public RSS feeds: headline, source, date and link, never the article text.</p>
+      <p><b>Privacy.</b> No cookies. We measure visits with Cloudflare Web Analytics, which uses no cookies and doesn't identify people. YouTube videos load only when you press play. The interactive chart is provided by TradingView and loads when you reach that section. Fonts come from Google Fonts.</p>
+      <p><b>Risk notice.</b> Informational and educational content; not financial advice. Trading involves risk of loss and past results do not guarantee future results. Links marked as affiliate or referral earn us a commission at no extra cost to you.</p>
+      <div class="pie-fund"><img src="../assets/fotos/fundador.jpg" alt="" width="30" height="30" loading="lazy"><span><b style="color:var(--suave)">Ing. Avelino González</b> · Founder and researcher</span></div>
+      <p class="redes-pie"><b>Social.</b> <a href="https://www.facebook.com/wiqonlab/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/wiqonlab/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.youtube.com/@wiqonlab" target="_blank" rel="noopener">YouTube</a> · <a href="https://t.me/wiqonlab" target="_blank" rel="noopener">Telegram</a> · <a href="https://www.tiktok.com/@wiqonlab" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/wiqonlab" target="_blank" rel="noopener">X</a> · <a href="https://discord.gg/8GDqe8H7R7" target="_blank" rel="noopener">Discord</a> · <a href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">GitHub</a></p>
+      <p><b>Owner.</b> Avelino González Melgarejo · C.I. N.º 4.690.007 · individual (sole proprietor), trade name WIQON, Paraguay.</p>
+      <p>© <span id="anio">2026</span> WIQON · Asunción · Ciudad del Este · Foz do Iguaçu</p>
+    </div>
+  </div>
+</footer>
+
+<dialog class="acceso" id="acceso" aria-labelledby="acc-t">
+  <form class="cuerpo" id="acc-form" novalidate>
+    <div class="cab-d"><h3 id="acc-t">Sign in to WIQON</h3><button class="cerrar" type="button" aria-label="Close">×</button></div>
+    <p>Enter your email and we will send you a link to sign in. We don't use passwords.</p>
+    <label class="campo" for="acc-email">Email</label>
+    <input type="email" id="acc-email" name="email" autocomplete="email" required placeholder="you@email.com">
+    <label class="check"><input type="checkbox" id="acc-priv" required> <span>I accept the <a href="privacy/" target="_blank">privacy policy</a>.</span></label>
+    <label class="check"><input type="checkbox" id="acc-nov"> <span>I want to receive WIQON news (optional, I can unsubscribe anytime).</span></label>
+    <button class="btn p" type="submit">Send sign-in link</button>
+    <p class="msg" id="acc-msg" role="status" aria-live="polite"></p>
+    <p class="pie-d">If you already have an account, the same link signs you in.</p>
+  </form>
+</dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../assets/cuenta.js"></script>
+<script src="../assets/vivo.js"></script>
+<script src="../assets/v4.js"></script>
+<script src="../assets/mercados.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
+</body>
+</html>

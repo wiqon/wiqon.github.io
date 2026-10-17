@@ -5,6 +5,7 @@
   const URL_SB = "https://ffswzcjcrxokoefhykvv.supabase.co";
   const ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmc3d6Y2pjcnhva29lZmh5a3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0MjA3NTUsImV4cCI6MjEwNjk5Njc1NX0.3hKqtMak_aoK4Hamv6NWzGZIURQ28yMh1nyGZtAHN4c";
   const PT = document.documentElement.lang.toLowerCase().startsWith("pt");
+  const EN = document.documentElement.lang.toLowerCase().startsWith("en");
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const T = PT ? {
@@ -12,6 +13,11 @@
     error: "Não foi possível enviar o link agora. Tente de novo em alguns minutos.", limite: "Muitas tentativas. Espere alguns minutos e tente de novo.",
     abrir: "Abrir o {p}", esperando: "Esperando você abrir o link… esta janela entra sozinha.", listo: "Pronto, você entrou! ✓",
     email: "Digite um e-mail válido.", privacidad: "Para criar a conta, aceite a política de privacidade.", salir: "Sair", enviar: "Enviar link de acesso",
+  } : EN ? {
+    enviando: "Sending…", enviado: "Done! We sent a link to {e}. Open your email and tap the link to sign in (check your spam folder too).",
+    error: "We couldn't send the link right now. Please try again in a few minutes.", limite: "Too many attempts. Wait a few minutes and try again.",
+    abrir: "Open {p}", esperando: "Waiting for you to open the link… this window will sign in by itself.", listo: "Done, you're in! ✓",
+    email: "Enter a valid email.", privacidad: "To create your account, please accept the privacy policy.", salir: "Sign out", enviar: "Send sign-in link",
   } : {
     enviando: "Enviando…", enviado: "¡Listo! Te enviamos un enlace a {e}. Abrí tu email y tocá el enlace para entrar (revisá también el spam).",
     error: "No pudimos enviar el enlace ahora. Probá de nuevo en unos minutos.", limite: "Demasiados intentos. Esperá unos minutos y probá de nuevo.",
@@ -81,7 +87,7 @@
       email,
       options: {
         emailRedirectTo: location.origin + location.pathname,
-        data: { acepta_novedades: $("#acc-nov").checked, idioma: PT ? "pt-BR" : "es", acepto_privacidad: new Date().toISOString() },
+        data: { acepta_novedades: $("#acc-nov").checked, idioma: PT ? "pt-BR" : EN ? "en" : "es", acepto_privacidad: new Date().toISOString() },
       },
     });
     btn.disabled = false; btn.textContent = T.enviar;
