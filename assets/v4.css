@@ -646,3 +646,6 @@ h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { letter-spacing: -.03em; }
 @media (max-width: 680px) { :root.logueado .nav .marca span:last-child { display: none; } :root.logueado .nav .c { gap: 10px; } }
 .defi-rend { overflow-x: auto; }
 @media (max-width: 420px) { .defi-tabla .om { display: none; } .defi-total, .defi-monedas, .defi-rend, .defi-cadenas { padding: 18px; } }
+
+.servs li a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--borde2); }
+.servs li a:hover { border-color: var(--cian); }

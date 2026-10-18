@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auditoría de bots de trading — WIQON</title>
+<meta name="description" content="Auditamos bots de Cryptohopper, Bitsgap, Pionex, grids de Binance y EAs de MetaTrader 5 con costos reales y pruebas fuera de muestra. Diagnóstico inicial gratis.">
+<link rel="canonical" href="https://wiqonlab.com/auditoria-bots/"><link rel="alternate" hreflang="es" href="https://wiqonlab.com/auditoria-bots/"><link rel="alternate" hreflang="pt-BR" href="https://wiqonlab.com/br/auditoria-robos/"><link rel="alternate" hreflang="en" href="https://wiqonlab.com/en/bot-audit/">
+<meta property="og:title" content="Auditoría de bots de trading — WIQON"><meta property="og:description" content="Auditamos bots de Cryptohopper, Bitsgap, Pionex, grids de Binance y EAs de MetaTrader 5 con costos reales y pruebas fuera de muestra. Diagnóstico inicial gratis."><meta property="og:image" content="https://wiqonlab.com/assets/og.png">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+<style>
+  .au { max-width: 1180px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+  .au-barra { display: flex; align-items: center; gap: 16px; height: 72px; }
+  .au-barra .der { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+  .au-hero { padding: clamp(40px, 7vw, 96px) 0 48px; max-width: 860px; }
+  .au-hero h1 { font: 500 clamp(36px, 5.2vw, 68px)/1.04 var(--titulos); letter-spacing: -.035em; text-wrap: balance; }
+  .au-hero .sub { margin-top: 22px; color: var(--suave); font-size: clamp(17px, 1.4vw, 19px); max-width: 60ch; }
+  .au-hero .plat { margin-top: 18px; color: var(--gris); font-size: 14px; }
+  .au-hero .acc { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+  .au-s { padding: 56px 0; border-top: 1px solid var(--borde); }
+  .au-s h2 { font: 500 clamp(26px, 3vw, 38px)/1.1 var(--titulos); letter-spacing: -.03em; margin-bottom: 26px; }
+  .revisa { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--borde); border: 1px solid var(--borde); border-radius: 16px; overflow: hidden; }
+  .revisa li { background: var(--sup); padding: 24px; }
+  .revisa h3, .pasos h3, .plan h3 { font: 500 18px/1.25 var(--titulos); letter-spacing: -.01em; }
+  .revisa p, .pasos p { color: var(--suave); font-size: 15px; margin-top: 8px; }
+  .pasos { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .pasos .n { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--cian); color: var(--cian); font-weight: 600; margin-bottom: 12px; }
+  .planes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .plan { background: var(--sup); border: 1px solid var(--borde); border-radius: 16px; padding: 26px; display: grid; align-content: start; gap: 10px; }
+  .plan.destacado { border-color: var(--cian); }
+  .plan > b { font: 500 26px/1.1 var(--titulos); letter-spacing: -.02em; }
+  .plan ul { list-style: none; display: grid; gap: 8px; margin-top: 6px; }
+  .plan li { color: var(--suave); font-size: 15px; padding-left: 22px; position: relative; }
+  .plan li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 9px; height: 5px; border: solid var(--compra); border-width: 0 0 2px 2px; transform: rotate(-45deg); }
+  .nota-p { color: var(--gris); font-size: 14px; margin-top: 16px; max-width: 80ch; }
+  .lab { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 28px; }
+  .lab li { display: grid; gap: 4px; padding: 16px 0; border-top: 1px solid var(--borde); }
+  .lab b { font-weight: 600; } .lab span { color: var(--suave); font-size: 15px; }
+  .faq details { border-bottom: 1px solid var(--borde); padding: 16px 0; }
+  .faq summary { cursor: pointer; font-weight: 600; font-size: 17px; }
+  .faq p { color: var(--suave); margin-top: 8px; max-width: 75ch; }
+  .cierre { text-align: left; padding: 64px 0; border-top: 1px solid var(--borde); }
+  .cierre h2 { font: 500 clamp(26px, 3.2vw, 42px)/1.1 var(--titulos); letter-spacing: -.03em; max-width: 22ch; }
+  .cierre p { color: var(--suave); margin-top: 12px; }
+  .cierre .acc { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  .au-pie { border-top: 1px solid var(--borde); padding: 28px 0 48px; color: var(--gris); font-size: 14px; display: grid; gap: 8px; }
+  .au-pie a { color: var(--gris); margin-right: 14px; }
+  @media (max-width: 900px) { .revisa, .planes { grid-template-columns: 1fr; } .pasos, .lab { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .pasos, .lab { grid-template-columns: 1fr; } }
+  @media (max-width: 380px) { .au-barra .marca span:last-child { display: none; } }
+</style>
+</head>
+<body>
+<div class="au">
+  <header class="au-barra">
+    <a class="marca" href="../"><span class="corona s"><img src="../assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
+    <div class="der">
+      <div class="idioma" aria-label="Idioma"><a class="on" href="../auditoria-bots/" lang="es">ES</a><a href="../br/auditoria-robos/" lang="pt-BR">PT-BR</a><a href="../en/bot-audit/" lang="en">EN</a></div>
+      <button class="tema-btn" type="button" aria-label="Cambiar entre tema claro y oscuro" title="Cambiar entre tema claro y oscuro"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button>
+    </div>
+  </header>
+  <main>
+    <section class="au-hero">
+      <h1>¿Tu bot gana, o solo tuvo un buen mes?</h1>
+      <p class="sub">Auditamos tu bot con el mismo método con el que descartamos 20 de nuestras propias ideas: costos reales, pruebas fuera de muestra y una comparación honesta contra no hacer nada. Si no tiene ventaja, te lo decimos.</p>
+      <p class="plat">Cryptohopper · Bitsgap · 3Commas · Pionex · grids de Binance · EAs de MetaTrader 5 · scripts propios</p>
+      <div class="acc"><a class="btn p" href="https://wa.me/595987685651?text=Hola%20WIQON%2C%20quiero%20auditar%20mi%20bot." target="_blank" rel="noopener">Pedir el diagnóstico gratis</a><a class="btn" href="../contacto/">Escribir por el formulario</a></div>
+    </section>
+    <section class="au-s"><h2>Qué revisamos</h2><ul class="revisa"><li><h3>Costos reales</h3><p>Comisiones, spread, funding y swaps: lo que el panel del bot no siempre descuenta.</p></li><li><h3>Contra qué compite</h3><p>Tu resultado frente a comprar y mantener, y frente a dejar los dólares en una stablecoin que rinde.</p></li><li><h3>Fuera de muestra</h3><p>Si la configuración funciona en períodos que no se usaron para elegirla.</p></li><li><h3>Robustez</h3><p>Qué pasa si movés un poco los parámetros: rango del grid, cantidad de niveles, take profit.</p></li><li><h3>La peor caída</h3><p>Cuánto perdió en su peor momento, cuánto tardó en recuperarse y qué habría pasado en un desplome como el de 2022.</p></li><li><h3>Sesgos</h3><p>Monedas elegidas mirando el pasado, períodos favorables u operaciones que en la realidad no se habrían ejecutado.</p></li></ul></section>
+    <section class="au-s"><h2>Cómo funciona</h2><ol class="pasos"><li><span class="n">1</span><h3>Diagnóstico gratis</h3><p>20 a 30 minutos por videollamada o WhatsApp: entendemos tu bot y te decimos si vale la pena auditarlo.</p></li><li><span class="n">2</span><h3>Propuesta por escrito</h3><p>Alcance, precio y plazo. Pagás solo si la aceptás.</p></li><li><span class="n">3</span><h3>Nos mandás los datos</h3><p>La configuración (capturas o exportación) y el historial de operaciones en CSV. Nunca pedimos contraseñas ni claves de API.</p></li><li><span class="n">4</span><h3>Informe y llamada</h3><p>Metodología, resultados con costos y una conclusión clara, explicada en una llamada.</p></li></ol></section>
+    <section class="au-s" id="planes"><h2>Planes</h2><div class="planes"><article class="plan"><h3>Diagnóstico</h3><b>Gratis</b><ul><li>Videollamada o WhatsApp de 20 a 30 minutos</li><li>Te decimos si tiene sentido auditar y qué datos hacen falta</li></ul></article><article class="plan"><h3>Auditoría básica</h3><b>Desde USD 80</b><ul><li>Revisión de la configuración</li><li>Backtest con costos reales sobre el historial disponible</li><li>Comparación contra comprar y mantener</li><li>Informe escrito</li></ul></article><article class="plan destacado"><h3>Auditoría completa</h3><b>Desde USD 200</b><ul><li>Todo lo de la básica</li><li>Pruebas fuera de muestra y robustez de parámetros</li><li>Escenarios de desplome y la peor caída</li><li>Recomendaciones de tamaño y riesgo</li><li>Llamada de entrega</li></ul></article></div><p class="nota-p">El precio final depende de la complejidad del bot y queda fijado en la propuesta, antes de pagar. Pagos con Binance / USDT, PYUSD o transferencia en Paraguay.</p></section>
+    <section class="au-s"><h2>Lo que ya encontramos en nuestro laboratorio</h2><ul class="lab"><li><b>Arbitraje entre 6 exchanges</b><span>69 oportunidades en 24 horas; casi ninguna sobrevivía a las comisiones y al tiempo de transferencia.</span></li><li><b>Cobrar la tasa de financiación</b><span>7 a 10 % anual en el histórico, casi todo de 2021; 2 a 3 % en 2025 y 2026.</span></li><li><b>Rotación de altcoins</b><span>33,7 % anual con las monedas de hoy, 1,0 % con las de 2021: el sesgo de supervivencia infla todo.</span></li><li><b>Day trade con EMA21</b><span>+0,71 % en 3 años, contra +9,3 % de dejar el dinero en Earn.</span></li></ul><p class="nota-p">Todos los experimentos, con su código, están publicados en GitHub. <a class="enl" href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">Ver el laboratorio</a></p></section>
+    <section class="au-s faq"><h2>Preguntas frecuentes</h2><details><summary>¿Necesitan acceso a mi cuenta?</summary><p>No. Trabajamos con capturas, exportaciones y el historial en CSV. Nunca pedimos contraseñas, códigos 2FA ni claves de API con permiso de retiro.</p></details><details><summary>¿Y si el bot sí tiene ventaja?</summary><p>Te lo decimos, con los números y las condiciones en las que funciona, y también los escenarios en los que dejaría de hacerlo.</p></details><details><summary>¿Garantizan algún resultado?</summary><p>No. Una auditoría mide lo que pasó y qué tan sólido es; ningún análisis garantiza ganancias futuras.</p></details><details><summary>¿Es confidencial?</summary><p>Sí. Tu bot y tus datos no se publican ni se comparten sin tu permiso por escrito.</p></details><details><summary>¿Cuánto tarda?</summary><p>El plazo queda en la propuesta según el alcance. La entrega es un informe escrito y una llamada.</p></details></section>
+    <section class="cierre"><h2>Antes de poner más dinero en tu bot, medilo.</h2><p>El diagnóstico es gratis y en 30 minutos sabés si vale la pena auditarlo.</p><div class="acc"><a class="btn p" href="https://wa.me/595987685651?text=Hola%20WIQON%2C%20quiero%20auditar%20mi%20bot." target="_blank" rel="noopener">Pedir el diagnóstico gratis</a><a class="btn" href="../contacto/">Escribir por el formulario</a></div></section>
+  </main>
+  <footer class="au-pie">
+    <div><a href="../terminos/">Términos y condiciones</a><a href="../devoluciones/">Entregas y devoluciones</a><a href="../contacto/">Contacto</a><a href="../privacidad/">Privacidad</a></div>
+    <div>Contenido informativo y educativo; no es asesoría financiera. Operar implica riesgo de pérdida.</div><div>© 2026 WIQON · Avelino González Melgarejo · C.I. 4.690.007</div>
+  </footer>
+</div>
+<script>
+  document.querySelector(".tema-btn").addEventListener("click", () => {
+    const r = document.documentElement; r.dataset.tema = r.dataset.tema === "claro" ? "oscuro" : "claro";
+    try { localStorage.setItem("wiqon-tema", r.dataset.tema); } catch (e) {}
+  });
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
+</body>
+</html>
