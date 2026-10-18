@@ -127,6 +127,31 @@
   </div>
 </section>
 
+<section class="s" id="defi" aria-labelledby="defi-t">
+  <div class="c">
+    <div class="cab"><div><span class="vol">Dólares digitales</span><h2 class="t" id="defi-t">Dónde están tus <span>dólares digitales</span></h2></div><p class="der">Cuántas stablecoins circulan, quién paga por guardarlas y en qué redes se mueve el dinero. Datos públicos de DefiLlama, cada 30 minutos. Es información, no una recomendación.</p></div>
+    <div class="defi-top">
+      <div class="defi-total">
+        <span class="defi-lbl">Stablecoins en dólares en circulación</span>
+        <div class="defi-cifra"><b id="df-total">—</b><span id="df-var" class="defi-var"></span></div>
+        <svg id="df-serie" class="defi-serie" viewBox="0 0 600 140" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <span class="defi-nota">Últimos 180 días, en miles de millones de dólares.</span>
+      </div>
+      <div class="defi-monedas"><span class="defi-lbl">Las más usadas</span><ul id="df-monedas"></ul></div>
+    </div>
+    <div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>Rendimientos de stablecoins y dinero por red</b><span>Con tu cuenta gratis ves quién paga por tus dólares digitales, cuánto hay depositado y en qué redes.</span></div></div><button class="btn p ch" type="button" data-acceso>Crear cuenta gratis</button></div>
+    <div class="defi-bajo vista-previa">
+      <div class="defi-rend">
+        <h3 class="defi-h3">Quién paga por tus dólares digitales</h3>
+        <table class="tabla defi-tabla"><thead><tr><th>Protocolo</th><th>Moneda</th><th class="om">Red</th><th class="r">Rendimiento anual</th><th class="r om">Depositado</th></tr></thead><tbody id="df-rend"><tr><td colspan="5" class="meta">Cargando…</td></tr></tbody></table>
+        <p class="nota">Ordenados por dinero depositado, no por rendimiento. Más rendimiento suele significar más riesgo: los protocolos DeFi pueden fallar o ser hackeados y ningún banco central los garantiza. Algunos fondos son solo para inversores calificados, y el rendimiento cambia todos los días.</p>
+      </div>
+      <div class="defi-cadenas"><h3 class="defi-h3">Dónde está el dinero de DeFi</h3><ul id="df-cadenas"></ul></div>
+    </div>
+    <p class="meta defi-fuente" id="df-fuente">Fuente: DefiLlama.</p>
+  </div>
+</section>
+
 <div class="prueba" aria-label="Cómo trabajamos">
   <div class="c">
     <div class="pr"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg><div><b>Datos reales</b><span>Precios públicos, años de historia</span></div></div>
@@ -327,6 +352,7 @@
 <script src="assets/v4.js"></script>
 <script src="assets/mercados.js"></script>
 <script src="assets/rio.js"></script>
+<script src="assets/defi.js"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
 </body>
 </html>

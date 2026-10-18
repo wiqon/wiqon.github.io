@@ -177,6 +177,31 @@ PLANTILLA = """<!doctype html>
   </div>
 </section>
 
+<section class="s" id="defi" aria-labelledby="defi-t">
+  <div class="c">
+    <div class="cab"><div><span class="vol">{{df_vol}}</span><h2 class="t" id="defi-t">{{df_h2}}</h2></div><p class="der">{{df_p}}</p></div>
+    <div class="defi-top">
+      <div class="defi-total">
+        <span class="defi-lbl">{{df_total_t}}</span>
+        <div class="defi-cifra"><b id="df-total">—</b><span id="df-var" class="defi-var"></span></div>
+        <svg id="df-serie" class="defi-serie" viewBox="0 0 600 140" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <span class="defi-nota">{{df_total_n}}</span>
+      </div>
+      <div class="defi-monedas"><span class="defi-lbl">{{df_monedas_t}}</span><ul id="df-monedas"></ul></div>
+    </div>
+    <div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>{{bl_defi_t}}</b><span>{{bl_defi}}</span></div></div><button class="btn p ch" type="button" data-acceso>{{crear_cuenta}}</button></div>
+    <div class="defi-bajo vista-previa">
+      <div class="defi-rend">
+        <h3 class="defi-h3">{{df_rend_t}}</h3>
+        <table class="tabla defi-tabla"><thead><tr><th>{{df_c_prot}}</th><th>{{df_c_mon}}</th><th class="om">{{df_c_red}}</th><th class="r">{{df_c_apy}}</th><th class="r om">{{df_c_tvl}}</th></tr></thead><tbody id="df-rend"><tr><td colspan="5" class="meta">{{cargando}}</td></tr></tbody></table>
+        <p class="nota">{{df_riesgo}}</p>
+      </div>
+      <div class="defi-cadenas"><h3 class="defi-h3">{{df_cad_t}}</h3><ul id="df-cadenas"></ul></div>
+    </div>
+    <p class="meta defi-fuente" id="df-fuente">{{df_fuente}}</p>
+  </div>
+</section>
+
 <div class="prueba" aria-label="{{prueba_aria}}">
   <div class="c">
     <div class="pr">{{ic_datos}}<div><b>{{p1}}</b><span>{{p1s}}</span></div></div>
@@ -377,6 +402,7 @@ PLANTILLA = """<!doctype html>
 <script src="{{r}}assets/v4.js"></script>
 <script src="{{r}}assets/mercados.js"></script>
 <script src="{{r}}assets/rio.js"></script>
+<script src="{{r}}assets/defi.js"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
 </body>
 </html>
@@ -466,6 +492,13 @@ ES = dict(ICONOS,
     es_on='class="on"', br_on="", en_on="", r_1a="1A", cta_nav="Probar Shield gratis", cta_nav_href="shield/",
     kicker="Paraguay · Brasil · Mercados",
     h1a="Probamos estrategias con datos reales.", h1b="Construimos herramientas con lo que sobrevive.",
+    df_vol="Dólares digitales", df_h2="Dónde están tus <span>dólares digitales</span>",
+    df_p="Cuántas stablecoins circulan, quién paga por guardarlas y en qué redes se mueve el dinero. Datos públicos de DefiLlama, cada 30 minutos. Es información, no una recomendación.",
+    df_total_t="Stablecoins en dólares en circulación", df_total_n="Últimos 180 días, en miles de millones de dólares.", df_monedas_t="Las más usadas",
+    bl_defi_t="Rendimientos de stablecoins y dinero por red", bl_defi="Con tu cuenta gratis ves quién paga por tus dólares digitales, cuánto hay depositado y en qué redes.",
+    df_rend_t="Quién paga por tus dólares digitales", df_c_prot="Protocolo", df_c_mon="Moneda", df_c_red="Red", df_c_apy="Rendimiento anual", df_c_tvl="Depositado",
+    df_riesgo="Ordenados por dinero depositado, no por rendimiento. Más rendimiento suele significar más riesgo: los protocolos DeFi pueden fallar o ser hackeados y ningún banco central los garantiza. Algunos fondos son solo para inversores calificados, y el rendimiento cambia todos los días.",
+    df_cad_t="Dónde está el dinero de DeFi", df_fuente="Fuente: DefiLlama.",
     rio_precio="Precio de BTC ahora", rio_ritmo="Operaciones en el último minuto", rio_compras="Compras", rio_ventas="Ventas", rr_txt="frente a la media de 100 días",
     rio_leyenda="Cada punto es una operación real de Bitcoin en Binance, ahora mismo: cian si alguien compró, azul si vendió; más grande, más dinero. Recorren los últimos 3 minutos.",
     sub="Investigamos mercados, medimos costos y validamos ideas antes de convertirlas en software, datos o servicios. Si una idea no sobrevive, también lo publicamos.",
@@ -600,6 +633,13 @@ BR = dict(ICONOS,
     es_on="", br_on='class="on"', en_on="", r_1a="1A", cta_nav="WIQON Shield", cta_nav_href="#shield",
     kicker="Brasil · Paraguai · Mercados",
     h1a="Testamos estratégias com dados reais.", h1b="Construímos ferramentas com o que sobrevive.",
+    df_vol="Dólares digitais", df_h2="Onde estão seus <span>dólares digitais</span>",
+    df_p="Quantas stablecoins circulam, quem paga para guardá-las e em quais redes o dinheiro se move. Dados públicos da DefiLlama, a cada 30 minutos. É informação, não recomendação.",
+    df_total_t="Stablecoins em dólar em circulação", df_total_n="Últimos 180 dias, em bilhões de dólares.", df_monedas_t="As mais usadas",
+    bl_defi_t="Rendimentos de stablecoins e dinheiro por rede", bl_defi="Com a sua conta grátis você vê quem paga pelos seus dólares digitais, quanto está depositado e em quais redes.",
+    df_rend_t="Quem paga pelos seus dólares digitais", df_c_prot="Protocolo", df_c_mon="Moeda", df_c_red="Rede", df_c_apy="Rendimento anual", df_c_tvl="Depositado",
+    df_riesgo="Ordenados por dinheiro depositado, não por rendimento. Mais rendimento costuma significar mais risco: protocolos DeFi podem falhar ou ser hackeados e nenhum banco central os garante. Alguns fundos são só para investidores qualificados, e o rendimento muda todos os dias.",
+    df_cad_t="Onde está o dinheiro do DeFi", df_fuente="Fonte: DefiLlama.",
     rio_precio="Preço do BTC agora", rio_ritmo="Negócios no último minuto", rio_compras="Compras", rio_ventas="Vendas", rr_txt="em relação à média de 100 dias",
     rio_leyenda="Cada ponto é um negócio real de Bitcoin na Binance, agora mesmo: ciano quando alguém comprou, azul quando vendeu; maior, mais dinheiro. Eles percorrem os últimos 3 minutos.",
     sub="Pesquisamos mercados, medimos custos e validamos ideias antes de transformá-las em software, dados ou serviços. Se uma ideia não sobrevive, também publicamos.",
@@ -744,6 +784,13 @@ EN = dict(ES,
     es_on="", br_on="", en_on='class="on"', r_1a="1Y", cta_nav="Try Shield free", cta_nav_href="shield/",
     kicker="Paraguay · Brazil · Markets",
     h1a="We test strategies with real data.", h1b="We build tools from what survives.",
+    df_vol="Digital dollars", df_h2="Where your <span>digital dollars</span> are",
+    df_p="How many stablecoins are in circulation, who pays to hold them and which networks the money moves on. Public DefiLlama data, every 30 minutes. Information, not a recommendation.",
+    df_total_t="Dollar stablecoins in circulation", df_total_n="Last 180 days, in billions of dollars.", df_monedas_t="The most used",
+    bl_defi_t="Stablecoin yields and money by network", bl_defi="With your free account you see who pays for your digital dollars, how much is deposited and on which networks.",
+    df_rend_t="Who pays for your digital dollars", df_c_prot="Protocol", df_c_mon="Coin", df_c_red="Network", df_c_apy="Annual yield", df_c_tvl="Deposited",
+    df_riesgo="Sorted by money deposited, not by yield. Higher yield usually means higher risk: DeFi protocols can fail or be hacked and no central bank backs them. Some funds are for qualified investors only, and yields change every day.",
+    df_cad_t="Where DeFi money is", df_fuente="Source: DefiLlama.",
     rio_precio="BTC price now", rio_ritmo="Trades in the last minute", rio_compras="Buys", rio_ventas="Sells", rr_txt="vs. the 100-day average",
     rio_leyenda="Each dot is a real Bitcoin trade on Binance, right now: cyan when someone bought, blue when someone sold; bigger means more money. They travel across the last 3 minutes.",
     sub="We research markets, measure costs and validate ideas before turning them into software, data or services. If an idea doesn't survive, we publish that too.",
