@@ -21,6 +21,8 @@
   .legal-p .meta { margin-top: 6px; }
   .legal-p table { width: 100%; border-collapse: collapse; margin: 10px 0; }
   .legal-p th, .legal-p td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+  .legal-p th, .legal-p td { overflow-wrap: anywhere; }
+  @media (max-width: 480px) { .legal-p th, .legal-p td { padding: 8px 6px; font-size: .88rem; } }
   .legal-p .tit { border: 1px solid var(--borde); border-radius: 12px; padding: 14px 18px; margin: 18px 0; }
   .legal-p .redes-l a { margin-right: 14px; display: inline-block; }
   .form-c { display: grid; gap: 12px; margin-top: 14px; }
