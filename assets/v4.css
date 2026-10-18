@@ -551,7 +551,8 @@ section.s + section.s { border-top-color: rgba(255, 255, 255, .04); }
 button:not(:disabled), summary, label.check, [data-acceso], .opcion { cursor: pointer; }
 /* pantallas táctiles: controles de al menos 44 px */
 @media (pointer: coarse) {
-  .idioma a, .rangos button, .chip, .sel, .pestanas button, .btn.ch { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .rangos button, .chip, .sel, .pestanas button, .btn.ch { min-height: 44px; }  /* solo altura: no tocar display (el menú móvil oculta botones) */
+  .idioma a { min-height: 44px; display: inline-flex; align-items: center; }
   .tema-btn { width: 44px; height: 44px; }
 }
 /* quien pide menos movimiento no ve animaciones */
@@ -561,3 +562,11 @@ button:not(:disabled), summary, label.check, [data-acceso], .opcion { cursor: po
 /* tabla de precios en vivo: en pantallas angostas se oculta la minigráfica y nunca empuja la página */
 .mercados { overflow-x: auto; }
 @media (max-width: 420px) { .mercados th.om, .mercados td.om { display: none; } }
+/* pantallas muy angostas (320–380 px): la barra superior entra completa */
+.idioma a { white-space: nowrap; }
+@media (max-width: 380px) { .nav .c { gap: 8px; padding: 0 12px; } .nav-d { gap: 6px; } .idioma a { padding: 4px 5px; font-size: .78rem; } .marca span:last-child { letter-spacing: .04em; } }
+/* pantallas táctiles: filas de enlaces con área tocable más alta (sin cambiar el aspecto) */
+@media (pointer: coarse) {
+  .redes a, .pie a, .pilar .pie-p a.enl { padding-top: 10px; padding-bottom: 10px; }
+  .redes a { display: inline-block; }
+}
