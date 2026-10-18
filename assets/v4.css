@@ -2,13 +2,13 @@
    cyan para acciones y datos activos, dorado tenue para lo regional/institucional,
    verde/rojo solo para estados de mercado. Bordes finos, glow mínimo. */
 :root {
-  --fondo: #060b14; --fondo2: #08101c; --sup: #0c1624; --sup2: #101d2f; --borde: #1a2a40; --borde2: #24384f;
-  --texto: #eaf0f7; --suave: #c2ccd8; --gris: #8a98ab; --gris2: #7a8797;
-  --cian: #22c3ee; --cian2: #5fd6f3; --oro: #c9a45a; --sube: #2fc47f; --baja: #ef5f67; --aviso: #e7b54a;
-  --sans: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --fondo: #02040b; --fondo2: #050a18; --sup: #081129; --sup2: #0c1834; --borde: #152447; --borde2: #1e3260;
+  --texto: #eaf3ff; --suave: #b4c3dd; --gris: #8d9cb6; --gris2: #7b8aa6;
+  --cian: #3fe0ff; --cian2: #8aebff; --compra: #3fe0ff; --venta: #3d6dff; --oro: #c9a45a; --sube: #2fc47f; --baja: #ef5f67; --aviso: #e7b54a;
+  --sans: "Geist", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; --titulos: "Unbounded", "Geist", system-ui, sans-serif;
   --mono: "JetBrains Mono", Consolas, monospace;
   --r: 12px; --ancho: 1240px;
-  --nav-bg: rgba(6, 11, 20, .9); --caja-bg: rgba(6, 11, 20, .35); --pie-bg: #04080f; --atajo-bg: rgba(12, 22, 36, .7); --grilla: rgba(26, 42, 64, .8); --eje: #7a8797;
+  --nav-bg: rgba(2, 4, 11, .82); --caja-bg: rgba(2, 4, 11, .35); --pie-bg: #01030a; --atajo-bg: rgba(12, 22, 36, .7); --grilla: rgba(26, 42, 64, .8); --eje: #7a8797;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -381,9 +381,9 @@ footer { border-top: 1px solid var(--borde); padding: 52px 0 30px; background: v
 
 /* ---------- tema claro (se activa con el botón sol/luna) ---------- */
 :root[data-tema="claro"] {
-  --fondo: #f4f6fa; --fondo2: #eceff5; --sup: #ffffff; --sup2: #f7f9fc; --borde: #dbe2ec; --borde2: #c9d3e1;
-  --texto: #0b1424; --suave: #2e3b50; --gris: #56647a; --gris2: #626c7b;
-  --cian: #087495; --cian2: #0a6a88; --oro: #866523; --sube: #0f7b4c; --baja: #c23740; --aviso: #8d630d;
+  --fondo: #f2f6ff; --fondo2: #e8eefa; --sup: #ffffff; --sup2: #f6f9ff; --borde: #d3def2; --borde2: #bfcde6;
+  --texto: #061233; --suave: #2c3c5c; --gris: #4f5f7d; --gris2: #5e6b84;
+  --cian: #1c46d9; --cian2: #1638b0; --compra: #0087b3; --venta: #1c46d9; --oro: #866523; --sube: #0f7b4c; --baja: #c23740; --aviso: #8d630d;
   --nav-bg: rgba(255, 255, 255, .9); --caja-bg: #f7f9fc; --pie-bg: #e9edf4; --atajo-bg: #ffffff; --grilla: rgba(160, 175, 195, .45); --eje: #626c7b;
 }
 :root[data-tema="claro"] .btn.p { color: #fff; }
@@ -570,3 +570,45 @@ button:not(:disabled), summary, label.check, [data-acceso], .opcion { cursor: po
   .redes a, .pie a, .pilar .pie-p a.enl { padding-top: 10px; padding-bottom: 10px; }
   .redes a { display: inline-block; }
 }
+
+/* ---------- identidad "río de operaciones" (octubre 2026) ---------- */
+.hero h1, h2.t, .snap .intro h2, .radar-cab h2, .registro h2, .pilar h3, .marca, .sello .nombre { font-family: var(--titulos); font-weight: 500; }
+h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { letter-spacing: -.03em; }
+.marca { letter-spacing: .06em; }
+
+.hero.rio { position: relative; min-height: calc(100svh - 66px); display: grid; align-items: end; padding: 96px 0 44px; isolation: isolate; overflow: hidden; overflow: clip; }
+.hero.rio::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, var(--fondo) 0%, color-mix(in srgb, var(--fondo) 90%, transparent) 38%, transparent 64%),
+              linear-gradient(0deg, var(--fondo) 0%, transparent 32%); }
+#rio { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+.hero.rio .c { display: block; width: 100%; }
+.rio-copia { max-width: 720px; }
+.hero.rio h1 { font-size: clamp(34px, 4.6vw, 70px); line-height: 1.04; letter-spacing: -.035em; max-width: 15ch; margin: 0; text-wrap: balance; }
+.hero.rio .sub { margin-top: 24px; max-width: 54ch; color: var(--suave); font-size: clamp(16px, 1.3vw, 18.5px); }
+.hero.rio .acc { margin-top: 30px; }
+.rio-lectura { margin-top: 40px; display: grid; grid-template-columns: max-content max-content minmax(200px, 1fr); gap: 16px 40px; align-items: end; max-width: 860px; }
+.rio-dato { display: grid; gap: 4px; }
+.rio-dato b { font: 500 clamp(24px, 2.4vw, 34px)/1 var(--titulos); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.rio-dato span, .rio-presion .rotulos { color: var(--suave); font-size: 14px; }
+.rio-presion { display: grid; gap: 8px; }
+.rio-presion .tira { height: 8px; border-radius: 99px; background: var(--venta); overflow: hidden; }
+.rio-presion .tira i { display: block; height: 100%; width: 50%; background: var(--compra); border-radius: 99px; transition: width .6s ease; }
+.rio-presion .rotulos { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+/* la regla de la estrategia, compacta, con su aguja en vivo */
+.rio-regla { margin-top: 26px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 12px 16px; border: 1px solid var(--borde); border-radius: 16px; text-decoration: none; color: var(--suave); font-size: 14px; max-width: 760px;
+  background: color-mix(in srgb, var(--fondo) 70%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: border-color .2s; }
+.rio-regla:hover { border-color: var(--cian); }
+.rio-regla b { color: var(--texto); font-weight: 600; }
+.rr-escala { position: relative; flex: 1 1 140px; min-width: 120px; height: 18px;
+  background: repeating-linear-gradient(90deg, var(--borde2) 0 1px, transparent 1px 10%) center / 100% 8px no-repeat,
+              linear-gradient(90deg, transparent 50%, color-mix(in srgb, var(--venta) 22%, transparent) 50%) center / 100% 8px no-repeat; }
+.rr-cero { position: absolute; left: 50%; top: 0; bottom: 0; width: 1.5px; background: var(--texto); }
+.rr-aguja { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 3px; margin-left: -1.5px; border-radius: 2px; background: var(--compra); box-shadow: 0 0 10px var(--compra); transition: left .9s cubic-bezier(.2, .7, .2, 1); }
+.rio-leyenda { margin-top: 18px; max-width: 64ch; font-size: 13.5px; color: var(--suave); }
+@media (max-width: 860px) {
+  .hero.rio { padding-top: 40px; align-items: start; }
+  .hero.rio::before { background: linear-gradient(0deg, var(--fondo) 0%, var(--fondo) 62%, color-mix(in srgb, var(--fondo) 60%, transparent) 72%, transparent 82%); }
+  .hero.rio .rio-copia { padding-top: 30vh; }
+  .rio-lectura { grid-template-columns: 1fr 1fr; } .rio-presion { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .rr-aguja, .rio-presion .tira i { transition: none; } }

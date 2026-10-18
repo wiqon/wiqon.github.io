@@ -71,7 +71,7 @@ PLANTILLA = """<!doctype html>
 <link rel="icon" href="{{r}}assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{r}}assets/v4.css">
 <script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;if(localStorage.getItem("wiqon-sesion")==="1")document.documentElement.classList.add("logueado");}catch(e){}</script>
 </head>
@@ -96,50 +96,28 @@ PLANTILLA = """<!doctype html>
 </header>
 
 <main>
-<section class="hero" aria-labelledby="h1">
-  <canvas id="globo" aria-hidden="true"></canvas>
+<section class="hero rio" aria-labelledby="h1">
+  <canvas id="rio" aria-hidden="true"></canvas>
   <div class="c">
-    <div class="ap">
-      <span class="kicker">{{kicker}}</span>
-      <h1 id="h1">{{h1a}}<br><span>{{h1b}}</span></h1>
+    <div class="rio-copia">
+      <h1 id="h1">{{h1a}}</h1>
       <p class="sub">{{sub}}</p>
       <div class="acc">
-        <button class="btn p solo-visitante" type="button" data-acceso>{{crear_cuenta}} {{ic_flecha}}</button>
-        <a class="btn p solo-usuario" href="#mercado">{{ver_mercados}} {{ic_flecha}}</a>
+        <button class="btn p solo-visitante" type="button" data-acceso>{{crear_cuenta}}</button>
+        <a class="btn p solo-usuario" href="#mercado">{{ver_mercados}}</a>
         <a class="btn" href="#productos">{{cta1}}</a>
       </div>
-      <nav class="atajos" aria-label="{{n_prod}}">
-        <a class="atajo" href="#productos">{{ic_matraz}}<div><b>{{a_t}}</b><span>{{at_a}}</span></div></a>
-        <a class="atajo" href="#shield">{{ic_escudo}}<div><b>WIQON Shield</b><span>{{at_b}}</span></div></a>
-        <a class="atajo" href="#servicios">{{ic_datos}}<div><b>{{c_t}}</b><span>{{at_c}}</span></div></a>
-      </nav>
-    </div>
-    <div class="panel ap" aria-label="{{panel_aria}}">
-      <div class="grafico">
-        <div class="g-cab">
-          <div><div class="par"><span class="btc" aria-hidden="true">₿</span>BTC/USDT</div><div class="precio" id="precio-btc">—</div><span class="vivo-b" id="vivo-b">{{en_vivo}}</span></div>
-          <span class="est est-regla">…</span>
-        </div>
-        <canvas id="lienzo" role="img" aria-label="{{graf_aria}}"></canvas>
-        <div class="rangos" role="group" aria-label="{{rango_aria}}">
-          <button data-r="vivo" aria-pressed="true">{{en_vivo_btn}}</button><button data-r="30" aria-pressed="false">1M</button><button data-r="90" aria-pressed="false">3M</button>
-          <button data-r="180" aria-pressed="false">6M</button><button data-r="365" aria-pressed="false">{{r_1a}}</button>
-        </div>
-        <div class="leyenda"><span id="ley-velas" data-vivo="{{ley_vivo}}" data-dia="{{ley_velas}}">{{ley_vivo}}</span><span id="ley-media" hidden><i style="background:#e7b54a"></i>{{ley_media}}</span><span>Binance</span></div>
+      <div class="rio-lectura" aria-live="polite">
+        <div class="rio-dato"><b id="rio-precio">—</b><span>{{rio_precio}}</span></div>
+        <div class="rio-dato"><b id="rio-ritmo">—</b><span>{{rio_ritmo}}</span></div>
+        <div class="rio-presion"><div class="tira"><i id="rio-tira"></i></div><div class="rotulos"><span id="rio-compra">{{rio_compras}}</span><span id="rio-venta">{{rio_ventas}}</span></div></div>
       </div>
-      <div class="estado">
-        <div class="caja">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px"><span class="est est-regla">…</span><span class="act" id="h-act"></span></div>
-          <div class="fila"><span>{{h_cierre}}</span><b id="h-cierre">—</b></div>
-          <div class="fila"><span>{{h_dist}}</span><b id="h-dist">—</b></div>
-          <div class="fila"><span>{{h_desde}}</span><b id="h-desde">—</b></div>
-        </div>
-        <div class="caja">
-          <h4>{{ic_regla}} {{regla_t}}</h4>
-          <p>{{regla_p}}</p>
-          <a class="enl" href="#laboratorio">{{regla_link}} {{ic_flecha}}</a>
-        </div>
-      </div>
+      <a class="rio-regla" href="#laboratorio" aria-label="{{regla_t}}">
+        <span class="est est-regla">…</span>
+        <span class="rr-escala" aria-hidden="true"><i class="rr-cero"></i><i class="rr-aguja" id="rr-aguja"></i></span>
+        <span class="rr-txt"><b id="h-dist">—</b> {{rr_txt}} · {{h_desde}} <b id="h-desde">—</b></span>
+      </a>
+      <p class="rio-leyenda">{{rio_leyenda}} <span id="rio-estado"></span></p>
     </div>
   </div>
 </section>
@@ -398,6 +376,7 @@ PLANTILLA = """<!doctype html>
 <script src="{{r}}assets/vivo.js"></script>
 <script src="{{r}}assets/v4.js"></script>
 <script src="{{r}}assets/mercados.js"></script>
+<script src="{{r}}assets/rio.js"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
 </body>
 </html>
@@ -487,6 +466,8 @@ ES = dict(ICONOS,
     es_on='class="on"', br_on="", en_on="", r_1a="1A", cta_nav="Probar Shield gratis", cta_nav_href="shield/",
     kicker="Paraguay · Brasil · Mercados",
     h1a="Probamos estrategias con datos reales.", h1b="Construimos herramientas con lo que sobrevive.",
+    rio_precio="Precio de BTC ahora", rio_ritmo="Operaciones en el último minuto", rio_compras="Compras", rio_ventas="Ventas", rr_txt="frente a la media de 100 días",
+    rio_leyenda="Cada punto es una operación real de Bitcoin en Binance, ahora mismo: cian si alguien compró, azul si vendió; más grande, más dinero. Recorren los últimos 3 minutos.",
     sub="Investigamos mercados, medimos costos y validamos ideas antes de convertirlas en software, datos o servicios. Si una idea no sobrevive, también lo publicamos.",
     cta1="Explorar WIQON", cta2="Ver laboratorio",
     panel_aria="Bitcoin y el estado de nuestra regla de tendencia", graf_aria="Velas diarias de Bitcoin con su media de 100 días",
@@ -619,6 +600,8 @@ BR = dict(ICONOS,
     es_on="", br_on='class="on"', en_on="", r_1a="1A", cta_nav="WIQON Shield", cta_nav_href="#shield",
     kicker="Brasil · Paraguai · Mercados",
     h1a="Testamos estratégias com dados reais.", h1b="Construímos ferramentas com o que sobrevive.",
+    rio_precio="Preço do BTC agora", rio_ritmo="Negócios no último minuto", rio_compras="Compras", rio_ventas="Vendas", rr_txt="em relação à média de 100 dias",
+    rio_leyenda="Cada ponto é um negócio real de Bitcoin na Binance, agora mesmo: ciano quando alguém comprou, azul quando vendeu; maior, mais dinheiro. Eles percorrem os últimos 3 minutos.",
     sub="Pesquisamos mercados, medimos custos e validamos ideias antes de transformá-las em software, dados ou serviços. Se uma ideia não sobrevive, também publicamos.",
     cta1="Explorar a WIQON", cta2="Ver laboratório",
     panel_aria="Bitcoin e o estado da nossa regra de tendência", graf_aria="Candles diários do Bitcoin com a média de 100 dias",
@@ -761,6 +744,8 @@ EN = dict(ES,
     es_on="", br_on="", en_on='class="on"', r_1a="1Y", cta_nav="Try Shield free", cta_nav_href="shield/",
     kicker="Paraguay · Brazil · Markets",
     h1a="We test strategies with real data.", h1b="We build tools from what survives.",
+    rio_precio="BTC price now", rio_ritmo="Trades in the last minute", rio_compras="Buys", rio_ventas="Sells", rr_txt="vs. the 100-day average",
+    rio_leyenda="Each dot is a real Bitcoin trade on Binance, right now: cyan when someone bought, blue when someone sold; bigger means more money. They travel across the last 3 minutes.",
     sub="We research markets, measure costs and validate ideas before turning them into software, data or services. If an idea doesn't survive, we publish that too.",
     cta1="Explore WIQON", cta2="See the lab",
     panel_aria="Bitcoin and the state of our trend rule", graf_aria="Bitcoin daily candles with their 100-day average",
