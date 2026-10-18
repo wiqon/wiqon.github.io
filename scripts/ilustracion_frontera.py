@@ -1,7 +1,9 @@
 """
-Genera assets/frontera.svg: ilustración propia de WIQON (no foto) con la frontera
-Paraguay–Brasil de noche: Ciudad del Este y Foz do Iguaçu, el arco del Puente de la
-Amistad sobre el río Paraná y una línea de mercado en el cielo. Colores de la marca.
+Genera assets/frontera.svg: ilustración propia de WIQON con el Puente de la Amistad sobre el cañón
+del río Paraná, entre Ciudad del Este (izquierda) y Foz do Iguaçu (derecha), de noche.
+Mismo lenguaje que la portada (río de operaciones): trazos luminosos finos; los vehículos que cruzan
+el puente son trazos cian (hacia Brasil) y azules (hacia Paraguay). Sin texto: sirve en los tres idiomas.
+El movimiento (vehículos y reflejos) se apaga con prefers-reduced-motion.
 
 Uso:  python scripts/ilustracion_frontera.py
 """
@@ -11,106 +13,153 @@ from pathlib import Path
 
 SALIDA = Path(__file__).resolve().parent.parent / "assets" / "frontera.svg"
 W, H = 1600, 560
-RIO = 395  # nivel del agua
-rnd = random.Random(27)
+TABLERO, AGUA = 250, 420                     # altura del tablero del puente y nivel del río
+A0, A1, CIMA = 600, 1040, 270                # arranques y cima del arco (parábola)
+rnd = random.Random(42)
 
 
-def edificios(x0, x1, base, alto_min, alto_max, densidad):
-    """Siluetas de edificios con ventanas encendidas (determinístico)."""
-    piezas, ventanas = [], []
+def f(v):
+    return f"{v:.1f}".rstrip("0").rstrip(".")
+
+
+def arco_y(x, cima=CIMA, base=AGUA - 14):
+    m = (A0 + A1) / 2
+    return base - (base - cima) * (1 - ((x - m) / ((A1 - A0) / 2)) ** 2)
+
+
+def curva(fn, x0, x1, paso=6):
+    return "M" + " L".join(f"{f(x)} {f(fn(x))}" for x in range(x0, x1 + 1, paso))
+
+
+def barranca(lado):
+    """Silueta de la barranca (cañón del Paraná) de cada lado."""
+    if lado == "izq":
+        return f"M0 298 C160 292 330 300 470 296 C520 296 548 304 566 330 C584 356 592 392 604 {AGUA} L0 {AGUA} Z"
+    return f"M{W} 306 C1440 300 1270 308 1140 302 C1094 300 1068 310 1052 334 C1036 360 1030 394 1022 {AGUA} L{W} {AGUA} Z"
+
+
+def ciudad(x0, x1, piso, alto_min, alto_max, densidad):
+    """Edificios como nubes de ventanas encendidas (puntos), con silueta muy tenue."""
+    siluetas, ventanas = [], []
     x = x0
     while x < x1:
-        w = rnd.randint(18, 46)
-        h = rnd.randint(alto_min, alto_max)
-        if rnd.random() < 0.18:
-            h += rnd.randint(40, 90)  # alguna torre
-        piezas.append(f'<rect x="{x}" y="{base - h}" width="{w}" height="{h}"/>')
-        for wy in range(base - h + 8, base - 6, 9):
-            for wx in range(x + 4, x + w - 4, 7):
-                if rnd.random() < densidad:
-                    c = rnd.choice(["#f5c76b", "#f5c76b", "#ffe2a1", "#5fd6f3"])
-                    o = round(rnd.uniform(0.35, 0.95), 2)
-                    ventanas.append(f'<rect x="{wx}" y="{wy}" width="3" height="4" fill="{c}" opacity="{o}"/>')
-        x += w + rnd.randint(1, 6)
-    return piezas, ventanas
+        ancho = rnd.choice([24, 30, 36, 42, 54])
+        alto = rnd.randint(alto_min, alto_max) if rnd.random() < densidad else rnd.randint(18, 50)
+        siluetas.append(f'<rect x="{x}" y="{piso - alto}" width="{ancho - 4}" height="{alto}"/>')
+        for wy in range(piso - alto + 6, piso - 4, 7):
+            for wx in range(x + 4, x + ancho - 6, 6):
+                if rnd.random() < 0.34:
+                    calido = rnd.random() < 0.22
+                    ventanas.append(f'<rect x="{wx}" y="{wy}" width="2.4" height="2.4" fill="{"#f2c67a" if calido else "#cfe9ff"}" opacity="{f(rnd.uniform(.25, .95))}"/>')
+        x += ancho
+    return "".join(siluetas), "".join(ventanas)
 
 
-def main():
-    # barrancas del Paraná (las ciudades están arriba de la barranca)
-    BAR = RIO - 70
-    cde, cde_v = edificios(-10, 470, BAR, 50, 150, 0.32)
-    foz, foz_v = edificios(1140, 1620, BAR + 4, 35, 110, 0.26)
+def curvas_nivel():
+    """Líneas de relieve suaves, recortadas por las barrancas."""
+    lineas = []
+    for i, y in enumerate(range(312, AGUA, 10)):
+        d = curva(lambda x, y=y, i=i: y + 3.5 * math.sin(x * .011 + i * .9) + 2 * math.sin(x * .027 + i), -10, W + 10, 10)
+        lineas.append(f'<path d="{d}"/>')
+    return "".join(lineas)
 
-    # Puente de la Amistad: tablero arriba, un gran arco de hormigón debajo
-    ax0, ax1, base_arco = 520, 1080, RIO - 6
-    tablero = BAR - 22
-    cx, rx = (ax0 + ax1) / 2, (ax1 - ax0) / 2
-    ry = base_arco - (tablero + 16)
-    arco = f"M{ax0},{base_arco} A{rx},{ry} 0 0 1 {ax1},{base_arco}"
-    arco_int = f"M{ax0 + 24},{base_arco} A{rx - 24},{ry - 18} 0 0 1 {ax1 - 24},{base_arco}"
-    pilares = []
-    for i in range(1, 20):
-        px = ax0 + (ax1 - ax0) * i / 20
-        y_arco = base_arco - ry * math.sqrt(max(0, 1 - ((px - cx) / rx) ** 2))
-        if y_arco > tablero + 14:
-            pilares.append(f'<line x1="{px:.1f}" y1="{tablero + 8}" x2="{px:.1f}" y2="{y_arco:.1f}"/>')
-    luces = "".join(f'<circle cx="{x}" cy="{tablero - 10}" r="2.3" fill="#ffe2a1"/><line x1="{x}" y1="{tablero}" x2="{x}" y2="{tablero - 9}" stroke="#4b5d78" stroke-width="1.2"/>'
-                    for x in range(440, 1170, 36))
 
-    # línea de mercado en el cielo (velas suavizadas)
-    pts, y = [], 210
-    for i in range(0, 41):
-        y += rnd.uniform(-16, 13) - 1.2
-        y = max(70, min(240, y))
-        pts.append((i * 40, y))
-    linea = " ".join(f"{x},{y:.1f}" for x, y in pts)
-    area = f"M0,{pts[0][1]:.1f} " + " ".join(f"L{x},{y:.1f}" for x, y in pts) + f" L1600,300 L0,300 Z"
+def puente():
+    partes = []
+    extra = curva(lambda x: arco_y(x), A0, A1, 4)
+    intra = curva(lambda x: arco_y(x, cima=CIMA + 11, base=AGUA - 8), A0 + 14, A1 - 14, 4)
+    partes.append(f'<path class="arco" d="{extra}"/>')
+    partes.append(f'<path class="arco fino" d="{intra}"/>')
+    for x in range(A0 + 30, A1 - 29, 22):                      # columnas entre el arco y el tablero
+        y = arco_y(x)
+        if y - TABLERO > 10:
+            partes.append(f'<line class="col" x1="{x}" y1="{TABLERO + 5}" x2="{x}" y2="{f(y)}"/>')
+    for x in list(range(452, 590, 34)) + list(range(1068, 1192, 34)):   # pilares de los accesos
+        base = 300 if x < 800 else 306
+        partes.append(f'<line class="col" x1="{x}" y1="{TABLERO + 5}" x2="{x}" y2="{base}"/>')
+    partes.append(f'<line class="tablero" x1="420" y1="{TABLERO}" x2="1220" y2="{TABLERO}"/>')
+    partes.append(f'<line class="baranda" x1="420" y1="{TABLERO - 9}" x2="1220" y2="{TABLERO - 9}"/>')
+    for x in range(440, 1210, 38):
+        partes.append(f'<line class="poste" x1="{x}" y1="{TABLERO - 9}" x2="{x}" y2="{TABLERO - 20}"/><circle class="farol" cx="{x}" cy="{TABLERO - 21}" r="2.2"/>')
+    return "".join(partes)
 
-    # estrellas
-    estrellas = "".join(f'<circle cx="{rnd.randint(0, W)}" cy="{rnd.randint(8, 180)}" r="{rnd.choice([0.6, 0.8, 1.1])}" fill="#cfe9ff" opacity="{rnd.uniform(.2, .7):.2f}"/>'
-                        for _ in range(110))
 
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="t d">
-<title id="t">Frontera Paraguay–Brasil</title>
-<desc id="d">Ilustración de WIQON: Ciudad del Este y Foz do Iguaçu de noche, el arco del Puente de la Amistad sobre el río Paraná y una línea de mercado en el cielo.</desc>
+def vehiculos():
+    """Trazos que cruzan el tablero: cian hacia Brasil (→), azul hacia Paraguay (←)."""
+    out = []
+    for i in range(14):
+        ida = i % 2 == 0
+        largo = rnd.randint(26, 54)
+        dur = rnd.uniform(7, 13)
+        y = TABLERO - (4 if ida else 7.5)
+        out.append(f'<rect class="auto {"ida" if ida else "vuelta"}" x="0" y="{f(y)}" width="{largo}" height="3.4" rx="1.7" '
+                   f'fill="url(#{"estela-ida" if ida else "estela-vuelta"})" style="animation-duration:{f(dur)}s;animation-delay:{f(-rnd.uniform(0, dur))}s"/>')
+    return "".join(out)
+
+
+def reflejos():
+    out = []
+    for x in range(440, 1210, 38):
+        out.append(f'<rect x="{x - 1}" y="{AGUA + 6}" width="2" height="{rnd.randint(30, 90)}" fill="url(#reflejo)" opacity="{f(rnd.uniform(.35, .8))}"/>')
+    for _ in range(26):
+        color = "#3fe0ff" if rnd.random() < .55 else "#3d6dff"
+        out.append(f'<rect class="brillo" x="{rnd.randint(0, W)}" y="{rnd.randint(AGUA + 10, H - 10)}" width="{rnd.randint(40, 220)}" height="1.4" fill="{color}" '
+                   f'opacity="{f(rnd.uniform(.08, .28))}" style="animation-delay:{f(-rnd.uniform(0, 18))}s"/>')
+    return "".join(out)
+
+
+def estrellas():
+    return "".join(f'<circle cx="{rnd.randint(0, W)}" cy="{rnd.randint(4, 200)}" r="{f(rnd.uniform(.5, 1.3))}" opacity="{f(rnd.uniform(.25, .8))}"/>' for _ in range(90))
+
+
+sil_cde, ven_cde = ciudad(0, 470, 298, 90, 190, .55)
+sil_foz, ven_foz = ciudad(1130, W, 306, 60, 140, .4)
+espejo_arco = curva(lambda x: 2 * AGUA - arco_y(x), A0, A1, 6)
+
+svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-label="Puente de la Amistad sobre el río Paraná, entre Ciudad del Este y Foz do Iguaçu, de noche">
 <defs>
-  <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050a14"/><stop offset=".62" stop-color="#0b1d33"/><stop offset="1" stop-color="#123250"/></linearGradient>
-  <linearGradient id="agua" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b2236"/><stop offset="1" stop-color="#050a14"/></linearGradient>
-  <linearGradient id="mercado" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22c3ee" stop-opacity=".22"/><stop offset="1" stop-color="#22c3ee" stop-opacity="0"/></linearGradient>
-  <radialGradient id="halo" cx=".5" cy=".7" r=".6"><stop offset="0" stop-color="#22c3ee" stop-opacity=".16"/><stop offset="1" stop-color="#22c3ee" stop-opacity="0"/></radialGradient>
-  <filter id="brillo" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>
-  <mask id="reflejo"><rect width="{W}" height="{H}" fill="url(#agua)"/></mask>
+  <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#02040b"/><stop offset=".55" stop-color="#06122a"/><stop offset="1" stop-color="#0a1c3c"/></linearGradient>
+  <linearGradient id="agua" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071833"/><stop offset="1" stop-color="#02040b"/></linearGradient>
+  <linearGradient id="tierra" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06142a"/><stop offset="1" stop-color="#030a18"/></linearGradient>
+  <radialGradient id="resplandor-izq" cx=".16" cy=".5" r=".36"><stop offset="0" stop-color="#3fe0ff" stop-opacity=".13"/><stop offset="1" stop-color="#3fe0ff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="resplandor-der" cx=".86" cy=".54" r=".3"><stop offset="0" stop-color="#3d6dff" stop-opacity=".14"/><stop offset="1" stop-color="#3d6dff" stop-opacity="0"/></radialGradient>
+  <linearGradient id="estela-ida" x1="0" x2="1"><stop offset="0" stop-color="#3fe0ff" stop-opacity="0"/><stop offset="1" stop-color="#bff6ff"/></linearGradient>
+  <linearGradient id="estela-vuelta" x1="1" x2="0"><stop offset="0" stop-color="#3d6dff" stop-opacity="0"/><stop offset="1" stop-color="#9db6ff"/></linearGradient>
+  <linearGradient id="reflejo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf3ff" stop-opacity=".55"/><stop offset="1" stop-color="#eaf3ff" stop-opacity="0"/></linearGradient>
+  <clipPath id="barrancas"><path d="{barranca("izq")}"/><path d="{barranca("der")}"/></clipPath>
+  <filter id="halo" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
+<style>
+  .arco {{ fill: none; stroke: #eaf3ff; stroke-width: 3.2; stroke-linecap: round; }}
+  .arco.fino {{ stroke-width: 1.2; opacity: .55; }}
+  .col {{ stroke: #cfe0f7; stroke-width: 1.3; opacity: .7; }}
+  .tablero {{ stroke: #eaf3ff; stroke-width: 4.5; }}
+  .baranda {{ stroke: #cfe0f7; stroke-width: 1; opacity: .6; }}
+  .poste {{ stroke: #9fb2cf; stroke-width: 1; }}
+  .farol {{ fill: #fff3d6; }}
+  .relieve path {{ fill: none; stroke: #3fe0ff; stroke-width: .8; opacity: .13; }}
+  .siluetas rect {{ fill: #050d20; }}
+  .auto {{ animation: 9s linear infinite; }}
+  .ida {{ animation-name: ida; }} .vuelta {{ animation-name: vuelta; }}
+  @keyframes ida {{ from {{ transform: translateX(424px); }} to {{ transform: translateX(1162px); }} }}
+  @keyframes vuelta {{ from {{ transform: translateX(1162px); }} to {{ transform: translateX(424px); }} }}
+  .brillo {{ animation: deriva 18s linear infinite; }}
+  @keyframes deriva {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-60px); }} }}
+  @media (prefers-reduced-motion: reduce) {{ .auto, .brillo {{ animation: none; }} .auto {{ transform: translateX(800px); }} }}
+</style>
 <rect width="{W}" height="{H}" fill="url(#cielo)"/>
-<rect width="{W}" height="{H}" fill="url(#halo)"/>
-<g opacity=".18" stroke="#22c3ee" stroke-width=".6">{"".join(f'<line x1="0" y1="{yy}" x2="{W}" y2="{yy}"/>' for yy in range(60, 300, 48))}</g>
-{estrellas}
-<path d="{area}" fill="url(#mercado)"/>
-<polyline points="{linea}" fill="none" stroke="#22c3ee" stroke-width="5" opacity=".35" filter="url(#brillo)"/>
-<polyline points="{linea}" fill="none" stroke="#5fd6f3" stroke-width="2"/>
-<circle cx="{pts[-1][0] - 2}" cy="{pts[-1][1]:.1f}" r="5" fill="#5fd6f3"/>
-<g fill="#0a1626">{"".join(cde)}{"".join(foz)}</g>
-<g>{"".join(cde_v)}{"".join(foz_v)}</g>
-<path d="M-10,{BAR} L470,{BAR} C500,{BAR + 6} 515,{RIO - 30} 540,{RIO} L-10,{RIO} Z" fill="#0d1b1a"/>
-<path d="M1140,{BAR + 4} L1620,{BAR + 4} L1620,{RIO} L1060,{RIO} C1085,{RIO - 30} 1100,{BAR + 8} 1140,{BAR + 4} Z" fill="#0d1b1a"/>
-<rect y="{RIO}" width="{W}" height="{H - RIO}" fill="url(#agua)"/>
-<g stroke="#e9eef6" fill="none" stroke-linecap="round">
-  <path d="{arco}" stroke-width="12" opacity=".92"/>
-  <path d="{arco_int}" stroke-width="3" opacity=".35"/>
-  <g stroke-width="2.2" opacity=".55">{"".join(pilares)}</g>
-</g>
-<rect x="420" y="{tablero}" width="760" height="9" fill="#e9eef6" opacity=".92"/>
-<rect x="420" y="{tablero + 9}" width="760" height="3" fill="#0a1626"/>
-{luces}
-<g transform="translate(0,{2 * RIO}) scale(1,-1)" opacity=".22" mask="url(#reflejo)">
-  <path d="{arco}" stroke="#e9eef6" stroke-width="10" fill="none"/>
-  <g fill="#f5c76b">{"".join(cde_v[::3])}{"".join(foz_v[::3])}</g>
-</g>
-<g stroke="#22c3ee" stroke-width="1.2" opacity=".25">{"".join(f'<line x1="{rnd.randint(0, W)}" y1="{yy}" x2="{rnd.randint(0, W)}" y2="{yy}"/>' for yy in range(RIO + 18, H, 22))}</g>
-</svg>'''
-    SALIDA.write_text(svg, encoding="utf-8")
-    print("OK", SALIDA, len(svg) // 1024, "KB")
-
-
-if __name__ == "__main__":
-    main()
+<g fill="#eaf3ff">{estrellas()}</g>
+<rect width="{W}" height="{H}" fill="url(#resplandor-izq)"/><rect width="{W}" height="{H}" fill="url(#resplandor-der)"/>
+<g class="siluetas">{sil_cde}{sil_foz}</g>
+<g>{ven_cde}{ven_foz}</g>
+<rect y="{AGUA}" width="{W}" height="{H - AGUA}" fill="url(#agua)"/>
+<path d="{barranca("izq")}" fill="url(#tierra)"/><path d="{barranca("der")}" fill="url(#tierra)"/>
+<g class="relieve" clip-path="url(#barrancas)">{curvas_nivel()}</g>
+<path d="{espejo_arco}" fill="none" stroke="#eaf3ff" stroke-width="2" opacity=".12"/>
+<g>{reflejos()}</g>
+<g filter="url(#halo)">{puente()}</g>
+<g filter="url(#halo)">{vehiculos()}</g>
+</svg>
+'''
+SALIDA.write_text(svg, encoding="utf-8")
+print(f"OK {SALIDA.name} · {len(svg) // 1024} KB")
