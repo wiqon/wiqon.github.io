@@ -578,7 +578,7 @@ h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { letter-spacing: -.03em; }
 
 .hero.rio { position: relative; min-height: calc(100svh - 66px); display: grid; align-items: end; padding: 96px 0 44px; isolation: isolate; overflow: hidden; overflow: clip; }
 .hero.rio::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(90deg, var(--fondo) 0%, color-mix(in srgb, var(--fondo) 90%, transparent) 38%, transparent 64%),
+  background: linear-gradient(90deg, color-mix(in srgb, var(--fondo) 45%, transparent) 0%, color-mix(in srgb, var(--fondo) 30%, transparent) 40%, transparent 66%),
               linear-gradient(0deg, var(--fondo) 0%, transparent 32%); }
 #rio { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
 .hero.rio .c { display: block; width: 100%; }

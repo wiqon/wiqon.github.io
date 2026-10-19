@@ -19,7 +19,9 @@
   let W = 0, H = 0, bajo = 0, alto = 0, ultimo = 0, conectado = false, simulado = false, sma = null;
   const css = (v) => getComputedStyle(raiz).getPropertyValue(v).trim();
   const medida = () => { const dpr = Math.min(devicePixelRatio || 1, 2); W = lienzo.clientWidth; H = lienzo.clientHeight; lienzo.width = W * dpr; lienzo.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); };
-  addEventListener("resize", medida); medida();
+  let finTexto = 0;  // borde derecho del bloque de texto, en px del lienzo
+  const medirTexto = () => { const c = document.querySelector(".rio-copia"); if (c) finTexto = c.getBoundingClientRect().right - lienzo.getBoundingClientRect().left; };
+  addEventListener("resize", () => { medida(); medirTexto(); }); addEventListener("load", medirTexto); medida(); medirTexto();
 
   // ---------- intro: "mixto" (polvo → W del logo → río), "polvo" (polvo → río) o "w" (W → río)
   const pedido = new URLSearchParams(location.search).get("intro");
@@ -91,8 +93,11 @@
     const pad = Math.max((hi - lo) * .35, ultimo * .00015);
     bajo = bajo ? bajo + (lo - pad - bajo) * .06 : lo - pad; alto = alto ? alto + (hi + pad - alto) * .06 : hi + pad;
     const angosto = W < 860;
+    // el río cruza toda la pantalla: se atenúa detrás del texto (para que se lea) y se desvanece en el borde
+    // izquierdo, como si siguiera sin fin
+    const velo = (px) => { const borde = Math.min(1, Math.max(0, px / (W * .1))); return angosto ? borde : borde * (px < finTexto ? Math.min(1, .62 + .38 * Math.max(0, (px - finTexto + 240) / 240)) : 1); };
     const y = (p) => H * (angosto ? .05 : .16) + (1 - (p - bajo) / (alto - bajo)) * H * (angosto ? .17 : .58);
-    const banda = angosto ? Math.max(6, H * .014) : Math.max(10, H * .035), x = (t) => W - ((ahora - t) / VENTANA) * W * (angosto ? 1 : Math.max(.5, Math.min(.62, 1 - 760 / W)));
+    const banda = angosto ? Math.max(6, H * .014) : Math.max(10, H * .035), x = (t) => W - ((ahora - t) / VENTANA) * W;  // de punta a punta
     // línea de precio promedio por segundo (aparece cuando el río ya está armado)
     const segs = new Map(); for (const o of ops) { const k = Math.floor(o.t / 1000); const s = segs.get(k) || [0, 0]; s[0] += o.p * o.usd; s[1] += o.usd; segs.set(k, s); }
     g.beginPath(); let primero = true;
@@ -103,7 +108,7 @@
     const relleno = { true: Array.from({ length: NIV }, () => new Path2D()), false: Array.from({ length: NIV }, () => new Path2D()) };
     for (const o of ops) {
       const r = Math.min(10, 1.6 + Math.sqrt(o.usd / 3500)), edad = (ahora - o.t) / VENTANA;
-      let px = x(o.t), py = y(o.p) + o.j * banda, al = Math.max(.1, 1 - edad * .85);
+      let px = x(o.t), py = y(o.p) + o.j * banda, al = Math.max(.1, 1 - edad * .85) * velo(px);
       if (f && o.s) {
         const ox = o.w ? o.s[0] + (o.w[0] - o.s[0]) * f[2] : o.s[0], oy = o.w ? o.s[1] + (o.w[1] - o.s[1]) * f[2] : o.s[1];
         px = ox + (px - ox) * f[1]; py = oy + (py - oy) * f[1]; al *= f[0];
