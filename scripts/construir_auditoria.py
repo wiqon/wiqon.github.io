@@ -7,6 +7,8 @@ Uso:  python scripts/construir_auditoria.py
 from pathlib import Path
 from urllib.parse import quote
 
+import marca  # scripts/marca.py: datos estructurados de la marca
+
 RAIZ = Path(__file__).resolve().parent.parent
 WA = "https://wa.me/595987685651"
 LAB = "https://github.com/wiqon/wiqon-lab"
@@ -156,6 +158,9 @@ def pagina(t):
     lab = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in t["lab"])
     faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in t["faq"])
     alt = "".join(f'<link rel="alternate" hreflang="{k}" href="{v}">' for k, v in ALTERNOS.items())
+    precio = lambda txt: 0.0 if not any(ch.isdigit() for ch in txt) else float("".join(ch for ch in txt if ch.isdigit()))
+    ficha = marca.servicio(t["titulo"].split(" — ")[0], t["desc"], f"https://wiqonlab.com/{t['ruta']}/", t["lang"],
+                           [(n, precio(pr)) for n, pr, _ in t["planes"]])
     return f'''<!doctype html>
 <html lang="{t["lang"]}">
 <head>
@@ -211,6 +216,7 @@ def pagina(t):
   @media (max-width: 560px) {{ .pasos, .lab {{ grid-template-columns: 1fr; }} }}
   @media (max-width: 380px) {{ .au-barra .marca span:last-child {{ display: none; }} }}
 </style>
+{ficha}
 </head>
 <body>
 <div class="au">

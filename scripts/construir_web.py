@@ -74,6 +74,7 @@ PLANTILLA = """<!doctype html>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{r}}assets/v4.css">
 <script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;if(localStorage.getItem("wiqon-sesion")==="1")document.documentElement.classList.add("logueado");}catch(e){}</script>
+{{ficha_marca}}
 </head>
 <body data-estado="{{r}}estado.json" data-raiz="{{r}}">
 <a class="oculto" href="#productos">{{saltar}}</a>
@@ -899,12 +900,16 @@ EN = dict(ES,
 )
 
 
+import marca  # noqa: E402  (scripts/marca.py: datos estructurados de la marca)
+
+
 def construir(textos, destino):
     def reemplazo(m):
         clave = m.group(1)
         if clave not in textos:
             raise KeyError(f"falta la clave '{clave}' para {destino}")
         return textos[clave]
+    textos = dict(textos, ficha_marca=marca.organizacion(textos["lang"]))
     html = PLANTILLA
     for _ in range(2):
         html = re.sub(r"\{\{(\w+)\}\}", reemplazo, html)

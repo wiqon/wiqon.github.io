@@ -9,6 +9,7 @@ Las imágenes de muestra (libro/img/) salen de los PDF en C:\\wiqon-productos\\e
 Los botones de compra con tarjeta se completan en COMPRA cuando estén los links (Lemon Squeezy, Hotmart).
 """
 import html
+import json
 from pathlib import Path
 from urllib.parse import quote
 
@@ -136,6 +137,14 @@ def pagina(cod):
     if AMAZON.get(cod):
         tarjeta += f'<a class="btn amz" href="{esc(AMAZON[cod])}" target="_blank" rel="noopener">{t["amazon_btn"]}</a>'
     url = f"https://wiqonlab.com/{t['ruta']}/"
+    libro = {"@context": "https://schema.org", "@type": "Book", "name": t["titulo"], "url": url, "inLanguage": t["lang"],
+             "author": {"@type": "Person", "name": "Avelino González"},
+             "publisher": {"@type": "Organization", "@id": "https://wiqonlab.com/#org", "name": "WIQON", "url": "https://wiqonlab.com/"},
+             "numberOfPages": 16, "bookFormat": "https://schema.org/EBook", "image": f"https://wiqonlab.com/libro/img/{t['img']}_p01.jpg",
+             "offers": {"@type": "Offer", "price": "9.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": url}}
+    if AMAZON.get(t["img"]):
+        libro["sameAs"] = AMAZON[t["img"]]
+    ficha = '<script type="application/ld+json">' + json.dumps(libro, ensure_ascii=False) + "</script>"
     portada = f"{t['raiz']}libro/img/{t['img']}_p01.jpg"
     return f"""<!doctype html>
 <html lang="{t['lang']}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -147,7 +156,7 @@ def pagina(cod):
 <meta property="og:image" content="https://wiqonlab.com/libro/img/{t['img']}_p01.jpg"><meta property="og:url" content="{url}">
 <link rel="icon" href="{t['raiz']}assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
-<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Book","name":"{esc(t['titulo'])}","inLanguage":"{t['lang']}","author":{{"@type":"Person","name":"Avelino González"}},"publisher":{{"@type":"Organization","name":"WIQON Lab","url":"https://wiqonlab.com"}},"numberOfPages":16,"bookFormat":"https://schema.org/EBook","offers":{{"@type":"Offer","price":"9.99","priceCurrency":"USD","availability":"https://schema.org/InStock"}}}}</script>
+{ficha}
 <style>{CSS}</style></head><body>
 <div class="cab"><div class="in"><a href="{t['raiz']}">WIQON LAB</a><small>{t["lema_marca"]}</small></div></div>
 <section class="hero"><div class="in">
