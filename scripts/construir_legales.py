@@ -7,7 +7,7 @@ Uso:  python scripts/construir_legales.py
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-TITULAR, CI = "Avelino González Melgarejo", "4.690.007"
+TITULAR = "Avelino González Melgarejo"  # sin número de cédula: no se publica (pedido del titular)
 EMAIL, WA_TXT, WA = "contacto@wiqonlab.com", "+595 987 685 651", "https://wa.me/595987685651"
 FORM_URL = "https://n8n.wiqonlab.com/webhook/contacto-web"
 FECHA_ES, FECHA_PT = "17 de octubre de 2026", "17 de outubro de 2026"
@@ -76,7 +76,7 @@ def enlaces(lista):
 
 
 # ============================================ ESPAÑOL ============================================
-TITULAR_ES = f"""<div class="tit"><p><strong>Titular:</strong> {TITULAR} · Cédula de identidad (Paraguay) N.º {CI} · persona física que opera bajo el nombre comercial <strong>WIQON</strong>.<br>
+TITULAR_ES = f"""<div class="tit"><p><strong>Titular:</strong> {TITULAR} · persona física de Paraguay que opera bajo el nombre comercial <strong>WIQON</strong>.<br>
 <strong>Contacto:</strong> <a href="mailto:{EMAIL}">{EMAIL}</a> · WhatsApp <a href="{WA}" target="_blank" rel="noopener">{WA_TXT}</a> · <a href="../contacto/">formulario de contacto</a></p></div>"""
 
 TERMINOS_ES = f"""<h1>Términos y condiciones</h1>
@@ -235,7 +235,7 @@ CONTACTO_ES = f"""<h1>Contacto</h1>
 """
 
 # ============================================ PORTUGUÊS ============================================
-TITULAR_PT = f"""<div class="tit"><p><strong>Titular:</strong> {TITULAR} · Cédula de identidade paraguaia n.º {CI} · pessoa física que atua com o nome comercial <strong>WIQON</strong> (Paraguai).<br>
+TITULAR_PT = f"""<div class="tit"><p><strong>Titular:</strong> {TITULAR} · pessoa física do Paraguai que atua com o nome comercial <strong>WIQON</strong>.<br>
 <strong>Contato:</strong> <a href="mailto:{EMAIL}">{EMAIL}</a> · WhatsApp <a href="{WA}" target="_blank" rel="noopener">{WA_TXT}</a> · <a href="../contato/">formulário de contato</a></p></div>"""
 
 TERMOS_PT = f"""<h1>Termos e condições</h1>
@@ -341,7 +341,7 @@ CONTATO_PT = f"""<h1>Contato</h1>
 # ============================================ ENGLISH ============================================
 FECHA_EN = "October 17, 2026"
 REDES_EN = REDES_ES
-TITULAR_EN = f"""<div class="tit"><p><strong>Owner:</strong> {TITULAR} · Paraguayan identity card No. {CI} · individual (sole proprietor) trading as <strong>WIQON</strong> (Paraguay).<br>
+TITULAR_EN = f"""<div class="tit"><p><strong>Owner:</strong> {TITULAR} · individual (sole proprietor) from Paraguay trading as <strong>WIQON</strong>.<br>
 <strong>Contact:</strong> <a href="mailto:{EMAIL}">{EMAIL}</a> · WhatsApp <a href="{WA}" target="_blank" rel="noopener">{WA_TXT}</a> · <a href="../contact/">contact form</a></p></div>"""
 
 TERMS_EN = f"""<h1>Terms and conditions</h1>
@@ -501,12 +501,12 @@ CONTACT_EN = f"""<h1>Contact</h1>
 def pie(lang):
     if lang == "es":
         return (f'<a href="../terminos/">Términos y condiciones</a><a href="../devoluciones/">Entregas y devoluciones</a>'
-                f'<a href="../privacidad/">Privacidad</a><a href="../contacto/">Contacto</a><br>© 2026 WIQON · {TITULAR} · C.I. {CI} · Paraguay')
+                f'<a href="../privacidad/">Privacidad</a><a href="../contacto/">Contacto</a><br>© 2026 WIQON · {TITULAR} · Paraguay')
     if lang == "en":
         return (f'<a href="../terms/">Terms and conditions</a><a href="../refunds/">Delivery and refunds</a>'
-                f'<a href="../privacy/">Privacy</a><a href="../contact/">Contact</a><br>© 2026 WIQON · {TITULAR} · ID {CI} · Paraguay')
+                f'<a href="../privacy/">Privacy</a><a href="../contact/">Contact</a><br>© 2026 WIQON · {TITULAR} · Paraguay')
     return (f'<a href="../termos/">Termos e condições</a><a href="../devolucoes/">Entregas e devoluções</a>'
-            f'<a href="../privacidade/">Privacidade</a><a href="../contato/">Contato</a><br>© 2026 WIQON · {TITULAR} · C.I. {CI} · Paraguai')
+            f'<a href="../privacidade/">Privacidade</a><a href="../contato/">Contato</a><br>© 2026 WIQON · {TITULAR} · Paraguai')
 
 
 PAGINAS = [

@@ -55,7 +55,7 @@ T = {
              ("¿Es confidencial?", "Sí. Tu bot y tus datos no se publican ni se comparten sin tu permiso por escrito."),
              ("¿Cuánto tarda?", "El plazo queda en la propuesta según el alcance. La entrega es un informe escrito y una llamada.")],
         cierre_t="Antes de poner más dinero en tu bot, medilo.", cierre_p="El diagnóstico es gratis y en 30 minutos sabés si vale la pena auditarlo.",
-        legal="© 2026 WIQON · Avelino González Melgarejo · C.I. 4.690.007", l_terminos="Términos y condiciones", l_devoluciones="Entregas y devoluciones", l_contacto="Contacto", l_privacidad="Privacidad",
+        legal="© 2026 WIQON · Avelino González Melgarejo · Paraguay", l_terminos="Términos y condiciones", l_devoluciones="Entregas y devoluciones", l_contacto="Contacto", l_privacidad="Privacidad",
         aviso="Contenido informativo y educativo; no es asesoría financiera. Operar implica riesgo de pérdida.",
     ),
     "pt": dict(
@@ -98,7 +98,7 @@ T = {
              ("É confidencial?", "Sim. Seu robô e seus dados não são publicados nem compartilhados sem sua permissão por escrito."),
              ("Quanto tempo leva?", "O prazo fica na proposta, conforme o escopo. A entrega é um relatório escrito e uma chamada.")],
         cierre_t="Antes de colocar mais dinheiro no seu robô, meça.", cierre_p="O diagnóstico é grátis e em 30 minutos você sabe se vale a pena auditar.",
-        legal="© 2026 WIQON · Avelino González Melgarejo · C.I. 4.690.007 (Paraguai)", l_terminos="Termos e condições", l_devoluciones="Entregas e devoluções", l_contacto="Contato", l_privacidad="Privacidade",
+        legal="© 2026 WIQON · Avelino González Melgarejo · Paraguai", l_terminos="Termos e condições", l_devoluciones="Entregas e devoluções", l_contacto="Contato", l_privacidad="Privacidade",
         aviso="Conteúdo informativo e educacional; não é recomendação de investimento. Operar envolve risco de perda.",
     ),
     "en": dict(
@@ -141,7 +141,7 @@ T = {
              ("Is it confidential?", "Yes. Your bot and your data are never published or shared without your written permission."),
              ("How long does it take?", "The timeline is set in the proposal according to scope. You get a written report and a call.")],
         cierre_t="Before you put more money into your bot, measure it.", cierre_p="The diagnosis is free, and in 30 minutes you'll know whether an audit is worth it.",
-        legal="© 2026 WIQON · Avelino González Melgarejo · ID 4.690.007 (Paraguay)", l_terminos="Terms and conditions", l_devoluciones="Delivery and refunds", l_contacto="Contact", l_privacidad="Privacy",
+        legal="© 2026 WIQON · Avelino González Melgarejo · Paraguay", l_terminos="Terms and conditions", l_devoluciones="Delivery and refunds", l_contacto="Contact", l_privacidad="Privacy",
         aviso="Informational and educational content; not financial advice. Trading involves risk of loss.",
     ),
 }

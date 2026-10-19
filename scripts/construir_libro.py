@@ -178,7 +178,7 @@ def pagina(cod):
  <p class="otros">{t['otros']}: {''.join(f'<a href="{h}">{n}</a>' for n, h in t['otros_l'])}</p>
  <p><a href="{t['raiz']}{'br/' if cod == 'pt' else ''}">{t['volver']}</a></p>
 </main>
-<footer>{esc(t['aviso'])}<br>{LEGALES[cod].format(r=t['raiz'])}<br>© 2026 WIQON · Avelino González Melgarejo · C.I. 4.690.007 · contacto@wiqonlab.com</footer>
+<footer>{esc(t['aviso'])}<br>{LEGALES[cod].format(r=t['raiz'])}<br>© 2026 WIQON · Avelino González Melgarejo · Paraguay · contacto@wiqonlab.com</footer>
 {BEACON}
 </body></html>
 """

@@ -378,7 +378,7 @@ PLANTILLA = """<!doctype html>
       <p><b>{{pie_riesgo_t}}</b> {{pie_riesgo}}</p>
       <div class="pie-fund"><img src="{{r}}assets/fotos/fundador.jpg" alt="" width="30" height="30" loading="lazy"><span><b style="color:var(--suave)">Ing. Avelino González</b> · {{fundador_rol}}</span></div>
       <p class="redes-pie"><b>{{pie_redes_t}}</b> {{pie_redes}}</p>
-      <p><b>{{pie_tit_t}}</b> Avelino González Melgarejo · C.I. N.º 4.690.007 · {{pie_tit}}</p>
+      <p><b>{{pie_tit_t}}</b> Avelino González Melgarejo · {{pie_tit}}</p>
       <p>© <span id="anio">2026</span> WIQON · Asunción · Ciudad del Este · Foz do Iguaçu</p>
     </div>
   </div>
