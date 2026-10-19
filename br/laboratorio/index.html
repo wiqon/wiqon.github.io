@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratório WIQON: estratégias e robôs de trading testados com dados reais</title>
+<meta name="description" content="Testamos estratégias, robôs de grid, robôs DCA e arbitragem com dados e custos reais. Publicamos tudo, também o que não funciona, com código aberto.">
+<link rel="canonical" href="https://wiqonlab.com/br/laboratorio/"><link rel="alternate" hreflang="es" href="https://wiqonlab.com/laboratorio/"><link rel="alternate" hreflang="pt-BR" href="https://wiqonlab.com/br/laboratorio/"><link rel="alternate" hreflang="en" href="https://wiqonlab.com/en/lab/"><link rel="alternate" hreflang="x-default" href="https://wiqonlab.com/laboratorio/">
+<meta property="og:type" content="article"><meta property="og:title" content="Laboratório WIQON: estratégias e robôs de trading testados com dados reais"><meta property="og:description" content="Testamos estratégias, robôs de grid, robôs DCA e arbitragem com dados e custos reais. Publicamos tudo, também o que não funciona, com código aberto."><meta property="og:url" content="https://wiqonlab.com/br/laboratorio/"><meta property="og:image" content="https://wiqonlab.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+<style>
+.lb { max-width: 1080px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+.lb-barra { display: flex; align-items: center; gap: 16px; height: 72px; }
+.lb-barra .der { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.miga { font-size: 14px; color: var(--gris); margin-top: 18px; } .miga a { color: var(--gris); } .miga span { margin: 0 8px; }
+.lb-hero { padding: clamp(28px, 5vw, 64px) 0 28px; max-width: 860px; }
+.lb-hero h1 { font: 500 clamp(32px, 4.6vw, 58px)/1.06 var(--titulos); letter-spacing: -.035em; text-wrap: balance; }
+.lb-hero .lead { margin-top: 20px; color: var(--suave); font-size: clamp(17px, 1.4vw, 19px); max-width: 64ch; }
+.lb-hero .meta { margin-top: 14px; color: var(--gris); font-size: 14px; }
+.corta { margin: 8px 0 36px; border-left: 3px solid var(--cian); background: var(--sup); border-radius: 0 14px 14px 0; padding: 20px 24px; max-width: 860px; }
+.corta b { display: block; font: 500 15px var(--titulos); color: var(--cian); margin-bottom: 6px; } .corta p { font-size: 17px; }
+.graf { margin: 0; background: var(--sup); border: 1px solid var(--borde); border-radius: 16px; padding: 18px 18px 12px; }
+.graf svg { width: 100%; height: auto; display: block; } .graf .g-angosto { display: none; }
+@media (max-width: 600px) { .graf .g-ancho { display: none; } .graf .g-angosto { display: block; } }
+.g-r { stroke: var(--borde); stroke-width: 1; } .g-e { fill: var(--gris); font-family: var(--sans); font-weight: 500; }
+.g-cap { stroke: var(--gris); stroke-width: 1; stroke-dasharray: 4 6; opacity: .7; }
+.g-p { fill: none; stroke: var(--cian); stroke-width: 2.4; stroke-linejoin: round; }
+.g-c { fill: none; stroke: var(--baja); stroke-width: 3.6; stroke-linejoin: round; }
+.g-gap { stroke: var(--texto); stroke-width: 1.4; stroke-dasharray: 4 5; opacity: .7; } .g-pp { fill: var(--cian); } .g-pc { fill: var(--baja); }
+.graf figcaption { display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; text-align: left; gap: 8px 20px; font-size: 14px; color: var(--suave); margin-top: 8px; }
+@media (max-width: 600px) { .graf figcaption { flex-direction: column; gap: 6px; } }
+.ley::before { content: ""; display: inline-block; width: 18px; height: 3px; border-radius: 2px; margin-right: 8px; vertical-align: middle; }
+.ley.l-p::before { background: var(--cian); } .ley.l-c::before { background: var(--baja); height: 4px; } .ley.l-k::before { border-top: 1px dashed var(--gris); height: 0; }
+.g-nota { color: var(--gris); font-size: 14px; margin-top: 10px; max-width: 80ch; }
+.cifras { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 32px 0 8px; }
+.cifras li { background: var(--sup); border: 1px solid var(--borde); border-radius: 14px; padding: 18px; }
+.cifras b { display: block; font: 500 clamp(24px, 2.6vw, 32px)/1.1 var(--titulos); letter-spacing: -.02em; color: var(--cian); }
+.cifras span { display: block; margin-top: 6px; color: var(--suave); font-size: 14px; }
+.lb-s { padding: 44px 0 8px; } .lb-s h2 { font: 500 clamp(24px, 2.8vw, 34px)/1.12 var(--titulos); letter-spacing: -.03em; margin-bottom: 18px; }
+.lb-s p, .lb-s li { color: var(--suave); font-size: 17px; max-width: 75ch; } .lb-s ol, .lb-s ul.pun { padding-left: 22px; display: grid; gap: 10px; }
+.tabla-env { overflow-x: auto; border: 1px solid var(--borde); border-radius: 14px; }
+.lt { width: 100%; border-collapse: collapse; font-size: 15px; } .lt th, .lt td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+.lt th { color: var(--gris); font-weight: 500; font-size: 13px; } .lt tr:last-child td { border-bottom: 0; } .lt td:not(:first-child), .lt th:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+.lt td:first-child { white-space: normal; min-width: 180px; } .lt.num td:first-child { min-width: 0; }
+.nota-t { color: var(--gris); font-size: 14px; margin-top: 10px; }
+.faq details { border-bottom: 1px solid var(--borde); padding: 16px 0; } .faq summary { cursor: pointer; font-weight: 600; font-size: 17px; color: var(--texto); }
+.faq details p { margin-top: 8px; }
+.cta-l { margin: 48px 0 8px; background: var(--sup); border: 1px solid var(--cian); border-radius: 18px; padding: clamp(22px, 3vw, 34px); }
+.cta-l h2 { font: 500 clamp(22px, 2.6vw, 30px)/1.15 var(--titulos); letter-spacing: -.02em; } .cta-l p { color: var(--suave); margin-top: 8px; max-width: 64ch; }
+.cta-l .acc { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.exps { list-style: none; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--borde); }
+.exps li { border-bottom: 1px solid var(--borde); } .exps a { display: grid; grid-template-columns: 1fr auto; gap: 6px 20px; padding: 20px 4px; color: inherit; text-decoration: none; }
+.exps b { font: 500 19px/1.25 var(--titulos); letter-spacing: -.01em; } .exps span { color: var(--suave); font-size: 15px; grid-column: 1; } .exps i { grid-row: 1 / span 2; grid-column: 2; align-self: center; color: var(--cian); font-style: normal; font-size: 14px; white-space: nowrap; }
+.exps a:hover b { color: var(--cian); }
+.rel { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.rel a { display: block; height: 100%; background: var(--sup); border: 1px solid var(--borde); border-radius: 14px; padding: 18px; color: var(--texto); text-decoration: none; font-weight: 600; }
+.rel a:hover { border-color: var(--cian); }
+.lb-pie { border-top: 1px solid var(--borde); margin-top: 56px; padding: 28px 0 48px; color: var(--gris); font-size: 14px; display: grid; gap: 8px; }
+.lb-pie a { color: var(--gris); margin-right: 14px; }
+@media (max-width: 820px) { .cifras { grid-template-columns: 1fr 1fr; } .rel { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .exps a { grid-template-columns: 1fr; } .exps i { grid-row: auto; grid-column: 1; } .lb-barra .marca span:last-child { display: none; } }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://wiqonlab.com/br/"},{"@type":"ListItem","position":2,"name":"Laboratório","item":"https://wiqonlab.com/br/laboratorio/"}]}</script>
+</head>
+<body>
+<div class="lb">
+  <header class="lb-barra">
+    <a class="marca" href="../../br/"><span class="corona s"><img src="../../assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
+    <div class="der">
+      <div class="idioma" aria-label="Idioma"><a href="../../laboratorio/" lang="es">ES</a><a class="on" href="../../br/laboratorio/" lang="pt-BR">PT-BR</a><a href="../../en/lab/" lang="en">EN</a></div>
+      <button class="tema-btn" type="button" aria-label="Mudar tema" title="Mudar tema"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button>
+    </div>
+  </header>
+  <nav class="miga" aria-label="breadcrumb"><a href="../../br/">Início</a><span>›</span>Laboratório</nav>
+  <main><section class="lb-hero"><h1>O que testamos com dados reais</h1><p class="lead">Cada ideia passa pelo mesmo processo: regras exatas, anos de dados e os custos reais de uma exchange ou corretora. Publicamos tudo, também o que não funciona, com código aberto para qualquer um repetir.</p></section>
+<ul class="exps"><li><a href="../../br/laboratorio/robos-de-grid/"><b>Robôs de grid em spot</b><span>0 de 64 configurações superaram comprar e segurar; o painel mostrava +237% com a conta em −56%.</span><i>Ver o experimento</i></a></li><li><a href="../../br/laboratorio/robo-dca/"><b>Robôs DCA com ordens de segurança</b><span>Mediana de +19% ao ano contra +23% de segurar, com quedas de −80% e ciclos presos por até 2,8 anos.</span><i>Ver o experimento</i></a></li><li><a href="https://github.com/wiqon/wiqon-lab#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc" target="_blank" rel="noopener"><b>Filtro de tendência no BTC</b><span>A única regra que sobreviveu: 56,6% ao ano contra 37,3% de segurar, com metade da queda (2018-2026).</span><i>GitHub</i></a></li><li><a href="https://github.com/wiqon/wiqon-lab#1-una-estrategia-validada-que-era-ruido" target="_blank" rel="noopener"><b>Day trade com EMA21</b><span>+0,71% em 3 anos e 178 operações: não se distingue de zero. Deixar o dinheiro no Earn rendia +9,3%.</span><i>GitHub</i></a></li><li><a href="https://github.com/wiqon/wiqon-lab#2-el-sesgo-de-supervivencia-infla-todo" target="_blank" rel="noopener"><b>Rotação de altcoins</b><span>33,7% ao ano com as moedas de hoje, 1,0% com as de 2021: o viés de sobrevivência infla tudo.</span><i>GitHub</i></a></li><li><a href="https://github.com/wiqon/wiqon-lab#4-arbitraje-medido-no-supuesto" target="_blank" rel="noopener"><b>Arbitragem entre exchanges</b><span>As diferenças grandes eram moedas diferentes com o mesmo nome ou saques suspensos.</span><i>GitHub</i></a></li><li><a href="https://github.com/wiqon/wiqon-lab#5-arbitraje-de-funding-cash-and-carry" target="_blank" rel="noopener"><b>Cobrar a taxa de financiamento</b><span>7 a 10% ao ano no histórico, quase tudo de 2021; 2 a 3% em 2025 e 2026.</span><i>GitHub</i></a></li></ul>
+<p class="nota-t"><a class="enl" href="https://github.com/wiqon/wiqon-lab" target="_blank" rel="noopener">Código e dados no GitHub</a></p></main>
+  <footer class="lb-pie">
+    <div><a href="../../br/termos/">Termos e condições</a><a href="../../br/devolucoes/">Entregas e devoluções</a><a href="../../br/contato/">Contato</a><a href="../../br/privacidade/">Privacidade</a></div>
+    <div>Simulação com dados passados: não garante resultados futuros. Conteúdo educativo; não é recomendação de investimento.</div><div>© 2026 WIQON</div>
+  </footer>
+</div>
+<script>
+  document.querySelector(".tema-btn").addEventListener("click", () => {
+    const r = document.documentElement; r.dataset.tema = r.dataset.tema === "claro" ? "oscuro" : "claro";
+    try { localStorage.setItem("wiqon-tema", r.dataset.tema); } catch (e) {}
+  });
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
+</body>
+</html>

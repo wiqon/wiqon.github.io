@@ -420,7 +420,8 @@ def opciones(todas, nombres):
 
 
 def exp(hip, tipo, tipo_txt, res, ver, cls, href):
-    return (f'<tr><td><a href="{href}" target="_blank" rel="noopener">{hip}</a></td><td><span class="tipo {tipo}">{tipo_txt}</span></td>'
+    afuera = ' target="_blank" rel="noopener"' if href.startswith("http") else ""  # las páginas propias se abren en la misma pestaña
+    return (f'<tr><td><a href="{href}"{afuera}>{hip}</a></td><td><span class="tipo {tipo}">{tipo_txt}</span></td>'
             f'<td class="om">{res}</td><td class="ver {cls}">{ver}</td></tr>')
 
 
@@ -552,8 +553,8 @@ ES = dict(ICONOS,
     experimentos="".join([
         exp("Filtro de tendencia en BTC", "hist", "HISTÓRICO", "56,6% anual vs 37,3% de mantener; caída 34,7% vs 76,6% (2018-2026)", "Sobrevive", "si", f"{LAB}#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc"),
         exp("La misma regla en MT5 (CFD)", "hist", "HISTÓRICO", "x2,02 vs x1,96; caída 39% vs 67%. Swaps: un tercio de la ventaja", "Con reservas", "ojo", f"{LAB}/tree/main/resultados/mt5"),
-        exp("Grid bot de spot (64 variantes)", "hist", "HISTÓRICO", "Mediana −9% anual vs +23% de mantener; el panel mostraba +237% de “ganancia del grid” con la cuenta en −56%", "No", "no", f"{LAB}#6-grid-bots-la-ganancia-del-grid-no-es-tu-ganancia"),
-        exp("DCA bot con órdenes de seguridad (36 variantes)", "hist", "HISTÓRICO", "Mediana +19% anual vs +23% de mantener, con caída de −80%; deals atrapados hasta 2,8 años y un panel que nunca muestra pérdida", "No", "no", f"{LAB}#7-dca-el-de-ahorro-y-el-dca-bot-no-son-lo-mismo"),
+        exp("Grid bot de spot (64 variantes)", "hist", "HISTÓRICO", "Mediana −9% anual vs +23% de mantener; el panel mostraba +237% de “ganancia del grid” con la cuenta en −56%", "No", "no", "laboratorio/grid-bots/"),
+        exp("DCA bot con órdenes de seguridad (36 variantes)", "hist", "HISTÓRICO", "Mediana +19% anual vs +23% de mantener, con caída de −80%; deals atrapados hasta 2,8 años y un panel que nunca muestra pérdida", "No", "no", "laboratorio/dca-bot/"),
         exp("Day trade EMA21 Bounce", "hist", "HISTÓRICO", "+0,71% en 3 años vs +9,3% en Earn", "No", "no", f"{LAB}#1-una-estrategia-validada-que-era-ruido"),
         exp("Rotación de altcoins", "hist", "HISTÓRICO", "33,7% anual con monedas de hoy; 1,0% con las de 2021", "No (sesgo)", "no", f"{LAB}#2-el-sesgo-de-supervivencia-infla-todo"),
         exp("Arbitraje entre 6 exchanges", "med", "MEDICIÓN", "69 oportunidades en 24 h; casi ninguna real", "No", "no", f"{LAB}#4-arbitraje-medido-no-supuesto"),
@@ -696,8 +697,8 @@ BR = dict(ICONOS,
     experimentos="".join([
         exp("Filtro de tendência no BTC", "hist", "HISTÓRICO", "56,6% ao ano contra 37,3% de segurar; queda 34,7% contra 76,6% (2018-2026)", "Sobrevive", "si", f"{LAB}#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc"),
         exp("A mesma regra no MT5 (CFD)", "hist", "HISTÓRICO", "x2,02 contra x1,96; queda 39% contra 67%. Swaps: um terço da vantagem", "Com ressalvas", "ojo", f"{LAB}/tree/main/resultados/mt5"),
-        exp("Robô de grid em spot (64 variações)", "hist", "HISTÓRICO", "Mediana −9% ao ano contra +23% de segurar; o painel mostrava +237% de “lucro do grid” com a conta em −56%", "Não", "no", f"{LAB}#6-grid-bots-la-ganancia-del-grid-no-es-tu-ganancia"),
-        exp("Robô DCA com ordens de segurança (36 variações)", "hist", "HISTÓRICO", "Mediana +19% ao ano contra +23% de segurar, com queda de −80%; ciclos presos por até 2,8 anos e um painel que nunca mostra prejuízo", "Não", "no", f"{LAB}#7-dca-el-de-ahorro-y-el-dca-bot-no-son-lo-mismo"),
+        exp("Robô de grid em spot (64 variações)", "hist", "HISTÓRICO", "Mediana −9% ao ano contra +23% de segurar; o painel mostrava +237% de “lucro do grid” com a conta em −56%", "Não", "no", "../br/laboratorio/robos-de-grid/"),
+        exp("Robô DCA com ordens de segurança (36 variações)", "hist", "HISTÓRICO", "Mediana +19% ao ano contra +23% de segurar, com queda de −80%; ciclos presos por até 2,8 anos e um painel que nunca mostra prejuízo", "Não", "no", "../br/laboratorio/robo-dca/"),
         exp("Day trade EMA21 Bounce", "hist", "HISTÓRICO", "+0,71% em 3 anos contra +9,3% no Earn", "Não", "no", f"{LAB}#1-una-estrategia-validada-que-era-ruido"),
         exp("Rotação de altcoins", "hist", "HISTÓRICO", "33,7% ao ano com as moedas de hoje; 1,0% com as de 2021", "Não (viés)", "no", f"{LAB}#2-el-sesgo-de-supervivencia-infla-todo"),
         exp("Arbitragem entre 6 exchanges", "med", "MEDIÇÃO", "69 oportunidades em 24 h; quase nenhuma real", "Não", "no", f"{LAB}#4-arbitraje-medido-no-supuesto"),
@@ -848,8 +849,8 @@ EN = dict(ES,
     experimentos="".join([
         exp("Trend filter on BTC", "hist", "HISTORICAL", "56.6% per year vs 37.3% buy &amp; hold; drawdown 34.7% vs 76.6% (2018-2026)", "Survives", "si", f"{LAB}#3-lo-que-sobrevivió-filtro-de-tendencia-en-btc"),
         exp("The same rule on MT5 (CFD)", "hist", "HISTORICAL", "x2.02 vs x1.96; drawdown 39% vs 67%. Swaps: a third of the edge", "With caveats", "ojo", f"{LAB}/tree/main/resultados/mt5"),
-        exp("Spot grid bot (64 settings)", "hist", "HISTORICAL", "Median −9% a year vs +23% buy &amp; hold; the dashboard showed +237% “grid profit” while the account was at −56%", "No", "no", f"{LAB}#6-grid-bots-la-ganancia-del-grid-no-es-tu-ganancia"),
-        exp("DCA bot with safety orders (36 settings)", "hist", "HISTORICAL", "Median +19% a year vs +23% buy &amp; hold, with a −80% drawdown; deals stuck for up to 2.8 years and a dashboard that never shows a loss", "No", "no", f"{LAB}#7-dca-el-de-ahorro-y-el-dca-bot-no-son-lo-mismo"),
+        exp("Spot grid bot (64 settings)", "hist", "HISTORICAL", "Median −9% a year vs +23% buy &amp; hold; the dashboard showed +237% “grid profit” while the account was at −56%", "No", "no", "../en/lab/grid-bots/"),
+        exp("DCA bot with safety orders (36 settings)", "hist", "HISTORICAL", "Median +19% a year vs +23% buy &amp; hold, with a −80% drawdown; deals stuck for up to 2.8 years and a dashboard that never shows a loss", "No", "no", "../en/lab/dca-bot/"),
         exp("Day trade EMA21 Bounce", "hist", "HISTORICAL", "+0.71% in 3 years vs +9.3% in Earn", "No", "no", f"{LAB}#1-una-estrategia-validada-que-era-ruido"),
         exp("Altcoin rotation", "hist", "HISTORICAL", "33.7% per year with today's coins; 1.0% with 2021's", "No (bias)", "no", f"{LAB}#2-el-sesgo-de-supervivencia-infla-todo"),
         exp("Arbitrage across 6 exchanges", "med", "MEASURED", "69 opportunities in 24 h; almost none real", "No", "no", f"{LAB}#4-arbitraje-medido-no-supuesto"),
