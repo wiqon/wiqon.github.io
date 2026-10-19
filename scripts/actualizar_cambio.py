@@ -82,6 +82,56 @@ def trm():
             "valores": [{"moneda": "USD", "nombre": "Dólar (TRM)", "valor": float(d["valor"]), "unidad": "COP por 1 USD"}]}
 
 
+# ---------------------------------------------------------------- historial (últimos 30 datos de cada serie)
+DIAS_HIST = 30
+
+
+def bcp_hist(moneda):
+    """Planilla anual del BCP (filas = día, columnas = mes). Si el año recién empieza, suma el anterior."""
+    url = "https://www.bcp.gov.py/webapps/web/cotizacion/monedas-historica"
+    hoy = datetime.now(timezone.utc)
+    serie = []
+    for anio in (hoy.year - 1, hoy.year) if hoy.month <= 2 else (hoy.year,):
+        req = urllib.request.Request(url, data=f"anho={anio}&moneda={moneda}".encode(), headers={"User-Agent": AGENTE})
+        with urllib.request.urlopen(req, timeout=40) as r:
+            pagina = r.read().decode("utf-8", errors="replace")
+        tablas = re.findall(r"(?s)<table.*?</table>", pagina)
+        if len(tablas) < 2:
+            raise ValueError("sin tabla en el histórico del BCP")
+        for fila in re.findall(r"(?s)<tr.*?</tr>", tablas[1])[1:]:
+            celdas = [html.unescape(re.sub(r"<[^>]+>", "", c)).strip() for c in re.findall(r"(?s)<t[hd][^>]*>.*?</t[hd]>", fila)]
+            if not celdas or not celdas[0].isdigit():
+                continue
+            dia = int(celdas[0])
+            for mes, v in enumerate(celdas[1:13], 1):
+                if re.fullmatch(r"[\d.]+,\d+", v):
+                    serie.append([f"{anio:04d}-{mes:02d}-{dia:02d}", numero_es(v)])
+    serie.sort()
+    if not serie:
+        raise ValueError("histórico del BCP vacío")
+    return serie[-DIAS_HIST:]
+
+
+def bcb_hist():
+    hoy = datetime.now(timezone.utc)
+    ini, fin = (hoy - timedelta(days=55)).strftime("%m-%d-%Y"), hoy.strftime("%m-%d-%Y")
+    api = ("https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@moeda,dataInicial=@dataInicial,"
+           f"dataFinalCotacao=@dataFinalCotacao)?@moeda='USD'&@dataInicial='{ini}'&@dataFinalCotacao='{fin}'&$format=json")
+    por_dia = {d["dataHoraCotacao"][:10]: d["cotacaoVenda"] for d in json.loads(bajar(api))["value"] if d["tipoBoletim"] == "Fechamento"}
+    return sorted([k, v] for k, v in por_dia.items())[-DIAS_HIST:]
+
+
+def bcra_hist():
+    hoy = datetime.now(timezone.utc)
+    api = (f"https://api.bcra.gob.ar/estadisticascambiarias/v1.0/Cotizaciones/USD?fechadesde={(hoy - timedelta(days=55)).strftime('%Y-%m-%d')}"
+           f"&fechahasta={hoy.strftime('%Y-%m-%d')}")
+    datos = json.loads(bajar(api))["results"]
+    return sorted([d["fecha"], d["detalle"][0]["tipoCotizacion"]] for d in datos if d.get("detalle"))[-DIAS_HIST:]
+
+
+HISTORIALES = {"bcp:USD": lambda: bcp_hist("USD"), "bcp:BRL": lambda: bcp_hist("BRL"), "bcb:USD": bcb_hist, "bcra:USD": bcra_hist}
+
+
 def main():
     ahora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     previo = {}
@@ -104,7 +154,20 @@ def main():
             f = dict(ant, ok=False, error=type(e).__name__)
         fuentes.append(f)
         print(f"{f['id']}: {f['fecha']} " + ", ".join(f"{v['moneda']}={v['valor']}" for v in f["valores"]) + ("" if f["ok"] else " (último conocido)"))
-    SALIDA.write_text(json.dumps({"actualizado_utc": ahora, "fuentes": fuentes}, ensure_ascii=False, indent=1), encoding="utf-8")
+    try:
+        hist_previo = json.loads(SALIDA.read_text(encoding="utf-8")).get("historial", {}) if SALIDA.exists() else {}
+    except ValueError:
+        hist_previo = {}
+    historial = {}
+    for clave, fn in HISTORIALES.items():
+        try:
+            historial[clave] = fn()
+            print(f"historial {clave}: {len(historial[clave])} datos hasta {historial[clave][-1][0]}")
+        except Exception as e:  # se conserva el historial anterior
+            if clave in hist_previo:
+                historial[clave] = hist_previo[clave]
+            print(f"historial {clave}: falló ({type(e).__name__})")
+    SALIDA.write_text(json.dumps({"actualizado_utc": ahora, "fuentes": fuentes, "historial": historial}, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
 if __name__ == "__main__":

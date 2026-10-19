@@ -29,6 +29,17 @@
   .cta-b p { margin: 0; max-width: 480px; }
   .rel { display: flex; gap: 8px; flex-wrap: wrap; } .rel a { padding: 6px 12px; border: 1px solid var(--borde2); border-radius: 999px; text-decoration: none; color: var(--suave); font-size: .86rem; }
   .faq-s details { border-bottom: 1px solid var(--borde); padding: 12px 0; } .faq-s summary { cursor: pointer; font-weight: 600; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 6px 0 14px; }
+  .stats div { background: var(--sup); border: 1px solid var(--borde); border-radius: 12px; padding: 14px; }
+  .stats b { display: block; font-family: var(--mono); font-size: 1.15rem; font-weight: 500; } .stats span { display: block; color: var(--gris); font-size: .8rem; margin-top: 4px; }
+  .graf-c { margin: 0 0 8px; background: var(--sup); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 14px 8px; }
+  .graf-c svg { width: 100%; height: 170px; display: block; } .graf-c polyline { fill: none; stroke: var(--cian); stroke-width: 2.2; stroke-linejoin: round; }
+  .graf-c figcaption { display: flex; justify-content: space-between; color: var(--gris); font-size: .78rem; margin-top: 6px; }
+  .tab-env { border: 1px solid var(--borde); border-radius: 12px; overflow-x: auto; }
+  .tab { width: 100%; border-collapse: collapse; font-size: .92rem; } .tab th, .tab td { padding: 9px 12px; border-bottom: 1px solid var(--borde); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tab th { color: var(--gris); font-weight: 500; font-size: .8rem; } .tab td:first-child, .tab th:first-child { text-align: left; } .tab tr:last-child td { border-bottom: 0; }
+  .convs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 560px) { .stats { grid-template-columns: 1fr; } .convs { grid-template-columns: 1fr; } }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Desde quando valem?", "acceptedAnswer": {"@type": "Answer", "text": "Desde 1º de outubro de 2026; o envio de dados de supervisão, desde 1º de janeiro de 2027."}}, {"@type": "Question", "name": "Quem é afetado?", "acceptedAnswer": {"@type": "Answer", "text": "As prestadoras de serviços de ativos virtuais que atendem clientes no Brasil."}}, {"@type": "Question", "name": "O que é carteira autocustodiada?", "acceptedAnswer": {"@type": "Answer", "text": "Uma carteira em que você controla as chaves, sem uma exchange no meio."}}]}</script>
 </head>
@@ -47,7 +58,7 @@
 <h2>O que muda para o usuário</h2>
 <ul><li>Vale operar com plataformas autorizadas ou em processo de autorização no Banco Central.</li>
 <li>Segundo o divulgado sobre a regulação de prevenção à lavagem de dinheiro, transferências de ativos virtuais para ou de carteiras autocustodiadas em valor igual ou superior a US$ 10 mil passam a ser objeto de comunicação específica ao Coaf.</li></ul><p class="nota">Resumo informativo elaborado pela WIQON a partir das fontes oficiais citadas. Não substitui o texto da norma nem a orientação de um profissional.</p>
-<div class="cta-b"><p>Com a sua conta grátis você vê todas as cotações oficiais, o radar de notícias da região e os resultados do laboratório.</p><div class="rel"><a class="btn p ch" href="https://wiqonlab.com/br/#ingresar" style="color:#04121c">Criar conta grátis</a><a class="btn ch" href="https://wiqonlab.com/br/#laboratorio">Ver o laboratório</a></div></div>
+<div class="cta-b"><p>Com a sua conta grátis você vê todas as cotações oficiais, o radar de notícias da região e os resultados do laboratório.</p><div class="rel"><a class="btn p ch" href="https://wiqonlab.com/br/#ingresar" style="color:#04121c">Criar conta grátis</a><a class="btn ch" href="https://wiqonlab.com/br/laboratorio/">Ver o laboratório</a></div></div>
 <h2>Perguntas frequentes</h2>
 <div class="faq-s"><details><summary>Desde quando valem?</summary><p>Desde 1º de outubro de 2026; o envio de dados de supervisão, desde 1º de janeiro de 2027.</p></details><details><summary>Quem é afetado?</summary><p>As prestadoras de serviços de ativos virtuais que atendem clientes no Brasil.</p></details><details><summary>O que é carteira autocustodiada?</summary><p>Uma carteira em que você controla as chaves, sem uma exchange no meio.</p></details></div>
 <h2>Fontes</h2>

@@ -111,6 +111,84 @@ COTIZ = [
                       ("Com que frequência é atualizado?", "O BCRA publica em dias úteis; a nossa página consulta a cada hora.")])),
 ]
 
+# Conversión rápida y textos que dependen de la moneda (símbolo y nombre de cada lado)
+CONV = {
+    "dolar-guarani": dict(base="US$ ", ida=[1, 10, 100, 1000], vuelta=[100000, 500000, 1000000],
+                          es=("dólares", "guaraníes", "el dólar"), pt=("dólares", "guaranis", "o dólar")),
+    "real-guarani": dict(base="R$ ", ida=[1, 10, 100, 1000], vuelta=[100000, 500000, 1000000],
+                         es=("reales", "guaraníes", "el real"), pt=("reais", "guaranis", "o real")),
+    "dolar-real": dict(base="US$ ", ida=[1, 10, 100, 1000], vuelta=[100, 1000, 5000],
+                       es=("dólares", "reales", "el dólar"), pt=("dólares", "reais", "o dólar")),
+    "dolar-peso-argentino": dict(base="US$ ", ida=[1, 10, 100, 1000], vuelta=[10000, 100000, 1000000],
+                                 es=("dólares", "pesos argentinos", "el dólar"), pt=("dólares", "pesos argentinos", "o dólar")),
+}
+TX = {
+    "es": dict(hist_t="Últimos 30 días", var="Variación en 30 días", maxi="Máximo", mini="Mínimo", ult_t="Últimas cotizaciones", dia="Día", camb="Cambio",
+               conv_t="Conversión rápida", conv_n="Con la cotización oficial del {f}. Las casas de cambio aplican su propio precio de compra y venta.",
+               casas_t="Cotización oficial y casas de cambio",
+               casas=["La cotización oficial es un promedio del mercado. Bancos y casas de cambio compran un poco más barato y venden un poco más caro: esa diferencia (el «spread») es su ganancia, y en la frontera puede variar bastante entre una casa y otra, o según el horario.",
+                      "Antes de cambiar una suma grande, compará el precio de compra y de venta en dos o tres lugares y usá esta cotización como referencia para saber cuánto te están cobrando."],
+               iof="En Brasil, las compras con tarjeta en el exterior pagan además el IOF, un impuesto que se suma al tipo de cambio de la tarjeta.",
+               q_cuanto="¿Cuánto son 100 {b} en {d} hoy?", a_cuanto="Con la cotización oficial del {f}, 100 {b} equivalen a {v}. Una casa de cambio puede pagar algo menos.",
+               q_mes="¿Subió o bajó {n} en el último mes?", a_mes="En las últimas 30 cotizaciones pasó de {v0} ({f0}) a {v1} ({f1}): una variación de {p}."),
+    "pt": dict(hist_t="Últimos 30 dias", var="Variação em 30 dias", maxi="Máxima", mini="Mínima", ult_t="Últimas cotações", dia="Dia", camb="Variação",
+               conv_t="Conversão rápida", conv_n="Com a cotação oficial de {f}. As casas de câmbio aplicam o próprio preço de compra e venda.",
+               casas_t="Cotação oficial e casas de câmbio",
+               casas=["A cotação oficial é uma média do mercado. Bancos e casas de câmbio compram um pouco mais barato e vendem um pouco mais caro: essa diferença (o «spread») é o lucro deles, e na fronteira pode variar bastante de uma casa para outra ou conforme o horário.",
+                      "Antes de trocar um valor alto, compare o preço de compra e de venda em dois ou três lugares e use esta cotação como referência para saber quanto estão cobrando."],
+               iof="No Brasil, as compras com cartão no exterior pagam também o IOF, um imposto que se soma ao câmbio do cartão.",
+               q_cuanto="Quanto são 100 {b} em {d} hoje?", a_cuanto="Com a cotação oficial de {f}, 100 {b} equivalem a {v}. Uma casa de câmbio pode pagar um pouco menos.",
+               q_mes="{N} subiu ou caiu no último mês?", a_mes="Nas últimas 30 cotações passou de {v0} ({f0}) para {v1} ({f1}): uma variação de {p}."),
+}
+
+
+def bloque_historial(c, idioma, v, f):
+    """Gráfico de 30 días, máximo/mínimo, últimas cotizaciones, conversión rápida y textos; más 2 preguntas con datos del día."""
+    tx, cv = TX[idioma], CONV[c["slug"]]
+    nb, nd, nn = cv[idioma]
+    hist = CAMBIO.get("historial", {}).get(f'{c["fuente"]}:{c["moneda"]}') or []
+    dec, pre = c["dec"], c["pre"]
+    pct = lambda x: num(x, 1).replace("-", "−") + ("%" if idioma == "pt" else " %")
+    partes, faq = [], []
+    if v and f:
+        faq.append((tx["q_cuanto"].format(b=nb, d=nd), tx["a_cuanto"].format(b=nb, f=fecha(f.get("fecha")), v=f"{pre}{num(100 * v, 0 if v * 100 >= 1000 else 2)}")))
+    if len(hist) >= 2:
+        vals = [x[1] for x in hist]
+        p0, p1 = hist[0], hist[-1]
+        var = (p1[1] / p0[1] - 1) * 100
+        imax, imin = vals.index(max(vals)), vals.index(min(vals))
+        q = tx["q_mes"].format(n=nn, N=nn[0].upper() + nn[1:])
+        faq.append((q, tx["a_mes"].format(v0=f"{pre}{num(p0[1], dec)}", f0=fecha(p0[0]), v1=f"{pre}{num(p1[1], dec)}", f1=fecha(p1[0]),
+                                          p=("+" if var > 0 else "") + pct(var))))
+        lo, hi = min(vals), max(vals)
+        rango = (hi - lo) or 1
+        puntos = " ".join(f"{i / (len(vals) - 1) * 300:.1f},{95 - (x - lo) / rango * 90:.1f}" for i, x in enumerate(vals))
+        ultimas = list(reversed(hist[-10:]))
+        filas = ""
+        for i, (d, x) in enumerate(ultimas):
+            ant = ultimas[i + 1][1] if i + 1 < len(ultimas) else None
+            ch = "" if ant is None else ("+" if x > ant else "") + pct((x / ant - 1) * 100)
+            filas += f"<tr><td>{fecha(d)}</td><td>{pre}{num(x, dec)}</td><td>{ch}</td></tr>"
+        partes.append(
+            f'<h2>{tx["hist_t"]}</h2>'
+            f'<div class="stats"><div><b>{("+" if var > 0 else "") + pct(var)}</b><span>{tx["var"]}</span></div>'
+            f'<div><b>{pre}{num(vals[imax], dec)}</b><span>{tx["maxi"]} · {fecha(hist[imax][0])}</span></div>'
+            f'<div><b>{pre}{num(vals[imin], dec)}</b><span>{tx["mini"]} · {fecha(hist[imin][0])}</span></div></div>'
+            f'<figure class="graf-c"><svg viewBox="0 0 300 100" preserveAspectRatio="none" role="img" aria-label="{tx["hist_t"]}: {c[idioma]["corto"]}">'
+            f'<polyline points="{puntos}" vector-effect="non-scaling-stroke"/></svg>'
+            f'<figcaption><span>{fecha(p0[0])}</span><span>{fecha(p1[0])}</span></figcaption></figure>'
+            f'<h2>{tx["ult_t"]}</h2><div class="tab-env"><table class="tab"><thead><tr><th>{tx["dia"]}</th><th>{c[idioma]["corto"]}</th><th>{tx["camb"]}</th></tr></thead><tbody>{filas}</tbody></table></div>')
+    if v and f:
+        ida = "".join(f"<tr><td>{cv['base']}{num(a, 0)}</td><td>{pre}{num(a * v, 0 if a * v >= 1000 else 2)}</td></tr>" for a in cv["ida"])
+        vuelta = "".join(f"<tr><td>{pre}{num(a, 0)}</td><td>{cv['base']}{num(a / v, 2)}</td></tr>" for a in cv["vuelta"])
+        partes.append(f'<h2>{tx["conv_t"]}</h2><div class="convs"><div class="tab-env"><table class="tab"><tbody>{ida}</tbody></table></div>'
+                      f'<div class="tab-env"><table class="tab"><tbody>{vuelta}</tbody></table></div></div>'
+                      f'<p class="nota">{tx["conv_n"].format(f=fecha(f.get("fecha")))}</p>')
+    extra = [tx["iof"]] if c["slug"] == "dolar-real" else []
+    partes.append(f'<h2>{tx["casas_t"]}</h2>' + "".join(f"<p>{p}</p>" for p in tx["casas"] + extra))
+    return "".join(partes), faq
+
+
 NORMAS = [
     dict(slug="dnit-47-2026-criptoactivos",
          es=dict(h1="RG DNIT N.º 47/2026: qué hay que declarar de criptoactivos en Paraguay",
@@ -219,6 +297,17 @@ PAGINA = """<!doctype html>
   .cta-b p {{ margin: 0; max-width: 480px; }}
   .rel {{ display: flex; gap: 8px; flex-wrap: wrap; }} .rel a {{ padding: 6px 12px; border: 1px solid var(--borde2); border-radius: 999px; text-decoration: none; color: var(--suave); font-size: .86rem; }}
   .faq-s details {{ border-bottom: 1px solid var(--borde); padding: 12px 0; }} .faq-s summary {{ cursor: pointer; font-weight: 600; }}
+  .stats {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 6px 0 14px; }}
+  .stats div {{ background: var(--sup); border: 1px solid var(--borde); border-radius: 12px; padding: 14px; }}
+  .stats b {{ display: block; font-family: var(--mono); font-size: 1.15rem; font-weight: 500; }} .stats span {{ display: block; color: var(--gris); font-size: .8rem; margin-top: 4px; }}
+  .graf-c {{ margin: 0 0 8px; background: var(--sup); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 14px 8px; }}
+  .graf-c svg {{ width: 100%; height: 170px; display: block; }} .graf-c polyline {{ fill: none; stroke: var(--cian); stroke-width: 2.2; stroke-linejoin: round; }}
+  .graf-c figcaption {{ display: flex; justify-content: space-between; color: var(--gris); font-size: .78rem; margin-top: 6px; }}
+  .tab-env {{ border: 1px solid var(--borde); border-radius: 12px; overflow-x: auto; }}
+  .tab {{ width: 100%; border-collapse: collapse; font-size: .92rem; }} .tab th, .tab td {{ padding: 9px 12px; border-bottom: 1px solid var(--borde); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }}
+  .tab th {{ color: var(--gris); font-weight: 500; font-size: .8rem; }} .tab td:first-child, .tab th:first-child {{ text-align: left; }} .tab tr:last-child td {{ border-bottom: 0; }}
+  .convs {{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }}
+  @media (max-width: 560px) {{ .stats {{ grid-template-columns: 1fr; }} .convs {{ grid-template-columns: 1fr; }} }}
 </style>
 <script type="application/ld+json">{faq_json}</script>
 </head>
@@ -229,7 +318,7 @@ PAGINA = """<!doctype html>
 <nav class="migas" aria-label="breadcrumb"><a href="{r_home}">{inicio}</a> › {seccion}</nav>
 <h1>{h1}</h1>
 {cuerpo}
-<div class="cta-b"><p>{cuenta_txt}</p><div class="rel"><a class="btn p ch" href="{r_home}#ingresar" style="color:#04121c">{crear}</a><a class="btn ch" href="{r_home}#laboratorio">{lab}</a></div></div>
+<div class="cta-b"><p>{cuenta_txt}</p><div class="rel"><a class="btn p ch" href="{r_home}#ingresar" style="color:#04121c">{crear}</a><a class="btn ch" href="{lab_url}">{lab}</a></div></div>
 <h2>{faq_t}</h2>
 <div class="faq-s">{faq_html}</div>
 <h2>{fuentes_t}</h2>
@@ -279,7 +368,9 @@ def main():
             cuerpo = (f'<div class="cotiz"><span class="v" id="valor">{c["pre"]}{num(v, c["dec"])}</span>'
                       f'<span class="m">{x["corto"]} · <a href="{(f or {}).get("url", "#")}" target="_blank" rel="noopener">{inst}</a> · {t["fecha"]}: <span id="fecha">{fecha((f or {}).get("fecha"))}</span></span></div>'
                       f'<p><strong>{t["que"]}:</strong> {x["que"]}.</p>' + "".join(f"<p>{p}</p>" for p in x["explica"]))
-            fj, fh = faq_bloques(x["faq"])
+            extra_html, extra_faq = bloque_historial(c, idioma, v, f)
+            cuerpo += extra_html
+            fj, fh = faq_bloques(extra_faq + x["faq"])
             script = ('<script>fetch("' + SITIO + '/cambio.json?t="+Math.floor(Date.now()/36e5)).then(r=>r.json()).then(d=>{const f=d.fuentes.find(x=>x.id==="'
                       + c["fuente"] + '");const v=f&&f.valores.find(x=>x.moneda==="' + c["moneda"] + '");if(!v)return;'
                       'document.getElementById("valor").textContent="' + c["pre"] + '"+v.valor.toLocaleString("' + ("pt-BR" if idioma == "pt" else "es-PY") + '",{minimumFractionDigits:' + str(c["dec"]) + ',maximumFractionDigits:' + str(c["dec"]) + '});'
@@ -288,7 +379,7 @@ def main():
                                 hl=t["hreflang"], hl_otro=t["otro"], sitio=SITIO, r=r, r_home=r_home, volver=t["volver"], crear=t["crear"], inicio=t["inicio"],
                                 seccion=x["corto"], h1=x["h1"], cuerpo=cuerpo, cuenta_txt=t["cuenta_txt"], lab=t["lab"], faq_t=t["faq"], faq_html=fh, faq_json=fj,
                                 fuentes_t=t["fuentes"], fuentes_html=f'<li><a href="{(f or {}).get("url", "#")}" target="_blank" rel="noopener">{inst}</a></li>',
-                                relacionados=relacionados(idioma, c["slug"]), aviso=t["aviso"], script=script)
+                                lab_url=f"{SITIO}/{t['base']}laboratorio/", relacionados=relacionados(idioma, c["slug"]), aviso=t["aviso"], script=script)
             escribir(RAIZ / t["base"] / "cambio" / c["slug"] / "index.html", pag)
             urls.append(url)
         for n in NORMAS:
@@ -300,7 +391,7 @@ def main():
                                 sitio=SITIO, r=r, r_home=r_home, volver=t["volver"], crear=t["crear"], inicio=t["inicio"], seccion=x["h1"].split(":")[0], h1=x["h1"],
                                 cuerpo=x["cuerpo"] + f'<p class="nota">{t["nota_norma"]}</p>', cuenta_txt=t["cuenta_txt"], lab=t["lab"], faq_t=t["faq"], faq_html=fh, faq_json=fj,
                                 fuentes_t=t["fuentes"], fuentes_html="".join(f'<li><a href="{u}" target="_blank" rel="noopener">{html.escape(nm)}</a></li>' for nm, u in x["fuentes"]),
-                                relacionados=relacionados(idioma, n["slug"]), aviso=t["aviso"], script="")
+                                lab_url=f"{SITIO}/{t['base']}laboratorio/", relacionados=relacionados(idioma, n["slug"]), aviso=t["aviso"], script="")
             escribir(RAIZ / t["base"] / "normas" / n["slug"] / "index.html", pag)
             urls.append(url)
 
