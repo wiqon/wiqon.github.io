@@ -226,7 +226,9 @@
       }
       return out;
     };
-    const item = (n) => `<li class="nota-n"><div class="lm"><span class="pais">${esc(n.pais_nombre)}</span><span class="cat">${esc(T.cats[n.categorias[0]] || n.categorias[0])}</span>
+    const mini = (n) => `<a class="mini" href="${esc(n.url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${n.imagen
+        ? `<img src="${esc(n.imagen)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ""}<span class="mini-f">${esc(n.fuente)}</span></a>`;
+    const item = (n) => `<li class="nota-n${n.imagen ? "" : " sin-img"}">${mini(n)}<div class="lm"><span class="pais">${esc(n.pais_nombre)}</span><span class="cat">${esc(T.cats[n.categorias[0]] || n.categorias[0])}</span>
         <time datetime="${n.publicado_utc}" title="${hora(n.publicado_utc)}">${hace(n.publicado_utc)}</time></div>
       <h3><a href="${esc(n.url)}" target="_blank" rel="noopener" lang="${n.idioma === "pt" ? "pt-BR" : "es"}">${esc(n.titulo)}</a></h3>
       <div class="lm"><span class="fte-b${n.tipo === "oficial" ? " of" : ""}">${esc(n.fuente)}</span><span class="idi">${n.idioma.toUpperCase()}</span></div>
@@ -240,6 +242,8 @@
       const max = est.completo ? est.limite : 4;
       lista.classList.toggle("completo", est.completo);
       lista.innerHTML = ns.length ? ns.slice(0, max).map(item).join("") : `<li class="estado-r">${T.vacio}</li>`;
+      // si el medio no deja cargar la foto, queda el recuadro con el nombre de la fuente
+      $$(".mini img", lista).forEach((im) => im.addEventListener("error", () => { im.closest(".nota-n").classList.add("sin-img"); im.remove(); }, { once: true }));
       btn.textContent = est.completo ? T.menos : T.completo;
       btn.setAttribute("aria-expanded", String(est.completo));
       masBtn.hidden = !est.completo || ns.length <= est.limite;

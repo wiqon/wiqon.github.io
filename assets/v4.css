@@ -211,6 +211,16 @@ details.mas .tabla { margin-top: 12px; }
 .notas { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .notas.completo { grid-template-columns: repeat(2, 1fr); }
 .nota-n { background: var(--sup); border: 1px solid var(--borde); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.nota-n { overflow: hidden; }
+.mini { display: block; position: relative; margin: -14px -14px 2px; aspect-ratio: 16 / 9; overflow: hidden; background:
+  radial-gradient(120% 90% at 85% 10%, color-mix(in srgb, var(--cian) 28%, transparent), transparent 60%),
+  linear-gradient(135deg, var(--sup2), var(--fondo)); }
+.mini img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.nota-n:hover .mini img { transform: scale(1.04); }
+.mini-f { position: absolute; left: 12px; bottom: 10px; font: 600 .8rem var(--titulos); letter-spacing: -.01em; color: #fff; opacity: 0; }
+.sin-img .mini-f { opacity: .9; font-size: 1.05rem; }
+.mini::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 -1px 0 var(--borde); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .mini img { transition: none; } .nota-n:hover .mini img { transform: none; } }
 .nota-n h3 { font-size: .92rem; line-height: 1.38; font-weight: 600; }
 .nota-n h3 a { text-decoration: none; }
 .nota-n h3 a:hover { color: var(--cian); text-decoration: underline; text-underline-offset: 3px; }
@@ -649,3 +659,11 @@ h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { letter-spacing: -.03em; }
 
 .servs li a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--borde2); }
 .servs li a:hover { border-color: var(--cian); }
+.radar-mas-v { margin-top: 18px; }
+@media (max-width: 680px) {
+  .nota-n { display: grid; grid-template-columns: 104px 1fr; column-gap: 12px; row-gap: 6px; align-items: start; }
+  .nota-n > * { grid-column: 2; }
+  .nota-n > .mini { grid-column: 1; grid-row: 1 / span 4; margin: 0; aspect-ratio: 1; border-radius: 8px; }
+  .nota-n h3 { font-size: .88rem; }
+  .sin-img .mini-f { font-size: .72rem; left: 8px; right: 8px; bottom: 8px; }
+}

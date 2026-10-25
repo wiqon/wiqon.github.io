@@ -10,6 +10,8 @@ Reglas editoriales (ver brief de rediseño):
     noticias con su hora real y se marca la fuente como caída.
   - Se excluyen predicciones, promociones y "precio de hoy".
   - Los títulos en portugués se mantienen en portugués.
+  - Miniatura: la imagen que el medio publica en su propio RSS (media:content, enclosure o la primera <img>);
+    si el feed no trae, la og:image de la nota (se guarda la dirección, no se copia la imagen).
 Sin dependencias: solo biblioteca estándar.
 
 Uso:  python scripts/actualizar_noticias.py
@@ -73,7 +75,7 @@ TEMAS = {
 CONTEXTO_REGULACION = r"financ|banc|cripto|bitcoin|tributari|tributa[cç]|impuest|mercado|fintech|pago|bolsa|valores|\bbcp\b|\bbcb\b|\bcvm\b|\bcnv\b|cambio|seguro|ativos virtuais|activos virtuales|stablecoin|lavado|lavagem|\bdnit\b"
 EXCLUIR = r"predicci[oó]n|previs[aã]o de pre[cç]o|podr[ií]a (llegar|alcanzar|subir)|pode chegar|chegar[aá] a|llegar[aá] a|vai explodir|explotar[aá]|\bpatrocinad|publicidad|\bpromo|cupom|cup[oó]n|precio de .* hoy|pre[cç]o do .* hoje|hor[oó]scopo|\bsorteo\b|ap[uú]esta|\bf[uú]tbol\b|futebol|mega-?sena|lotof[aá]cil|novela|\bbbb\b|\b(sube|cae|avanza|retrocede|repunta|rebota|cai|sobe|salta|se desploma)\b[^%]{0,40}\d+[.,]\d+ ?%|\bel \d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\b|\bem \d{1,2} de (janeiro|fevereiro|mar[cç]o|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\b|el precio (retrocede|avanza|sube|cae)|se[nñ]ales t[eé]cnicas"
 # Notas internacionales (sin vínculo regional): solo pasan si son de cripto/stablecoins.
-INTERNACIONAL = r"wall street|nasdaq|\bg20\b|\bonu\b|guterres|\brusi|ucrani|\bchina\b|chinos|xi jinping|\beeuu\b|estados unidos|trump|europa|\bue\b|israel|gaza|ir[aá]n|jap[oó]n|india|alemania|francia|reino unido"
+INTERNACIONAL = r"wall street|nasdaq|\bg20\b|\bonu\b|guterres|\brusi|ucrani|\bchina\b|chinos|xi jinping|\beeuu\b|estados unidos|trump|europa|\bue\b|israel|gaza|ir[aá]n|jap[oó]n|india|alemania|francia|reino unido|espa[nñ]a|madrid|londres|par[ií]s|berl[ií]n|\broma\b|italia|praga|chequia|polonia|turqu[ií]a|corea|taiw[aá]n|canad[aá]|australia"
 PAISES = {
     "PY": r"paraguay|asunci[oó]n|ciudad del este|alto paran[aá]|itaip[uú]|\bdnit\b|\bbcp\b",
     "BR": r"brasil|brazil|s[aã]o paulo|\bpix\b|banco central do brasil|\bbcb\b|\bcvm\b|\bdrex\b",
@@ -111,6 +113,48 @@ def fecha(texto):
     return d.astimezone(timezone.utc)
 
 
+def https(u):
+    u = (u or "").strip().replace("&amp;", "&")
+    if u.startswith("//"):
+        u = "https:" + u
+    if u.startswith("http://"):
+        u = "https://" + u[7:]   # la página es https: una imagen http quedaría bloqueada
+    return u if u.startswith("https://") else ""
+
+
+def imagen_de(it):
+    """Imagen que el propio medio incluye en el ítem del RSS."""
+    for c in it.iter():
+        t = c.tag.split("}")[-1]
+        if t in ("content", "thumbnail") and c.get("url") and c.get("medium", "image") == "image"                 and not (c.get("type") or "image").split("/")[0] in ("video", "audio"):
+            return https(c.get("url"))
+        if t == "enclosure" and c.get("url") and (c.get("type") or "").startswith("image"):
+            return https(c.get("url"))
+    for c in it.iter():
+        if c.tag.split("}")[-1] in ("description", "encoded", "content", "summary") and c.text:
+            m = re.search(r'<img[^>]+src=["\x27]([^"\x27]+)', c.text)
+            if m:
+                return https(m.group(1))
+    return ""
+
+
+def og_image(url):
+    """og:image de la nota, para las fuentes cuyo RSS no trae imagen (solo se leen los primeros 200 KB)."""
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": AGENTE, "Accept": "text/html"})
+        with urllib.request.urlopen(req, timeout=12) as r:
+            html_txt = r.read(200_000).decode("utf-8", "replace")
+    except Exception:
+        return ""
+    for rx in (r'<meta[^>]+property=["\x27]og:image(?::secure_url)?["\x27][^>]+content=["\x27]([^"\x27]+)',
+               r'<meta[^>]+content=["\x27]([^"\x27]+)["\x27][^>]+property=["\x27]og:image["\x27]',
+               r'<meta[^>]+name=["\x27]twitter:image["\x27][^>]+content=["\x27]([^"\x27]+)'):
+        m = re.search(rx, html_txt, re.I)
+        if m:
+            return https(m.group(1))
+    return ""
+
+
 def leer_feed(f):
     req = urllib.request.Request(f["url"], headers={"User-Agent": AGENTE, "Accept": "application/rss+xml, application/xml, text/xml"})
     with urllib.request.urlopen(req, timeout=30) as r:
@@ -131,7 +175,7 @@ def leer_feed(f):
                 publicado = fecha(campos[k].text.strip())
                 break
         if titulo and enlace.startswith("http") and publicado:
-            items.append({"titulo": titulo, "url": enlace, "publicado": publicado})
+            items.append({"titulo": titulo, "url": enlace, "publicado": publicado, "imagen": imagen_de(it)})
     return items
 
 
@@ -214,6 +258,7 @@ def main():
                     "region": f["region"], "pais": pais,
                     "categorias": cats or ["criptoactivos" if f["id"] in ("livecoins", "criptonoticias", "diariobitcoin") else "mercados"],
                     "publicado_utc": it["publicado"].strftime("%Y-%m-%dT%H:%M:%SZ"), "_dt": it["publicado"],
+                    "imagen": it["imagen"],
                 })
         except Exception as e:  # fuente caída: conservar lo último conocido, con su hora real
             ant = estado_previo.get(f["id"], {})
@@ -268,6 +313,17 @@ def main():
         elegidas += resto[:sobrante]
     orden = {"PY": 0, "BR": 1, "LATAM": 2}
     elegidas.sort(key=lambda n: (orden[n["region"]], -n["_p"]))
+
+    # Miniaturas que faltan: og:image de la nota (se reutiliza la ya encontrada en la corrida anterior)
+    conocidas = {n["url"]: n.get("imagen", "") for n in previo.get("noticias", [])}
+    buscadas = 0
+    for n in elegidas:
+        if not n.get("imagen"):
+            if conocidas.get(n["url"]):
+                n["imagen"] = conocidas[n["url"]]
+            elif buscadas < 20:
+                n["imagen"] = og_image(n["url"])
+                buscadas += 1
 
     salida = {
         "actualizado_utc": ahora.strftime("%Y-%m-%dT%H:%M:%SZ"),

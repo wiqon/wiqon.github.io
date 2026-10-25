@@ -292,12 +292,11 @@ PLANTILLA = """<!doctype html>
 
 <section class="s" id="radar" data-prioridad="{{prioridad}}" aria-labelledby="radar-t">
   <div class="c">
-    <div class="solo-visitante"><div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>{{bl_radar_t}}</b><span>{{bl_radar}}</span></div></div><button class="btn p ch" type="button" data-acceso>{{crear_cuenta}}</button></div></div>
-    <div class="privado">
     <div class="radar-cab">
       <div><span class="vol">{{radar_vol}}</span><h2 id="radar-t">{{radar_h2}}</h2><p>{{radar_p}}</p></div>
       <div class="meta" id="radar-info" aria-live="polite">{{cargando}}</div>
     </div>
+    <div class="privado">
     <div class="filtros" role="group" aria-label="{{filtros_aria}}">
       <div class="grupo"><span>{{f_region}}</span>
         <button class="chip" data-f="region:todas" aria-pressed="true">{{f_todas}}</button>
@@ -314,14 +313,17 @@ PLANTILLA = """<!doctype html>
         <select class="sel" id="f-idioma" data-s="idioma"><option value="todos">{{f_todos}}</option><option value="es">Español</option><option value="pt">Português</option></select></div>
       <div class="grupo"><label for="f-cat"><span>{{f_cat}}</span></label><select class="sel" id="f-cat" data-s="cat">{{opciones_cat}}</select></div>
     </div>
+    </div>
     <p class="aviso-r" id="radar-aviso" aria-live="polite"></p>
     <ul class="notas" id="radar-lista" aria-live="polite"></ul>
+    <div class="privado">
     <div class="radar-pie">
       <p class="meta">{{radar_nota}}</p>
       <div style="display:flex;gap:10px"><button class="btn ch" id="radar-mas" hidden>{{ver_mas}}</button><button class="btn ch" id="radar-btn" aria-expanded="false" aria-controls="radar-lista">{{ver_completo}}</button></div>
     </div>
     <div class="historias">{{historias}}</div>
     </div>
+    <div class="solo-visitante radar-mas-v"><div class="bloqueo solo-visitante"><div class="txt"><span class="candado"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><b>{{bl_radar_t}}</b><span>{{bl_radar}}</span></div></div><button class="btn p ch" type="button" data-acceso>{{crear_cuenta}}</button></div></div>
   </div>
 </section>
 
@@ -464,7 +466,7 @@ def redes(lista):
 ES = dict(ICONOS,
     ingresar="Ingresar", crear_cuenta="Crear cuenta gratis", salir="Salir", ver_mercados="Ver mercados", cerrar="Cerrar",
     bl_lab_t="Resultados completos y estrategia en vivo", bl_lab="Con tu cuenta gratis ves la tabla de experimentos y nuestra regla operando en vivo.",
-    bl_radar_t="Radar de noticias y tipo de cambio oficial", bl_radar="Noticias de Paraguay, Brasil e Hispanoamérica cada 30 minutos, y las cotizaciones del BCP, BCB, BCRA y TRM.",
+    bl_radar_t="Radar completo y tipo de cambio oficial", bl_radar="Todas las noticias con filtros por país, período y tema, cada 30 minutos, y las cotizaciones del BCP, BCB, BCRA y TRM.",
     bl_eco_t="Mapa de inflación y calendario económico", bl_eco="La inflación de cada país (datos del FMI) y los próximos indicadores, con tu cuenta gratis.",
     reg_vol="Cuenta gratuita", reg_h2="Creá tu cuenta y <span>mirá todo el laboratorio</span>",
     reg_p="Solo tu email: te enviamos un enlace para entrar, sin contraseñas. Gratis y sin compromiso.",
@@ -608,7 +610,7 @@ ES = dict(ICONOS,
 BR = dict(ICONOS,
     ingresar="Entrar", crear_cuenta="Criar conta grátis", salir="Sair", ver_mercados="Ver mercados", cerrar="Fechar",
     bl_lab_t="Resultados completos e estratégia ao vivo", bl_lab="Com a sua conta grátis você vê a tabela de experimentos e a nossa regra operando ao vivo.",
-    bl_radar_t="Radar de notícias e câmbio oficial", bl_radar="Notícias do Brasil, Paraguai e América hispânica a cada 30 minutos, e as cotações do BCB, BCP, BCRA e TRM.",
+    bl_radar_t="Radar completo e câmbio oficial", bl_radar="Todas as notícias com filtros por país, período e tema, a cada 30 minutos, e as cotações do BCB, BCP, BCRA e TRM.",
     bl_eco_t="Mapa da inflação e calendário econômico", bl_eco="A inflação de cada país (dados do FMI) e os próximos indicadores, com a sua conta grátis.",
     reg_vol="Conta gratuita", reg_h2="Crie a sua conta e <span>veja todo o laboratório</span>",
     reg_p="Só o seu e-mail: enviamos um link para entrar, sem senha. Grátis e sem compromisso.",
@@ -753,7 +755,7 @@ CAT_EN = ["Regulation", "Taxes", "Crypto assets", "Stablecoins", "Payments", "Fi
 EN = dict(ES,
     ingresar="Sign in", crear_cuenta="Create free account", salir="Sign out", ver_mercados="See markets", cerrar="Close",
     bl_lab_t="Full results and live strategy", bl_lab="With your free account you see the experiments table and our rule running live.",
-    bl_radar_t="News radar and official exchange rates", bl_radar="News from Paraguay, Brazil and Latin America every 30 minutes, plus official rates from the BCP, BCB, BCRA and TRM.",
+    bl_radar_t="Full news radar and official exchange rates", bl_radar="Every story with filters by country, period and topic, every 30 minutes, plus official rates from the BCP, BCB, BCRA and TRM.",
     bl_eco_t="Inflation map and economic calendar", bl_eco="Inflation in every country (IMF data) and upcoming indicators, with your free account.",
     reg_vol="Free account", reg_h2="Create your account and <span>see the whole lab</span>",
     reg_p="Just your email: we send you a link to sign in, no passwords. Free, no strings attached.",
