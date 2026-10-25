@@ -725,3 +725,19 @@ h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { letter-spacing: -.03em; }
   box-shadow: 0 8px 24px rgba(0, 0, 0, .25); transform: rotate(-2deg); }
 .reg-informes img:nth-child(2) { transform: translateY(-6px); }
 .reg-informes img:nth-child(3) { transform: rotate(2deg); }
+
+/* ---------- terminal de mercados: fila elegida y ficha del instrumento ---------- */
+.mercados button.sim { font: inherit; font-weight: 700; color: inherit; background: none; border: 0; padding: 4px 0; cursor: pointer; text-align: left; min-height: 40px; }
+.mercados button.sim:focus-visible { outline: 2px solid var(--cian); outline-offset: 3px; border-radius: 6px; }
+.mercados tbody tr { cursor: pointer; transition: background .15s; }
+.mercados tbody tr:hover { background: color-mix(in srgb, var(--cian) 5%, transparent); }
+.mercados tbody tr.sel { background: color-mix(in srgb, var(--cian) 10%, transparent); box-shadow: inset 3px 0 0 var(--cian); }
+.mv-ficha { border-top: 1px solid var(--borde); padding: 12px; }
+.mv-ficha:empty { display: none; }
+.mf-cab { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: .86rem; margin-bottom: 8px; }
+.mf-cab span { color: var(--gris); font-size: .74rem; }
+.mv-ficha dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 0 0 8px; }
+.mv-ficha dt { font-size: .68rem; color: var(--gris); }
+.mv-ficha dd { margin: 2px 0 0; font: 600 .84rem var(--mono, monospace); font-variant-numeric: tabular-nums; }
+.mv-ficha .meta a { color: var(--suave); }
+@media (max-width: 520px) { .mv-ficha dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

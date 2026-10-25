@@ -135,6 +135,12 @@
   }).catch(() => { const s = $("#snap-btc"); if (s) s.textContent = "—"; });
 
   // ================= mercado en vivo: tabla de precios en tiempo real =================
+  const TF = PT ? { ver: "ver no gráfico", mercado: "Binance · mercado à vista", ultimo: "Último preço", max: "Máxima 24 h", min: "Mínima 24 h", vol: "Volume 24 h",
+                    milM: "bi", fuente: "Fonte: API pública da", horario: "opera 24 h, 7 dias", datos: "dado de", ayuda: "Toque numa moeda para vê-la no gráfico." }
+           : EN ? { ver: "show on chart", mercado: "Binance · spot market", ultimo: "Last price", max: "24 h high", min: "24 h low", vol: "24 h volume",
+                    milM: "bn", fuente: "Source: public API from", horario: "trades 24/7", datos: "data from", ayuda: "Tap a coin to show it on the chart." }
+           : { ver: "ver en el gráfico", mercado: "Binance · mercado al contado", ultimo: "Último precio", max: "Máximo 24 h", min: "Mínimo 24 h", vol: "Volumen 24 h",
+               milM: "mil M", fuente: "Fuente: API pública de", horario: "opera 24 h, los 7 días", datos: "dato de las", ayuda: "Tocá una moneda para verla en el gráfico." };
   const tbVivo = $("#mercados-vivo");
   if (tbVivo) {
     const ACT = [["BTC", "Bitcoin", "#f7931a"], ["ETH", "Ethereum", "#8c9eff"], ["SOL", "Solana", "#14f195"], ["BNB", "BNB", "#f3ba2f"], ["XRP", "XRP", "#c2ccd8"], ["DOGE", "Dogecoin", "#c2a633"]];
@@ -151,10 +157,31 @@
       tbVivo.innerHTML = ACT.map(([s, n, col]) => {
         const t = datos[s]; if (!t) return "";
         const c = +t.priceChangePercent;
-        return `<tr><td><span class="sim"><i style="background:${col}">${s.slice(0, 1)}</i><span>${s}<small>${n}</small></span></span></td>
+        return `<tr data-s="${s}"${s === "BTC" ? ' class="sel"' : ""}><td><button type="button" class="sim" aria-pressed="${s === "BTC"}" aria-label="${n} (${s}/USDT): ${TF.ver}"><i style="background:${col}">${s.slice(0, 1)}</i><span>${s}<small>${n}</small></span></button></td>
           <td class="p" id="mv-${s}">${num(+t.lastPrice, dec(+t.lastPrice))}</td>
           <td class="ch ${c >= 0 ? "sube" : "baja"}" id="mvc-${s}">${c >= 0 ? "+" : ""}${num(c, 2)}%</td><td class="om" id="mvs-${s}"></td></tr>`;
       }).join("");
+      // ficha del instrumento elegido: todo sale del ticker de 24 h y del WebSocket de Binance
+      let elegido = "BTC";
+      const ficha = $("#mv-ficha");
+      const pintarFicha = () => {
+        const t = datos[elegido], n = (ACT.find((a) => a[0] === elegido) || [])[1]; if (!ficha || !t) return;
+        const p = +($("#mv-" + elegido)?.dataset.v || t.lastPrice);
+        const vol = +t.quoteVolume >= 1e9 ? `${num(+t.quoteVolume / 1e9, 2)} ${TF.milM}` : `${num(+t.quoteVolume / 1e6, 1)} M`;
+        ficha.innerHTML = `<div class="mf-cab"><b>${esc(n)} · ${elegido}/USDT</b><span>${TF.mercado}</span></div>
+          <dl><div><dt>${TF.ultimo}</dt><dd>US$ ${num(p, dec(p))}</dd></div><div><dt>${TF.max}</dt><dd>${num(+t.highPrice, dec(+t.highPrice))}</dd></div>
+          <div><dt>${TF.min}</dt><dd>${num(+t.lowPrice, dec(+t.lowPrice))}</dd></div><div><dt>${TF.vol}</dt><dd>US$ ${vol}</dd></div></dl>
+          <p class="meta">${TF.fuente} <a href="https://www.binance.com/es/trade/${elegido}_USDT?type=spot" target="_blank" rel="noopener">Binance</a> · ${TF.horario} · ${TF.datos} ${new Date(+t.closeTime).toLocaleTimeString(LOC, { timeZone: TZ, hour12: false })}. ${TF.ayuda}</p>`;
+      };
+      pintarFicha();
+      tbVivo.addEventListener("click", (ev) => {
+        const fila = ev.target.closest("tr[data-s]"); if (!fila) return;
+        elegido = fila.dataset.s;
+        $$("tr[data-s]", tbVivo).forEach((f) => { const on = f === fila; f.classList.toggle("sel", on); $("button", f).setAttribute("aria-pressed", String(on)); });
+        const ts = $("#tv-sim"); if (ts) ts.textContent = `${elegido}/USDT`;
+        document.dispatchEvent(new CustomEvent("wiqon:simbolo", { detail: `BINANCE:${elegido}USDT` }));
+        pintarFicha();
+      });
       ACT.forEach(([s]) => fetch(`${API}/klines?symbol=${s}USDT&interval=1h&limit=24`).then((r) => r.json())
         .then((k) => { const el = $("#mvs-" + s); if (el) el.innerHTML = spark(k.map((x) => +x[4])); }).catch(() => {}));
       try {
@@ -167,6 +194,8 @@
           el.dataset.v = p; el.textContent = num(p, dec(p));
           if (p !== ant) { el.classList.remove("sube-f", "baja-f"); void el.offsetWidth; el.classList.add(p > ant ? "sube-f" : "baja-f"); setTimeout(() => el.classList.remove("sube-f", "baja-f"), 700); }
           ec.textContent = `${c >= 0 ? "+" : ""}${num(c, 2)}%`; ec.className = "ch " + (c >= 0 ? "sube" : "baja");
+          if (datos[s]) { datos[s].lastPrice = p; datos[s].highPrice = +d.h; datos[s].lowPrice = +d.l; datos[s].quoteVolume = +d.q; datos[s].closeTime = d.E; }
+          if (s === elegido) pintarFicha();
         };
       } catch (e) { /* sin WebSocket: queda el último dato */ }
     }).catch(() => { tbVivo.innerHTML = `<tr><td colspan="4" class="meta">${T.sinDatos}</td></tr>`; });
