@@ -218,6 +218,7 @@ PLANTILLA = """<!doctype html>
     <div class="cab"><div><span class="vol">{{prod_vol}}</span><h2 class="t" id="prod-t">{{prod_h2}}</h2></div><p class="der">{{prod_p}}</p></div>
     <div class="pilares">
       <article class="pilar ap">
+        <figure class="p-img"><a href="{{r}}assets/productos/laboratorio_{{img_idi}}.webp" target="_blank" rel="noopener"><img src="{{r}}assets/productos/laboratorio_{{img_idi}}.webp" width="1200" height="675" alt="{{img_a_alt}}" loading="lazy" decoding="async"></a><figcaption>{{img_a}}</figcaption></figure>
         <div class="p-cab"><span class="p-ic">{{ic_matraz}}</span><h3>{{a_t}}</h3><span class="chip-e ok">{{a_chip}}</span></div>
         <p class="que">{{a_que}}</p>
         <p class="problema"><b>{{problema}}</b> {{a_prob}}</p>
@@ -225,6 +226,7 @@ PLANTILLA = """<!doctype html>
         <div class="pie-p"><a class="enl" href="#laboratorio">{{a_cta}} {{ic_flecha}}</a><span class="limite">{{a_lim}}</span></div>
       </article>
       <article class="pilar dest ap" id="shield">
+        <figure class="p-img"><a href="{{r}}assets/productos/shield.webp" target="_blank" rel="noopener"><img src="{{r}}assets/productos/shield.webp" width="1200" height="675" alt="{{img_b_alt}}" loading="lazy" decoding="async"></a><figcaption>{{img_b}}</figcaption></figure>
         <div class="p-cab"><span class="p-ic">{{ic_escudo}}</span><h3>WIQON Shield</h3><span class="chip-e {{b_chip_cls}}">{{b_chip}}</span></div>
         <p class="que">{{b_que}}</p>
         <p class="problema"><b>{{problema}}</b> {{b_prob}}</p>
@@ -232,6 +234,7 @@ PLANTILLA = """<!doctype html>
         <div class="pie-p"><a class="btn p ch" href="{{b_href}}">{{b_cta}}</a><span class="limite">{{b_lim}}</span></div>
       </article>
       <article class="pilar ap" id="servicios">
+        <figure class="p-img"><a href="{{r}}assets/productos/datos_{{img_idi}}.webp" target="_blank" rel="noopener"><img src="{{r}}assets/productos/datos_{{img_idi}}.webp" width="1200" height="675" alt="{{img_c_alt}}" loading="lazy" decoding="async"></a><figcaption>{{img_c}}</figcaption></figure>
         <div class="p-cab"><span class="p-ic">{{ic_datos}}</span><h3>{{c_t}}</h3><span class="chip-e ok">{{c_chip}}</span></div>
         <p class="que">{{c_que}}</p>
         <p class="problema"><b>{{problema}}</b> {{c_prob}}</p>
@@ -521,6 +524,13 @@ ES = dict(ICONOS,
     prod_p="Investigación abierta, un producto para gestionar el riesgo y servicios técnicos. Todo sale del mismo proceso de pruebas.",
     problema="Para qué sirve:",
     a_t="Laboratorio de estrategias", a_chip="Abierto",
+    img_idi="es",
+    img_a="Captura real de WIQON Estudio: el filtro de tendencia contra comprar y mantener, 2018–2026, con costos.",
+    img_a_alt="Gráfico del backtest: el filtro de tendencia termina en x39,8 y comprar y mantener en x13,5; ganancia anual 56,6 % contra 37,3 % y caída máxima −34,7 % contra −76,6 %.",
+    img_b="Captura real: WIQON Shield funcionando en MetaTrader 5, cuenta demo, gráfico diario de BTC.",
+    img_b_alt="MetaTrader 5 con el gráfico diario de BTC/USD y el panel de WIQON Shield: cuenta demo, media de 100 días, señal comprado.",
+    img_c="Captura real de nuestra terminal: precio de BTC en vivo y estado de la regla, con datos públicos de Binance.",
+    img_c_alt="Panel de la terminal WIQON con el precio de BTC en vivo, el gráfico de 24 horas y el estado del filtro de tendencia: en BTC.",
     a_que="Probamos ideas de trading populares con años de datos, costos reales y validación fuera de muestra, y publicamos el resultado.",
     a_prob="saber si una estrategia tiene ventaja antes de arriesgar dinero en ella.",
     a_evid=('<div class="comp"><div><span class="lbl">Probadas</span><div class="num">20+</div></div><div><span class="lbl">Sobrevivió</span><div class="num">1</div></div></div>'
@@ -665,6 +675,13 @@ BR = dict(ICONOS,
     prod_p="Pesquisa aberta, um produto para gestão de risco e serviços técnicos. Tudo sai do mesmo processo de testes.",
     problema="Para que serve:",
     a_t="Laboratório de estratégias", a_chip="Aberto",
+    img_idi="pt",
+    img_a="Captura real do WIQON Estúdio: o filtro de tendência contra comprar e segurar, 2018–2026, com custos.",
+    img_a_alt="Gráfico do backtest: o filtro de tendência termina em x39,8 e comprar e segurar em x13,5; ganho anual 56,6 % contra 37,3 % e queda máxima −34,7 % contra −76,6 %.",
+    img_b="Captura real: WIQON Shield rodando no MetaTrader 5, conta demo, gráfico diário do BTC.",
+    img_b_alt="MetaTrader 5 com o gráfico diário de BTC/USD e o painel do WIQON Shield: conta demo, média de 100 dias, sinal comprado.",
+    img_c="Captura real do nosso terminal: preço do BTC ao vivo e estado da regra, com dados públicos da Binance.",
+    img_c_alt="Painel do terminal WIQON com o preço do BTC ao vivo, o gráfico de 24 horas e o estado do filtro de tendência: em BTC.",
     a_que="Testamos ideias populares de trading com anos de dados, custos reais e validação fora da amostra, e publicamos o resultado.",
     a_prob="saber se uma estratégia tem vantagem antes de arriscar dinheiro nela.",
     a_evid=('<div class="comp"><div><span class="lbl">Testadas</span><div class="num">20+</div></div><div><span class="lbl">Sobreviveu</span><div class="num">1</div></div></div>'
@@ -819,6 +836,13 @@ EN = dict(ES,
     prod_p="Open research, a risk-management product and technical services. Everything comes from the same testing process.",
     problema="What it's for:",
     a_t="Strategy lab", a_chip="Open",
+    img_idi="es",
+    img_a="Real screenshot of WIQON Studio: the trend filter against buy and hold, 2018–2026, with costs (labels in Spanish).",
+    img_a_alt="Backtest chart: the trend filter ends at x39.8 and buy and hold at x13.5; annual gain 56.6% vs 37.3% and max drawdown −34.7% vs −76.6%.",
+    img_b="Real screenshot: WIQON Shield running in MetaTrader 5, demo account, BTC daily chart.",
+    img_b_alt="MetaTrader 5 with the BTC/USD daily chart and the WIQON Shield panel: demo account, 100-day average, long signal.",
+    img_c="Real screenshot of our terminal: live BTC price and rule status, from Binance public data (labels in Spanish).",
+    img_c_alt="WIQON terminal panel with the live BTC price, the 24-hour chart and the trend filter status: in BTC.",
     a_que="We test popular trading ideas with years of data, real costs and out-of-sample validation, and we publish the result.",
     a_prob="knowing whether a strategy has an edge before risking money on it.",
     a_evid=ES["a_evid"].replace("Probadas", "Tested").replace("Sobrevivió", "Survived").replace("HISTÓRICO", "HISTORICAL")
