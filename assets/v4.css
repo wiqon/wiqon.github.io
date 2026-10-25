@@ -686,3 +686,17 @@ h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { letter-spacing: -.03em; }
 .p-img figcaption { font-size: .72rem; line-height: 1.4; color: var(--gris); margin-top: 7px; }
 @media (prefers-reduced-motion: reduce) { .p-img img { transition: none; } .p-img a:hover img { transform: none; } }
 @media (max-width: 400px) { .idioma a { padding: 4px 5px; } .idioma a::before { width: 18px; height: 12px; } }
+
+/* ---------- estado de cada dato (salud.json) ---------- */
+.est-l { margin-top: 8px; }
+.est { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: .72rem; color: var(--gris); line-height: 1.4; }
+.est::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--gris2); flex: none; }
+.est b { font-weight: 700; }
+.est a { color: var(--suave); }
+.est-al_dia::before { background: var(--sube); } .est-al_dia b { color: var(--sube); }
+.est-atrasado::before { background: var(--aviso); } .est-atrasado b { color: var(--aviso); }
+.est-caido::before, .est-error::before { background: var(--baja); } .est-caido b, .est-error b { color: var(--baja); }
+.est[title] { cursor: help; }
+.vivo-b[data-estado="conectando"] { color: var(--gris); } .vivo-b[data-estado="conectando"]::before { background: var(--gris2); animation: none; }
+.vivo-b[data-estado="vivo"] { color: var(--sube); } .vivo-b[data-estado="vivo"]::before { background: var(--sube); }
+.vivo-b[data-estado="sin"] { color: var(--aviso); } .vivo-b[data-estado="sin"]::before { background: var(--aviso); animation: none; }

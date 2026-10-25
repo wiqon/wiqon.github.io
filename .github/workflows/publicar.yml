@@ -1,6 +1,6 @@
 # Publica wiqonlab.com con GitHub Pages y actualiza los datos dinámicos sin
-# llenar el historial del repo: noticias.json, cambio.json y videos.json se
-# generan en cada corrida y se publican directamente (no se commitean).
+# llenar el historial del repo: noticias.json, cambio.json, videos.json y
+# salud.json se generan en cada corrida y se publican directamente.
 name: Publicar sitio y actualizar datos
 
 on:
@@ -30,6 +30,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Pruebas de los lectores de datos (si fallan, no se publica y queda la versión anterior)
+        run: |
+          pip install --quiet pytest==8.3.3
+          python -m pytest tests -q -p no:cacheprovider
       - name: Traer los últimos datos publicados (respaldo si una fuente falla)
         run: |
           for f in noticias.json cambio.json videos.json inflacion.json defi.json; do
@@ -56,6 +60,8 @@ jobs:
       - name: Portada con los últimos datos (sin JavaScript también se ven)
         run: python scripts/rellenar_inicio.py
         continue-on-error: true
+      - name: Salud de los datos (salud.json, lo leen la página y el aviso de n8n)
+        run: python scripts/salud.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

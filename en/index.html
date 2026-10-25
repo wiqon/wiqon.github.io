@@ -91,7 +91,7 @@
           <thead><tr><th>Asset</th><th class="r">Price</th><th class="r">24 h</th><th class="r om">Last 24 h</th></tr></thead>
           <tbody id="mercados-vivo"><tr><td colspan="4" class="meta">Loading…</td></tr></tbody>
         </table>
-        <p class="meta" style="padding:8px 12px"><span class="vivo-b">LIVE</span> Real-time Binance prices. Not recommendations.</p>
+        <p class="meta" style="padding:8px 12px"><span class="vivo-b" id="mv-estado" data-estado="conectando">LIVE</span> Real-time Binance prices. Not recommendations.</p>
       </div>
       <div class="tv" id="tv">
         <div class="tv-cab"><b>Try it: interactive chart</b><span class="meta">Chart by <a href="https://www.tradingview.com/?aff_id=1171961&aff_sub=web&source=wiqonlab" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> (affiliate link)</span></div>
@@ -121,6 +121,7 @@
           <div class="escala" id="mapa-escala"></div>
           <ul class="ranking" id="mapa-ranking"></ul>
           <p class="nota-w" id="mapa-fuente">Loading…</p>
+          <p class="est-l"><span data-salud="inflacion"></span></p>
         </div>
         <div><div class="widget" id="w-calendario"></div><p class="nota-w">Economic calendar: upcoming data and indicators by country. Data from TradingView; some markets are delayed depending on the exchange.</p></div>
       </div>
@@ -150,6 +151,7 @@
       <div class="defi-cadenas"><h3 class="defi-h3">Where DeFi money is</h3><ul id="df-cadenas"></ul></div>
     </div>
     <p class="meta defi-fuente" id="df-fuente">Source: DefiLlama.</p>
+    <p class="est-l"><span data-salud="defi"></span></p>
   </div>
 </section>
 
@@ -216,7 +218,8 @@
         <div class="meta" id="desde"></div>
         <div class="datos-v"><div><b id="cierre">—</b><span>Close</span></div><div><b id="sma">—</b><span>100-day avg</span></div><div><b id="dist">—</b><span>Distance</span></div></div>
         <p class="actualizado" id="actualizado"></p>
-        <p class="nota">Recalculated every day at 21:15 (Paraguay time) on the closed candle. Not a recommendation.</p>
+        <p class="est-l"><span data-salud="estrategia"></span></p>
+        <p class="nota">Recalculated once a day, after the daily candle closes (00:00 UTC); the automated server can delay it a few hours. The actual time is shown above. Not a recommendation.</p>
       </aside>
     </div>
   </div>
@@ -225,7 +228,7 @@
 <section class="s privado" id="contexto" aria-labelledby="snap-t">
   <div class="c">
     <div class="snap">
-      <div class="intro"><span class="vol">Market context</span><h2 id="snap-t">The region matters too</h2><p>Data from Paraguay and Brazil from official sources, with their dates. No signals, no promises.</p></div>
+      <div class="intro"><span class="vol">Market context</span><h2 id="snap-t">The region matters too</h2><p>Data from Paraguay and Brazil from official sources, with their dates. No signals, no promises.</p><p class="est-l"><span data-salud="cambio"></span></p></div>
       <div class="dato-m"><span class="q">Bitcoin · BTC/USDT</span><span class="v" id="snap-btc">—</span><span class="f" id="snap-btc-f">Loading…</span></div>
       <div class="dato-m"><span class="q"><i>PY</i> USD/PYG</span><span class="v" id="snap-pyg">—</span><span class="f" id="snap-pyg-f">Loading…</span></div>
       <div class="dato-m"><span class="q"><i>BR</i> USD/BRL</span><span class="v" id="snap-brl">—</span><span class="f" id="snap-brl-f">Loading…</span></div>
@@ -267,6 +270,7 @@
       <div class="grupo"><label for="f-cat"><span>Topic</span></label><select class="sel" id="f-cat" data-s="cat"><option value="todas">All</option><option value="regulacion">Regulation</option><option value="impuestos">Taxes</option><option value="criptoactivos">Crypto assets</option><option value="stablecoins">Stablecoins</option><option value="pagos">Payments</option><option value="fintech">Fintech</option><option value="finanzas">Finance</option><option value="mercados">Markets</option><option value="macroeconomia">Macroeconomics</option><option value="empresas">Companies</option><option value="seguridad">Security</option></select></div>
     </div>
     </div>
+    <p class="est-l"><span data-salud="radar"></span></p>
     <p class="aviso-r" id="radar-aviso" aria-live="polite"></p>
     <ul class="notas" id="radar-lista" aria-live="polite"></ul>
     <div class="privado">
@@ -327,7 +331,7 @@
       <div><h5>Contact</h5><a href="contact/">Contact form</a><a href="mailto:contacto@wiqonlab.com">contacto@wiqonlab.com</a><a href="https://wa.me/595987685651?text=Hi%20WIQON" target="_blank" rel="noopener">WhatsApp +595 987 685 651</a><a href="terms/">Terms and conditions</a><a href="refunds/">Delivery and refunds</a><a href="privacy/">Privacy policy</a></div>
     </div>
     <div class="legal">
-      <p><b>Updates.</b> News: every 30 minutes. Official exchange rates: every hour (each institution publishes on its own schedule). Strategy: every day at 21:15 (Paraguay time). BTC price: when you open the page.</p>
+      <p><b>Updates.</b> News: every 30 minutes. Official exchange rates: every hour (each institution publishes on its own schedule). Strategy: once a day, after the daily candle closes (it can be delayed a few hours). BTC price: when you open the page.</p>
       <p><b>Methodology.</b> Results with costs and code on GitHub. The radar only uses public RSS feeds: headline, source, date and link, never the article text.</p>
       <p><b>Privacy.</b> No cookies. We measure visits with Cloudflare Web Analytics, which uses no cookies and doesn't identify people. YouTube videos load only when you press play. The interactive chart is provided by TradingView and loads when you reach that section. Fonts come from Google Fonts.</p>
       <p><b>Risk notice.</b> Informational and educational content; not financial advice. Trading involves risk of loss and past results do not guarantee future results. Links marked as affiliate or referral earn us a commission at no extra cost to you.</p>

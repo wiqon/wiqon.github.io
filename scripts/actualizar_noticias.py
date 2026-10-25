@@ -146,6 +146,10 @@ def og_image(url):
             html_txt = r.read(200_000).decode("utf-8", "replace")
     except Exception:
         return ""
+    return og_de_html(html_txt)
+
+
+def og_de_html(html_txt):
     for rx in (r'<meta[^>]+property=["\x27]og:image(?::secure_url)?["\x27][^>]+content=["\x27]([^"\x27]+)',
                r'<meta[^>]+content=["\x27]([^"\x27]+)["\x27][^>]+property=["\x27]og:image["\x27]',
                r'<meta[^>]+name=["\x27]twitter:image["\x27][^>]+content=["\x27]([^"\x27]+)'):

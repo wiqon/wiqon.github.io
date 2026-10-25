@@ -161,6 +161,7 @@
         const ws = new WebSocket(`wss://data-stream.binance.vision/stream?streams=${ACT.map((a) => a[0].toLowerCase() + "usdt@miniTicker").join("/")}`);
         ws.onmessage = (ev) => {
           const d = JSON.parse(ev.data).data, s = d.s.replace("USDT", ""), p = +d.c, c = ((p - +d.o) / +d.o) * 100;
+          const me = $("#mv-estado"); if (me) me.dataset.ultimo = Date.now();
           const el = $("#mv-" + s), ec = $("#mvc-" + s); if (!el) return;
           const ant = parseFloat(el.dataset.v || p);
           el.dataset.v = p; el.textContent = num(p, dec(p));
@@ -280,6 +281,47 @@
       b.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.id}?autoplay=1&rel=0" title="YouTube" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
     }, { once: true }));
   }).catch(() => {});
+
+
+  // ================= estado de cada dato (salud.json) y «EN VIVO» real =================
+  // La etiqueta se calcula con la hora del último dato bueno y el plazo de cada fuente; la página
+  // vuelve a calcular la edad con la hora del visitante por si salud.json quedó viejo.
+  const TS = PT ? { al_dia: "Em dia", atrasado: "Atrasado", caido: "Sem dados novos", error: "Fonte com erro", fuente: "Fonte",
+                    ult: "último dado", conectando: "CONECTANDO", vivo: "AO VIVO", sin: "SEM CONEXÃO", ultimo: "último preço" }
+           : EN ? { al_dia: "Up to date", atrasado: "Delayed", caido: "No new data", error: "Source error", fuente: "Source",
+                    ult: "last data", conectando: "CONNECTING", vivo: "LIVE", sin: "DISCONNECTED", ultimo: "last price" }
+           : { al_dia: "Al día", atrasado: "Atrasado", caido: "Sin datos nuevos", error: "Fuente con error", fuente: "Fuente",
+               ult: "último dato", conectando: "CONECTANDO", vivo: "EN VIVO", sin: "SIN CONEXIÓN", ultimo: "último precio" };
+  const ORD = { al_dia: 0, atrasado: 1, caido: 2, error: 3 };
+  const marcas = $$("[data-salud]");
+  if (marcas.length) json("salud.json").then((s) => {
+    marcas.forEach((el) => {
+      const m = s.modulos[el.dataset.salud]; if (!m) return;
+      let estado = m.estado;
+      if (m.actualizado_utc && estado !== "error") {
+        const edad = (Date.now() - new Date(m.actualizado_utc).getTime()) / 60000;
+        const local = edad > m.caido_min ? "caido" : edad > m.plazo_min ? "atrasado" : "al_dia";
+        if (ORD[local] > ORD[estado]) estado = local;
+      }
+      const cuando = m.actualizado_utc ? ` · ${T.act.toLowerCase()} ${hace(m.actualizado_utc)}` : "";
+      el.className = "est est-" + estado;
+      el.innerHTML = `<b>${TS[estado]}</b>${cuando} · ${TS.fuente}: <a href="${esc(m.fuente_url)}" target="_blank" rel="noopener">${esc(m.fuente)}</a>`;
+      if (m.avisos && m.avisos.length && estado !== "al_dia") el.title = m.avisos.join(" · ");
+      if (m.actualizado_utc) el.setAttribute("data-hora", hora(m.actualizado_utc));
+    });
+  }).catch(() => {});   // sin salud.json la etiqueta no aparece (cada panel ya muestra su propia hora)
+
+  // tabla de mercados: «EN VIVO» solo si llegó un precio en los últimos 20 segundos
+  const mvEst = $("#mv-estado");
+  if (mvEst) {
+    const pintarEst = () => {
+      const ult = +(mvEst.dataset.ultimo || 0), edad = Date.now() - ult;
+      const estado = !ult ? "conectando" : edad < 20000 ? "vivo" : "sin";
+      mvEst.dataset.estado = estado;
+      mvEst.textContent = estado === "sin" ? `${TS.sin} · ${TS.ultimo} ${new Date(ult).toLocaleTimeString(LOC, { timeZone: TZ, hour12: false })}` : TS[estado];
+    };
+    pintarEst(); setInterval(pintarEst, 5000);
+  }
 
   // ================= aparición suave, una vez =================
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } }), { threshold: 0.06 });

@@ -141,7 +141,7 @@ PLANTILLA = """<!doctype html>
           <thead><tr><th>{{mv_activo}}</th><th class="r">{{mv_precio}}</th><th class="r">24 h</th><th class="r om">{{mv_tend}}</th></tr></thead>
           <tbody id="mercados-vivo"><tr><td colspan="4" class="meta">{{cargando}}</td></tr></tbody>
         </table>
-        <p class="meta" style="padding:8px 12px"><span class="vivo-b">{{en_vivo}}</span> {{mv_fuente}}</p>
+        <p class="meta" style="padding:8px 12px"><span class="vivo-b" id="mv-estado" data-estado="conectando">{{en_vivo}}</span> {{mv_fuente}}</p>
       </div>
       <div class="tv" id="tv">
         <div class="tv-cab"><b>{{tv_t}}</b><span class="meta">{{tv_nota}} <a href="{{tv_link}}" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> ({{tv_af}})</span></div>
@@ -171,6 +171,7 @@ PLANTILLA = """<!doctype html>
           <div class="escala" id="mapa-escala"></div>
           <ul class="ranking" id="mapa-ranking"></ul>
           <p class="nota-w" id="mapa-fuente">{{cargando}}</p>
+          <p class="est-l"><span data-salud="inflacion"></span></p>
         </div>
         <div><div class="widget" id="w-calendario"></div><p class="nota-w">{{nota_cal}} {{nota_tv}}</p></div>
       </div>
@@ -200,6 +201,7 @@ PLANTILLA = """<!doctype html>
       <div class="defi-cadenas"><h3 class="defi-h3">{{df_cad_t}}</h3><ul id="df-cadenas"></ul></div>
     </div>
     <p class="meta defi-fuente" id="df-fuente">{{df_fuente}}</p>
+    <p class="est-l"><span data-salud="defi"></span></p>
   </div>
 </section>
 
@@ -266,6 +268,7 @@ PLANTILLA = """<!doctype html>
         <div class="meta" id="desde"></div>
         <div class="datos-v"><div><b id="cierre">—</b><span>{{d_cierre}}</span></div><div><b id="sma">—</b><span>{{d_media}}</span></div><div><b id="dist">—</b><span>{{d_dist}}</span></div></div>
         <p class="actualizado" id="actualizado"></p>
+        <p class="est-l"><span data-salud="estrategia"></span></p>
         <p class="nota">{{vivo_nota}}</p>
       </aside>
     </div>
@@ -275,7 +278,7 @@ PLANTILLA = """<!doctype html>
 <section class="s privado" id="contexto" aria-labelledby="snap-t">
   <div class="c">
     <div class="snap">
-      <div class="intro"><span class="vol">{{snap_vol}}</span><h2 id="snap-t">{{snap_h2}}</h2><p>{{snap_p}}</p></div>
+      <div class="intro"><span class="vol">{{snap_vol}}</span><h2 id="snap-t">{{snap_h2}}</h2><p>{{snap_p}}</p><p class="est-l"><span data-salud="cambio"></span></p></div>
       <div class="dato-m"><span class="q">Bitcoin · BTC/USDT</span><span class="v" id="snap-btc">—</span><span class="f" id="snap-btc-f">{{cargando}}</span></div>
       <div class="dato-m"><span class="q"><i>PY</i> USD/PYG</span><span class="v" id="snap-pyg">—</span><span class="f" id="snap-pyg-f">{{cargando}}</span></div>
       <div class="dato-m"><span class="q"><i>BR</i> USD/BRL</span><span class="v" id="snap-brl">—</span><span class="f" id="snap-brl-f">{{cargando}}</span></div>
@@ -317,6 +320,7 @@ PLANTILLA = """<!doctype html>
       <div class="grupo"><label for="f-cat"><span>{{f_cat}}</span></label><select class="sel" id="f-cat" data-s="cat">{{opciones_cat}}</select></div>
     </div>
     </div>
+    <p class="est-l"><span data-salud="radar"></span></p>
     <p class="aviso-r" id="radar-aviso" aria-live="polite"></p>
     <ul class="notas" id="radar-lista" aria-live="polite"></ul>
     <div class="privado">
@@ -575,7 +579,7 @@ ES = dict(ICONOS,
     lab_ley="HISTÓRICO: simulado con datos pasados · MEDICIÓN: observado en vivo, sin operar · REAL: operado con dinero.",
     vivo_aria="Estrategia en vivo", vivo_nombre="Filtro de tendencia en BTC", cargando="Cargando…",
     d_cierre="Cierre", d_media="Media 100", d_dist="Distancia",
-    vivo_nota="Se recalcula cada día a las 21:15 (hora de Paraguay) con la vela cerrada. No es una recomendación.",
+    vivo_nota="Se recalcula una vez por día, después del cierre de la vela diaria (21:00 de Paraguay); el servidor automático puede demorarlo unas horas. La hora real está arriba. No es una recomendación.",
     snap_vol="Mercado en contexto", snap_h2="La región también importa",
     snap_p="Datos de Paraguay y Brasil de fuentes oficiales, con su fecha. Sin señales, sin promesas.",
     snap_mas="Ver todas las cotizaciones oficiales", tc_moneda="Moneda", tc_valor="Valor", tc_fuente="Institución", tc_fecha="Fecha",
@@ -610,7 +614,7 @@ ES = dict(ICONOS,
     foto2_alt="Centro de Ciudad del Este", foto2_cap="Ciudad del Este, Alto Paraná.", foto2_cred=credito("cde", "Foto"), foto1_cred=credito("puente2", "Puente de la Amistad"),
     pie_desc="Laboratorio de trading y datos de mercado, desde la frontera Paraguay–Brasil.", pie_fuentes="Fuentes de datos", pie_her="Herramientas que usamos",
     pie_her_links=herr("afiliado", "referido"), pie_cont="Contacto", pie_fuentes_links=FUENTES_PIE, wa_hola=f"{WA}?text=Hola%20WIQON", lab=LAB,
-    pie_act_t="Actualización.", pie_act="Noticias: cada 30 minutos. Tipo de cambio oficial: cada hora (cada institución publica en su horario). Estrategia: todos los días a las 21:15 (hora de Paraguay). Precio de BTC: al abrir la página.",
+    pie_act_t="Actualización.", pie_act="Noticias: cada 30 minutos. Tipo de cambio oficial: cada hora (cada institución publica en su horario). Estrategia: una vez por día, después del cierre de la vela diaria (puede demorarse unas horas). Precio de BTC: al abrir la página.",
     pie_met_t="Metodología.", pie_met="Resultados con costos y código en GitHub. El radar usa solo RSS públicos: título, fuente, fecha y enlace, nunca el texto de los artículos.",
     pie_priv_t="Privacidad.", pie_priv="Sin cookies. Medimos visitas con Cloudflare Web Analytics, que no usa cookies ni identifica personas. Los videos de YouTube se cargan solo al tocar reproducir. El gráfico interactivo lo provee TradingView y se carga al llegar a esa sección. Las tipografías vienen de Google Fonts.",
     pie_riesgo_t="Aviso de riesgo.", pie_riesgo="Contenido informativo y educativo; no es asesoría financiera. Operar implica riesgo de pérdida y los resultados pasados no garantizan los futuros. Los enlaces marcados como afiliado o referido nos dan una comisión sin costo extra para vos.",
@@ -726,7 +730,7 @@ BR = dict(ICONOS,
     lab_ley="HISTÓRICO: simulado com dados passados · MEDIÇÃO: observado ao vivo, sem operar · REAL: operado com dinheiro.",
     vivo_aria="Estratégia ao vivo", vivo_nombre="Filtro de tendência no BTC", cargando="Carregando…",
     d_cierre="Fechamento", d_media="Média 100", d_dist="Distância",
-    vivo_nota="Recalculada todo dia às 21h15 (Brasília) com o candle fechado. Não é recomendação de investimento.",
+    vivo_nota="Recalculada uma vez por dia, depois do fechamento do candle diário (21h de Brasília); o servidor automático pode atrasar algumas horas. O horário real está acima. Não é recomendação de investimento.",
     snap_vol="Mercado em contexto", snap_h2="A região também importa",
     snap_p="Dados do Brasil e do Paraguai de fontes oficiais, com a data. Sem sinais, sem promessas.",
     snap_mas="Ver todas as cotações oficiais", tc_moneda="Moeda", tc_valor="Valor", tc_fuente="Instituição", tc_fecha="Data",
@@ -761,7 +765,7 @@ BR = dict(ICONOS,
     foto2_alt="Centro de Ciudad del Este", foto2_cap="Ciudad del Este, Alto Paraná (Paraguai).", foto2_cred=credito("cde", "Foto"), foto1_cred=credito("puente2", "Ponte da Amizade"),
     pie_desc="Laboratório de trading e dados de mercado, direto da fronteira Brasil–Paraguai.", pie_fuentes="Fontes de dados", pie_her="Ferramentas que usamos",
     pie_her_links=herr("afiliado", "indicação"), pie_cont="Contato", pie_fuentes_links=FUENTES_PIE, wa_hola=f"{WA}?text=Ol%C3%A1%20WIQON", lab=LAB,
-    pie_act_t="Atualização.", pie_act="Notícias: a cada 30 minutos. Câmbio oficial: a cada hora (cada instituição publica no seu horário). Estratégia: todo dia às 21h15 (Brasília). Preço do BTC: ao abrir a página.",
+    pie_act_t="Atualização.", pie_act="Notícias: a cada 30 minutos. Câmbio oficial: a cada hora (cada instituição publica no seu horário). Estratégia: uma vez por dia, depois do fechamento do candle diário (pode atrasar algumas horas). Preço do BTC: ao abrir a página.",
     pie_met_t="Metodologia.", pie_met="Resultados com custos e código no GitHub. O radar usa só RSS públicos: título, fonte, data e link, nunca o texto das matérias.",
     pie_priv_t="Privacidade.", pie_priv="Sem cookies. Medimos visitas com o Cloudflare Web Analytics, que não usa cookies nem identifica pessoas. Os vídeos do YouTube só carregam ao tocar em reproduzir. O gráfico interativo é fornecido pela TradingView e carrega ao chegar nessa seção. As fontes vêm do Google Fonts.",
     pie_riesgo_t="Aviso de risco.", pie_riesgo="Conteúdo informativo e educacional; não é recomendação de investimento. Operar envolve risco de perda e resultados passados não garantem os futuros. Os links marcados como afiliado ou indicação nos dão uma comissão sem custo extra para você.",
@@ -885,7 +889,7 @@ EN = dict(ES,
     lab_ley="HISTORICAL: simulated on past data · MEASURED: observed live, without trading · LIVE: traded with real money.",
     vivo_aria="Live strategy", vivo_nombre="BTC trend filter", cargando="Loading…",
     d_cierre="Close", d_media="100-day avg", d_dist="Distance",
-    vivo_nota="Recalculated every day at 21:15 (Paraguay time) on the closed candle. Not a recommendation.",
+    vivo_nota="Recalculated once a day, after the daily candle closes (00:00 UTC); the automated server can delay it a few hours. The actual time is shown above. Not a recommendation.",
     snap_vol="Market context", snap_h2="The region matters too",
     snap_p="Data from Paraguay and Brazil from official sources, with their dates. No signals, no promises.",
     snap_mas="See all official rates", tc_moneda="Currency", tc_valor="Value", tc_fuente="Institution", tc_fecha="Date",
@@ -920,7 +924,7 @@ EN = dict(ES,
     foto2_alt="Downtown Ciudad del Este", foto2_cap="Ciudad del Este, Alto Paraná.", foto2_cred=credito("cde", "Photo"), foto1_cred=credito("puente2", "Friendship Bridge"),
     pie_desc="Trading lab and market data, from the Paraguay–Brazil border.", pie_fuentes="Data sources", pie_her="Tools we use",
     pie_her_links=herr("affiliate", "referral"), pie_cont="Contact", wa_hola=f"{WA}?text=Hi%20WIQON",
-    pie_act_t="Updates.", pie_act="News: every 30 minutes. Official exchange rates: every hour (each institution publishes on its own schedule). Strategy: every day at 21:15 (Paraguay time). BTC price: when you open the page.",
+    pie_act_t="Updates.", pie_act="News: every 30 minutes. Official exchange rates: every hour (each institution publishes on its own schedule). Strategy: once a day, after the daily candle closes (it can be delayed a few hours). BTC price: when you open the page.",
     pie_met_t="Methodology.", pie_met="Results with costs and code on GitHub. The radar only uses public RSS feeds: headline, source, date and link, never the article text.",
     pie_priv_t="Privacy.", pie_priv="No cookies. We measure visits with Cloudflare Web Analytics, which uses no cookies and doesn't identify people. YouTube videos load only when you press play. The interactive chart is provided by TradingView and loads when you reach that section. Fonts come from Google Fonts.",
     pie_riesgo_t="Risk notice.", pie_riesgo="Informational and educational content; not financial advice. Trading involves risk of loss and past results do not guarantee future results. Links marked as affiliate or referral earn us a commission at no extra cost to you.",
