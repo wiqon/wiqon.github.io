@@ -700,3 +700,28 @@ h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { letter-spacing: -.03em; }
 .vivo-b[data-estado="conectando"] { color: var(--gris); } .vivo-b[data-estado="conectando"]::before { background: var(--gris2); animation: none; }
 .vivo-b[data-estado="vivo"] { color: var(--sube); } .vivo-b[data-estado="vivo"]::before { background: var(--sube); }
 .vivo-b[data-estado="sin"] { color: var(--aviso); } .vivo-b[data-estado="sin"]::before { background: var(--aviso); animation: none; }
+
+/* ---------- redes sociales con ícono (Simple Icons, CC0) ---------- */
+.ic-red { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.redes { gap: 8px; }
+.redes .red { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px 7px 10px; min-height: 40px; border: 1px solid var(--borde2);
+  border-radius: 999px; color: var(--suave); font-size: .8rem; font-weight: 600; transition: color .2s, border-color .2s, background .2s; }
+.redes .red:hover, .redes .red:focus-visible { color: var(--texto); border-color: var(--red, var(--cian)); background: color-mix(in srgb, var(--red, var(--cian)) 12%, transparent); }
+.redes .red:hover .ic-red, .redes .red:focus-visible .ic-red { color: var(--red, var(--cian)); }
+.redes-pie { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.redes-pie .red { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--borde2); color: var(--gris); text-decoration: none; transition: color .2s, border-color .2s; }
+.redes-pie .red:hover, .redes-pie .red:focus-visible { color: var(--red, var(--cian)); border-color: var(--red, var(--cian)); }
+.redes-pie .ic-red { width: 16px; height: 16px; }
+.red-youtube { --red: #ff0033; } .red-instagram { --red: #e4405f; } .red-tiktok { --red: #25f4ee; } .red-x { --red: var(--texto); }
+.red-telegram { --red: #26a5e4; } .red-whatsapp { --red: #25d366; } .red-discord { --red: #5865f2; } .red-linkedin { --red: #0a66c2; }
+.red-facebook { --red: #1877f2; } .red-github { --red: var(--texto); }
+@media (max-width: 480px) { .redes .red span { display: none; } .redes .red { padding: 0; width: 42px; justify-content: center; } }
+
+/* ---------- miniaturas de los pasos, informes y adelanto en el registro ---------- */
+.paso-img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; border: 1px solid var(--borde); margin-bottom: 12px; background: #080b14; }
+.inf-img { display: block; width: calc(100% + 2px); height: auto; aspect-ratio: 8 / 5; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid var(--borde); margin-bottom: 4px; background: #fff; }
+.reg-informes { display: flex; gap: 10px; margin-top: 16px; }
+.reg-informes img { width: 31%; height: auto; aspect-ratio: 8 / 5; object-fit: cover; object-position: top; border-radius: 6px; border: 1px solid var(--borde2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .25); transform: rotate(-2deg); }
+.reg-informes img:nth-child(2) { transform: translateY(-6px); }
+.reg-informes img:nth-child(3) { transform: rotate(2deg); }

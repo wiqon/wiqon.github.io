@@ -366,6 +366,7 @@ PLANTILLA = """<!doctype html>
     <div><span class="vol">{{reg_vol}}</span><h2 id="reg-t">{{reg_h2}}</h2><p>{{reg_p}}</p>
       <div class="acc" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:22px"><button class="btn p" type="button" data-acceso>{{crear_cuenta}} {{ic_flecha}}</button></div></div>
     <ul>{{reg_lista}}</ul>
+    <div class="reg-informes" aria-hidden="true">{{reg_informes}}</div>
   </div></div>
 </section>
 </main>
@@ -434,8 +435,27 @@ def exp(hip, tipo, tipo_txt, res, ver, cls, href):
             f'<td class="om">{res}</td><td class="ver {cls}">{ver}</td></tr>')
 
 
-def pasos(items):
-    return "".join(f'<li class="paso ap"><span class="n">{i}</span><h3>{t}</h3><p>{d}</p></li>' for i, (t, d) in enumerate(items, 1))
+ALT_PASOS = {
+    "es": ["Gráfico diario de BTC con su media de 100 días", "La regla escrita en nuestra terminal: estado, nivel de salida y regla",
+           "Curva del backtest 2018–2026 con costos: filtro contra comprar y mantener",
+           "Saldo de la misma regla en un broker real con spreads y swaps, cuenta demo 2022–2026",
+           "MetaTrader 5 con WIQON Shield operando en una cuenta demo"],
+    "pt": ["Gráfico diário do BTC com a média de 100 dias", "A regra escrita no nosso terminal: estado, nível de saída e regra",
+           "Curva do backtest 2018–2026 com custos: filtro contra comprar e segurar",
+           "Saldo da mesma regra numa corretora real com spreads e swaps, conta demo 2022–2026",
+           "MetaTrader 5 com o WIQON Shield operando numa conta demo"],
+    "en": ["BTC daily chart with its 100-day average", "The rule written in our terminal: status, exit level and rule",
+           "Backtest curve 2018–2026 with costs: filter against buy and hold",
+           "Balance of the same rule at a real broker with spreads and swaps, demo account 2022–2026",
+           "MetaTrader 5 with WIQON Shield running on a demo account"],
+}
+
+
+def pasos(items, idioma="es"):
+    img = "pt" if idioma == "pt" else "es"
+    return "".join(f'<li class="paso ap"><img class="paso-img" src="{{{{r}}}}assets/pasos/{i}_{img}.webp" width="640" height="360" '
+                   f'alt="{ALT_PASOS[idioma][i - 1]}" loading="lazy" decoding="async"><span class="n">{i}</span><h3>{t}</h3><p>{d}</p></li>'
+                   for i, (t, d) in enumerate(items, 1))
 
 
 def serv(icono, texto, chip, cls):
@@ -465,8 +485,22 @@ def herr(af_txt, ref_txt):
             f'<a href="{LAB}" target="_blank" rel="noopener">WIQON Lab (GitHub)</a>')
 
 
+ICONOS_REDES = json.loads((Path(__file__).parent / "iconos_redes.json").read_text(encoding="utf-8"))   # Simple Icons (CC0)
+
+
+def icono_red(nombre):
+    d = ICONOS_REDES.get(nombre.lower())
+    return f'<svg class="ic-red" viewBox="0 0 24 24" aria-hidden="true"><path d="{d}"/></svg>' if d else ""
+
+
 def redes(lista):
-    return " ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in lista)
+    """Redes con ícono y nombre (sección «Quiénes somos»)."""
+    return "".join(f'<a class="red red-{n.lower()}" href="{u}" target="_blank" rel="noopener" aria-label="{n}">{icono_red(n)}<span aria-hidden="true">{n}</span></a>' for n, u in lista)
+
+
+def redes_pie(lista):
+    """Solo íconos (pie de página); el nombre queda para lectores de pantalla y al pasar el mouse."""
+    return "".join(f'<a class="red red-{n.lower()}" href="{u}" target="_blank" rel="noopener" aria-label="{n}" title="{n}">{icono_red(n)}</a>' for n, u in lista)
 
 
 # ============================================ ESPAÑOL ============================================
@@ -477,13 +511,14 @@ ES = dict(ICONOS,
     bl_eco_t="Mapa de inflación y calendario económico", bl_eco="La inflación de cada país (datos del FMI) y los próximos indicadores, con tu cuenta gratis.",
     reg_vol="Cuenta gratuita", reg_h2="Creá tu cuenta y <span>mirá todo el laboratorio</span>",
     reg_p="Solo tu email: te enviamos un enlace para entrar, sin contraseñas. Gratis y sin compromiso.",
+    reg_informes='<img src="{{r}}assets/informes/20-ideas-probadas.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><img src="{{r}}assets/informes/informe-swaps.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><img src="{{r}}assets/informes/guia-dnit-47-2026.webp" width="640" height="400" alt="" loading="lazy" decoding="async">',
     reg_lista="<li>Resultados completos del laboratorio y la estrategia en vivo</li><li>Radar de noticias de la región, cada 30 minutos</li><li>Tipo de cambio oficial (BCP, BCB, BCRA, TRM)</li><li>Mapa de inflación mundial y calendario económico</li><li>3 informes en PDF: 20+ ideas probadas, costo de los swaps y guía DNIT 47/2026</li><li class=\"pronto\">Próximamente: alertas por email y lista de seguimiento</li>",
     acc_t="Entrá a WIQON", acc_p="Escribí tu email y te mandamos un enlace para entrar. No usamos contraseñas.", acc_ph="tu@email.com",
     acc_priv='Acepto la <a href="privacidad/" target="_blank">política de privacidad</a>.', acc_nov="Quiero recibir novedades de WIQON (opcional, me puedo dar de baja cuando quiera).",
     acc_btn="Enviar enlace de acceso", acc_pie="Si ya tenés cuenta, el mismo enlace te hace entrar.", priv_url="privacidad/", priv_txt="Política de privacidad", cont_url="contacto/", cont_txt="Formulario de contacto", term_url="terminos/", term_txt="Términos y condiciones", dev_url="devoluciones/", dev_txt="Entregas y devoluciones",
-    pie_redes_t="Redes.", pie_redes=" · ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in [("Facebook", "https://www.facebook.com/wiqonlab/"), ("Instagram", "https://www.instagram.com/wiqonlab/"), ("YouTube", "https://www.youtube.com/@wiqonlab"), ("Telegram", "https://t.me/wiqonlab"), ("TikTok", "https://www.tiktok.com/@wiqonlab"), ("X", "https://x.com/wiqonlab"), ("Discord", "https://discord.gg/8GDqe8H7R7"), ("GitHub", LAB)]),
+    pie_redes_t="Redes.", pie_redes=redes_pie([("Facebook", "https://www.facebook.com/wiqonlab/"), ("Instagram", "https://www.instagram.com/wiqonlab/"), ("YouTube", "https://www.youtube.com/@wiqonlab"), ("Telegram", "https://t.me/wiqonlab"), ("TikTok", "https://www.tiktok.com/@wiqonlab"), ("X", "https://x.com/wiqonlab"), ("Discord", "https://discord.gg/8GDqe8H7R7"), ("GitHub", LAB)]),
     pie_tit_t="Titular.", pie_tit="persona física, nombre comercial WIQON, Paraguay.",
-    desc_vol="Descargas", desc_h2="Informes del laboratorio", desc_p="Material en PDF para leer con calma, con fuentes y fechas. Exclusivo para cuentas registradas.", desc_btn="Descargar PDF", descargas='<a class="pilar" href="{{r}}descargas/wiqon-shield-demo.zip" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><h3 style="font-size:1.05rem">WIQON Shield · demo gratis</h3></div><p class="que">El EA completo para MetaTrader 5 + manual. Uso libre en cuentas demo; en cuentas reales pide licencia.</p><span class="enl">Descargar demo (.zip) ↓</span></a><a class="pilar" href="{{r}}descargas/20-ideas-probadas.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">20+ ideas probadas: cuál sobrevivió</h3></div><p class="que">22 familias de estrategias, 84 variantes y la única regla que pasó todas las pruebas.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/informe-swaps.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">El costo invisible de un robot de CFD</h3></div><p class="que">Cuánto se llevaron los swaps de un broker real en 4 años, y qué revisar antes de usar un EA.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/guia-dnit-47-2026.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">Guía RG DNIT 47/2026</h3></div><p class="que">Quién tiene que declarar criptoactivos en Paraguay, desde qué monto, y un checklist para prepararte.</p><span class="enl">{{desc_btn}} ↓</span></a>',
+    desc_vol="Descargas", desc_h2="Informes del laboratorio", desc_p="Material en PDF para leer con calma, con fuentes y fechas. Exclusivo para cuentas registradas.", desc_btn="Descargar PDF", descargas='<a class="pilar" href="{{r}}descargas/wiqon-shield-demo.zip" rel="noopener" style="text-decoration:none"><img class="inf-img" src="{{r}}assets/informes/wiqon-shield-demo.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><h3 style="font-size:1.05rem">WIQON Shield · demo gratis</h3></div><p class="que">El EA completo para MetaTrader 5 + manual. Uso libre en cuentas demo; en cuentas reales pide licencia.</p><span class="enl">Descargar demo (.zip) ↓</span></a><a class="pilar" href="{{r}}descargas/20-ideas-probadas.pdf" target="_blank" rel="noopener" style="text-decoration:none"><img class="inf-img" src="{{r}}assets/informes/20-ideas-probadas.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">20+ ideas probadas: cuál sobrevivió</h3></div><p class="que">22 familias de estrategias, 84 variantes y la única regla que pasó todas las pruebas.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/informe-swaps.pdf" target="_blank" rel="noopener" style="text-decoration:none"><img class="inf-img" src="{{r}}assets/informes/informe-swaps.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">El costo invisible de un robot de CFD</h3></div><p class="que">Cuánto se llevaron los swaps de un broker real en 4 años, y qué revisar antes de usar un EA.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/guia-dnit-47-2026.pdf" target="_blank" rel="noopener" style="text-decoration:none"><img class="inf-img" src="{{r}}assets/informes/guia-dnit-47-2026.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">Guía RG DNIT 47/2026</h3></div><p class="que">Quién tiene que declarar criptoactivos en Paraguay, desde qué monto, y un checklist para prepararte.</p><span class="enl">{{desc_btn}} ↓</span></a>',
     tema_aria="Cambiar entre tema oscuro y claro", tab_cripto="Criptomonedas", tab_acciones="Acciones EE. UU.", tab_b3="Brasil B3", tab_futuros="Futuros", tab_economia="Economía",
     nota_acciones="Las acciones con más movimiento del día en EE. UU.", nota_b3="Ibovespa, acciones y minicontratos de la B3.",
     nota_futuros="Minicontratos de la B3 y, como referencia global, índices y materias primas (incluida la soja) en CFD.", nota_forex="Monedas de la región frente al dólar y los pares principales.",
@@ -561,8 +596,8 @@ ES = dict(ICONOS,
     met_vol="Metodología", met_h2="Cómo decidimos qué <span>sobrevive</span>",
     met_p="No es suerte, es un proceso. Cada idea pasa por los mismos filtros antes de convertirse en una herramienta o un dato.",
     pasos=pasos([("Hipótesis", "Tomamos una idea concreta de mercado."), ("Reglas exactas", "Entradas, salidas y tamaño, sin ambigüedad."),
-                 ("Backtest con costos", "Años de datos, comisiones, slippage y swaps."), ("Fuera de muestra", "Validamos en períodos que no vimos."),
-                 ("Real, si sobrevive", "Recién ahí se convierte en producto o servicio.")]),
+                 ("Backtest con costos", "Años de datos, comisiones, slippage y swaps."), ("Fuera de muestra", "La validamos con datos que no usamos para crearla: otros períodos y un broker real con sus costos."),
+                 ("Real, si sobrevive", "Recién ahí se convierte en producto o servicio.")], "es"),
     principios="".join(f"<span><b>{a}</b> · {b}</span>" for a, b in [("Fuentes primero", "cada dato con origen y fecha"), ("Costos reales", "sin resultados maquillados"),
                  ("Lo malo también se publica", "la mayoría no funciona"), ("Noticias no son señales", "informamos, no recomendamos"), ("Código abierto", "podés repetirlo")]),
     tabla_cap="Resultados publicados del laboratorio", lx_hip="Hipótesis", lx_tipo="Tipo", lx_res="Resultado", lx_ver="Veredicto",
@@ -628,13 +663,14 @@ BR = dict(ICONOS,
     bl_eco_t="Mapa da inflação e calendário econômico", bl_eco="A inflação de cada país (dados do FMI) e os próximos indicadores, com a sua conta grátis.",
     reg_vol="Conta gratuita", reg_h2="Crie a sua conta e <span>veja todo o laboratório</span>",
     reg_p="Só o seu e-mail: enviamos um link para entrar, sem senha. Grátis e sem compromisso.",
+    reg_informes='<img src="{{r}}assets/informes/20-ideias-testadas.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><img src="{{r}}assets/informes/relatorio-swaps.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><img src="{{r}}assets/informes/guia-bcb-519-520-521.webp" width="640" height="400" alt="" loading="lazy" decoding="async">',
     reg_lista="<li>Resultados completos do laboratório e a estratégia ao vivo</li><li>Radar de notícias da região, a cada 30 minutos</li><li>Câmbio oficial (BCB, BCP, BCRA, TRM)</li><li>Mapa da inflação mundial e calendário econômico</li><li>3 relatórios em PDF: 20+ ideias testadas, custo dos swaps e guia BCB 519-521</li><li class=\"pronto\">Em breve: alertas por e-mail e lista de acompanhamento</li>",
     acc_t="Entre na WIQON", acc_p="Digite o seu e-mail e enviamos um link para entrar. Não usamos senha.", acc_ph="voce@email.com",
     acc_priv='Aceito a <a href="privacidade/" target="_blank">política de privacidade</a>.', acc_nov="Quero receber novidades da WIQON (opcional, posso cancelar quando quiser).",
     acc_btn="Enviar link de acesso", acc_pie="Se você já tem conta, o mesmo link faz você entrar.", priv_url="privacidade/", priv_txt="Política de privacidade", cont_url="contato/", cont_txt="Formulário de contato", term_url="termos/", term_txt="Termos e condições", dev_url="devolucoes/", dev_txt="Entregas e devoluções",
-    pie_redes_t="Redes.", pie_redes=" · ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in [("Instagram", "https://www.instagram.com/wiqonbr/"), ("YouTube", "https://www.youtube.com/@wiqonbr"), ("TikTok", "https://www.tiktok.com/@wiqonbr"), ("X", "https://x.com/wiqonbr"), ("Telegram", "https://t.me/wiqonlab"), ("Discord", "https://discord.gg/8GDqe8H7R7"), ("Facebook", "https://www.facebook.com/wiqonlab/"), ("GitHub", LAB)]),
+    pie_redes_t="Redes.", pie_redes=redes_pie([("Instagram", "https://www.instagram.com/wiqonbr/"), ("YouTube", "https://www.youtube.com/@wiqonbr"), ("TikTok", "https://www.tiktok.com/@wiqonbr"), ("X", "https://x.com/wiqonbr"), ("Telegram", "https://t.me/wiqonlab"), ("Discord", "https://discord.gg/8GDqe8H7R7"), ("Facebook", "https://www.facebook.com/wiqonlab/"), ("GitHub", LAB)]),
     pie_tit_t="Titular.", pie_tit="pessoa física, nome comercial WIQON, Paraguai.",
-    desc_vol="Downloads", desc_h2="Relatórios do laboratório", desc_p="Material em PDF para ler com calma, com fontes e datas. Exclusivo para contas cadastradas.", desc_btn="Baixar PDF", descargas='<a class="pilar" href="{{r}}descargas/wiqon-shield-demo-pt.zip" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><h3 style="font-size:1.05rem">WIQON Shield · demo grátis</h3></div><p class="que">O EA completo para MetaTrader 5 + manual. Uso livre em contas demo; em contas reais pede licença.</p><span class="enl">Baixar demo (.zip) ↓</span></a><a class="pilar" href="{{r}}descargas/20-ideias-testadas.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">20+ ideias testadas: qual sobreviveu</h3></div><p class="que">22 famílias de estratégias, 84 variações e a única regra que passou em todos os testes.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/relatorio-swaps.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">O custo invisível de um robô de CFD</h3></div><p class="que">Quanto os swaps de uma corretora real levaram em 4 anos, e o que revisar antes de usar um EA.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/guia-bcb-519-520-521.pdf" target="_blank" rel="noopener" style="text-decoration:none"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">Guia Resoluções BCB 519, 520 e 521</h3></div><p class="que">As novas regras do Banco Central para cripto, desde quando valem e o que muda para você.</p><span class="enl">{{desc_btn}} ↓</span></a>',
+    desc_vol="Downloads", desc_h2="Relatórios do laboratório", desc_p="Material em PDF para ler com calma, com fontes e datas. Exclusivo para contas cadastradas.", desc_btn="Baixar PDF", descargas='<a class="pilar" href="{{r}}descargas/wiqon-shield-demo-pt.zip" rel="noopener" style="text-decoration:none"><img class="inf-img" src="{{r}}assets/informes/wiqon-shield-demo.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><h3 style="font-size:1.05rem">WIQON Shield · demo grátis</h3></div><p class="que">O EA completo para MetaTrader 5 + manual. Uso livre em contas demo; em contas reais pede licença.</p><span class="enl">Baixar demo (.zip) ↓</span></a><a class="pilar" href="{{r}}descargas/20-ideias-testadas.pdf" target="_blank" rel="noopener" style="text-decoration:none"><img class="inf-img" src="{{r}}assets/informes/20-ideias-testadas.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">20+ ideias testadas: qual sobreviveu</h3></div><p class="que">22 famílias de estratégias, 84 variações e a única regra que passou em todos os testes.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/relatorio-swaps.pdf" target="_blank" rel="noopener" style="text-decoration:none"><img class="inf-img" src="{{r}}assets/informes/relatorio-swaps.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">O custo invisível de um robô de CFD</h3></div><p class="que">Quanto os swaps de uma corretora real levaram em 4 anos, e o que revisar antes de usar um EA.</p><span class="enl">{{desc_btn}} ↓</span></a><a class="pilar" href="{{r}}descargas/guia-bcb-519-520-521.pdf" target="_blank" rel="noopener" style="text-decoration:none"><img class="inf-img" src="{{r}}assets/informes/guia-bcb-519-520-521.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><div class="p-cab"><span class="p-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span><h3 style="font-size:1.05rem">Guia Resoluções BCB 519, 520 e 521</h3></div><p class="que">As novas regras do Banco Central para cripto, desde quando valem e o que muda para você.</p><span class="enl">{{desc_btn}} ↓</span></a>',
     tema_aria="Alternar entre tema escuro e claro", tab_cripto="Criptomoedas", tab_acciones="Ações EUA", tab_b3="Brasil B3", tab_futuros="Futuros", tab_economia="Economia",
     nota_acciones="As ações com mais movimento do dia nos EUA.", nota_b3="Ibovespa, ações e minicontratos da B3.",
     nota_futuros="Minicontratos da B3 e, como referência global, índices e commodities (incluindo a soja) em CFD.", nota_forex="Moedas da região frente ao dólar e os pares principais.",
@@ -712,8 +748,8 @@ BR = dict(ICONOS,
     met_vol="Metodologia", met_h2="Como decidimos o que <span>sobrevive</span>",
     met_p="Não é sorte, é processo. Cada ideia passa pelos mesmos filtros antes de virar ferramenta ou dado.",
     pasos=pasos([("Hipótese", "Pegamos uma ideia concreta de mercado."), ("Regras exatas", "Entradas, saídas e tamanho, sem ambiguidade."),
-                 ("Backtest com custos", "Anos de dados, taxas, slippage e swaps."), ("Fora da amostra", "Validamos em períodos que não vimos."),
-                 ("Real, se sobreviver", "Só então vira produto ou serviço.")]),
+                 ("Backtest com custos", "Anos de dados, taxas, slippage e swaps."), ("Fora da amostra", "Validamos com dados que não usamos para criá-la: outros períodos e uma corretora real com seus custos."),
+                 ("Real, se sobreviver", "Só então vira produto ou serviço.")], "pt"),
     principios="".join(f"<span><b>{a}</b> · {b}</span>" for a, b in [("Fontes primeiro", "cada dado com origem e data"), ("Custos reais", "sem resultado maquiado"),
                  ("O ruim também é publicado", "a maioria não funciona"), ("Notícia não é sinal", "informamos, não recomendamos"), ("Código aberto", "você pode refazer")]),
     tabla_cap="Resultados publicados do laboratório", lx_hip="Hipótese", lx_tipo="Tipo", lx_res="Resultado", lx_ver="Veredito",
@@ -871,8 +907,8 @@ EN = dict(ES,
     met_vol="Methodology", met_h2="How we decide what <span>survives</span>",
     met_p="It's not luck, it's a process. Every idea goes through the same filters before it becomes a tool or a data point.",
     pasos=pasos([("Hypothesis", "We take a concrete market idea."), ("Exact rules", "Entries, exits and size, with no ambiguity."),
-                 ("Backtest with costs", "Years of data, fees, slippage and swaps."), ("Out of sample", "We validate on periods we haven't seen."),
-                 ("Live, if it survives", "Only then does it become a product or service.")]),
+                 ("Backtest with costs", "Years of data, fees, slippage and swaps."), ("Out of sample", "We validate it on data we didn't use to build it: other periods and a real broker with its costs."),
+                 ("Live, if it survives", "Only then does it become a product or service.")], "en"),
     principios="".join(f"<span><b>{a}</b> · {b}</span>" for a, b in [("Sources first", "every data point with origin and date"), ("Real costs", "no polished results"),
                  ("The bad stuff gets published too", "most ideas don't work"), ("News is not a signal", "we inform, we don't recommend"), ("Open source", "you can reproduce it")]),
     tabla_cap="Published lab results", lx_hip="Hypothesis", lx_tipo="Type", lx_res="Result", lx_ver="Verdict",
