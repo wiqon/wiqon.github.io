@@ -151,7 +151,7 @@ PLANTILLA = """<!doctype html>
       </div>
     </div>
     <div class="favs" id="favoritos" aria-labelledby="favs-t">
-      <div class="favs-cab"><h3 id="favs-t">{{favs_t}}</h3><p class="meta">{{favs_p}}</p></div>
+      <div class="favs-cab"><h3 id="favs-t">{{favs_t}} <span class="nuevo">{{nuevo}}</span></h3><p class="meta">{{favs_p}}</p></div>
       <div id="favs-cuerpo"><p class="meta">{{cargando}}</p></div>
     </div>
     </div>
@@ -536,7 +536,7 @@ ES = dict(ICONOS,
     mv_vol="Mercado en vivo", mv_h2="Así se mueve el mercado <span>ahora</span>",
     mv_p="Cripto en tiempo real, acciones de EE. UU. y de la B3, futuros, forex y economía: elegí una pestaña. El gráfico interactivo lo podés usar vos.",
     mv_activo="Activo", mv_precio="Precio", mv_tend="Últimas 24 h", mv_fuente="Precios de Binance en tiempo real. No son recomendaciones.",
-    favs_t="Mis favoritos y alertas", favs_p="Guardá tus monedas y recibí un email cuando el precio llegue a tu valor.",
+    nuevo="Nuevo", favs_t="Mis favoritos y alertas", favs_p="Guardá tus monedas y recibí un email cuando el precio llegue a tu valor.",
     tv_t="Gráfico interactivo", tv_nota="Gráfico de", tv_af="enlace de afiliado", tv_link=TV, tv_locale="es",
     lang="es", r="", inicio="./", url="https://wiqonlab.com/", og_locale="es_LA", prioridad="PY", canal="wiqonlab",
     titulo="WIQON — Probamos estrategias con datos reales",
@@ -689,7 +689,7 @@ BR = dict(ICONOS,
     mv_vol="Mercado ao vivo", mv_h2="Assim o mercado se move <span>agora</span>",
     mv_p="Cripto em tempo real, ações dos EUA e da B3, futuros, forex e economia: escolha uma aba. O gráfico interativo é para você usar.",
     mv_activo="Ativo", mv_precio="Preço", mv_tend="Últimas 24 h", mv_fuente="Preços da Binance em tempo real. Não são recomendações.",
-    favs_t="Meus favoritos e alertas", favs_p="Guarde suas moedas e receba um e-mail quando o preço chegar ao seu valor.",
+    nuevo="Novo", favs_t="Meus favoritos e alertas", favs_p="Guarde suas moedas e receba um e-mail quando o preço chegar ao seu valor.",
     tv_t="Gráfico interativo", tv_nota="Gráfico da", tv_af="link de afiliado", tv_link=TV, tv_locale="br",
     lang="pt-BR", r="../", inicio="./", url="https://wiqonlab.com/br/", og_locale="pt_BR", prioridad="BR", canal="wiqonbr",
     titulo="WIQON Brasil — Testamos estratégias com dados reais",
@@ -851,7 +851,7 @@ EN = dict(ES,
     mv_vol="Live market", mv_h2="How the market is moving <span>now</span>",
     mv_p="Real-time crypto, US and B3 stocks, futures, forex and the economy: pick a tab. You can use the interactive chart yourself.",
     mv_activo="Asset", mv_precio="Price", mv_tend="Last 24 h", mv_fuente="Real-time Binance prices. Not recommendations.",
-    favs_t="My favorites and alerts", favs_p="Save your coins and get an email when the price reaches your level.",
+    nuevo="New", favs_t="My favorites and alerts", favs_p="Save your coins and get an email when the price reaches your level.",
     tv_t="Interactive chart", tv_nota="Chart by", tv_af="affiliate link", tv_locale="en",
     lang="en", r="../", inicio="./", url="https://wiqonlab.com/en/", og_locale="en_US", prioridad="PY", canal="wiqonlab",
     titulo="WIQON — We test trading strategies with real data",

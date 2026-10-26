@@ -83,6 +83,16 @@
     errCargar: L("No pudimos cargar tus favoritos y alertas. Probá recargar la página.", "Não foi possível carregar seus favoritos e alertas. Tente recarregar a página.", "We couldn't load your favorites and alerts. Try reloading the page."),
     creadaOk: L("Alerta creada. Te avisamos por email cuando se cumpla.", "Alerta criado. Avisamos por e-mail quando acontecer.", "Alert created. We'll email you when it happens."),
     errAlerta: L("No pudimos enviar el email de esta alerta. Reactivala para intentar de nuevo.", "Não foi possível enviar o e-mail deste alerta. Reative para tentar de novo.", "We couldn't send this alert's email. Reactivate it to try again."),
+    demoT: L("Caso real de esta semana", "Caso real desta semana", "A real case from this week"),
+    demoQ: { true: L("«Avisame cuando BTC baje de US$ {v}»", "«Me avise quando o BTC cair abaixo de US$ {v}»", "“Tell me when BTC drops below US$ {v}”"),
+             false: L("«Avisame cuando BTC suba por encima de US$ {v}»", "«Me avise quando o BTC subir acima de US$ {v}»", "“Tell me when BTC rises above US$ {v}”") },
+    demoR: L("Con esa alerta, el email te llegaba el {f} cerca de las {h}.", "Com esse alerta, o e-mail chegava em {f} por volta das {h}.", "With that alert, the email would have reached you on {f} around {h}."),
+    demoAviso: { true: L("BTC bajó de US$ {v}", "BTC caiu abaixo de US$ {v}", "BTC dropped below US$ {v}"), false: L("BTC superó US$ {v}", "BTC passou de US$ {v}", "BTC rose above US$ {v}") },
+    demoEmail: L("Email enviado", "E-mail enviado", "Email sent"), demoTu: L("tu alerta", "seu alerta", "your alert"),
+    demoFuente: L("Precios reales de BTC/USDT, velas de 1 h de Binance (últimos 7 días).", "Preços reais de BTC/USDT, velas de 1 h da Binance (últimos 7 dias).", "Real BTC/USDT prices, Binance 1 h candles (last 7 days)."),
+    puntos: [L("Hasta 30 monedas favoritas con precio y cambio del día", "Até 30 moedas favoritas com preço e variação do dia", "Up to 30 favorite coins with price and daily change"),
+             L("Hasta 10 alertas de precio o de % en 24 h", "Até 10 alertas de preço ou de % em 24 h", "Up to 10 price or 24 h % alerts"),
+             L("El email llega aunque tengas la página cerrada", "O e-mail chega mesmo com a página fechada", "The email arrives even when the page is closed")],
     confirmar: L("¿Borrar esta alerta?", "Excluir este alerta?", "Delete this alert?"),
   };
 
@@ -185,11 +195,67 @@
     if (txt) borrarAviso = setTimeout(() => avisar(""), 12000);
   }
 
+  // ---------------------------------------------------------------- caso real: una alerta que se habría disparado esta semana
+  // Con las velas de 1 h de los últimos 7 días se busca el último número redondo (múltiplo de US$ 1.000) que BTC cruzó
+  // y se muestra cuándo habría llegado el email. Todo sale de datos reales; si no hay cruce, no se muestra.
+  let velas = null;
+  async function cargarDemo() {
+    if (velas) return;
+    try {
+      const r = await fetch(`${API}/klines?symbol=BTCUSDT&interval=1h&limit=168`); if (!r.ok) throw new Error(r.status);
+      velas = (await r.json()).map((k) => [+k[0], +k[4]]);
+    } catch (e) { velas = []; }
+  }
+  function demo() {
+    const k = velas || [], c = k.map((x) => x[1]), PASO = 1000;
+    // el cruce más reciente dentro del tramo central (se lee el antes y el después); si no hay, cualquiera
+    const buscar = (desde, hasta) => {
+      for (let i = hasta; i > desde; i--) {
+        const a = Math.floor(c[i - 1] / PASO), b = Math.floor(c[i] / PASO);
+        if (a !== b) { const baja = c[i] < c[i - 1]; return { i, baja, nivel: (baja ? a : b) * PASO }; }
+      }
+      return null;
+    };
+    const cruce = buscar(Math.floor(k.length * 0.25), Math.floor(k.length * 0.8)) || buscar(0, k.length - 2);
+    if (!cruce) return "";
+    const W = 560, H = 210, AR = 16, AB = 22, n = c.length;
+    const lo = Math.min(...c, cruce.nivel), hi = Math.max(...c, cruce.nivel);
+    const x = (i) => (i / (n - 1)) * W, y = (v) => AR + (1 - (v - lo) / (hi - lo || 1)) * (H - AR - AB);
+    const linea = c.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+    const cx = x(cruce.i), cy = y(cruce.nivel), v = fmt(cruce.nivel).replace(/[.,]00$/, "");
+    const t = k[cruce.i][0] + 3600e3;   // cierre de la vela en la que cruzó
+    const f = new Date(t).toLocaleDateString(LOC, { timeZone: TZ, day: "2-digit", month: "2-digit" });
+    const h = new Date(t).toLocaleTimeString(LOC, { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false });
+    const izq = cx > W * 0.55;   // la burbuja va del lado con espacio
+    return `<figure class="fi-demo">
+      <figcaption><b>${T.demoT}</b> ${T.demoQ[cruce.baja].replace("{v}", v)}</figcaption>
+      <div class="fi-graf">
+        <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="fi-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--cian)" stop-opacity=".28"/><stop offset="1" stop-color="var(--cian)" stop-opacity="0"/></linearGradient></defs>
+          <polygon points="0,${H} ${linea} ${W},${H}" fill="url(#fi-g)"/>
+          <line x1="0" x2="${W}" y1="${cy.toFixed(1)}" y2="${cy.toFixed(1)}" class="fi-nivel"/>
+          <polyline points="${linea}" class="fi-linea"/>
+        </svg>
+        <span class="fi-etq" style="top:${((cy / H) * 100).toFixed(1)}%">${T.demoTu} · US$ ${v}</span>
+        <span class="fi-punto" style="left:${((cx / W) * 100).toFixed(2)}%;top:${((cy / H) * 100).toFixed(2)}%"></span>
+        <div class="fi-burbuja ${izq ? "izq" : "der"}" style="${izq ? "right" : "left"}:${(izq ? 100 - (cx / W) * 100 + 3 : (cx / W) * 100 + 3).toFixed(1)}%;${cy < H / 2 ? "bottom" : "top"}:10px">
+          ${IC.campana}<div><b>${T.demoAviso[cruce.baja].replace("{v}", v)}</b><small>${T.demoEmail} · ${f} ${h}</small></div>
+        </div>
+      </div>
+      <p>${T.demoR.replace("{f}", f).replace("{h}", h)}</p>
+      <p class="meta">${T.demoFuente}</p>
+    </figure>`;
+  }
+
   function invitacion() {
+    const ok = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg>';
     caja.innerHTML = `<div class="favs-invita">
-        <div><h4>${T.invitaT}</h4><p>${T.invitaP}</p><p class="meta">${T.ejemplo}</p></div>
-        <button type="button" class="btn p" id="favs-crear">${T.crear}</button></div>`;
+        <div class="fi-texto"><h4>${T.invitaT}</h4><p>${T.invitaP}</p>
+          <ul class="fi-puntos">${T.puntos.map((p) => `<li>${ok}${p}</li>`).join("")}</ul>
+          <button type="button" class="btn p" id="favs-crear">${T.crear}</button></div>
+        <div id="fi-demo">${demo()}</div></div>`;
     $("#favs-crear", caja).addEventListener("click", () => window.wiqonCuenta && window.wiqonCuenta.abrir());
+    if (!velas) cargarDemo().then(() => { const d = $("#fi-demo", caja); if (d && !sesion) d.innerHTML = demo(); });
   }
 
   function filasFavs() {
@@ -214,7 +280,7 @@
   }
 
   function filasAlertas() {
-    if (!alertas.length) return `<li class="vacio">${T.sinAlertas}</li>`;
+    if (!alertas.length) return `<li class="vacio">${T.sinAlertas}</li>` + (demo() ? `<li class="demo">${demo()}</li>` : "");
     return alertas.map((a) => {
       const detalle = a.estado === "disparada" && a.disparada
         ? T.disparo.replace("{f}", cuando(a.disparada)).replace("{p}", fmt(+a.precio_disparo))
@@ -358,7 +424,7 @@
     sesion = s; clearInterval(reloj); cargado = false; aviso = "";
     if (!sesion || !sb()) { favs = []; alertas = []; estrellas(); invitacion(); return; }
     try { await cargar(); } catch (e) { caja.innerHTML = `<p class="msg error">${T.errCargar}</p>`; return; }
-    estrellas(); await traerPrecios(); novedades(); pintar();
+    estrellas(); await Promise.all([traerPrecios(), alertas.length ? null : cargarDemo()]); novedades(); pintar();
     let vuelta = 0;
     reloj = setInterval(async () => {
       if (document.hidden) return;
