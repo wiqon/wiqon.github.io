@@ -40,6 +40,7 @@
   let vigilando = null;
 
   // ---------- abrir / cerrar la ventana de acceso ----------
+  window.wiqonCuenta = { sb: null, sesion: null, abrir: () => abrir() };
   const abrir = (e) => { if (e) e.preventDefault(); if (dlg && !dlg.open) { dlg.showModal(); setTimeout(() => $("#acc-email").focus(), 50); } };
   $$("[data-acceso]").forEach((b) => b.addEventListener("click", abrir));
   if (dlg) {
@@ -59,11 +60,13 @@
       $(".ini", chip).textContent = (email[0] || "W").toUpperCase();
       $(".ini", chip).title = email;
     }
-    document.dispatchEvent(new CustomEvent("wiqon:sesion", { detail: { logueado } }));
+    window.wiqonCuenta.sesion = sesion || null;
+    document.dispatchEvent(new CustomEvent("wiqon:sesion", { detail: { logueado, sesion: sesion || null } }));
   }
 
   if (!window.supabase) { pintarSesion(null); return; }
   const sb = window.supabase.createClient(URL_SB, ANON, { auth: { persistSession: true, detectSessionInUrl: true, flowType: "implicit" } });
+  window.wiqonCuenta.sb = sb;   // favoritos.js lo usa para favoritos y alertas (con RLS: cada uno ve solo lo suyo)
   sb.auth.getSession().then(({ data }) => pintarSesion(data.session));
   sb.auth.onAuthStateChange((evento, sesion) => {
     pintarSesion(sesion);

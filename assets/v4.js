@@ -161,12 +161,14 @@
           <td class="p" id="mv-${s}">${num(+t.lastPrice, dec(+t.lastPrice))}</td>
           <td class="ch ${c >= 0 ? "sube" : "baja"}" id="mvc-${s}">${c >= 0 ? "+" : ""}${num(c, 2)}%</td><td class="om" id="mvs-${s}"></td></tr>`;
       }).join("");
+      document.dispatchEvent(new CustomEvent("wiqon:tabla"));   // favoritos.js agrega la estrella a cada fila
       // ficha del instrumento elegido: todo sale del ticker de 24 h y del WebSocket de Binance
       let elegido = "BTC";
+      const NOM = {};   // nombres de monedas favoritas que no están en la tabla
       const ficha = $("#mv-ficha");
       const pintarFicha = () => {
         if (!elegido) return;
-        const t = datos[elegido], n = (ACT.find((a) => a[0] === elegido) || [])[1]; if (!ficha || !t) return;
+        const t = datos[elegido], n = (ACT.find((a) => a[0] === elegido) || [])[1] || NOM[elegido]; if (!ficha || !t) return;
         const p = +($("#mv-" + elegido)?.dataset.v || t.lastPrice);
         const vol = +t.quoteVolume >= 1e9 ? `${num(+t.quoteVolume / 1e9, 2)} ${TF.milM}` : `${num(+t.quoteVolume / 1e6, 1)} M`;
         ficha.innerHTML = `<div class="mf-cab"><b>${esc(n)} · ${elegido}/USDT</b><span>${TF.mercado}</span></div>
@@ -178,9 +180,20 @@
       tbVivo.addEventListener("click", (ev) => {
         const fila = ev.target.closest("tr[data-s]"); if (!fila) return;
         elegido = fila.dataset.s;
-        $$("tr[data-s]", tbVivo).forEach((f) => { const on = f === fila; f.classList.toggle("sel", on); $("button", f).setAttribute("aria-pressed", String(on)); });
+        $$("tr[data-s]", tbVivo).forEach((f) => { const on = f === fila; f.classList.toggle("sel", on); $("button.sim", f).setAttribute("aria-pressed", String(on)); });
         const ts = $("#tv-sim"); if (ts) ts.textContent = `${elegido}/USDT`;
         document.dispatchEvent(new CustomEvent("wiqon:simbolo", { detail: { simbolo: `BINANCE:${elegido}USDT`, intervalo: "60" } }));
+        pintarFicha();
+      });
+      // una moneda de «Mis favoritos» que no está en la tabla: misma ficha, con el ticker que trae favoritos.js
+      document.addEventListener("wiqon:cripto", (ev) => {
+        const { s, n, t } = ev.detail || {}; if (!s || !t) return;
+        const fila = $(`tr[data-s="${s}"]`, tbVivo); if (fila) { fila.click(); return; }
+        datos[s] = t; NOM[s] = n; elegido = s;
+        $$("tr[data-s]", tbVivo).forEach((f) => { f.classList.remove("sel"); $("button.sim", f).setAttribute("aria-pressed", "false"); });
+        const ts = $("#tv-sim"); if (ts) ts.textContent = `${s}/USDT`;
+        const ti = $("#tv-inst"); if (ti) ti.value = "";
+        document.dispatchEvent(new CustomEvent("wiqon:simbolo", { detail: { simbolo: `BINANCE:${s}USDT`, intervalo: "60" } }));
         pintarFicha();
       });
       // ---- selector de instrumento y comparación (Sprint 2): el gráfico de TradingView muestra el precio;
@@ -226,7 +239,7 @@
           if (v.startsWith("c:")) { const f = $(`tr[data-s="${v.slice(2)}"]`, tbVivo); if (f) f.click(); return; }
           const i = INST[v.slice(2)];
           elegido = null;
-          $$("tr[data-s]", tbVivo).forEach((f) => { f.classList.remove("sel"); $("button", f).setAttribute("aria-pressed", "false"); });
+          $$("tr[data-s]", tbVivo).forEach((f) => { f.classList.remove("sel"); $("button.sim", f).setAttribute("aria-pressed", "false"); });
           const ts = $("#tv-sim"); if (ts) ts.textContent = i.n;
           document.dispatchEvent(new CustomEvent("wiqon:simbolo", { detail: { simbolo: i.sym, intervalo: "D", comparar } }));
           if (ficha) ficha.innerHTML = `<div class="mf-cab"><b>${esc(i.n)}</b><span>${esc(CAB[i.g])}</span></div>
