@@ -36,7 +36,7 @@
   const q = (s, n) => ({ name: s, displayName: n });
   const WIDGETS = {
     "tv-cuerpo": () => widget($("#tv-cuerpo"), "embed-widget-advanced-chart.js", () => ({
-      autosize: true, symbol: ($("#tv-cuerpo").dataset.simbolo || "BINANCE:BTCUSDT"), interval: "60", timezone: (PT ? "America/Sao_Paulo" : EN ? "America/Asuncion" : "America/Asuncion"), style: "1",
+      autosize: true, symbol: ($("#tv-cuerpo").dataset.simbolo || "BINANCE:BTCUSDT"), compareSymbols: ($("#tv-cuerpo").dataset.comparar ? [{ symbol: $("#tv-cuerpo").dataset.comparar, position: "SameScale" }] : []), interval: ($("#tv-cuerpo").dataset.intervalo || "60"), timezone: (PT ? "America/Sao_Paulo" : EN ? "America/Asuncion" : "America/Asuncion"), style: "1",
       allow_symbol_change: true, calendar: false, isTransparent: false, backgroundColor: tema() === "dark" ? "#0c1624" : "#ffffff", support_host: "https://www.tradingview.com" })),
     acciones: () => widget($("#w-acciones"), "embed-widget-hotlists.js", () => ({ dateRange: "1D", exchange: "US", showChart: true, showSymbolLogo: true, showFloatingTooltip: false })),
     b3: () => widget($("#w-b3"), "embed-widget-market-quotes.js", () => ({ showSymbolLogo: true, symbolsGroups: [
@@ -68,7 +68,10 @@
   // al elegir una moneda en la tabla de precios, el gráfico interactivo pasa a esa moneda
   document.addEventListener("wiqon:simbolo", (ev) => {
     if (!tvc) return;
-    tvc.dataset.simbolo = ev.detail;
+    const d = typeof ev.detail === "string" ? { simbolo: ev.detail } : ev.detail;
+    if (d.simbolo) tvc.dataset.simbolo = d.simbolo;
+    if ("comparar" in d) tvc.dataset.comparar = d.comparar || "";
+    if (d.intervalo) tvc.dataset.intervalo = d.intervalo;
     if (cargados.has(tvc)) cargados.get(tvc)(); else WIDGETS["tv-cuerpo"]();
   });
 

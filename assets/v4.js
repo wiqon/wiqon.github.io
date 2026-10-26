@@ -165,6 +165,7 @@
       let elegido = "BTC";
       const ficha = $("#mv-ficha");
       const pintarFicha = () => {
+        if (!elegido) return;
         const t = datos[elegido], n = (ACT.find((a) => a[0] === elegido) || [])[1]; if (!ficha || !t) return;
         const p = +($("#mv-" + elegido)?.dataset.v || t.lastPrice);
         const vol = +t.quoteVolume >= 1e9 ? `${num(+t.quoteVolume / 1e9, 2)} ${TF.milM}` : `${num(+t.quoteVolume / 1e6, 1)} M`;
@@ -179,9 +180,67 @@
         elegido = fila.dataset.s;
         $$("tr[data-s]", tbVivo).forEach((f) => { const on = f === fila; f.classList.toggle("sel", on); $("button", f).setAttribute("aria-pressed", String(on)); });
         const ts = $("#tv-sim"); if (ts) ts.textContent = `${elegido}/USDT`;
-        document.dispatchEvent(new CustomEvent("wiqon:simbolo", { detail: `BINANCE:${elegido}USDT` }));
+        document.dispatchEvent(new CustomEvent("wiqon:simbolo", { detail: { simbolo: `BINANCE:${elegido}USDT`, intervalo: "60" } }));
         pintarFicha();
       });
+      // ---- selector de instrumento y comparación (Sprint 2): el gráfico de TradingView muestra el precio;
+      // para lo que no es cripto la ficha dice qué es y de dónde sale, sin inventar cifras
+      const L = (es, pt, en) => (PT ? pt : EN ? en : es);
+      const CAB = { idx: L("Índices", "Índices", "Indices"), fx: L("Divisas", "Moedas", "Currencies"), mp: L("Materias primas", "Commodities", "Commodities"), cr: "Cripto" };
+      const H24 = L("casi 24 h, de lunes a viernes", "quase 24 h, de segunda a sexta", "nearly 24 h, Monday to Friday");
+      const HAB = L("días hábiles", "dias úteis", "business days");
+      const PTS = L("puntos", "pontos", "points");
+      const INST = {
+        SPX: { g: "idx", sym: "FOREXCOM:SPXUSD", n: "S&P 500", hor: H24, mon: "USD",
+               tipo: L("CFD que sigue al índice S&P 500 (FOREX.com)", "CFD que acompanha o índice S&P 500 (FOREX.com)", "CFD tracking the S&P 500 index (FOREX.com)") },
+        NDX: { g: "idx", sym: "FOREXCOM:NSXUSD", n: "Nasdaq 100", hor: H24, mon: "USD",
+               tipo: L("CFD que sigue al índice Nasdaq 100 (FOREX.com)", "CFD que acompanha o índice Nasdaq 100 (FOREX.com)", "CFD tracking the Nasdaq 100 index (FOREX.com)") },
+        IBOV: { g: "idx", sym: "BMFBOVESPA:IBOV", n: "Ibovespa", mon: PTS,
+                hor: L("10:00 a 17:00 de Brasilia, días hábiles", "10h às 17h de Brasília, dias úteis", "10:00–17:00 Brasília time, business days"),
+                tipo: L("Índice principal de la bolsa de Brasil (B3)", "Principal índice da bolsa brasileira (B3)", "Brazil's main stock index (B3)") },
+        USDPYG: { g: "fx", sym: "FX_IDC:USDPYG", n: "USD/PYG", hor: HAB, mon: "PYG",
+                  tipo: L("Cotización interbancaria agregada (referencial). El oficial lo publica el BCP.", "Cotação interbancária agregada (referencial). A oficial é do BCP.", "Aggregated interbank quote (reference). The official rate is published by the BCP.") },
+        USDBRL: { g: "fx", sym: "FX_IDC:USDBRL", n: "USD/BRL", hor: HAB, mon: "BRL",
+                  tipo: L("Cotización interbancaria agregada (referencial). La oficial (PTAX) la publica el BCB.", "Cotação interbancária agregada (referencial). A oficial (PTAX) é do BCB.", "Aggregated interbank quote (reference). The official PTAX rate is published by the BCB.") },
+        EURUSD: { g: "fx", sym: "FX:EURUSD", n: "EUR/USD", mon: "USD", hor: L("24 h, de lunes a viernes", "24 h, de segunda a sexta", "24 h, Monday to Friday"),
+                  tipo: L("Par de divisas más negociado del mundo", "Par de moedas mais negociado do mundo", "The world's most traded currency pair") },
+        DXY: { g: "fx", sym: "CAPITALCOM:DXY", n: L("Índice dólar (DXY)", "Índice dólar (DXY)", "Dollar index (DXY)"), hor: H24, mon: PTS,
+               tipo: L("Valor del dólar frente a 6 monedas (CFD de Capital.com)", "Valor do dólar contra 6 moedas (CFD da Capital.com)", "Dollar value against 6 currencies (Capital.com CFD)") },
+        ORO: { g: "mp", sym: "OANDA:XAUUSD", n: L("Oro", "Ouro", "Gold"), hor: H24, mon: L("USD por onza", "USD por onça", "USD per ounce"),
+               tipo: L("Oro contra dólar, precio al contado (OANDA)", "Ouro contra dólar, preço à vista (OANDA)", "Gold vs. dollar, spot price (OANDA)") },
+        WTI: { g: "mp", sym: "TVC:USOIL", n: L("Petróleo WTI", "Petróleo WTI", "WTI crude oil"), hor: H24, mon: L("USD por barril", "USD por barril", "USD per barrel"),
+               tipo: L("Referencia del petróleo de EE. UU. (índice de TradingView)", "Referência do petróleo dos EUA (índice da TradingView)", "US crude oil benchmark (TradingView index)") },
+      };
+      const ctl = $("#tv-ctl");
+      let comparar = "";
+      if (ctl) {
+        const opcion = (v, t, sel) => `<option value="${v}"${sel ? " selected" : ""}>${esc(t)}</option>`;
+        const grupos = (sel, conNinguno) => (conNinguno ? opcion("", L("Nada", "Nada", "Nothing"), true) : "") +
+          `<optgroup label="${CAB.cr}">${ACT.map(([sy, n]) => opcion("c:" + sy, `${n} (${sy})`, !conNinguno && sy === sel)).join("")}</optgroup>` +
+          ["idx", "fx", "mp"].map((g) => `<optgroup label="${CAB[g]}">${Object.entries(INST).filter(([, i]) => i.g === g).map(([k, i]) => opcion("i:" + k, i.n, false)).join("")}</optgroup>`).join("");
+        ctl.innerHTML = `<label>${L("Instrumento", "Instrumento", "Instrument")} <select class="sel" id="tv-inst">${grupos("BTC", false)}</select></label>
+          <label>${L("Comparar con", "Comparar com", "Compare with")} <select class="sel" id="tv-comp">${grupos("", true)}</select></label>`;
+        const simDe = (v) => (v.startsWith("c:") ? `BINANCE:${v.slice(2)}USDT` : v.startsWith("i:") ? INST[v.slice(2)].sym : "");
+        $("#tv-inst").addEventListener("change", (ev) => {
+          const v = ev.target.value;
+          if (v.startsWith("c:")) { const f = $(`tr[data-s="${v.slice(2)}"]`, tbVivo); if (f) f.click(); return; }
+          const i = INST[v.slice(2)];
+          elegido = null;
+          $$("tr[data-s]", tbVivo).forEach((f) => { f.classList.remove("sel"); $("button", f).setAttribute("aria-pressed", "false"); });
+          const ts = $("#tv-sim"); if (ts) ts.textContent = i.n;
+          document.dispatchEvent(new CustomEvent("wiqon:simbolo", { detail: { simbolo: i.sym, intervalo: "D", comparar } }));
+          if (ficha) ficha.innerHTML = `<div class="mf-cab"><b>${esc(i.n)}</b><span>${esc(CAB[i.g])}</span></div>
+            <dl class="mf-meta"><div><dt>${L("Qué es", "O que é", "What it is")}</dt><dd>${esc(i.tipo)}</dd></div><div><dt>${L("Horario", "Horário", "Hours")}</dt><dd>${esc(i.hor)}</dd></div>
+            <div><dt>${L("Unidad", "Unidade", "Unit")}</dt><dd>${esc(i.mon)}</dd></div></dl>
+            <p class="meta">${L("El precio está en el gráfico de TradingView (fuente: ", "O preço está no gráfico da TradingView (fonte: ", "The price is on the TradingView chart (source: ")}${esc(i.sym.split(":")[0])}${L("); puede tener demora según el mercado. No lo copiamos ni lo guardamos.", "); pode ter atraso conforme o mercado. Não copiamos nem guardamos o dado.", "); it may be delayed depending on the market. We don't copy or store it.")}</p>`;
+        });
+        $("#tv-comp").addEventListener("change", (ev) => {
+          comparar = simDe(ev.target.value);
+          document.dispatchEvent(new CustomEvent("wiqon:simbolo", { detail: { comparar } }));
+        });
+        // al tocar una fila de la tabla, el selector acompaña
+        tbVivo.addEventListener("click", (ev) => { const f = ev.target.closest("tr[data-s]"); if (f) $("#tv-inst").value = "c:" + f.dataset.s; });
+      }
       ACT.forEach(([s]) => fetch(`${API}/klines?symbol=${s}USDT&interval=1h&limit=24`).then((r) => r.json())
         .then((k) => { const el = $("#mvs-" + s); if (el) el.innerHTML = spark(k.map((x) => +x[4])); }).catch(() => {}));
       try {

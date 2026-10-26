@@ -741,3 +741,12 @@ h2.t, .snap .intro h2, .radar-cab h2, .registro h2 { letter-spacing: -.03em; }
 .mv-ficha dd { margin: 2px 0 0; font: 600 .84rem var(--mono, monospace); font-variant-numeric: tabular-nums; }
 .mv-ficha .meta a { color: var(--suave); }
 @media (max-width: 520px) { .mv-ficha dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- gráfico: instrumento y comparación ---------- */
+.tv-ctl { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 8px 14px; border-bottom: 1px solid var(--borde); font-size: .76rem; color: var(--gris); }
+.tv-ctl:empty { display: none; }
+.tv-ctl label { display: inline-flex; align-items: center; gap: 6px; }
+.tv-ctl .sel { min-height: 34px; max-width: 220px; }
+.mv-ficha .mf-meta { grid-template-columns: 2fr 1fr 1fr; }
+.mv-ficha .mf-meta dd { font: 500 .8rem var(--sans); line-height: 1.4; }
+@media (max-width: 520px) { .mv-ficha .mf-meta { grid-template-columns: 1fr; } .tv-ctl label { width: 100%; justify-content: space-between; } .tv-ctl .sel { max-width: 65%; } }

@@ -146,6 +146,7 @@ PLANTILLA = """<!doctype html>
       </div>
       <div class="tv" id="tv">
         <div class="tv-cab"><b>{{tv_t}} · <span id="tv-sim">BTC/USDT</span></b><span class="meta">{{tv_nota}} <a href="{{tv_link}}" target="_blank" rel="sponsored noopener" style="color:var(--suave)">TradingView</a> ({{tv_af}})</span></div>
+        <div class="tv-ctl" id="tv-ctl"></div>
         <div class="tv-cuerpo" id="tv-cuerpo" data-locale="{{tv_locale}}"><div class="tv-espera">{{cargando}}</div></div>
       </div>
     </div>
