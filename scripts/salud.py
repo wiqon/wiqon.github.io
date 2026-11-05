@@ -97,8 +97,10 @@ def detalles(clave, datos, ahora):
     elif clave == "videos":
         sin = [k for k, c in datos["canales"].items() if not c.get("ok")]
         if sin:
+            # Solo informativo: el estado lo decide la antigüedad del último refresco
+            # exitoso (por_edad). Que un canal no responda en una corrida no es "atrasado"
+            # mientras videos.json conserve la marca de tiempo del último dato bueno.
             avisos.append("canales sin responder: " + ", ".join(sin))
-            estado = "atrasado"
     elif clave == "estrategia":
         assert datos["senal"] in ("EN_BTC", "EN_USDT") and datos["sma100"] > 0
         vela = date.fromisoformat(datos["vela"])

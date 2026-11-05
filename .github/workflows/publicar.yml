@@ -48,6 +48,8 @@ jobs:
       - name: Videos de YouTube
         run: python scripts/actualizar_videos.py
         continue-on-error: true
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       - name: Inflación por país (FMI)
         run: python scripts/actualizar_inflacion.py
         continue-on-error: true
