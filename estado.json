@@ -1,9 +1,9 @@
 {
-  "senal": "EN_BTC",
-  "vela": "2026-11-04",
-  "cierre": 80504.01,
-  "sma100": 76875.37,
-  "distancia_pct": 4.72,
-  "desde": "2026-08-19",
-  "actualizado_utc": "2026-11-05 06:52"
+  "senal": "EN_USDT",
+  "vela": "2026-11-05",
+  "cierre": 76088.01,
+  "sma100": 76997.1,
+  "distancia_pct": -1.18,
+  "desde": "2026-11-05",
+  "actualizado_utc": "2026-11-06 06:53"
 }
