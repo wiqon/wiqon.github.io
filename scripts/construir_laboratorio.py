@@ -5,6 +5,7 @@ wiqonlab.com y no solo en GitHub):
   laboratorio/                 br/laboratorio/                     en/lab/              índice de experimentos
   laboratorio/grid-bots/       br/laboratorio/robos-de-grid/       en/lab/grid-bots/    experimento #6
   laboratorio/dca-bot/         br/laboratorio/robo-dca/            en/lab/dca-bot/      experimento #7
+  laboratorio/comparador/      br/laboratorio/comparador/          en/lab/compare/      comparador (Sprint 4) + fichas
 
 Los números salen de github.com/wiqon/wiqon-lab (resultados/*.csv) y las series semanales de
 scripts/datos_lab/*.json. Cada página lleva datos estructurados (Article + FAQPage + BreadcrumbList).
@@ -12,19 +13,21 @@ Uso:  python scripts/construir_laboratorio.py
 """
 import html
 import json
+import math
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 SITIO = "https://wiqonlab.com"
 LAB = "https://github.com/wiqon/wiqon-lab"
 DATOS = Path(__file__).resolve().parent / "datos_lab"
-PUBLICADO, MODIFICADO = "2026-10-18", "2026-10-19"
+PUBLICADO, MODIFICADO = "2026-10-18", "2026-11-13"   # 13-nov: ficha técnica en #6 y #7
 
 BASE = {"es": "", "pt-BR": "br/", "en": "en/"}
 RUTAS = {  # ruta de cada página por idioma
     "indice": {"es": "laboratorio/", "pt-BR": "br/laboratorio/", "en": "en/lab/"},
     "grid": {"es": "laboratorio/grid-bots/", "pt-BR": "br/laboratorio/robos-de-grid/", "en": "en/lab/grid-bots/"},
     "dca": {"es": "laboratorio/dca-bot/", "pt-BR": "br/laboratorio/robo-dca/", "en": "en/lab/dca-bot/"},
+    "comp": {"es": "laboratorio/comparador/", "pt-BR": "br/laboratorio/comparador/", "en": "en/lab/compare/"},
 }
 OTRAS = {
     "es": dict(auditoria="auditoria-bots/", libro="libro/", terminos="terminos/", devoluciones="devoluciones/", contacto="contacto/", privacidad="privacidad/", shield="shield/"),
@@ -36,17 +39,17 @@ COMUN = {
                rel="Seguí leyendo", faq="Preguntas frecuentes", corta="Respuesta corta", anio="Año", aviso="Simulación con datos pasados: no garantiza resultados futuros. Contenido educativo; no es asesoría financiera.",
                l_terminos="Términos y condiciones", l_devoluciones="Entregas y devoluciones", l_contacto="Contacto", l_privacidad="Privacidad",
                cta_t="¿Usás uno de estos bots?", cta_p="Lo auditamos con tus propios datos: el resultado de tu cuenta, no el del panel. El diagnóstico es gratis.", cta_b="Auditar mi bot", cta_l="Leer el libro «¿Ventaja o suerte?»",
-               publicado="Publicado el 18 de octubre de 2026 · Actualizado el 19 de octubre de 2026", autor="Por Avelino González, WIQON Lab"),
+               publicado="Publicado el 18 de octubre de 2026 · Actualizado el 13 de noviembre de 2026", autor="Por Avelino González, WIQON Lab"),
     "pt-BR": dict(inicio="Início", lab="Laboratório", tema="Mudar tema", leer="Ver o experimento", codigo="Código e dados no GitHub", fuentes="Fontes e método",
                   rel="Continue lendo", faq="Perguntas frequentes", corta="Resposta curta", anio="Ano", aviso="Simulação com dados passados: não garante resultados futuros. Conteúdo educativo; não é recomendação de investimento.",
                   l_terminos="Termos e condições", l_devoluciones="Entregas e devoluções", l_contacto="Contato", l_privacidad="Privacidade",
                   cta_t="Você usa um desses robôs?", cta_p="Auditamos com os seus próprios dados: o resultado da sua conta, não o do painel. O diagnóstico é grátis.", cta_b="Auditar meu robô", cta_l="Ler o livro «Vantagem ou sorte?»",
-                  publicado="Publicado em 18 de outubro de 2026 · Atualizado em 19 de outubro de 2026", autor="Por Avelino González, WIQON Lab"),
+                  publicado="Publicado em 18 de outubro de 2026 · Atualizado em 13 de novembro de 2026", autor="Por Avelino González, WIQON Lab"),
     "en": dict(inicio="Home", lab="Lab", tema="Toggle theme", leer="See the experiment", codigo="Code and data on GitHub", fuentes="Sources and method",
                rel="Keep reading", faq="Frequently asked questions", corta="Short answer", anio="Year", aviso="Simulation on past data: no guarantee of future results. Educational content; not financial advice.",
                l_terminos="Terms and conditions", l_devoluciones="Delivery and refunds", l_contacto="Contact", l_privacidad="Privacy",
                cta_t="Do you use one of these bots?", cta_p="We audit it with your own data: your account's result, not the dashboard's. The diagnosis is free.", cta_b="Audit my bot", cta_l="Read the book «Edge or Luck?»",
-               publicado="Published October 18, 2026 · Updated October 19, 2026", autor="By Avelino González, WIQON Lab"),
+               publicado="Published October 18, 2026 · Updated November 13, 2026", autor="By Avelino González, WIQON Lab"),
 }
 
 
@@ -344,7 +347,348 @@ def indice(lang):
                           (secc("4-arbitraje-medido-no-supuesto"), "Cross-exchange arbitrage", "The big gaps were different coins sharing a ticker, or suspended withdrawals."),
                           (secc("5-arbitraje-de-funding-cash-and-carry"), "Collecting the funding rate", "7–10% a year historically, almost all from 2021; 2–3% in 2025 and 2026.")]),
     }[lang]
+    E["items"].insert(0, item_comp(lang))
     return E
+
+
+# ---------------------------------------------------------------- comparador (Sprint 4) y fichas estándar
+# Datos traídos del repo del laboratorio con scripts/importar_comparador.py. Ningún número va escrito a mano:
+# los textos se arman con los valores de comparador.json para que la página nunca contradiga a los datos.
+COMP = json.loads((DATOS / "comparador.json").read_text(encoding="utf-8"))
+CS = json.loads((DATOS / "comparador_serie.json").read_text(encoding="utf-8"))
+FICHAS = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted((DATOS / "fichas").glob("*.json"))}
+FECHA_COMP = MODIFICADO   # fecha de publicación de la página (la ficha guarda su propia fecha de generación)
+ORDEN_E = ("tendencia", "hold", "dca_bot", "grid")
+LK = {"es": "es", "pt-BR": "pt", "en": "en"}
+NOMBRE_E = {
+    "es": {"hold": "Comprar y mantener BTC", "tendencia": "Filtro de tendencia (media de 100 días)", "grid": "Grid típico (±10 %, 20 niveles)", "dca_bot": "DCA bot típico (TP 2 %, 8 órdenes)"},
+    "pt-BR": {"hold": "Comprar e segurar BTC", "tendencia": "Filtro de tendência (média de 100 dias)", "grid": "Grid típico (±10%, 20 níveis)", "dca_bot": "Robô DCA típico (TP 2%, 8 ordens)"},
+    "en": {"hold": "Buy and hold BTC", "tendencia": "Trend filter (100-day average)", "grid": "Typical grid (±10%, 20 levels)", "dca_bot": "Typical DCA bot (TP 2%, 8 orders)"},
+}
+MESES = {"es": "enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre".split(),
+         "pt-BR": "janeiro fevereiro março abril maio junho julho agosto setembro outubro novembro dezembro".split(),
+         "en": "January February March April May June July August September October November December".split()}
+
+
+def fecha_larga(iso, lang):
+    a, m, d = (int(x) for x in iso.split("-"))
+    return f"{MESES['en'][m - 1]} {d}, {a}" if lang == "en" else f"{d} de {MESES[lang][m - 1]} de {a}"
+
+
+def met(k, periodo="completo"):
+    return COMP["estrategias"][k]["metricas"][periodo]
+
+
+def svg_multi(series, fechas, log, ticks, fmt, W, H, ml, mr, mt, mb, fuente, cada_anios, clase, aria, ref):
+    """Varias curvas en el mismo eje; en escala logarítmica la misma distancia vertical es el mismo porcentaje."""
+    tr = (lambda v: math.log(v)) if log else (lambda v: v)
+    todos = [v for s in series.values() for v in s]
+    lo, hi = tr(min(ticks[0], min(todos))), tr(max(ticks[-1], max(todos)))
+    n = len(fechas)
+    X = lambda i: ml + i / (n - 1) * (W - ml - mr)
+    Y = lambda v: mt + (1 - (tr(v) - lo) / (hi - lo)) * (H - mt - mb)
+    eje = "".join(f'<line x1="{ml}" x2="{W - mr}" y1="{Y(t):.1f}" y2="{Y(t):.1f}" class="g-r"/><text x="{ml - 8}" y="{Y(t) + 5:.1f}" text-anchor="end" class="g-e" font-size="{fuente}">{fmt(t)}</text>'
+                  for t in ticks)
+    anios = "".join(f'<text x="{X(i):.1f}" y="{H - 12}" text-anchor="middle" class="g-e" font-size="{fuente}">{f[:4]}</text>'
+                    for i, f in enumerate(fechas) if f[5:7] == "01" and int(f[8:10]) <= 7 and int(f[:4]) % cada_anios == 0)
+    base = f'<line x1="{ml}" x2="{W - mr}" y1="{Y(ref):.1f}" y2="{Y(ref):.1f}" class="g-cap"/>'
+    linea = lambda s: " ".join(f"{'M' if i == 0 else 'L'}{X(i):.1f} {Y(v):.1f}" for i, v in enumerate(s))
+    caminos = "".join(f'<path d="{linea(series[k])}" class="g-m g-{k}"/>' for k in ("grid", "dca_bot", "hold", "tendencia"))  # tendencia arriba de todo
+    return f'<svg class="{clase}" viewBox="0 0 {W} {H}" role="img" aria-label="{html.escape(aria)}">{eje}{anios}{base}{caminos}</svg>'
+
+
+def graf_multi(lang, cual, aria):
+    series = CS["base100"] if cual == "base" else CS["caida"]
+    if cual == "base":
+        a = dict(log=True, ticks=[20, 50, 100, 250, 500, 1000, 2500], fmt=lambda t: num(t, lang, 0), ref=100)
+    else:
+        a = dict(log=False, ticks=[-90, -75, -50, -25, 0], fmt=lambda t: pct(t, lang, 0), ref=0)
+    ancho = svg_multi(series, CS["fechas"], W=960, H=420, ml=64, mr=16, mt=20, mb=40, fuente=13, cada_anios=1, clase="g-ancho", aria=aria, **a)
+    angosto = svg_multi(series, CS["fechas"], W=420, H=340, ml=48, mr=10, mt=14, mb=34, fuente=15, cada_anios=2, clase="g-angosto", aria=aria, **a)
+    ley = "".join(f'<span class="ley lm-{k}">{NOMBRE_E[lang][k]}</span>' for k in ORDEN_E)
+    return f'<figure class="graf">{ancho}{angosto}<figcaption>{ley}</figcaption></figure>'
+
+
+def r2(v, lang):
+    return "—" if v is None else num(v, lang, 2)
+
+
+DEFS = {
+    "es": [("Anual", "Crecimiento compuesto por año: (valor final ÷ valor inicial) elevado a (365 ÷ días), menos 1."),
+           ("Caída máxima", "La peor caída del valor de la cuenta desde un máximo anterior."),
+           ("Días en caída", "La racha más larga de días seguidos por debajo de un máximo anterior."),
+           ("Volatilidad", "Desvío de los retornos diarios × √365."),
+           ("Sharpe", "Retorno diario medio ÷ su desvío × √365, con tasa libre de riesgo cero."),
+           ("Sortino", "Como el Sharpe, pero el desvío solo cuenta los días de baja."),
+           ("Calmar", "Anual ÷ caída máxima: cuánto rinde por cada punto de caída."),
+           ("Años positivos", "Años calendario con ganancia (2026 llega hasta septiembre).")],
+    "pt-BR": [("Anual", "Crescimento composto por ano: (valor final ÷ valor inicial) elevado a (365 ÷ dias), menos 1."),
+              ("Queda máxima", "A pior queda do valor da conta desde um topo anterior."),
+              ("Dias em queda", "A sequência mais longa de dias seguidos abaixo de um topo anterior."),
+              ("Volatilidade", "Desvio dos retornos diários × √365."),
+              ("Sharpe", "Retorno diário médio ÷ seu desvio × √365, com taxa livre de risco zero."),
+              ("Sortino", "Como o Sharpe, mas o desvio só conta os dias de baixa."),
+              ("Calmar", "Anual ÷ queda máxima: quanto rende por ponto de queda."),
+              ("Anos positivos", "Anos-calendário com lucro (2026 vai até setembro).")],
+    "en": [("Annual", "Compound growth per year: (final value ÷ initial value) to the power of (365 ÷ days), minus 1."),
+           ("Max drawdown", "The worst fall in account value from a previous high."),
+           ("Days in drawdown", "The longest run of consecutive days below a previous high."),
+           ("Volatility", "Standard deviation of daily returns × √365."),
+           ("Sharpe", "Mean daily return ÷ its standard deviation × √365, with a zero risk-free rate."),
+           ("Sortino", "Like Sharpe, but the deviation only counts down days."),
+           ("Calmar", "Annual ÷ max drawdown: return per point of drawdown."),
+           ("Positive years", "Calendar years with a gain (2026 runs through September).")],
+}
+
+
+def tabla_metricas(lang):
+    cab = {"es": ["Estrategia", "Anual", "Caída máx.", "Días en caída", "Volatilidad", "Sharpe", "Sortino", "Calmar", "Peor año", "Años positivos"],
+           "pt-BR": ["Estratégia", "Anual", "Queda máx.", "Dias em queda", "Volatilidade", "Sharpe", "Sortino", "Calmar", "Pior ano", "Anos positivos"],
+           "en": ["Strategy", "Annual", "Max drawdown", "Days in drawdown", "Volatility", "Sharpe", "Sortino", "Calmar", "Worst year", "Positive years"]}[lang]
+    de = {"es": "de", "pt-BR": "de", "en": "of"}[lang]
+    filas = []
+    for k in ORDEN_E:
+        m = met(k)
+        f = [NOMBRE_E[lang][k], pct(m["cagr_pct"], lang), pct(m["max_drawdown_pct"], lang), num(m["dias_en_dd_max"], lang, 0), pct(m["volatilidad_pct"], lang, 0),
+             r2(m["sharpe"], lang), r2(m["sortino"], lang), r2(m["calmar"], lang), pct(m["peor_anio_pct"], lang), f'{m["anios_positivos"]} {de} {m["anios_total"]}']
+        filas.append([f"<b>{x}</b>" for x in f] if k == "tendencia" else f)
+    defs = "".join(f"<dt>{a}</dt><dd>{b}</dd>" for a, b in DEFS[lang])
+    tit = {"es": "Cómo se calcula cada métrica", "pt-BR": "Como cada métrica é calculada", "en": "How each metric is calculated"}[lang]
+    return tabla(cab, filas) + f'<details class="defs"><summary>{tit}</summary><dl>{defs}</dl></details>'
+
+
+def tabla_periodos(lang):
+    cab = {"es": ["Estrategia", "2018-2022", "2023-2026", "Distancia entre períodos"], "pt-BR": ["Estratégia", "2018-2022", "2023-2026", "Distância entre períodos"],
+           "en": ["Strategy", "2018-2022", "2023-2026", "Gap between periods"]}[lang]
+    pp = {"es": " pp", "pt-BR": " p.p.", "en": " pp"}[lang]
+    filas = []
+    for k in ORDEN_E:
+        a, b = met(k, "2018-2022")["cagr_pct"], met(k, "2023-2026")["cagr_pct"]
+        f = [NOMBRE_E[lang][k], pct(a, lang), pct(b, lang), num(abs(b - a), lang) + pp]
+        filas.append([f"<b>{x}</b>" for x in f] if k == "tendencia" else f)
+    return tabla(cab, filas)
+
+
+def tabla_anual_comp(lang):
+    anios = sorted(COMP["estrategias"]["hold"]["anios"])
+    cab = [COMUN[lang]["anio"]] + [NOMBRE_E[lang][k] for k in ORDEN_E]
+    filas = [[a + ("*" if a == "2026" else "")] + [pct(COMP["estrategias"][k]["anios"][a], lang, 1, True) for k in ORDEN_E] for a in anios]
+    return tabla(cab, filas, "num")
+
+
+ETAPA = {"es": {"hecho": "hecho", "no": "no", "curso": "en curso, sin historial suficiente para publicar"},
+         "pt-BR": {"hecho": "feito", "no": "não", "curso": "em andamento, sem histórico suficiente para publicar"},
+         "en": {"hecho": "done", "no": "no", "curso": "in progress, not enough history to publish"}}
+UNIDAD = {"órdenes (entradas y salidas)": {"es": "órdenes (entradas y salidas)", "pt-BR": "ordens (entradas e saídas)", "en": "orders (entries and exits)"},
+          "vueltas cerradas (compra + venta)": {"es": "vueltas cerradas (compra + venta)", "pt-BR": "voltas fechadas (compra + venda)", "en": "closed round trips (buy + sell)"},
+          "ciclos cerrados (deals)": {"es": "ciclos cerrados (deals)", "pt-BR": "ciclos fechados (deals)", "en": "closed cycles (deals)"},
+          "compra inicial": {"es": "compra inicial", "pt-BR": "compra inicial", "en": "initial buy"}}
+FT = {
+    "es": dict(t="Ficha técnica", exp="Experimento", etapa="Etapa", hip="Hipótesis", reglas="Reglas", act="Activo y período", datos="Datos",
+               datos_v="Velas de 5 minutos BTC/USDT spot del archivo público de Binance, sin meses faltantes; las métricas se miden al cierre de cada día (UTC).",
+               huella="Huella de los datos (SHA-256)", costos="Costos y supuestos", com="de comisión por orden", bench="Benchmark", met="Resultado medido en el comparador",
+               anual="anual", caida="caída máxima", val="Validación", adv="Advertencias", ver="Versión", gen="generada el", json="ficha completa (JSON)", cod="código",
+               demo="Demo", real="Real", backtest="Backtest"),
+    "pt-BR": dict(t="Ficha técnica", exp="Experimento", etapa="Etapa", hip="Hipótese", reglas="Regras", act="Ativo e período", datos="Dados",
+                  datos_v="Velas de 5 minutos BTC/USDT spot do arquivo público da Binance, sem meses faltando; as métricas são medidas no fechamento de cada dia (UTC).",
+                  huella="Impressão digital dos dados (SHA-256)", costos="Custos e premissas", com="de comissão por ordem", bench="Referência", met="Resultado medido no comparador",
+                  anual="ao ano", caida="queda máxima", val="Validação", adv="Avisos", ver="Versão", gen="gerada em", json="ficha completa (JSON)", cod="código",
+                  demo="Demo", real="Real", backtest="Backtest"),
+    "en": dict(t="Fact sheet", exp="Experiment", etapa="Stage", hip="Hypothesis", reglas="Rules", act="Asset and period", datos="Data",
+               datos_v="5-minute BTC/USDT spot candles from Binance's public archive, no missing months; metrics are measured at each day's close (UTC).",
+               huella="Data fingerprint (SHA-256)", costos="Costs and assumptions", com="fee per order", bench="Benchmark", met="Result measured in the comparison",
+               anual="a year", caida="max drawdown", val="Validation", adv="Caveats", ver="Version", gen="generated on", json="full fact sheet (JSON)", cod="code",
+               demo="Demo", real="Real", backtest="Backtest"),
+}
+
+
+def etapa(v, lang):
+    if v.startswith("hecho"):
+        extra = v[len("hecho"):].strip(" ()")
+        return ETAPA[lang]["hecho"] + (f" ({extra})" if extra else "")
+    return ETAPA[lang]["curso"] if v.startswith("en curso") else ETAPA[lang]["no"]
+
+
+def ficha_html(fid, lang):
+    f, T, lk = FICHAS[fid], FT[lang], LK[lang]
+    m = f["metricas"]["completo"]
+    b = f["benchmark_metricas"]["completo"]
+    cl = f["clasificacion"]
+    per = f'{fecha_larga(f["periodo"]["desde"], lang)} – {fecha_larga(f["periodo"]["hasta"], lang)}'
+    unidad = UNIDAD.get(f["unidad_operaciones"], {}).get(lang, f["unidad_operaciones"])
+    ops = f' · {num(m["operaciones"], lang, 0)} {unidad}' if m.get("operaciones") else ""
+    h = f["datos"]["huella"]["sha256"]
+    sup = f["supuestos"]
+    filas = [
+        (T["etapa"], f'{T["backtest"]}: {etapa(cl["backtest"], lang)} · {T["demo"]}: {etapa(cl["demo"], lang)} · {T["real"]}: {etapa(cl["real"], lang)}'),
+        (T["hip"], f["hipotesis"][lk]),
+        (T["reglas"], "<ul>" + "".join(f"<li>{x}</li>" for x in f["reglas"][lk]) + "</ul>"),
+        (T["act"], f"BTC/USDT · {per} · {f['temporalidad']}"),
+        (T["datos"], T["datos_v"]),
+        (T["huella"], f'<code title="{h}">{h[:16]}…</code> · {f["datos"]["huella"]["archivos_mensuales"]} {"meses" if lang != "en" else "months"}'),
+        (T["costos"], f'{pct(sup["comision_por_orden_pct"], lang)} {T["com"]}. {sup["spread_y_slippage"][lk]} {sup["rendimiento_del_usdt"][lk]}'),
+        (T["bench"], f["benchmark"][lk] + f' ({pct(b["cagr_pct"], lang)} {T["anual"]}, {pct(b["max_drawdown_pct"], lang)} {T["caida"]})'),
+        (T["met"], f'{pct(m["cagr_pct"], lang)} {T["anual"]} · {pct(m["max_drawdown_pct"], lang)} {T["caida"]} · Sharpe {r2(m["sharpe"], lang)}{ops}'),
+        (T["val"], "<ul>" + "".join(f"<li>{v[lk]}</li>" for v in f["validacion"]) + "</ul>"),
+        (T["adv"], "<ul>" + "".join(f"<li>{v[lk]}</li>" for v in f["advertencias"]) + "</ul>"),
+        (T["ver"], f'<a class="enl" href="{LAB}/tree/{f["version"]["commit"]}" target="_blank" rel="noopener">{T["cod"]} {f["version"]["commit"]}</a> · {T["gen"]} {fecha_larga(f["generado"], lang)} · '
+                   f'<a class="enl" href="{LAB}/blob/main/resultados/fichas/{fid}.json" target="_blank" rel="noopener">{T["json"]}</a>'),
+    ]
+    dl = "".join(f"<dt>{a}</dt><dd>{v}</dd>" for a, v in filas)
+    return f'<section class="lb-s ficha" id="ficha"><h2>{T["t"]} · {T["exp"]} #{f["numero"]}</h2><dl class="ficha-dl">{dl}</dl></section>'
+
+
+def comparador(lang):
+    t, h, d, g = (met(k) for k in ("tendencia", "hold", "dca_bot", "grid"))
+    p = lambda k, per: met(k, per)["cagr_pct"]
+    A = lambda k, a: COMP["estrategias"][k]["anios"][a]
+    P = lambda v, dec=1: pct(v, lang, dec)
+    de = {"es": "de", "pt-BR": "de", "en": "of"}[lang]
+    E = {
+        "es": dict(
+            titulo="Grid, DCA bot, tendencia o mantener BTC: comparación en igualdad | WIQON Lab",
+            desc=f"Cuatro estrategias sobre BTC con la misma ventana (2018-2026), la misma comisión y la misma definición de cada métrica. El filtro de tendencia rindió {P(t['cagr_pct'])} por año con una caída de {P(t['max_drawdown_pct'])}.",
+            miga="Comparador", h1="Cuatro estrategias, las mismas reglas de juego",
+            lead="Comprar y mantener, el filtro de tendencia, un grid bot y un DCA bot sobre el mismo BTC, en los mismos casi nueve años y con la misma comisión. Cada número se calcula con la misma fórmula y se puede reproducir con el código abierto.",
+            corta=f"En el período completo el filtro de tendencia rindió {P(t['cagr_pct'])} por año con una caída máxima de {P(t['max_drawdown_pct'])}; mantener BTC, {P(h['cagr_pct'])} con {P(h['max_drawdown_pct'])}. Lo que más pesa es la constancia: el filtro rindió {P(p('tendencia', '2018-2022'))} en 2018-2022 y {P(p('tendencia', '2023-2026'))} en 2023-2026, mientras mantener pasó de {P(p('hold', '2018-2022'))} a {P(p('hold', '2023-2026'))}. El grid típico nunca recuperó el capital inicial.",
+            g_aria="Valor de la cuenta de las cuatro estrategias, base 100, escala logarítmica, 2018 a 2026",
+            g_nota="Base 100 al inicio. Escala logarítmica: la misma distancia vertical es el mismo porcentaje. Comisión de 0,1 % por orden; el USDT no rinde en ninguna.",
+            cifras=[(P(t["cagr_pct"]), f"por año con el filtro de tendencia, contra {P(h['cagr_pct'])} de mantener"),
+                    (P(t["max_drawdown_pct"]), f"su peor caída; mantener llegó a {P(h['max_drawdown_pct'])}"),
+                    (f"{t['anios_positivos']} de {t['anios_total']}", f"años con ganancia con el filtro (mantener: {h['anios_positivos']} de {h['anios_total']})"),
+                    (P(g["cagr_pct"]), f"por año del grid típico, que pasó {num(g['dias_en_dd_max'], lang, 0)} días por debajo de su máximo")],
+            metodo_t="Cómo se comparó",
+            metodo=["Mismo activo: BTC/USDT spot de Binance, con velas de 5 minutos del archivo público, de enero de 2018 a septiembre de 2026.",
+                    "Mismas condiciones para las cuatro: US$ 10.000 iniciales, 0,1 % de comisión por orden y USDT sin rendimiento.",
+                    "Cada estrategia usa el simulador de su experimento; el grid y el DCA bot, en su configuración típica.",
+                    "Todas se miden con la misma definición de cada métrica, sobre el valor de la cuenta al cierre de cada día.",
+                    "Control: antes de escribir resultados, el comparador recalcula los números ya publicados de los experimentos #6 y #7 y se frena si no coinciden."],
+            res_t="Resultados con la misma vara", caidas_t="Caída desde el máximo",
+            caidas_aria="Caída del valor de la cuenta desde su máximo anterior, cuatro estrategias, 2018 a 2026",
+            caidas_nota="Cada punto es la peor caída de su semana, calculada con el valor diario.",
+            porque_t="Qué muestra la comparación",
+            porque=[f"El filtro rindió {P(p('tendencia', '2018-2022'))} en 2018-2022 y {P(p('tendencia', '2023-2026'))} en 2023-2026. Mantener pasó de {P(p('hold', '2018-2022'))} a {P(p('hold', '2023-2026'))} y el DCA bot de {P(p('dca_bot', '2018-2022'))} a {P(p('dca_bot', '2023-2026'))}: su resultado depende de que el mercado suba.",
+                    f"El DCA bot terminó casi igual que mantener ({P(d['cagr_pct'])} contra {P(h['cagr_pct'])} por año) y con una caída parecida ({P(d['max_drawdown_pct'])} contra {P(h['max_drawdown_pct'])}): sin stop loss es comprar BTC en más pasos.",
+                    f"El grid típico terminó en {P(g['cagr_pct'])} por año con {num(g['operaciones'], lang, 0)} vueltas cerradas: cada vuelta gana de a poco y el BTC comprado en las bajas pierde de golpe.",
+                    f"El filtro rinde menos que mantener en los años muy alcistas (2023: {pct(A('tendencia', '2023'), lang, 1, True)} contra {pct(A('hold', '2023'), lang, 1, True)}); su ventaja es perder mucho menos en los bajistas (2022: {pct(A('tendencia', '2022'), lang, 1, True)} contra {pct(A('hold', '2022'), lang, 1, True)}).",
+                    "En esta comparación el USDT no rinde. Con el USDT en Earn el filtro da más (experimento #3), pero así las cuatro compiten en igualdad."],
+            anual_t="Por período y por año", per_t="Anual por período",
+            anual_n="* 2026 hasta septiembre. El corte 2018-2022 / 2023-2026 es el mismo de los experimentos #6 y #7.",
+            faq=[(f"¿Por qué el filtro de tendencia da {P(t['cagr_pct'])} acá y 56,6 % en el experimento #3?",
+                  "Por dos motivos: allá el USDT rinde en Earn durante el tiempo fuera de BTC (cerca de la mitad), y la ventana arranca en otra fecha, por eso mantener también da distinto (37,3 % allá, 23,3 % acá). Acá el USDT no rinde, para que las cuatro compitan en igualdad. La conclusión no cambia: rinde más que mantener con menos de la mitad de la caída."),
+                 ("¿Que haya funcionado garantiza que siga funcionando?",
+                  "No. Es una sola historia de un solo activo y con pocas operaciones por año. Lo que sí muestra es que no dependió de un período favorable: rindió parecido en 2018-2022 y en 2023-2026."),
+                 ("¿Puedo repetir la comparación?",
+                  "Sí. El código, la ficha de cada experimento y la huella de los datos están en GitHub: python -m lab.comparador genera estas tablas y verifica los números publicados.")],
+            publicado=f"Publicado el {fecha_larga(FECHA_COMP, 'es')}"),
+        "pt-BR": dict(
+            titulo="Grid, robô DCA, tendência ou segurar BTC: comparação em igualdade | WIQON Lab",
+            desc=f"Quatro estratégias em BTC com a mesma janela (2018-2026), a mesma comissão e a mesma definição de cada métrica. O filtro de tendência rendeu {P(t['cagr_pct'])} ao ano com queda de {P(t['max_drawdown_pct'])}.",
+            miga="Comparador", h1="Quatro estratégias, as mesmas regras do jogo",
+            lead="Comprar e segurar, o filtro de tendência, um robô de grid e um robô DCA sobre o mesmo BTC, nos mesmos quase nove anos e com a mesma comissão. Cada número é calculado com a mesma fórmula e pode ser reproduzido com o código aberto.",
+            corta=f"No período completo o filtro de tendência rendeu {P(t['cagr_pct'])} ao ano com queda máxima de {P(t['max_drawdown_pct'])}; segurar BTC, {P(h['cagr_pct'])} com {P(h['max_drawdown_pct'])}. O que mais pesa é a constância: o filtro rendeu {P(p('tendencia', '2018-2022'))} em 2018-2022 e {P(p('tendencia', '2023-2026'))} em 2023-2026, enquanto segurar passou de {P(p('hold', '2018-2022'))} para {P(p('hold', '2023-2026'))}. O grid típico nunca recuperou o capital inicial.",
+            g_aria="Valor da conta das quatro estratégias, base 100, escala logarítmica, 2018 a 2026",
+            g_nota="Base 100 no início. Escala logarítmica: a mesma distância vertical é a mesma porcentagem. Comissão de 0,1% por ordem; o USDT não rende em nenhuma.",
+            cifras=[(P(t["cagr_pct"]), f"ao ano com o filtro de tendência, contra {P(h['cagr_pct'])} de segurar"),
+                    (P(t["max_drawdown_pct"]), f"sua pior queda; segurar chegou a {P(h['max_drawdown_pct'])}"),
+                    (f"{t['anios_positivos']} de {t['anios_total']}", f"anos com lucro com o filtro (segurar: {h['anios_positivos']} de {h['anios_total']})"),
+                    (P(g["cagr_pct"]), f"ao ano do grid típico, que passou {num(g['dias_en_dd_max'], lang, 0)} dias abaixo do seu topo")],
+            metodo_t="Como foi comparado",
+            metodo=["Mesmo ativo: BTC/USDT spot da Binance, com velas de 5 minutos do arquivo público, de janeiro de 2018 a setembro de 2026.",
+                    "Mesmas condições para as quatro: US$ 10.000 iniciais, 0,1% de comissão por ordem e USDT sem rendimento.",
+                    "Cada estratégia usa o simulador do seu experimento; o grid e o robô DCA, na configuração típica.",
+                    "Todas são medidas com a mesma definição de cada métrica, sobre o valor da conta no fechamento de cada dia.",
+                    "Controle: antes de gravar resultados, o comparador recalcula os números já publicados dos experimentos #6 e #7 e para se não coincidirem."],
+            res_t="Resultados com a mesma régua", caidas_t="Queda desde o topo",
+            caidas_aria="Queda do valor da conta desde o topo anterior, quatro estratégias, 2018 a 2026",
+            caidas_nota="Cada ponto é a pior queda da sua semana, calculada com o valor diário.",
+            porque_t="O que a comparação mostra",
+            porque=[f"O filtro rendeu {P(p('tendencia', '2018-2022'))} em 2018-2022 e {P(p('tendencia', '2023-2026'))} em 2023-2026. Segurar passou de {P(p('hold', '2018-2022'))} para {P(p('hold', '2023-2026'))} e o robô DCA de {P(p('dca_bot', '2018-2022'))} para {P(p('dca_bot', '2023-2026'))}: o resultado deles depende de o mercado subir.",
+                    f"O robô DCA terminou quase igual a segurar ({P(d['cagr_pct'])} contra {P(h['cagr_pct'])} ao ano) e com queda parecida ({P(d['max_drawdown_pct'])} contra {P(h['max_drawdown_pct'])}): sem stop loss é comprar BTC em mais passos.",
+                    f"O grid típico terminou em {P(g['cagr_pct'])} ao ano com {num(g['operaciones'], lang, 0)} voltas fechadas: cada volta ganha aos poucos e o BTC comprado nas quedas perde de uma vez.",
+                    f"O filtro rende menos que segurar nos anos muito altistas (2023: {pct(A('tendencia', '2023'), lang, 1, True)} contra {pct(A('hold', '2023'), lang, 1, True)}); sua vantagem é perder muito menos nas baixas (2022: {pct(A('tendencia', '2022'), lang, 1, True)} contra {pct(A('hold', '2022'), lang, 1, True)}).",
+                    "Nesta comparação o USDT não rende. Com o USDT no Earn o filtro dá mais (experimento #3), mas assim as quatro competem em igualdade."],
+            anual_t="Por período e por ano", per_t="Anual por período",
+            anual_n="* 2026 até setembro. O corte 2018-2022 / 2023-2026 é o mesmo dos experimentos #6 e #7.",
+            faq=[(f"Por que o filtro de tendência dá {P(t['cagr_pct'])} aqui e 56,6% no experimento #3?",
+                  "Por dois motivos: lá o USDT rende no Earn durante o tempo fora do BTC (cerca da metade), e a janela começa em outra data, por isso segurar também dá diferente (37,3% lá, 23,3% aqui). Aqui o USDT não rende, para que as quatro compitam em igualdade. A conclusão não muda: rende mais que segurar com menos da metade da queda."),
+                 ("Ter funcionado garante que continue funcionando?",
+                  "Não. É uma só história de um só ativo e com poucas operações por ano. O que mostra é que não dependeu de um período favorável: rendeu parecido em 2018-2022 e em 2023-2026."),
+                 ("Posso repetir a comparação?",
+                  "Sim. O código, a ficha de cada experimento e a impressão digital dos dados estão no GitHub: python -m lab.comparador gera estas tabelas e verifica os números publicados.")],
+            publicado=f"Publicado em {fecha_larga(FECHA_COMP, 'pt-BR')}"),
+        "en": dict(
+            titulo="Grid, DCA bot, trend filter or holding BTC: a like-for-like comparison | WIQON Lab",
+            desc=f"Four BTC strategies on the same window (2018-2026), the same fee and the same definition of every metric. The trend filter returned {P(t['cagr_pct'])} a year with a {P(t['max_drawdown_pct'])} drawdown.",
+            miga="Comparison", h1="Four strategies, the same rules of the game",
+            lead="Buy and hold, the trend filter, a grid bot and a DCA bot on the same BTC, over the same almost nine years and with the same fee. Every number uses the same formula and can be reproduced with the open-source code.",
+            corta=f"Over the full period the trend filter returned {P(t['cagr_pct'])} a year with a {P(t['max_drawdown_pct'])} max drawdown; holding BTC, {P(h['cagr_pct'])} with {P(h['max_drawdown_pct'])}. Consistency matters most: the filter returned {P(p('tendencia', '2018-2022'))} in 2018-2022 and {P(p('tendencia', '2023-2026'))} in 2023-2026, while holding went from {P(p('hold', '2018-2022'))} to {P(p('hold', '2023-2026'))}. The typical grid never got back to its starting capital.",
+            g_aria="Account value of the four strategies, base 100, log scale, 2018 to 2026",
+            g_nota="Base 100 at the start. Log scale: the same vertical distance is the same percentage. 0.1% fee per order; USDT earns nothing in any of them.",
+            cifras=[(P(t["cagr_pct"]), f"a year with the trend filter, versus {P(h['cagr_pct'])} for holding"),
+                    (P(t["max_drawdown_pct"]), f"its worst drawdown; holding reached {P(h['max_drawdown_pct'])}"),
+                    (f"{t['anios_positivos']} of {t['anios_total']}", f"years with a gain using the filter (holding: {h['anios_positivos']} of {h['anios_total']})"),
+                    (P(g["cagr_pct"]), f"a year for the typical grid, which spent {num(g['dias_en_dd_max'], lang, 0)} days below its high")],
+            metodo_t="How it was compared",
+            metodo=["Same asset: Binance BTC/USDT spot, with 5-minute candles from the public archive, January 2018 to September 2026.",
+                    "Same conditions for all four: US$10,000 to start, a 0.1% fee per order and USDT earning nothing.",
+                    "Each strategy uses its experiment's simulator; the grid and the DCA bot in their typical settings.",
+                    "All are measured with the same definition of every metric, on the account value at each day's close.",
+                    "Control: before writing results, the comparison recomputes the published numbers of experiments #6 and #7 and stops if they don't match."],
+            res_t="Results on the same yardstick", caidas_t="Drawdown from the high",
+            caidas_aria="Fall in account value from its previous high, four strategies, 2018 to 2026",
+            caidas_nota="Each point is the worst drawdown of its week, computed from the daily value.",
+            porque_t="What the comparison shows",
+            porque=[f"The filter returned {P(p('tendencia', '2018-2022'))} in 2018-2022 and {P(p('tendencia', '2023-2026'))} in 2023-2026. Holding went from {P(p('hold', '2018-2022'))} to {P(p('hold', '2023-2026'))} and the DCA bot from {P(p('dca_bot', '2018-2022'))} to {P(p('dca_bot', '2023-2026'))}: their results depend on the market going up.",
+                    f"The DCA bot ended almost level with holding ({P(d['cagr_pct'])} versus {P(h['cagr_pct'])} a year) with a similar drawdown ({P(d['max_drawdown_pct'])} versus {P(h['max_drawdown_pct'])}): without a stop loss it is buying BTC in more steps.",
+                    f"The typical grid ended at {P(g['cagr_pct'])} a year after {num(g['operaciones'], lang, 0)} closed round trips: each one gains a little, while the BTC bought on the way down loses a lot at once.",
+                    f"The filter lags holding in strong bull years (2023: {pct(A('tendencia', '2023'), lang, 1, True)} versus {pct(A('hold', '2023'), lang, 1, True)}); its edge is losing far less in bear years (2022: {pct(A('tendencia', '2022'), lang, 1, True)} versus {pct(A('hold', '2022'), lang, 1, True)}).",
+                    "In this comparison USDT earns nothing. With USDT in Earn the filter returns more (experiment #3), but this way all four compete on equal terms."],
+            anual_t="By period and by year", per_t="Annual return by period",
+            anual_n="* 2026 through September. The 2018-2022 / 2023-2026 split is the same one used in experiments #6 and #7.",
+            faq=[(f"Why does the trend filter show {P(t['cagr_pct'])} here and 56.6% in experiment #3?",
+                  "Two reasons: there, USDT earns in Earn during the time out of BTC (about half), and the window starts on a different date, which is why holding differs too (37.3% there, 23.3% here). Here USDT earns nothing, so all four compete on equal terms. The conclusion doesn't change: it beats holding with less than half the drawdown."),
+                 ("Does it working in the past guarantee it will keep working?",
+                  "No. It is one history of one asset, with few trades a year. What it does show is that it didn't depend on a lucky period: it returned about the same in 2018-2022 and 2023-2026."),
+                 ("Can I repeat the comparison?",
+                  "Yes. The code, each experiment's fact sheet and the data fingerprint are on GitHub: python -m lab.comparador produces these tables and checks the published numbers.")],
+            publicado=f"Published {fecha_larga(FECHA_COMP, 'en')}"),
+    }[lang]
+    E["grafico"] = graf_multi(lang, "base", E["g_aria"])
+    E["res_html"] = (tabla_metricas(lang) + f'<h3 class="sub">{E["caidas_t"]}</h3>' + graf_multi(lang, "caida", E["caidas_aria"])
+                     + f'<p class="g-nota">{E["caidas_nota"]}</p>')
+    E["anual_html"] = f'<h3 class="sub">{E["per_t"]}</h3>' + tabla_periodos(lang) + tabla_anual_comp(lang)
+    E["seccion_lab"] = "8-comparador-todas-en-las-mismas-condiciones"
+    E["ficha_html"] = ficha_html("tendencia-btc", lang)
+    E["fechas"] = (FECHA_COMP, FECHA_COMP)
+    return E
+
+
+def item_comp(lang):
+    t, h, g = met("tendencia"), met("hold"), met("grid")
+    P = lambda v: pct(v, lang)
+    nombre = {"es": "Comparador: cuatro estrategias en igualdad", "pt-BR": "Comparador: quatro estratégias em igualdade", "en": "Comparison: four strategies on equal terms"}[lang]
+    desc = {"es": f"Misma ventana, comisión y métricas. El filtro de tendencia rindió {P(t['cagr_pct'])} por año (mantener: {P(h['cagr_pct'])}) y fue el único parejo en bajistas y alcistas; el grid típico terminó en {P(g['cagr_pct'])}.",
+            "pt-BR": f"Mesma janela, comissão e métricas. O filtro de tendência rendeu {P(t['cagr_pct'])} ao ano (segurar: {P(h['cagr_pct'])}) e foi o único constante em baixas e altas; o grid típico terminou em {P(g['cagr_pct'])}.",
+            "en": f"Same window, fee and metrics. The trend filter returned {P(t['cagr_pct'])} a year (holding: {P(h['cagr_pct'])}) and was the only one steady in bear and bull markets; the typical grid ended at {P(g['cagr_pct'])}."}[lang]
+    return ("comp", nombre, desc)
+
+
+CSS_COMP = """
+.g-m { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.g-hold { stroke: var(--texto); stroke-width: 1.6; opacity: .8; } .g-tendencia { stroke: var(--cian); stroke-width: 3.2; }
+.g-dca_bot { stroke: var(--oro); stroke-width: 2; stroke-dasharray: 8 5; } .g-grid { stroke: var(--baja); stroke-width: 2.2; stroke-dasharray: 1 5; }
+.ley.lm-hold::before { background: none; border-top: 2px solid var(--texto); height: 0; opacity: .8; } .ley.lm-tendencia::before { background: var(--cian); height: 4px; }
+.ley.lm-dca_bot::before { background: none; border-top: 2px dashed var(--oro); height: 0; } .ley.lm-grid::before { background: none; border-top: 3px dotted var(--baja); height: 0; }
+.lb-s h3.sub { font: 500 19px/1.2 var(--titulos); letter-spacing: -.01em; margin: 30px 0 14px; color: var(--texto); }
+.lb-s .tabla-env + .tabla-env { margin-top: 18px; }
+details.defs { margin-top: 14px; } details.defs summary { cursor: pointer; color: var(--cian); font-weight: 600; font-size: 15px; }
+.defs dl, .ficha-dl { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 10px 22px; margin-top: 14px; }
+.defs dt, .ficha-dl dt { color: var(--texto); font-weight: 600; font-size: 15px; } .defs dd, .ficha-dl dd { color: var(--suave); font-size: 15px; margin: 0; }
+.ficha-dl { background: var(--sup); border: 1px solid var(--borde); border-radius: 16px; padding: 22px 24px; }
+.ficha-dl ul { padding-left: 18px; display: grid; gap: 6px; } .ficha-dl li { font-size: 15px; } .ficha-dl code { font-family: var(--mono); font-size: 13px; }
+@media (max-width: 640px) { .defs dl, .ficha-dl { grid-template-columns: 1fr; gap: 4px; } .ficha-dl dd { margin-bottom: 10px; } }
+"""
 
 
 # ---------------------------------------------------------------- página
@@ -428,19 +772,19 @@ def pagina(lang, clave, contenido):
         miga_html = f'<nav class="miga" aria-label="breadcrumb"><a href="{home}">{C["inicio"]}</a><span>›</span>{C["lab"]}</nav>'
     else:
         ld.append({"@context": "https://schema.org", "@type": "Article", "headline": t["h1"], "description": t["desc"], "inLanguage": lang, "url": url,
-                   "datePublished": PUBLICADO, "dateModified": MODIFICADO, "image": f"{SITIO}/assets/og.png",
+                   "datePublished": t.get("fechas", (PUBLICADO, MODIFICADO))[0], "dateModified": t.get("fechas", (PUBLICADO, MODIFICADO))[1], "image": f"{SITIO}/assets/og.png",
                    "author": {"@type": "Person", "name": "Avelino González"},
                    "publisher": {"@type": "Organization", "@id": f"{SITIO}/#org", "name": "WIQON", "logo": {"@type": "ImageObject", "url": f"{SITIO}/assets/logo.png"}},
                    "isBasedOn": f"{LAB}#{t['seccion_lab']}"})
         ld.append({"@context": "https://schema.org", "@type": "FAQPage",
                    "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in t["faq"]]})
-        otra = "dca" if clave == "grid" else "grid"
-        nombre_otra = {"grid": {"es": "Grid bots: 64 configuraciones", "pt-BR": "Robôs de grid: 64 configurações", "en": "Grid bots: 64 settings"},
-                       "dca": {"es": "DCA bots: 36 configuraciones", "pt-BR": "Robôs DCA: 36 configurações", "en": "DCA bots: 36 settings"}}[otra][lang]
+        nombres = {"grid": {"es": "Grid bots: 64 configuraciones", "pt-BR": "Robôs de grid: 64 configurações", "en": "Grid bots: 64 settings"},
+                   "dca": {"es": "DCA bots: 36 configuraciones", "pt-BR": "Robôs DCA: 36 configurações", "en": "DCA bots: 36 settings"},
+                   "comp": {"es": "Las cuatro estrategias comparadas", "pt-BR": "As quatro estratégias comparadas", "en": "All four strategies compared"}}
+        rel1, rel2 = {"grid": ("dca", "comp"), "dca": ("grid", "comp"), "comp": ("grid", "dca")}[clave]
         nombre_aud = {"es": "Auditoría de bots", "pt-BR": "Auditoria de robôs", "en": "Bot audit"}[lang]
-        nombre_lab = {"es": "Todos los experimentos", "pt-BR": "Todos os experimentos", "en": "All experiments"}[lang]
         cuerpo = f'''<article>
-<section class="lb-hero"><h1>{t["h1"]}</h1><p class="lead">{t["lead"]}</p><p class="meta">{C["autor"]} · {C["publicado"]}</p></section>
+<section class="lb-hero"><h1>{t["h1"]}</h1><p class="lead">{t["lead"]}</p><p class="meta">{C["autor"]} · {t.get("publicado", C["publicado"])}</p></section>
 <div class="corta"><b>{C["corta"]}</b><p>{t["corta"]}</p></div>
 {t["grafico"]}<p class="g-nota">{t["g_nota"]}</p>
 <ul class="cifras">{"".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in t["cifras"])}</ul>
@@ -448,10 +792,11 @@ def pagina(lang, clave, contenido):
 <section class="lb-s"><h2>{t["res_t"]}</h2>{t["res_html"]}</section>
 <section class="lb-s"><h2>{t["porque_t"]}</h2><ul class="pun">{"".join(f"<li>{x}</li>" for x in t["porque"])}</ul></section>
 <section class="lb-s"><h2>{t["anual_t"]}</h2>{t["anual_html"]}<p class="nota-t">{t["anual_n"]}</p></section>
+{t.get("ficha_html", "")}
 <div class="cta-l"><h2>{C["cta_t"]}</h2><p>{C["cta_p"]}</p><div class="acc"><a class="btn p" href="{r}{O["auditoria"]}">{C["cta_b"]}</a><a class="btn" href="{r}{O["libro"]}">{C["cta_l"]}</a></div></div>
 <section class="lb-s faq"><h2>{C["faq"]}</h2>{"".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in t["faq"])}</section>
 <section class="lb-s"><h2>{C["fuentes"]}</h2><ul class="pun"><li><a class="enl" href="{LAB}#{t["seccion_lab"]}" target="_blank" rel="noopener">{C["codigo"]}</a></li><li><a class="enl" href="https://data.binance.vision/" target="_blank" rel="noopener">Binance public data (data.binance.vision)</a></li></ul></section>
-<section class="lb-s"><h2>{C["rel"]}</h2><ul class="rel"><li><a href="{r}{RUTAS[otra][lang]}">{nombre_otra}</a></li><li><a href="{r}{O["auditoria"]}">{nombre_aud}</a></li><li><a href="{lab}">{nombre_lab}</a></li></ul></section>
+<section class="lb-s"><h2>{C["rel"]}</h2><ul class="rel"><li><a href="{r}{RUTAS[rel1][lang]}">{nombres[rel1][lang]}</a></li><li><a href="{r}{RUTAS[rel2][lang]}">{nombres[rel2][lang]}</a></li><li><a href="{r}{O["auditoria"]}">{nombre_aud}</a></li></ul></section>
 </article>'''
         miga_html = f'<nav class="miga" aria-label="breadcrumb"><a href="{home}">{C["inicio"]}</a><span>›</span><a href="{lab}">{C["lab"]}</a><span>›</span>{t["miga"]}</nav>'
     lds = "".join('<script type="application/ld+json">' + json.dumps(x, ensure_ascii=False, separators=(",", ":")) + "</script>" for x in ld)
@@ -470,7 +815,7 @@ def pagina(lang, clave, contenido):
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{r}assets/v4.css">
 <script>try{{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}}catch(e){{}}</script>
-<style>{CSS}</style>
+<style>{CSS}{CSS_COMP}</style>
 {lds}
 </head>
 <body>
@@ -503,8 +848,11 @@ def pagina(lang, clave, contenido):
 
 if __name__ == "__main__":
     for lang in ("es", "pt-BR", "en"):
-        for clave, fn in (("indice", indice), ("grid", grid), ("dca", dca)):
+        for clave, fn in (("indice", indice), ("grid", grid), ("dca", dca), ("comp", comparador)):
             destino = RAIZ / RUTAS[clave][lang] / "index.html"
             destino.parent.mkdir(parents=True, exist_ok=True)
-            destino.write_text(pagina(lang, clave, fn(lang)), encoding="utf-8", newline="\n")
+            contenido = fn(lang)
+            if clave in ("grid", "dca"):
+                contenido["ficha_html"] = ficha_html({"grid": "grid-bots", "dca": "dca-bot"}[clave], lang)
+            destino.write_text(pagina(lang, clave, contenido), encoding="utf-8", newline="\n")
             print("OK", destino.relative_to(RAIZ))

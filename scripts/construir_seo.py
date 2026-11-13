@@ -400,7 +400,8 @@ def main():
                   f"{SITIO}/contacto/", f"{SITIO}/terminos/", f"{SITIO}/devoluciones/", f"{SITIO}/br/contato/", f"{SITIO}/br/termos/", f"{SITIO}/br/devolucoes/",
                   f"{SITIO}/en/", f"{SITIO}/en/terms/", f"{SITIO}/en/refunds/", f"{SITIO}/en/privacy/", f"{SITIO}/en/contact/", f"{SITIO}/en/shield/", f"{SITIO}/auditoria-bots/", f"{SITIO}/br/auditoria-robos/", f"{SITIO}/en/bot-audit/",
                   f"{SITIO}/laboratorio/", f"{SITIO}/laboratorio/grid-bots/", f"{SITIO}/laboratorio/dca-bot/", f"{SITIO}/br/laboratorio/", f"{SITIO}/br/laboratorio/robos-de-grid/",
-                  f"{SITIO}/br/laboratorio/robo-dca/", f"{SITIO}/en/lab/", f"{SITIO}/en/lab/grid-bots/", f"{SITIO}/en/lab/dca-bot/"]
+                  f"{SITIO}/br/laboratorio/robo-dca/", f"{SITIO}/en/lab/", f"{SITIO}/en/lab/grid-bots/", f"{SITIO}/en/lab/dca-bot/",
+                  f"{SITIO}/laboratorio/comparador/", f"{SITIO}/br/laboratorio/comparador/", f"{SITIO}/en/lab/compare/"]
     mapa = "".join(f"<url><loc>{u}</loc><lastmod>{hoy}</lastmod></url>" for u in principales + urls)
     escribir(RAIZ / "sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{mapa}</urlset>\n')
     escribir(RAIZ / "robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITIO}/sitemap.xml\n")
