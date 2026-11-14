@@ -82,8 +82,9 @@ def trm():
             "valores": [{"moneda": "USD", "nombre": "Dólar (TRM)", "valor": float(d["valor"]), "unidad": "COP por 1 USD"}]}
 
 
-# ---------------------------------------------------------------- historial (últimos 30 datos de cada serie)
+# ---------------------------------------------------------------- historial (últimos 30 datos) y promedios mensuales (13 meses)
 DIAS_HIST = 30
+DIAS_LARGO = 420          # alcanza para 12 meses completos más el actual
 
 
 def bcp_hist(moneda):
@@ -91,7 +92,7 @@ def bcp_hist(moneda):
     url = "https://www.bcp.gov.py/webapps/web/cotizacion/monedas-historica"
     hoy = datetime.now(timezone.utc)
     serie = []
-    for anio in (hoy.year - 1, hoy.year) if hoy.month <= 2 else (hoy.year,):
+    for anio in (hoy.year - 1, hoy.year):
         req = urllib.request.Request(url, data=f"anho={anio}&moneda={moneda}".encode(), headers={"User-Agent": AGENTE})
         with urllib.request.urlopen(req, timeout=40) as r:
             pagina = r.read().decode("utf-8", errors="replace")
@@ -109,24 +110,32 @@ def bcp_hist(moneda):
     serie.sort()
     if not serie:
         raise ValueError("histórico del BCP vacío")
-    return serie[-DIAS_HIST:]
+    return serie
 
 
 def bcb_hist():
     hoy = datetime.now(timezone.utc)
-    ini, fin = (hoy - timedelta(days=55)).strftime("%m-%d-%Y"), hoy.strftime("%m-%d-%Y")
+    ini, fin = (hoy - timedelta(days=DIAS_LARGO)).strftime("%m-%d-%Y"), hoy.strftime("%m-%d-%Y")
     api = ("https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@moeda,dataInicial=@dataInicial,"
            f"dataFinalCotacao=@dataFinalCotacao)?@moeda='USD'&@dataInicial='{ini}'&@dataFinalCotacao='{fin}'&$format=json")
     por_dia = {d["dataHoraCotacao"][:10]: d["cotacaoVenda"] for d in json.loads(bajar(api))["value"] if d["tipoBoletim"] == "Fechamento"}
-    return sorted([k, v] for k, v in por_dia.items())[-DIAS_HIST:]
+    return sorted([k, v] for k, v in por_dia.items())
 
 
 def bcra_hist():
     hoy = datetime.now(timezone.utc)
-    api = (f"https://api.bcra.gob.ar/estadisticascambiarias/v1.0/Cotizaciones/USD?fechadesde={(hoy - timedelta(days=55)).strftime('%Y-%m-%d')}"
-           f"&fechahasta={hoy.strftime('%Y-%m-%d')}")
+    api = (f"https://api.bcra.gob.ar/estadisticascambiarias/v1.0/Cotizaciones/USD?fechadesde={(hoy - timedelta(days=DIAS_LARGO)).strftime('%Y-%m-%d')}"
+           f"&fechahasta={hoy.strftime('%Y-%m-%d')}&limit=1000")
     datos = json.loads(bajar(api))["results"]
-    return sorted([d["fecha"], d["detalle"][0]["tipoCotizacion"]] for d in datos if d.get("detalle"))[-DIAS_HIST:]
+    return sorted([d["fecha"], d["detalle"][0]["tipoCotizacion"]] for d in datos if d.get("detalle"))
+
+
+def mensual(serie):
+    """Promedio, mínimo y máximo de cada mes (últimos 13 meses, el último puede estar en curso)."""
+    meses = {}
+    for d, v in serie:
+        meses.setdefault(d[:7], []).append(v)
+    return [[m, round(sum(x) / len(x), 4), min(x), max(x), len(x)] for m, x in sorted(meses.items())][-13:]
 
 
 HISTORIALES = {"bcp:USD": lambda: bcp_hist("USD"), "bcp:BRL": lambda: bcp_hist("BRL"), "bcb:USD": bcb_hist, "bcra:USD": bcra_hist}
@@ -158,16 +167,26 @@ def main():
         hist_previo = json.loads(SALIDA.read_text(encoding="utf-8")).get("historial", {}) if SALIDA.exists() else {}
     except ValueError:
         hist_previo = {}
-    historial = {}
+    try:
+        mens_previo = json.loads(SALIDA.read_text(encoding="utf-8")).get("mensual", {}) if SALIDA.exists() else {}
+    except ValueError:
+        mens_previo = {}
+    historial, mens = {}, {}
     for clave, fn in HISTORIALES.items():
         try:
-            historial[clave] = fn()
-            print(f"historial {clave}: {len(historial[clave])} datos hasta {historial[clave][-1][0]}")
-        except Exception as e:  # se conserva el historial anterior
+            serie = fn()
+            if not serie:
+                raise ValueError("serie vacía")
+            historial[clave] = serie[-DIAS_HIST:]
+            mens[clave] = mensual(serie)
+            print(f"historial {clave}: {len(serie)} datos hasta {serie[-1][0]}, {len(mens[clave])} meses")
+        except Exception as e:  # se conserva lo anterior
             if clave in hist_previo:
                 historial[clave] = hist_previo[clave]
+            if clave in mens_previo:
+                mens[clave] = mens_previo[clave]
             print(f"historial {clave}: falló ({type(e).__name__})")
-    SALIDA.write_text(json.dumps({"actualizado_utc": ahora, "fuentes": fuentes, "historial": historial}, ensure_ascii=False, indent=1), encoding="utf-8")
+    SALIDA.write_text(json.dumps({"actualizado_utc": ahora, "fuentes": fuentes, "historial": historial, "mensual": mens}, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -130,7 +130,15 @@ TX = {
                       "Antes de cambiar una suma grande, compará el precio de compra y de venta en dos o tres lugares y usá esta cotización como referencia para saber cuánto te están cobrando."],
                iof="En Brasil, las compras con tarjeta en el exterior pagan además el IOF, un impuesto que se suma al tipo de cambio de la tarjeta.",
                q_cuanto="¿Cuánto son 100 {b} en {d} hoy?", a_cuanto="Con la cotización oficial del {f}, 100 {b} equivalen a {v}. Una casa de cambio puede pagar algo menos.",
-               q_mes="¿Subió o bajó {n} en el último mes?", a_mes="En las últimas 30 cotizaciones pasó de {v0} ({f0}) a {v1} ({f1}): una variación de {p}."),
+               q_mes="¿Subió o bajó {n} en el último mes?", a_mes="En las últimas 30 cotizaciones pasó de {v0} ({f0}) a {v1} ({f1}): una variación de {p}.",
+               anual_t="Últimos 12 meses", mes="Mes", prom="Promedio", n_dias="Días",
+               anual_n="Promedio, mínimo y máximo de las cotizaciones oficiales de cada mes. El último mes está en curso.",
+               q_anio="¿Cuánto cambió {n} en un año?", a_anio="El promedio de {m1} fue {v1}, contra {v0} en {m0}: una variación de {p} en doce meses.",
+               cruce_t="Cruce entre bancos centrales",
+               cruce_rg="Si se divide la cotización del dólar en guaraníes del BCP ({a}) por la PTAX del Banco Central do Brasil ({b}), el real «implícito» da {c}. El BCP publica para el real {d}: una diferencia de {p}. Si la diferencia es grande, puede convenir más cambiar pasando por el dólar que cambiar reales directo, o al revés; las casas de cambio cobran su margen en cada paso.",
+               cruce_dr="Si se divide la cotización del dólar en guaraníes ({a}) por la del real en guaraníes ({b}), ambas del BCP, el dólar «implícito» en Paraguay da {c}. La PTAX de Brasil está en {d}: una diferencia de {p}. Por eso, para quien cruza la frontera, el precio del dólar no es exactamente el mismo de un lado y del otro.",
+               cruce_f="Datos del {f}. Cálculo de WIQON con las cotizaciones oficiales; no es una cotización de ningún banco.",
+               meses=["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]),
     "pt": dict(hist_t="Últimos 30 dias", var="Variação em 30 dias", maxi="Máxima", mini="Mínima", ult_t="Últimas cotações", dia="Dia", camb="Variação",
                conv_t="Conversão rápida", conv_n="Com a cotação oficial de {f}. As casas de câmbio aplicam o próprio preço de compra e venda.",
                casas_t="Cotação oficial e casas de câmbio",
@@ -138,7 +146,15 @@ TX = {
                       "Antes de trocar um valor alto, compare o preço de compra e de venda em dois ou três lugares e use esta cotação como referência para saber quanto estão cobrando."],
                iof="No Brasil, as compras com cartão no exterior pagam também o IOF, um imposto que se soma ao câmbio do cartão.",
                q_cuanto="Quanto são 100 {b} em {d} hoje?", a_cuanto="Com a cotação oficial de {f}, 100 {b} equivalem a {v}. Uma casa de câmbio pode pagar um pouco menos.",
-               q_mes="{N} subiu ou caiu no último mês?", a_mes="Nas últimas 30 cotações passou de {v0} ({f0}) para {v1} ({f1}): uma variação de {p}."),
+               q_mes="{N} subiu ou caiu no último mês?", a_mes="Nas últimas 30 cotações passou de {v0} ({f0}) para {v1} ({f1}): uma variação de {p}.",
+               anual_t="Últimos 12 meses", mes="Mês", prom="Média", n_dias="Dias",
+               anual_n="Média, mínima e máxima das cotações oficiais de cada mês. O último mês está em andamento.",
+               q_anio="Quanto {n} mudou em um ano?", a_anio="A média de {m1} foi {v1}, contra {v0} em {m0}: uma variação de {p} em doze meses.",
+               cruce_t="Cruzamento entre bancos centrais",
+               cruce_rg="Dividindo a cotação do dólar em guaranis do BCP ({a}) pela PTAX do Banco Central do Brasil ({b}), o real «implícito» dá {c}. O BCP publica para o real {d}: uma diferença de {p}. Se a diferença for grande, pode compensar mais trocar passando pelo dólar do que trocar reais direto, ou o contrário; as casas de câmbio cobram sua margem em cada etapa.",
+               cruce_dr="Dividindo a cotação do dólar em guaranis ({a}) pela do real em guaranis ({b}), ambas do BCP, o dólar «implícito» no Paraguai dá {c}. A PTAX do Brasil está em {d}: uma diferença de {p}. Por isso, para quem cruza a fronteira, o preço do dólar não é exatamente o mesmo dos dois lados.",
+               cruce_f="Dados de {f}. Cálculo da WIQON com as cotações oficiais; não é a cotação de nenhum banco.",
+               meses=["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"]),
 }
 
 
@@ -178,6 +194,34 @@ def bloque_historial(c, idioma, v, f):
             f'<polyline points="{puntos}" vector-effect="non-scaling-stroke"/></svg>'
             f'<figcaption><span>{fecha(p0[0])}</span><span>{fecha(p1[0])}</span></figcaption></figure>'
             f'<h2>{tx["ult_t"]}</h2><div class="tab-env"><table class="tab"><thead><tr><th>{tx["dia"]}</th><th>{c[idioma]["corto"]}</th><th>{tx["camb"]}</th></tr></thead><tbody>{filas}</tbody></table></div>')
+    mens = CAMBIO.get("mensual", {}).get(f'{c["fuente"]}:{c["moneda"]}') or []
+    if len(mens) >= 2:
+        nm = lambda m: f'{tx["meses"][int(m[5:7]) - 1]} {m[:4]}'
+        filas = "".join(f'<tr><td>{nm(m)}</td><td>{pre}{num(a, dec)}</td><td>{pre}{num(lo_, dec)}</td><td>{pre}{num(hi_, dec)}</td></tr>'
+                        for m, a, lo_, hi_, _ in reversed(mens))
+        partes.append(f'<h2>{tx["anual_t"]}</h2><div class="tab-env"><table class="tab"><thead><tr><th>{tx["mes"]}</th><th>{tx["prom"]}</th>'
+                      f'<th>{tx["mini"]}</th><th>{tx["maxi"]}</th></tr></thead><tbody>{filas}</tbody></table></div>'
+                      f'<p class="nota">{tx["anual_n"]}</p>')
+        m0, m1 = mens[0], mens[-1]
+        var_a = (m1[1] / m0[1] - 1) * 100
+        faq.append((tx["q_anio"].format(n=nn), tx["a_anio"].format(m0=nm(m0[0]), v0=f"{pre}{num(m0[1], dec)}", m1=nm(m1[0]), v1=f"{pre}{num(m1[1], dec)}",
+                                                                   p=("+" if var_a > 0 else "") + pct(var_a))))
+    cruce = None
+    usd_py, f_py = dato("bcp", "USD")
+    brl_py, _ = dato("bcp", "BRL")
+    ptax, f_br = dato("bcb", "USD")
+    if usd_py and brl_py and ptax and f_py and f_br:
+        if c["slug"] == "real-guarani":
+            imp = usd_py / ptax
+            cruce = tx["cruce_rg"].format(a=f"₲ {num(usd_py, 2)}", b=f"R$ {num(ptax, 4)}", c=f"₲ {num(imp, 2)}", d=f"₲ {num(brl_py, 2)}",
+                                          p=("+" if brl_py > imp else "") + pct((brl_py / imp - 1) * 100))
+        elif c["slug"] == "dolar-real":
+            imp = usd_py / brl_py
+            cruce = tx["cruce_dr"].format(a=f"₲ {num(usd_py, 2)}", b=f"₲ {num(brl_py, 2)}", c=f"R$ {num(imp, 4)}", d=f"R$ {num(ptax, 4)}",
+                                          p=("+" if ptax > imp else "") + pct((ptax / imp - 1) * 100))
+    if cruce:
+        fechas = sorted({f_py["fecha"], f_br["fecha"]})
+        partes.append(f'<h2>{tx["cruce_t"]}</h2><p>{cruce}</p><p class="nota">{tx["cruce_f"].format(f=" / ".join(fecha(x) for x in fechas))}</p>')
     if v and f:
         ida = "".join(f"<tr><td>{cv['base']}{num(a, 0)}</td><td>{pre}{num(a * v, 0 if a * v >= 1000 else 2)}</td></tr>" for a in cv["ida"])
         vuelta = "".join(f"<tr><td>{pre}{num(a, 0)}</td><td>{cv['base']}{num(a / v, 2)}</td></tr>" for a in cv["vuelta"])

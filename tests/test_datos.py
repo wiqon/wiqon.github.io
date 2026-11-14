@@ -129,3 +129,11 @@ def test_vela_de_estrategia_vieja(sitio):
     escribir(sitio, "estado.json", {"actualizado_utc": "2026-10-27 04:46", "senal": "EN_BTC", "sma100": 75330.9, "vela": "2026-10-22"})
     m = S.main(AHORA)["modulos"]["estrategia"]
     assert m["estado"] == "atrasado" and "2026-10-22" in m["avisos"][0]
+
+
+def test_promedios_mensuales():
+    import actualizar_cambio as AC
+    serie = [["2026-10-30", 10.0], ["2026-10-31", 20.0], ["2026-11-02", 30.0]]
+    assert AC.mensual(serie) == [["2026-10", 15.0, 10.0, 20.0, 2], ["2026-11", 30.0, 30.0, 30.0, 1]]
+    larga = [[f"20{a:02d}-{m:02d}-01", 1.0] for a in (25, 26) for m in range(1, 13)]
+    assert len(AC.mensual(larga)) == 13 and AC.mensual(larga)[-1][0] == "2026-12"
