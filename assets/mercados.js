@@ -108,9 +108,9 @@
   // ---------------- librerías de mapas (solo cuando hacen falta) ----------------
   let libs = null;
   const cargarJS = (src) => new Promise((ok, mal) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = mal; document.head.appendChild(s); });
-  const geo = () => libs || (libs = cargarJS("https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js")
-    .then(() => cargarJS("https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"))
-    .then(() => fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then((r) => r.json())));
+  const geo = () => libs || (libs = cargarJS(RAIZ + "assets/vendor/d3-7.9.0.min.js")
+    .then(() => cargarJS(RAIZ + "assets/vendor/topojson-client-3.1.0.min.js"))
+    .then(() => fetch(RAIZ + "assets/vendor/world-atlas-2.0.2-countries-110m.json").then((r) => r.json())));
 
   // ---------------- mapa de inflación (FMI) ----------------
   let mapaHecho = false;

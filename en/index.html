@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- seguridad:inicio -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://s3.tradingview.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' https:; connect-src 'self' https://data-api.binance.vision https://api.binance.com wss://data-stream.binance.vision https://ffswzcjcrxokoefhykvv.supabase.co wss://ffswzcjcrxokoefhykvv.supabase.co https://n8n.wiqonlab.com https://cloudflareinsights.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://*.tradingview.com https://*.tradingview-widget.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- seguridad:fin -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WIQON — We test trading strategies with real data</title>
 <meta name="description" content="A trading lab from Paraguay and Brazil: we test strategies with real costs, publish the results and build tools from what survives, like WIQON Shield.">
@@ -363,7 +367,7 @@
     <p class="pie-d">If you already have an account, the same link signs you in.</p>
   </form>
 </dialog>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../assets/vendor/supabase-2.119.0.js"></script>
 <script src="../assets/cuenta.js"></script>
 <script src="../assets/vivo.js"></script>
 <script src="../assets/v4.js"></script>

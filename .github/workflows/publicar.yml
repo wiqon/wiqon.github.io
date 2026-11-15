@@ -64,6 +64,8 @@ jobs:
         continue-on-error: true
       - name: Salud de los datos (salud.json, lo leen la página y el aviso de n8n)
         run: python scripts/salud.py
+      - name: Política de seguridad (CSP) en todas las páginas, después de los generadores
+        run: python scripts/seguridad_web.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

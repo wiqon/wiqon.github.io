@@ -1,0 +1,6 @@
+# Si encontrás un fallo de seguridad en wiqonlab.com, avisanos antes de publicarlo.
+# Respondemos en español, portugués o inglés. No tenemos programa de recompensas.
+Contact: mailto:contacto@wiqonlab.com
+Expires: 2027-11-01T00:00:00.000Z
+Preferred-Languages: es, pt, en
+Canonical: https://wiqonlab.com/.well-known/security.txt
