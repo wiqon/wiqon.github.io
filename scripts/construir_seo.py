@@ -264,6 +264,51 @@ NORMAS = [
                  faq=[("A partir de qual valor é preciso informar?", "Residentes no Paraguai, quando as operações com criptoativos passam de US$ 5.000 no ano."),
                       ("Vale para quem mora no Brasil?", "Não. É uma norma paraguaia para residentes no Paraguai."),
                       ("Onde se entrega?", "Pelo sistema Marangatu da DNIT, uma vez por ano.")])),
+    dict(slug="ley-7572-tokenizacion", borrador=True,   # se genera pero no se enlaza ni va al sitemap hasta que el usuario lo publique
+         es=dict(h1="Ley 7572/2025: cuándo un token es un valor en Paraguay",
+                 desc="Qué dice la Ley 7572/2025 de Mercado de Valores sobre tokens y blockchain: qué cuenta como valor, qué es oferta pública, quién autoriza y qué reglamentos faltan.",
+                 cuerpo=f"""<p>La <strong>Ley 7572/2025 de Mercado de Valores y Productos</strong>, promulgada el 7 de noviembre de 2025, reemplazó a la Ley 5810/2017. Es la primera ley paraguaya que menciona de forma expresa la <strong>tecnología de registros distribuidos</strong>, es decir, la blockchain.</p>
+<h2>Qué cuenta como valor (art. 73)</h2>
+<p>Además de acciones, bonos y cuotas de fondos, la ley considera valores:</p>
+<ul><li>los <strong>«acuerdos de inversión en proyectos colectivos con expectativa de ganancias»</strong>;</li>
+<li>los derechos negociables que tienen como objetivo o efecto la <strong>captación de recursos del público</strong>;</li>
+<li>los que se emiten, registran, transfieren o almacenan <strong>mediante registros distribuidos</strong> u otras tecnologías similares.</li></ul>
+<p>En la práctica: un token que promete una renta, una parte de las ganancias o la devolución con intereses es un valor, aunque lo respalde un inmueble, mercadería o cualquier otro activo real.</p>
+<h2>Qué es oferta pública (art. 71)</h2>
+<p>Es la oferta dirigida <strong>«al público en general o a ciertos sectores o a grupos específicos de éste»</strong>. Ofrecer valores al público requiere autorización del <strong>Banco Central del Paraguay</strong>, por medio de su <strong>Superintendencia de Valores</strong>. Qué ofertas no se consideran públicas lo va a definir un reglamento, según el número y tipo de inversionistas, los medios usados y el monto.</p>
+<h2>Qué falta</h2>
+<p>La Superintendencia de Valores anunció para 2026 y 2027 una segunda generación de reglamentos sobre <strong>tokenización, registros distribuidos, financiamiento colectivo (crowdfunding) y fondos privados</strong>. Hasta que se publiquen, no hay una vía específica para emitir tokens de inversión al público.</p>
+<h2>Otras normas que se cruzan</h2>
+<ul><li><strong>Ley 861/96 de bancos:</strong> captar dinero del público en forma habitual con promesa de devolución es intermediación financiera y requiere autorización del BCP.</li>
+<li><strong>SEPRELAD:</strong> quien comercializa o custodia activos virtuales para terceros tiene obligaciones de prevención de lavado.</li>
+<li><strong>DNIT, RG 47/2026:</strong> declaración informativa de operaciones con criptoactivos.</li></ul>
+<h2>Antes de comprar un token que promete ganancias</h2>
+<ul><li>Pedí la razón social, el RUC o CUIT y quiénes están a cargo.</li>
+<li>Preguntá con qué autorización se ofrece al público.</li>
+<li>Pedí ver el respaldo con fecha, y cuántos tokens hay emitidos frente a él.</li></ul>""",
+                 fuentes=[("BACN: Ley N.º 7572/2025 de Mercado de Valores y Productos", "https://www.bacn.gov.py/leyes-paraguayas/12910/ley-n-7572-2025-mercado-de-valores-y-productos"),
+                          ("BACN: Ley N.º 861/96 General de Bancos, Financieras y otras Entidades de Crédito", "https://www.bacn.gov.py/leyes-paraguayas/4135/ley-n-861-general-de-bancos-financieras-y-otras-entidades-de-credito"),
+                          ("MarketData: la Superintendencia de Valores fija su hoja de ruta 2026", "https://marketdata.com.py/noticias/superintendencia-de-valores-fija-hoja-de-ruta-2026-para-reglamentos-y-nuevas-categorias-de-productos-147733/")],
+                 faq=[("¿Un token respaldado en algo real es legal?", "Depende de lo que promete. Si da derecho a ganancias o a una renta, es un valor y su oferta al público necesita autorización del BCP y la Superintendencia de Valores."),
+                      ("¿Ya se pueden emitir tokens de inversión en Paraguay?", "La ley los reconoce, pero los reglamentos de tokenización todavía no se publicaron: la Superintendencia de Valores los anunció para 2026 y 2027."),
+                      ("¿Ofrecerlo por redes sociales es oferta pública?", "La ley define oferta pública como la dirigida al público o a grupos de él; las excepciones las fijará un reglamento. Ofrecer por redes a cualquiera que lo vea entra, muy probablemente, en esa definición.")]),
+         pt=dict(h1="Lei 7572/2025: quando um token é valor mobiliário no Paraguai",
+                 desc="O que diz a Lei 7572/2025 do mercado de valores do Paraguai sobre tokens e blockchain: o que é valor mobiliário, o que é oferta pública e quem autoriza.",
+                 cuerpo=f"""<p>A <strong>Lei 7572/2025 de Mercado de Valores e Produtos</strong> do Paraguai, promulgada em 7 de novembro de 2025, substituiu a Lei 5810/2017 e menciona expressamente a <strong>tecnologia de registros distribuídos</strong> (blockchain).</p>
+<h2>O que é valor mobiliário (art. 73)</h2>
+<ul><li><strong>«Acordos de investimento em projetos coletivos com expectativa de ganhos»</strong>;</li>
+<li>direitos negociáveis que têm como objetivo ou efeito a <strong>captação de recursos do público</strong>;</li>
+<li>os emitidos, registrados, transferidos ou armazenados <strong>em registros distribuídos</strong>.</li></ul>
+<p>Na prática: um token que promete renda, participação nos lucros ou devolução com juros é valor mobiliário, mesmo com lastro em imóveis ou mercadorias.</p>
+<h2>Oferta pública (art. 71)</h2>
+<p>É a oferta dirigida ao público em geral ou a setores ou grupos dele. Precisa de autorização do <strong>Banco Central do Paraguai</strong>, por meio da <strong>Superintendência de Valores</strong>.</p>
+<h2>O que falta</h2>
+<p>A Superintendência anunciou para 2026 e 2027 os regulamentos de <strong>tokenização, registros distribuídos e crowdfunding</strong>. Até lá, não há uma via específica para emitir tokens de investimento ao público.</p>
+<p><strong>Mora no Brasil?</strong> Esta norma vale para ofertas no Paraguai. No Brasil, tokens de investimento ficam sob a CVM.</p>""",
+                 fuentes=[("BACN: Ley N.º 7572/2025 de Mercado de Valores y Productos", "https://www.bacn.gov.py/leyes-paraguayas/12910/ley-n-7572-2025-mercado-de-valores-y-productos")],
+                 faq=[("Um token com lastro em algo real é legal?", "Depende do que promete. Se dá direito a lucros ou renda, é valor mobiliário e sua oferta pública no Paraguai precisa de autorização do BCP."),
+                      ("Já dá para emitir tokens de investimento no Paraguai?", "A lei os reconhece, mas os regulamentos de tokenização ainda não foram publicados."),
+                      ("Vale para quem mora no Brasil?", "Não. É uma lei paraguaia; no Brasil, o tema é da CVM.")])),
     dict(slug="bcb-519-520-521-activos-virtuales",
          es=dict(h1="Resoluciones BCB 519, 520 y 521: las nuevas reglas de cripto en Brasil",
                  desc="Qué cambian las Resoluciones BCB 519, 520 y 521 para las prestadoras de servicios de activos virtuales en Brasil, vigentes desde el 1 de octubre de 2026.",
@@ -387,7 +432,7 @@ def relacionados(idioma, actual):
     t = T[idioma]
     nombres_c = {c["slug"]: c[idioma]["corto"] for c in COTIZ}
     links_c = "".join(f'<a href="{SITIO}/{t["base"]}cambio/{s}/">{n}</a>' for s, n in nombres_c.items() if s != actual)
-    links_n = "".join(f'<a href="{SITIO}/{t["base"]}normas/{n["slug"]}/">{n[idioma]["h1"].split(":")[0]}</a>' for n in NORMAS if n["slug"] != actual)
+    links_n = "".join(f'<a href="{SITIO}/{t["base"]}normas/{n["slug"]}/">{n[idioma]["h1"].split(":")[0]}</a>' for n in NORMAS if n["slug"] != actual and not n.get("borrador"))
     return f'<h2>{t["otras"]}</h2><div class="rel">{links_c}</div><h2>{t["normas"]}</h2><div class="rel">{links_n}</div>'
 
 
@@ -437,11 +482,12 @@ def main():
                                 fuentes_t=t["fuentes"], fuentes_html="".join(f'<li><a href="{u}" target="_blank" rel="noopener">{html.escape(nm)}</a></li>' for nm, u in x["fuentes"]),
                                 lab_url=f"{SITIO}/{t['base']}laboratorio/", relacionados=relacionados(idioma, n["slug"]), aviso=t["aviso"], script="")
             escribir(RAIZ / t["base"] / "normas" / n["slug"] / "index.html", pag)
-            urls.append(url)
+            if not n.get("borrador"):
+                urls.append(url)
 
     hoy = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     principales = [f"{SITIO}/", f"{SITIO}/br/", f"{SITIO}/shield/", f"{SITIO}/libro/", f"{SITIO}/br/livro/", f"{SITIO}/en/book/", f"{SITIO}/privacidad/", f"{SITIO}/br/privacidade/",
-                  f"{SITIO}/contacto/", f"{SITIO}/terminos/", f"{SITIO}/devoluciones/", f"{SITIO}/br/contato/", f"{SITIO}/br/termos/", f"{SITIO}/br/devolucoes/",
+                  f"{SITIO}/contacto/", f"{SITIO}/colaboraciones/", f"{SITIO}/laboratorio/vale-agm/", f"{SITIO}/br/parcerias/", f"{SITIO}/en/partnerships/", f"{SITIO}/terminos/", f"{SITIO}/devoluciones/", f"{SITIO}/br/contato/", f"{SITIO}/br/termos/", f"{SITIO}/br/devolucoes/",
                   f"{SITIO}/en/", f"{SITIO}/en/terms/", f"{SITIO}/en/refunds/", f"{SITIO}/en/privacy/", f"{SITIO}/en/contact/", f"{SITIO}/en/shield/", f"{SITIO}/auditoria-bots/", f"{SITIO}/br/auditoria-robos/", f"{SITIO}/en/bot-audit/",
                   f"{SITIO}/laboratorio/", f"{SITIO}/laboratorio/grid-bots/", f"{SITIO}/laboratorio/dca-bot/", f"{SITIO}/br/laboratorio/", f"{SITIO}/br/laboratorio/robos-de-grid/",
                   f"{SITIO}/br/laboratorio/robo-dca/", f"{SITIO}/en/lab/", f"{SITIO}/en/lab/grid-bots/", f"{SITIO}/en/lab/dca-bot/",

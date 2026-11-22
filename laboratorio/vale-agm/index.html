@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<!-- seguridad:inicio -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://s3.tradingview.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' https:; connect-src 'self' https://data-api.binance.vision https://api.binance.com wss://data-stream.binance.vision https://ffswzcjcrxokoefhykvv.supabase.co wss://ffswzcjcrxokoefhykvv.supabase.co https://n8n.wiqonlab.com https://cloudflareinsights.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://*.tradingview.com https://*.tradingview-widget.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- seguridad:fin -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vale de compra en blockchain: un token respaldado en mercadería, sin ser una inversión | WIQON Lab</title>
+<meta name="description" content="Simulación de un vale de compra tokenizado con respaldo en el inventario de un comercio real: cómo se emite, se canjea y se regala, y por qué no es una inversión.">
+<link rel="canonical" href="https://wiqonlab.com/laboratorio/vale-agm/">
+<meta property="og:type" content="article"><meta property="og:title" content="Vale de compra en blockchain: respaldado, verificable y sin promesas de ganancia | WIQON Lab"><meta property="og:description" content="Probá en el navegador cómo funciona un vale tokenizado con respaldo en mercadería. Simulación educativa en el navegador."><meta property="og:url" content="https://wiqonlab.com/laboratorio/vale-agm/"><meta property="og:image" content="https://wiqonlab.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+<style>
+.lb { max-width: 1080px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+.lb-barra { display: flex; align-items: center; gap: 16px; height: 72px; }
+.lb-barra .der { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.miga { font-size: 14px; color: var(--gris); margin-top: 18px; } .miga a { color: var(--gris); } .miga span { margin: 0 8px; }
+.lb-hero { padding: clamp(28px, 5vw, 64px) 0 28px; max-width: 860px; }
+.lb-hero h1 { font: 500 clamp(32px, 4.6vw, 58px)/1.06 var(--titulos); letter-spacing: -.035em; text-wrap: balance; }
+.lb-hero .lead { margin-top: 20px; color: var(--suave); font-size: clamp(17px, 1.4vw, 19px); max-width: 64ch; }
+.lb-hero .meta { margin-top: 14px; color: var(--gris); font-size: 14px; }
+.corta { margin: 8px 0 36px; border-left: 3px solid var(--cian); background: var(--sup); border-radius: 0 14px 14px 0; padding: 20px 24px; max-width: 860px; }
+.corta b { display: block; font: 500 15px var(--titulos); color: var(--cian); margin-bottom: 6px; } .corta p { font-size: 17px; }
+.lb-s { padding: 44px 0 8px; } .lb-s h2 { font: 500 clamp(24px, 2.8vw, 34px)/1.12 var(--titulos); letter-spacing: -.03em; margin-bottom: 18px; }
+.lb-s p, .lb-s li { color: var(--suave); font-size: 17px; max-width: 75ch; } .lb-s ol, .lb-s ul.pun { padding-left: 22px; display: grid; gap: 10px; }
+.lb-s p + p { margin-top: 12px; }
+.tabla-env { overflow-x: auto; border: 1px solid var(--borde); border-radius: 14px; }
+.lt { width: 100%; border-collapse: collapse; font-size: 15px; } .lt th, .lt td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--borde); vertical-align: top; }
+.lt th { color: var(--gris); font-weight: 500; font-size: 13px; } .lt tr:last-child td { border-bottom: 0; } .lt td:first-child { color: var(--texto); font-weight: 600; min-width: 150px; }
+.lt td { color: var(--suave); }
+.faq details { border-bottom: 1px solid var(--borde); padding: 16px 0; } .faq summary { cursor: pointer; font-weight: 600; font-size: 17px; color: var(--texto); }
+.faq details p { margin-top: 8px; }
+.cta-l { margin: 48px 0 8px; background: var(--sup); border: 1px solid var(--cian); border-radius: 18px; padding: clamp(22px, 3vw, 34px); }
+.cta-l h2 { font: 500 clamp(22px, 2.6vw, 30px)/1.15 var(--titulos); letter-spacing: -.02em; } .cta-l p { color: var(--suave); margin-top: 8px; max-width: 64ch; }
+.cta-l .acc { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.rel { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.rel a { display: block; height: 100%; background: var(--sup); border: 1px solid var(--borde); border-radius: 14px; padding: 18px; color: var(--texto); text-decoration: none; font-weight: 600; }
+.rel a:hover { border-color: var(--cian); }
+.lb-pie { border-top: 1px solid var(--borde); margin-top: 56px; padding: 28px 0 48px; color: var(--gris); font-size: 14px; display: grid; gap: 8px; }
+.lb-pie a { color: var(--gris); margin-right: 14px; }
+@media (max-width: 820px) { .rel { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .lb-barra .marca span:last-child { display: none; } }
+
+/* ── simulador ── */
+.vsim { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 18px; align-items: start; }
+@media (max-width: 860px) { .vsim { grid-template-columns: 1fr; } }
+.vbox { background: var(--sup); border: 1px solid var(--borde); border-radius: 16px; padding: 20px; }
+.vbox h3 { font: 500 17px/1.2 var(--titulos); letter-spacing: -.01em; margin-bottom: 14px; }
+.respaldo .cob { font: 500 clamp(34px, 4vw, 46px)/1 var(--titulos); letter-spacing: -.03em; color: var(--cian); font-variant-numeric: tabular-nums; }
+.respaldo .cob-t { color: var(--suave); font-size: 15px; margin-top: 6px; }
+.barra-r { position: relative; height: 12px; border-radius: 99px; background: var(--borde); margin: 18px 0 8px; overflow: hidden; }
+.barra-r i { position: absolute; inset: 0 auto 0 0; background: var(--cian); border-radius: 99px; transition: width .35s ease; }
+.barra-r u { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--texto); opacity: .55; }
+.barra-l { display: flex; justify-content: space-between; color: var(--gris); font-size: 13px; }
+.dl { display: grid; grid-template-columns: 1fr auto; gap: 8px 14px; margin-top: 16px; font-size: 15px; }
+.dl dt { color: var(--suave); } .dl dd { margin: 0; text-align: right; color: var(--texto); font-weight: 600; font-variant-numeric: tabular-nums; }
+.gente { display: grid; gap: 10px; margin-top: 18px; }
+.per { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 12px; align-items: center; padding: 12px 14px; border: 1px solid var(--borde); border-radius: 12px; background: var(--fondo); }
+.per .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: var(--borde); color: var(--texto); grid-row: span 2; }
+.per b { font-size: 15px; } .per small { color: var(--gris); font-size: 13px; grid-column: 2; }
+.per .sal { grid-row: span 2; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.ok-t { color: var(--sube); } .no-t { color: var(--baja); }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.tabs button { font: inherit; font-size: 14px; font-weight: 600; padding: 9px 14px; border-radius: 99px; border: 1px solid var(--borde); background: transparent; color: var(--suave); cursor: pointer; min-height: 40px; }
+.tabs button[aria-selected="true"] { background: var(--cian); border-color: var(--cian); color: var(--fondo); }
+.tabs button:focus-visible, .vsim button:focus-visible, .vsim select:focus-visible { outline: 2px solid var(--cian); outline-offset: 2px; }
+.op[hidden] { display: none; }
+.vcampo { display: grid; gap: 6px; margin-bottom: 14px; } .vcampo label { font-size: 14px; color: var(--suave); font-weight: 600; }
+.vcampo select { font: inherit; font-size: 16px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--borde); background: var(--fondo); color: var(--texto); min-height: 44px; }
+.fila2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } @media (max-width: 480px) { .fila2 { grid-template-columns: 1fr; } }
+.calc { font-size: 15px; color: var(--suave); margin: 2px 0 14px; } .calc b { color: var(--texto); }
+.btn-s { font: inherit; font-weight: 700; font-size: 15px; padding: 12px 18px; border-radius: 12px; border: 0; background: var(--cian); color: var(--fondo); cursor: pointer; min-height: 46px; transition: transform .12s ease, opacity .12s ease; }
+.btn-s:active { transform: scale(.97); } .btn-s.sec { background: transparent; color: var(--texto); border: 1px solid var(--borde); }
+.btn-s.peligro { background: transparent; color: var(--baja); border: 1px solid var(--baja); }
+.reglas { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; }
+.reglas li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-size: 15px; color: var(--suave); max-width: none; }
+.reglas li::before { content: "·"; font-weight: 700; text-align: center; }
+.reglas li.ok::before { content: "✓"; color: var(--sube); } .reglas li.no::before { content: "✕"; color: var(--baja); }
+.reglas li.no { color: var(--texto); }
+.res { margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-size: 15px; display: none; }
+.res.si { display: block; background: color-mix(in srgb, var(--sube) 12%, transparent); color: var(--texto); }
+.res.no { display: block; background: color-mix(in srgb, var(--baja) 12%, transparent); color: var(--texto); }
+.nota-p { color: var(--gris); font-size: 14px; margin-top: 12px; }
+.vreg { margin-top: 18px; }
+.reg-cab { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.reg-cab .acc { display: flex; gap: 8px; flex-wrap: wrap; }
+.lb-s .bloques { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; max-height: 360px; overflow: auto; }
+.bloque { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; padding: 10px 12px; border: 1px solid var(--borde); border-radius: 12px; background: var(--fondo); font-size: 14px; }
+.bloque .bn { grid-row: span 2; font: 600 13px var(--mono); color: var(--gris); align-self: center; }
+.bloque .ev { color: var(--texto); } .bloque code { font: 12px var(--mono); color: var(--gris); word-break: break-all; }
+.bloque.roto { border-color: var(--baja); } .bloque.roto code { color: var(--baja); }
+.estado-cad { font-size: 15px; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .barra-r i, .btn-s { transition: none; } }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://wiqonlab.com/"},{"@type":"ListItem","position":2,"name":"Laboratorio","item":"https://wiqonlab.com/laboratorio/"},{"@type":"ListItem","position":3,"name":"Vale de compra en blockchain","item":"https://wiqonlab.com/laboratorio/vale-agm/"}]}</script>
+</head>
+<body>
+<div class="lb">
+  <header class="lb-barra">
+    <a class="marca" href="../../"><span class="corona s"><img src="../../assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
+    <div class="der">
+      <button class="tema-btn" type="button" aria-label="Cambiar tema" title="Cambiar tema"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button>
+    </div>
+  </header>
+  <nav class="miga" aria-label="breadcrumb"><a href="../../">Inicio</a><span>›</span><a href="../../laboratorio/">Laboratorio</a><span>›</span>Vale de compra en blockchain</nav>
+  <main><article>
+<section class="lb-hero">
+  <h1>Un vale de compra en blockchain, respaldado en mercadería</h1>
+  <p class="lead">Tokenizar es representar algo real con fichas digitales que se pueden verificar y transferir. Acá lo probamos con lo más simple y legal que puede emitir un comercio: un vale para comprar en el local, con respaldo en su inventario, sin prometer ganancias. Usá el simulador: comprá, canjeá, regalá y mirá cómo cada movimiento queda sellado en un registro que no se puede alterar sin que se note.</p>
+  <p class="meta">Por Avelino González, WIQON Lab · Simulación educativa en tu navegador: no se mueve dinero real ni se vende ningún vale.</p>
+</section>
+<div class="corta"><b>Respuesta corta</b><p>Un vale de compra tokenizado es un prepago para gastar en mercadería: no sube de valor, no se recompra en efectivo y no tiene un mercado con precio. Por eso no es una inversión. Si un token te promete ganancias, es otra cosa: en Paraguay la Ley 7572 lo trata como un valor y necesita autorización.</p></div>
+
+<section class="lb-s" aria-labelledby="t-sim">
+  <h2 id="t-sim">Simulador: el vale de un comercio de electrónica</h2>
+  <p>El comercio tiene mercadería en su local y emite vales de Gs. 100.000 a Gs. 1.000.000 con un <b id="t-desc">5 %</b> de descuento. Solo puede emitir vales hasta la cuarta parte del valor de su inventario: así siempre hay mercadería de sobra para cumplir cada canje. Los productos son del catálogo real de AGM Electrónicos; las personas y los saldos son de ejemplo.</p>
+  <div class="vsim" style="margin-top:22px">
+    <div class="vbox respaldo" aria-live="polite">
+      <h3>Respaldo</h3>
+      <div class="cob" id="cob">—</div>
+      <div class="cob-t" id="cob-t">de cobertura: mercadería por cada guaraní en vales</div>
+      <div class="barra-r" aria-hidden="true"><i id="barra" style="width:0%"></i><u id="tope-m" style="left:100%"></u></div>
+      <div class="barra-l"><span>Vales emitidos</span><span id="tope-l">tope de emisión</span></div>
+      <dl class="dl">
+        <dt>Mercadería en el local</dt><dd id="d-inv">—</dd>
+        <dt>Vales en circulación</dt><dd id="d-circ">—</dd>
+        <dt>Tope de emisión (25 %)</dt><dd id="d-tope">—</dd>
+        <dt>Cobrado por vales</dt><dd id="d-cob">—</dd>
+      </dl>
+      <div class="gente" id="gente"></div>
+    </div>
+    <div class="vbox">
+      <div class="tabs" role="tablist" aria-label="Operaciones">
+        <button role="tab" id="tb-comprar" aria-controls="p-comprar" aria-selected="true">Comprar vale</button>
+        <button role="tab" id="tb-canjear" aria-controls="p-canjear" aria-selected="false" tabindex="-1">Canjear</button>
+        <button role="tab" id="tb-regalar" aria-controls="p-regalar" aria-selected="false" tabindex="-1">Regalar</button>
+        <button role="tab" id="tb-efectivo" aria-controls="p-efectivo" aria-selected="false" tabindex="-1">Cambiar por efectivo</button>
+      </div>
+
+      <div class="op" role="tabpanel" id="p-comprar" aria-labelledby="tb-comprar">
+        <div class="fila2">
+          <div class="vcampo"><label for="c-quien">Quién compra</label><select id="c-quien"></select></div>
+          <div class="vcampo"><label for="c-monto">Valor del vale</label><select id="c-monto"><option value="100000">Gs. 100.000</option><option value="250000" selected>Gs. 250.000</option><option value="500000">Gs. 500.000</option><option value="1000000">Gs. 1.000.000</option></select></div>
+        </div>
+        <p class="calc" id="c-calc"></p>
+        <button class="btn-s" type="button" id="c-btn">Emitir vale</button>
+        <ul class="reglas" id="c-reglas"></ul><div class="res" id="c-res" role="status"></div>
+      </div>
+
+      <div class="op" role="tabpanel" id="p-canjear" aria-labelledby="tb-canjear" hidden>
+        <div class="vcampo"><label for="j-quien">Quién canjea</label><select id="j-quien"></select></div>
+        <div class="vcampo"><label for="j-prod">Producto del local</label><select id="j-prod"></select></div>
+        <p class="calc" id="j-calc"></p>
+        <button class="btn-s" type="button" id="j-btn">Canjear por el producto</button>
+        <ul class="reglas" id="j-reglas"></ul><div class="res" id="j-res" role="status"></div>
+      </div>
+
+      <div class="op" role="tabpanel" id="p-regalar" aria-labelledby="tb-regalar" hidden>
+        <div class="fila2">
+          <div class="vcampo"><label for="r-de">De</label><select id="r-de"></select></div>
+          <div class="vcampo"><label for="r-a">Para</label><select id="r-a"></select></div>
+        </div>
+        <div class="vcampo"><label for="r-monto">Cuánto</label><select id="r-monto"><option value="50000">Gs. 50.000</option><option value="100000" selected>Gs. 100.000</option><option value="250000">Gs. 250.000</option></select></div>
+        <button class="btn-s" type="button" id="r-btn">Regalar saldo</button>
+        <p class="nota-p">El vale se puede regalar, pero solo a personas verificadas y sin precio: no hay un mercado donde se compre y venda.</p>
+        <ul class="reglas" id="r-reglas"></ul><div class="res" id="r-res" role="status"></div>
+      </div>
+
+      <div class="op" role="tabpanel" id="p-efectivo" aria-labelledby="tb-efectivo" hidden>
+        <div class="vcampo"><label for="e-quien">Quién pide efectivo</label><select id="e-quien"></select></div>
+        <p class="calc">Pedirle al comercio que recompre el vale por plata.</p>
+        <button class="btn-s peligro" type="button" id="e-btn">Pedir recompra en efectivo</button>
+        <ul class="reglas" id="e-reglas"></ul><div class="res" id="e-res" role="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vbox vreg">
+    <div class="reg-cab">
+      <h3 style="margin:0">Registro sellado</h3>
+      <div class="acc">
+        <button class="btn-s sec" type="button" id="v-btn">Verificar el registro</button>
+        <button class="btn-s peligro" type="button" id="a-btn">Alterar un movimiento</button>
+        <button class="btn-s sec" type="button" id="z-btn">Reiniciar</button>
+      </div>
+    </div>
+    <p class="estado-cad" id="estado-cad" role="status" aria-live="polite"></p>
+    <p class="nota-p" style="margin:0 0 12px">Cada movimiento lleva la huella (SHA-256) del anterior. Si alguien cambia un dato del pasado, la huella deja de coincidir y la cadena se rompe desde ahí. Es lo mismo que hace una blockchain, en pequeño.</p>
+    <ol class="bloques" id="bloques" reversed></ol>
+  </div>
+</section>
+
+<section class="lb-s">
+  <h2>Cinco preguntas antes de comprar un token «respaldado»</h2>
+  <ol>
+    <li><b>¿Quién lo emite?</b> Razón social, RUC o CUIT y personas a cargo. Un correo gratuito y una cuenta de Instagram no alcanzan.</li>
+    <li><b>¿Te promete ganancia?</b> Si sí, preguntá con qué autorización del regulador se ofrece. En Paraguay, BCP y Superintendencia de Valores; en Argentina, la CNV.</li>
+    <li><b>¿Podés ver el respaldo?</b> Inventario o activo contado, con fecha, y la cantidad de tokens emitidos frente a ese respaldo.</li>
+    <li><b>¿Funciona en una red real o es una demo?</b> Muchas plataformas muestran una maqueta en red de prueba mientras ya cobran adelantos.</li>
+    <li><b>¿Te piden la frase semilla o conectar tu billetera principal?</b> Nunca la compartas, y para probar usá una billetera vacía.</li>
+  </ol>
+</section>
+
+<div class="cta-l">
+  <h2>¿Tenés un comercio y querés tu propio vale o una garantía digital?</h2>
+  <p>Te ayudamos con la parte técnica y con la formación: diseño de reglas, contrato en red de prueba, panel de respaldo y garantías verificables por cliente. No damos recomendaciones de inversión ni armamos ofertas al público: para eso trabajamos con tu abogado.</p>
+  <div class="acc"><a class="btn-s" style="text-decoration:none;display:inline-flex;align-items:center" href="../../contacto/">Escribinos</a></div>
+</div>
+
+<section class="lb-s faq"><h2>Preguntas frecuentes</h2>
+  <details><summary>¿Ya se puede comprar el vale de AGM Electrónicos?</summary><p>Todavía no. Esta página es una simulación para mostrar cómo funcionaría. Antes de emitir un vale real hay que contar el inventario, fijar las condiciones para el consumidor y revisar la facturación.</p></details>
+  <details><summary>¿Por qué el descuento no es una ganancia?</summary><p>Porque solo se puede usar comprando mercadería del local. No hay forma de convertir el vale en más plata de la que pagaste: es lo mismo que una tarjeta de regalo con promoción.</p></details>
+  <details><summary>¿Qué pasa si el comercio cierra?</summary><p>Es el riesgo de cualquier prepago. Por eso el tope de emisión deja mercadería de sobra y el respaldo se publica. En una versión real convendría además un vencimiento claro y un plazo para canjear.</p></details>
+  <details><summary>¿Hace falta saber de cripto para usarlo?</summary><p>No necesariamente. El cliente puede ver su saldo con un enlace o un código QR; la blockchain sirve para que cualquiera pueda comprobar cuántos vales hay emitidos.</p></details>
+</section>
+
+<section class="lb-s"><h2>Seguí leyendo</h2><ul class="rel"><li><a href="../../laboratorio/">Todos los experimentos</a></li><li><a href="../../auditoria-bots/">Auditoría de bots</a></li><li><a href="../../colaboraciones/">Servicios para comercios y marcas</a></li></ul></section>
+</article></main>
+  <footer class="lb-pie">
+    <div><a href="../../terminos/">Términos y condiciones</a><a href="../../devoluciones/">Entregas y devoluciones</a><a href="../../contacto/">Contacto</a><a href="../../privacidad/">Privacidad</a></div>
+    <div>Simulación educativa: no se vende ningún vale ni se mueve dinero real. No es asesoría legal ni financiera.</div><div>© 2026 WIQON</div>
+  </footer>
+</div>
+<script>
+  document.querySelector(".tema-btn").addEventListener("click", () => {
+    const r = document.documentElement; r.dataset.tema = r.dataset.tema === "claro" ? "oscuro" : "claro";
+    try { localStorage.setItem("wiqon-tema", r.dataset.tema); } catch (e) {}
+  });
+</script>
+<script>
+(() => {
+  const DESCUENTO = 0.05, TOPE = 0.25, INVENTARIO = 120000000;
+  // productos del catálogo real de AGM Electrónicos (precios del 16/11/2026)
+  const PRODUCTOS = [
+    ["Cargador Goline Quick Charger 20W", 40000], ["Auriculares Goline 9H Wireless", 70000],
+    ["Mecha perforadora de suelo 200 mm SONGHE", 75000], ["Kit de fresas rotativas 6 piezas", 80000],
+    ["Control Gamesir Tegenaria Lite", 100000], ["Perfume Ahmed Al Maghribi Meillure 80 ml", 120000],
+    ["Pulsera inteligente Xiaomi Mi Band 11", 405000], ["Tablet Xiaomi Redmi Pad SE 128 GB", 1165000],
+  ];
+  const PERSONAS = { ana: { n: "Ana", v: true, d: "verificada" }, bruno: { n: "Bruno", v: true, d: "verificado" }, carla: { n: "Carla", v: false, d: "sin verificar" } };
+  const $ = (id) => document.getElementById(id);
+  const gs = (n) => "Gs. " + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  let S;
+
+  async function sha(txt) {
+    if (window.crypto && crypto.subtle) {
+      const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
+      return [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, "0")).join("");
+    }
+    let h = 0; for (let i = 0; i < txt.length; i++) h = (Math.imul(31, h) + txt.charCodeAt(i)) | 0;   // respaldo sin crypto.subtle
+    return (h >>> 0).toString(16).padStart(8, "0").repeat(8);
+  }
+  async function sellar(ev) {
+    const prev = S.bloques.length ? S.bloques[S.bloques.length - 1].h : "0".repeat(64);
+    const b = { i: S.bloques.length, ev, prev };
+    b.h = await sha(b.i + "|" + b.ev + "|" + b.prev);
+    S.bloques.push(b);
+  }
+  async function iniciar() {
+    S = { inv: INVENTARIO, cobrado: 0, saldos: { ana: 0, bruno: 0, carla: 0 }, bloques: [], roto: -1 };
+    await sellar("Inventario publicado: " + gs(INVENTARIO) + " en mercadería · tope de vales " + gs(INVENTARIO * TOPE));
+    $("estado-cad").textContent = "";
+    pintar();
+  }
+  const circ = () => Object.values(S.saldos).reduce((a, b) => a + b, 0);
+
+  function pintar() {
+    const c = circ(), tope = S.inv * TOPE;
+    $("cob").textContent = c ? (S.inv / c).toFixed(1).replace(".", ",") + "×" : "∞";
+    $("cob-t").textContent = c ? "de cobertura: " + gs(S.inv / c).replace("Gs. ", "Gs. ") + " de mercadería por cada Gs. 1 en vales" : "sin vales emitidos todavía";
+    $("barra").style.width = Math.min(100, (c / tope) * 100) + "%";
+    $("tope-l").textContent = Math.round((c / tope) * 100) + " % del tope usado";
+    $("d-inv").textContent = gs(S.inv); $("d-circ").textContent = gs(c); $("d-tope").textContent = gs(tope); $("d-cob").textContent = gs(S.cobrado);
+    $("gente").innerHTML = Object.entries(PERSONAS).map(([k, p]) =>
+      `<div class="per"><span class="av" aria-hidden="true">${p.n[0]}</span><b>${p.n}</b><span class="sal">${gs(S.saldos[k])}</span><small class="${p.v ? "ok-t" : "no-t"}">${p.v ? "✓" : "✕"} ${p.d}</small></div>`).join("");
+    $("bloques").innerHTML = S.bloques.slice().reverse().map((b) =>
+      `<li class="bloque${S.roto >= 0 && b.i >= S.roto ? " roto" : ""}"><span class="bn">#${b.i}</span><span class="ev">${b.ev}</span><code>${b.h.slice(0, 32)}…</code></li>`).join("");
+    const m = +$("c-monto").value;
+    $("c-calc").innerHTML = `Paga <b>${gs(m * (1 - DESCUENTO))}</b> y recibe <b>${gs(m)}</b> para comprar en el local.`;
+    const pr = PRODUCTOS[+$("j-prod").value], q = $("j-quien").value;
+    $("j-calc").innerHTML = `Precio <b>${gs(pr[1])}</b> · saldo de ${PERSONAS[q].n}: <b>${gs(S.saldos[q])}</b>`;
+  }
+  function reglas(id, lista) {
+    $(id + "-reglas").innerHTML = lista.map(([ok, t]) => `<li class="${ok ? "ok" : "no"}">${t}</li>`).join("");
+    const todo = lista.every((x) => x[0]);
+    const r = $(id + "-res"); r.className = "res " + (todo ? "si" : "no");
+    return { todo, r };
+  }
+  const opts = (sel, html) => { $(sel).innerHTML = html; };
+  const optsGente = Object.entries(PERSONAS).map(([k, p]) => `<option value="${k}">${p.n} (${p.d})</option>`).join("");
+  ["c-quien", "j-quien", "r-de", "e-quien"].forEach((s) => opts(s, optsGente));
+  opts("r-a", optsGente); $("r-a").value = "bruno";
+  opts("j-prod", PRODUCTOS.map((p, i) => `<option value="${i}">${p[0]} · ${gs(p[1])}</option>`).join(""));
+
+  $("c-btn").onclick = async () => {
+    const q = $("c-quien").value, m = +$("c-monto").value, p = PERSONAS[q], tope = S.inv * TOPE;
+    const { todo, r } = reglas("c", [
+      [p.v, `${p.n} tiene la identidad verificada`],
+      [circ() + m <= tope, `La emisión no supera el tope de ${gs(tope)} (25 % del inventario)`],
+      [S.roto < 0, "El registro está íntegro"],
+    ]);
+    if (!todo) { r.textContent = "Emisión rechazada por el contrato: no se crea ningún vale."; return; }
+    S.saldos[q] += m; S.cobrado += m * (1 - DESCUENTO);
+    await sellar(`Emisión: vale de ${gs(m)} para ${p.n} (pagó ${gs(m * (1 - DESCUENTO))})`);
+    r.textContent = `Listo: ${p.n} tiene ${gs(S.saldos[q])} en vales.`; pintar();
+  };
+  $("j-btn").onclick = async () => {
+    const q = $("j-quien").value, pr = PRODUCTOS[+$("j-prod").value], p = PERSONAS[q];
+    const { todo, r } = reglas("j", [
+      [p.v, `${p.n} tiene la identidad verificada`],
+      [S.saldos[q] >= pr[1], `El saldo alcanza para el producto (${gs(pr[1])})`],
+      [S.inv >= pr[1], "Hay mercadería en el local"],
+      [S.roto < 0, "El registro está íntegro"],
+    ]);
+    if (!todo) { r.textContent = "Canje rechazado: el saldo y el inventario quedan igual."; return; }
+    S.saldos[q] -= pr[1]; S.inv -= pr[1];
+    await sellar(`Canje: ${p.n} retira «${pr[0]}» · se queman ${gs(pr[1])} en vales`);
+    r.textContent = `Canje hecho: ${p.n} se lleva el producto y esos vales dejan de existir.`; pintar();
+  };
+  $("r-btn").onclick = async () => {
+    const de = $("r-de").value, a = $("r-a").value, m = +$("r-monto").value;
+    const { todo, r } = reglas("r", [
+      [de !== a, "Origen y destino son personas distintas"],
+      [PERSONAS[a].v, `${PERSONAS[a].n} tiene la identidad verificada`],
+      [S.saldos[de] >= m, `${PERSONAS[de].n} tiene saldo suficiente`],
+      [true, "Es un regalo sin precio: no hay mercado de reventa"],
+      [S.roto < 0, "El registro está íntegro"],
+    ]);
+    if (!todo) { r.textContent = "Transferencia rechazada por el contrato."; return; }
+    S.saldos[de] -= m; S.saldos[a] += m;
+    await sellar(`Regalo: ${PERSONAS[de].n} → ${PERSONAS[a].n}, ${gs(m)}`);
+    r.textContent = "Listo: el saldo cambió de dueño; el total en circulación es el mismo."; pintar();
+  };
+  $("e-btn").onclick = () => {
+    const q = $("e-quien").value;
+    const { r } = reglas("e", [
+      [S.saldos[q] > 0, `${PERSONAS[q].n} tiene vales`],
+      [false, "El contrato no tiene función de recompra en efectivo"],
+    ]);
+    r.textContent = "Rechazado a propósito. Si el comercio devolviera plata por los vales, estaría tomando dinero del público con promesa de devolución, y eso ya no es un vale.";
+  };
+  $("v-btn").onclick = async () => {
+    let prev = "0".repeat(64), malo = -1;
+    for (const b of S.bloques) {
+      const h = await sha(b.i + "|" + b.ev + "|" + prev);
+      if (b.prev !== prev || h !== b.h) { malo = b.i; break; }
+      prev = b.h;
+    }
+    S.roto = malo;
+    $("estado-cad").innerHTML = malo < 0 ? `<span class="ok-t">✓ Registro íntegro: ${S.bloques.length} movimientos verificados.</span>` : `<span class="no-t">✕ La huella del movimiento #${malo} no coincide: alguien cambió el pasado.</span>`;
+    pintar();
+  };
+  $("a-btn").onclick = () => {
+    const cand = S.bloques.filter((b) => b.i > 0);
+    const b = cand.length ? cand[0] : S.bloques[0];
+    b.ev = b.ev.replace(/\d[\d.]*/, (x) => x + "0");
+    $("estado-cad").innerHTML = `Se cambió un número del movimiento #${b.i} sin recalcular su huella. Tocá «Verificar el registro».`;
+    pintar();
+  };
+  $("z-btn").onclick = iniciar;
+  ["c-monto", "j-prod", "j-quien"].forEach((s) => $(s).addEventListener("change", pintar));
+
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function elegir(t) {
+    tabs.forEach((x) => { const on = x === t; x.setAttribute("aria-selected", on); x.tabIndex = on ? 0 : -1; $(x.getAttribute("aria-controls")).hidden = !on; });
+    t.focus();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => elegir(t));
+    t.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") elegir(tabs[(i + 1) % tabs.length]);
+      if (e.key === "ArrowLeft") elegir(tabs[(i - 1 + tabs.length) % tabs.length]);
+    });
+  });
+  $("t-desc").textContent = Math.round(DESCUENTO * 100) + " %";
+  iniciar();
+})();
+</script>
+</body>
+</html>

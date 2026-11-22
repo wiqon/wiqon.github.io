@@ -501,12 +501,12 @@ CONTACT_EN = f"""<h1>Contact</h1>
 def pie(lang):
     if lang == "es":
         return (f'<a href="../terminos/">Términos y condiciones</a><a href="../devoluciones/">Entregas y devoluciones</a>'
-                f'<a href="../privacidad/">Privacidad</a><a href="../contacto/">Contacto</a><br>© 2026 WIQON · {TITULAR} · Paraguay')
+                f'<a href="../privacidad/">Privacidad</a><a href="../contacto/">Contacto</a><a href="../colaboraciones/">Colaboraciones</a><br>© 2026 WIQON · {TITULAR} · Paraguay')
     if lang == "en":
         return (f'<a href="../terms/">Terms and conditions</a><a href="../refunds/">Delivery and refunds</a>'
-                f'<a href="../privacy/">Privacy</a><a href="../contact/">Contact</a><br>© 2026 WIQON · {TITULAR} · Paraguay')
+                f'<a href="../privacy/">Privacy</a><a href="../contact/">Contact</a><a href="../partnerships/">Partnerships</a><br>© 2026 WIQON · {TITULAR} · Paraguay')
     return (f'<a href="../termos/">Termos e condições</a><a href="../devolucoes/">Entregas e devoluções</a>'
-            f'<a href="../privacidade/">Privacidade</a><a href="../contato/">Contato</a><br>© 2026 WIQON · {TITULAR} · Paraguai')
+            f'<a href="../privacidade/">Privacidade</a><a href="../contato/">Contato</a><a href="../parcerias/">Parcerias</a><br>© 2026 WIQON · {TITULAR} · Paraguai')
 
 
 PAGINAS = [
