@@ -23,7 +23,7 @@ ES = f"""<h1>WIQON Ciberseguridad</h1>
 <p>¿Por qué ahora? En noviembre de 2026 relevamos <strong>63 sitios de empresas paraguayas (.com.py)</strong> que aparecen en listas públicas de phishing: les entraron por un WordPress o un plugin desactualizado y los usaron para alojar estafas. Casi siempre, el dueño no se había enterado.</p>
 
 <h2>Planes</h2>
-<div class="tit"><p><strong>Revisión externa · US$ 180</strong><br>Sin intrusión: miramos lo que cualquiera ve desde afuera. Entrega en 3 días hábiles.</p>
+<div class="tit"><p><strong>Revisión externa · US$ 120 de lanzamiento</strong> (precio normal US$ 180)<br>Sin intrusión: miramos lo que cualquiera ve desde afuera. Entrega en 3 días hábiles.</p>
 <ul>
 <li>Certificado, cabeceras de seguridad, archivos y paneles expuestos.</li>
 <li>Versión de WordPress, plugins o framework, y vulnerabilidades conocidas (CVE).</li>
@@ -68,7 +68,7 @@ PT = f"""<h1>WIQON Cibersegurança</h1>
 <p>Por que agora? Em novembro de 2026 levantamos <strong>63 sites de empresas paraguaias (.com.py)</strong> que aparecem em listas públicas de phishing: foram invadidos por um WordPress ou plugin desatualizado e usados para hospedar golpes. Quase sempre o dono nem sabia.</p>
 
 <h2>Planos</h2>
-<div class="tit"><p><strong>Revisão externa · US$ 180</strong><br>Sem intrusão: olhamos o que qualquer pessoa vê de fora. Entrega em 3 dias úteis.</p>
+<div class="tit"><p><strong>Revisão externa · US$ 120 de lançamento</strong> (preço normal US$ 180)<br>Sem intrusão: olhamos o que qualquer pessoa vê de fora. Entrega em 3 dias úteis.</p>
 <ul>
 <li>Certificado, cabeçalhos de segurança, arquivos e painéis expostos.</li>
 <li>Versão do WordPress, plugins ou framework, e vulnerabilidades conhecidas (CVE).</li>
