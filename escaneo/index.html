@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escaneo gratuito de tu sitio — WIQON</title>
+<meta name="description" content="Escaneo gratuito y pasivo de un sitio web: HTTPS, certificado, cabeceras, versiones, SPF, DMARC y listas de phishing.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://wiqonlab.com/escaneo/">
+<link rel="icon" href="../assets/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/v4.css">
+<script>try{var t=localStorage.getItem("wiqon-tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+<style>
+  .legal-p { max-width: 780px; margin: 0 auto; padding: 48px 20px 80px; }
+  .legal-p h1 { font-size: 2rem; font-weight: 800; letter-spacing: -.02em; }
+  .legal-p h2 { font-size: 1.15rem; margin: 30px 0 8px; }
+  .legal-p p, .legal-p li, .legal-p td, .legal-p th { color: var(--suave); font-size: .95rem; line-height: 1.7; }
+  .legal-p ul, .legal-p ol { padding-left: 20px; }
+  .legal-p a { color: var(--cian); }
+  .legal-p .meta { margin-top: 6px; }
+  .legal-p table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+  .legal-p th, .legal-p td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+  .legal-p th, .legal-p td { overflow-wrap: anywhere; }
+  @media (max-width: 480px) { .legal-p th, .legal-p td { padding: 8px 6px; font-size: .88rem; } }
+  .legal-p .tit { border: 1px solid var(--borde); border-radius: 12px; padding: 14px 18px; margin: 18px 0; }
+  .legal-p .redes-l a { margin-right: 14px; display: inline-block; }
+  .form-c { display: grid; gap: 12px; margin-top: 14px; }
+  .form-c label { font-weight: 600; font-size: .9rem; }
+  .form-c input, .form-c textarea { width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--borde2); background: var(--fondo2); color: var(--texto); font: 1rem var(--sans); }
+  .form-c input:focus, .form-c textarea:focus { outline: 2px solid var(--cian); outline-offset: 1px; }
+  .form-c textarea { min-height: 150px; resize: vertical; }
+  .form-c .trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-c .estado { min-height: 1.4em; font-weight: 600; }
+  .form-c .estado.ok { color: var(--sube); }
+  .form-c .estado.error { color: #e5484d; }
+  .pie-l { max-width: 780px; margin: 0 auto; padding: 0 20px 50px; font-size: .85rem; color: var(--gris); }
+  .pie-l a { color: var(--gris); margin-right: 14px; }
+</style>
+</head>
+<body>
+<header class="nav"><div class="c"><a class="marca" href="../"><span class="corona s"><img src="../assets/logo.png" alt="" width="34" height="34"></span><span>WIQON</span></a>
+<div class="nav-d"><a class="btn ch" href="../">Volver a WIQON</a></div></div></header>
+<main class="legal-p">
+<style>
+.esc-form{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 8px}
+.esc-form input{flex:1 1 260px;min-width:0;font:inherit;font-size:1.05rem;padding:12px 14px;border-radius:12px;border:1px solid rgba(127,127,127,.45);background:transparent;color:inherit}
+.esc-form button{font-size:1.05rem}
+.esc-estado{min-height:1.4em;margin:6px 0 0}
+.esc-res{margin-top:18px;display:none}
+.esc-cab{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:16px;border:1px solid rgba(127,127,127,.35);margin-bottom:12px}
+.esc-cab b{font-size:1.2rem}
+.esc-lista{list-style:none;padding:0 !important;margin:0 !important;display:grid;gap:10px}
+.esc-lista li{display:grid;grid-template-columns:18px 1fr;gap:12px;padding:14px 16px;border-radius:14px;border:1px solid rgba(127,127,127,.3)}
+.esc-lista p{margin:4px 0 0}
+.esc-lista .con{opacity:.85;font-size:.95rem}
+.pt{width:16px;height:16px;border-radius:50%;margin-top:4px}
+.pt.verde{background:#22c55e}.pt.amarillo{background:#eab308}.pt.rojo{background:#ef4444}
+.esc-cta{margin-top:18px;padding:16px 18px;border-radius:16px;border:2px solid #2ad4ff}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style><h1>Escaneo gratuito de tu sitio</h1>
+<p>Escribí el dominio de tu web (o de cualquier sitio) y en unos segundos te mostramos un semáforo con lo básico: conexión segura, certificado, cabeceras de seguridad, versiones a la vista, protección del correo (SPF y DMARC) y si aparece en listas públicas de phishing.</p>
+<form class="esc-form" id="esc-f" novalidate>
+  <label for="esc-d" class="sr-only">Dominio</label>
+  <input id="esc-d" name="dominio" placeholder="miempresa.com.py" autocomplete="url" inputmode="url" maxlength="200" required>
+  <button class="btn p" type="submit">Escanear gratis</button>
+</form>
+<p class="esc-estado" id="esc-e" role="status" aria-live="polite"></p>
+<div class="esc-res" id="esc-r"></div>
+<h2>Qué hace y qué no</h2>
+<ul>
+<li><strong>Es pasivo:</strong> mira solo lo que ve cualquier navegador al abrir la portada y los registros públicos del DNS, como lo hacen otros servicios de análisis abiertos.</li>
+<li><strong>No</strong> prueba contraseñas, no busca archivos ocultos, no escanea puertos y no cambia nada en el sitio.</li>
+<li>Guardamos el dominio consultado y la fecha, para estadísticas y para evitar abusos. No guardamos tu IP en claro.</li>
+<li>Hay un límite de escaneos por hora.</li>
+</ul>
+<p>¿Querés la revisión completa, con informe y cómo corregir cada punto? Mirá <a href="../ciberseguridad/">WIQON Ciberseguridad</a>.</p>
+<script>
+(function () {
+  var f = document.getElementById('esc-f'), e = document.getElementById('esc-e'), r = document.getElementById('esc-r');
+  var NIVEL = {'verde': 'bien', 'amarillo': 'hay cosas para mejorar', 'rojo': 'hay puntos urgentes'};
+  function el(tag, cls, txt) { var x = document.createElement(tag); if (cls) x.className = cls; if (txt) x.textContent = txt; return x; }
+  f.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var d = (f.dominio.value || '').trim();
+    if (d.length < 4) { e.textContent = 'Escribí un dominio, por ejemplo miempresa.com.py'; return; }
+    var b = f.querySelector('button'); b.disabled = true; r.style.display = 'none'; e.textContent = 'Escaneando… (tarda unos 10 segundos)';
+    fetch('https://n8n.wiqonlab.com/webhook/escaneo-gratis', { method: 'POST', body: new URLSearchParams({ dominio: d }) })
+      .then(function (x) { return x.json(); })
+      .then(function (j) {
+        if (j.aviso || j.error || !j.items) { e.textContent = j.aviso || j.error || 'No pudimos completar el escaneo. Probá de nuevo en unos minutos.'; return; }
+        e.textContent = '';
+        r.innerHTML = '';
+        var cab = el('div', 'esc-cab'); cab.appendChild(el('span', 'pt ' + j.nivel));
+        var c = el('div'); c.appendChild(el('b', '', j.dominio + ': ' + NIVEL[j.nivel]));
+        c.appendChild(el('p', '', j.resumen.rojo + ' urgentes · ' + j.resumen.amarillo + ' importantes · ' + j.resumen.verde + ' bien'));
+        cab.appendChild(c); r.appendChild(cab);
+        var ul = el('ul', 'esc-lista');
+        j.items.forEach(function (i) {
+          var li = el('li'); li.appendChild(el('span', 'pt ' + i.estado));
+          var dv = el('div'); dv.appendChild(el('b', '', i.titulo)); dv.appendChild(el('p', '', i.detalle));
+          if (i.consejo) dv.appendChild(el('p', 'con', i.consejo));
+          li.appendChild(dv); ul.appendChild(li);
+        });
+        r.appendChild(ul);
+        var cta = el('div', 'esc-cta'); cta.innerHTML = '<b>Esto es una muestra.</b> La revisión completa mira además los plugins y versiones con fallas conocidas, archivos y paneles expuestos, DKIM, dominios que imitan al tuyo y puertos abiertos, con un informe y cómo corregir cada punto. <a href="../ciberseguridad/">Ver WIQON Ciberseguridad</a>.'; r.appendChild(cta);
+        r.style.display = 'block';
+      })
+      .catch(function () { e.textContent = 'No pudimos completar el escaneo. Probá de nuevo en unos minutos.'; })
+      .finally(function () { b.disabled = false; });
+  });
+})();
+</script>
+
+</main>
+<footer class="pie-l"><a href="../terminos/">Términos y condiciones</a><a href="../devoluciones/">Entregas y devoluciones</a><a href="../privacidad/">Privacidad</a><a href="../contacto/">Contacto</a><a href="../colaboraciones/">Colaboraciones</a><br>© 2026 WIQON · Avelino González Melgarejo · Paraguay</footer>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c394b4ca4e5144b19a861d3203511d84"}'></script>
+</body>
+</html>

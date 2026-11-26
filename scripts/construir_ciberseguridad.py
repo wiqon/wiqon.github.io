@@ -22,6 +22,8 @@ ES = f"""<h1>WIQON Ciberseguridad</h1>
 <p>Revisamos la seguridad de sitios web y plataformas online de comercios y pymes. Te entregamos un informe claro, en lenguaje simple, con qué está mal, qué tan grave es y cómo corregirlo. Usamos el mismo método que en el laboratorio: <strong>medir y documentar, no prometer</strong>.</p>
 <p>¿Por qué ahora? En noviembre de 2026 relevamos <strong>63 sitios de empresas paraguayas (.com.py)</strong> que aparecen en listas públicas de phishing: les entraron por un WordPress o un plugin desactualizado y los usaron para alojar estafas. Casi siempre, el dueño no se había enterado.</p>
 
+<div class="tit"><p><strong>Probá gratis el escaneo básico.</strong> Escribí tu dominio y en segundos ves un semáforo con HTTPS, certificado, cabeceras, correo y listas de phishing. <a href="../escaneo/">Escanear mi sitio gratis</a>.</p></div>
+
 <h2>Planes</h2>
 <div class="tit"><p><strong>Revisión externa · US$ 120 de lanzamiento</strong> (precio normal US$ 180)<br>Sin intrusión: miramos lo que cualquiera ve desde afuera. Entrega en 3 días hábiles.</p>
 <ul>
@@ -66,6 +68,8 @@ ES = f"""<h1>WIQON Ciberseguridad</h1>
 PT = f"""<h1>WIQON Cibersegurança</h1>
 <p>Revisamos a segurança de sites e plataformas online de lojas e pequenas empresas. Você recebe um relatório claro, em linguagem simples, com o que está errado, a gravidade e como corrigir. Usamos o mesmo método do laboratório: <strong>medir e documentar, não prometer</strong>.</p>
 <p>Por que agora? Em novembro de 2026 levantamos <strong>63 sites de empresas paraguaias (.com.py)</strong> que aparecem em listas públicas de phishing: foram invadidos por um WordPress ou plugin desatualizado e usados para hospedar golpes. Quase sempre o dono nem sabia.</p>
+
+<div class="tit"><p><strong>Teste grátis o escaneamento básico.</strong> Digite seu domínio e em segundos veja um semáforo com HTTPS, certificado, cabeçalhos, e-mail e listas de phishing. <a href="../escaneo/">Escanear meu site grátis</a>.</p></div>
 
 <h2>Planos</h2>
 <div class="tit"><p><strong>Revisão externa · US$ 120 de lançamento</strong> (preço normal US$ 180)<br>Sem intrusão: olhamos o que qualquer pessoa vê de fora. Entrega em 3 dias úteis.</p>
