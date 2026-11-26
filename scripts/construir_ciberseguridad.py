@@ -25,6 +25,7 @@ ES = f"""<h1>WIQON Ciberseguridad</h1>
 <div class="tit"><p><strong>Probá gratis el escaneo básico.</strong> Escribí tu dominio y en segundos ves un semáforo con HTTPS, certificado, cabeceras, correo y listas de phishing. <a href="../escaneo/">Escanear mi sitio gratis</a>.</p></div>
 
 <h2>Planes</h2>
+<div class="tit"><p><strong>Vigilancia mensual · US$ 30 por mes</strong><br>Te avisamos si tu sitio se cae, si el certificado está por vencer, si cambia la portada (desfiguración), si aparece en una lista de phishing, si alguien registra un dominio parecido o si sale una vulnerabilidad nueva en lo que usás.</p></div>
 <div class="tit"><p><strong>Revisión externa · US$ 120 de lanzamiento</strong> (precio normal US$ 180)<br>Sin intrusión: miramos lo que cualquiera ve desde afuera. Entrega en 3 días hábiles.</p>
 <ul>
 <li>Certificado, cabeceras de seguridad, archivos y paneles expuestos.</li>
@@ -42,7 +43,7 @@ ES = f"""<h1>WIQON Ciberseguridad</h1>
 <li>Reunión de 30 minutos para explicar el informe.</li>
 <li>Segunda verificación sin costo después de que corrijas.</li>
 </ul></div>
-<div class="tit"><p><strong>Vigilancia mensual · US$ 30 por mes</strong><br>Te avisamos si tu sitio se cae, si el certificado está por vencer, si cambia la portada (desfiguración), si aparece en una lista de phishing, si alguien registra un dominio parecido o si sale una vulnerabilidad nueva en lo que usás.</p></div>
+
 
 <h2>Cómo trabajamos</h2>
 <ul>
@@ -72,6 +73,7 @@ PT = f"""<h1>WIQON Cibersegurança</h1>
 <div class="tit"><p><strong>Teste grátis o escaneamento básico.</strong> Digite seu domínio e em segundos veja um semáforo com HTTPS, certificado, cabeçalhos, e-mail e listas de phishing. <a href="../escaneo/">Escanear meu site grátis</a>.</p></div>
 
 <h2>Planos</h2>
+<div class="tit"><p><strong>Monitoramento mensal · US$ 30 por mês</strong><br>Avisamos se o site cair, se o certificado estiver para vencer, se a página inicial mudar (desfiguração), se aparecer numa lista de phishing, se alguém registrar um domínio parecido ou se sair uma vulnerabilidade nova no que você usa.</p></div>
 <div class="tit"><p><strong>Revisão externa · US$ 120 de lançamento</strong> (preço normal US$ 180)<br>Sem intrusão: olhamos o que qualquer pessoa vê de fora. Entrega em 3 dias úteis.</p>
 <ul>
 <li>Certificado, cabeçalhos de segurança, arquivos e painéis expostos.</li>
@@ -89,7 +91,7 @@ PT = f"""<h1>WIQON Cibersegurança</h1>
 <li>Reunião de 30 minutos para explicar o relatório.</li>
 <li>Segunda verificação sem custo depois que você corrigir.</li>
 </ul></div>
-<div class="tit"><p><strong>Monitoramento mensal · US$ 30 por mês</strong><br>Avisamos se o site cair, se o certificado estiver para vencer, se a página inicial mudar (desfiguração), se aparecer numa lista de phishing, se alguém registrar um domínio parecido ou se sair uma vulnerabilidade nova no que você usa.</p></div>
+
 
 <h2>Como trabalhamos</h2>
 <ul>

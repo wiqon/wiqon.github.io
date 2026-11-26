@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="WIQON · Auditoría">
+<defs>
+<radialGradient id="f-auditoria" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#12306a"/><stop offset=".65" stop-color="#081a3d"/><stop offset="1" stop-color="#040b1f"/></radialGradient>
+<path id="a-auditoria" d="M 25 120 A 95 95 0 0 1 215 120"/>
+<path id="b-auditoria" d="M 15 120 A 105 105 0 0 0 225 120"/>
+</defs>
+<circle cx="120" cy="120" r="116" fill="url(#f-auditoria)" stroke="#a78bfa" stroke-width="5"/>
+<circle cx="120" cy="120" r="84" fill="none" stroke="#a78bfa" stroke-opacity=".35" stroke-width="2"/>
+<text font-family="Segoe UI, Inter, Arial, sans-serif" font-weight="800" font-size="15" letter-spacing="2.4" fill="#a78bfa" text-anchor="middle"><textPath href="#a-auditoria" startOffset="50%">AUDITORÍA</textPath></text>
+<text font-family="Segoe UI, Inter, Arial, sans-serif" font-weight="800" font-size="11.5" letter-spacing="1.8" fill="#dbe8ff" text-anchor="middle"><textPath href="#b-auditoria" startOffset="50%">ESTRATEGIAS Y BOTS</textPath></text>
+<circle cx="22" cy="120" r="3.2" fill="#a78bfa"/><circle cx="218" cy="120" r="3.2" fill="#a78bfa"/>
+<g transform="translate(120 58)"><path d="M-17 -8 L-9 12 L0 -4 L9 12 L17 -8" fill="none" stroke="#fff" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/><rect x="-3.6" y="9" width="7.2" height="7.2" fill="#a78bfa" transform="rotate(45 0 12.6)"/></g>
+<g transform="translate(70 76)"><rect x="14" y="56" width="10" height="20" rx="2" fill="#fff"/><rect x="30" y="44" width="10" height="32" rx="2" fill="#fff"/><rect x="46" y="62" width="10" height="14" rx="2" fill="#fff"/><circle cx="62" cy="42" r="20" fill="none" stroke="#a78bfa" stroke-width="6.5"/><path d="M76 56 L92 72" stroke="#a78bfa" stroke-width="9" stroke-linecap="round"/></g>
+</svg>

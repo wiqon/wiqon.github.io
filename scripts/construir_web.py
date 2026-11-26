@@ -224,6 +224,7 @@ PLANTILLA = """<!doctype html>
 <section class="s" id="productos" aria-labelledby="prod-t">
   <div class="c">
     <div class="cab"><div><span class="vol">{{prod_vol}}</span><h2 class="t" id="prod-t">{{prod_h2}}</h2></div><p class="der">{{prod_p}}</p></div>
+    {{sellos}}
     <div class="pilares">
       <article class="pilar ap">
         <figure class="p-img"><a href="{{r}}assets/productos/laboratorio_{{img_idi}}.webp" target="_blank" rel="noopener"><img src="{{r}}assets/productos/laboratorio_{{img_idi}}.webp" width="1200" height="675" alt="{{img_a_alt}}" loading="lazy" decoding="async"></a><figcaption>{{img_a}}</figcaption></figure>
@@ -465,6 +466,49 @@ def pasos(items, idioma="es"):
                    for i, (t, d) in enumerate(items, 1))
 
 
+# Sellos de producto (assets/distintivos, ver construir_distintivos.py): franja destacada arriba de «Qué ofrecemos».
+SELLOS = {
+    "es": ("Nuestros sellos", [("shield", "WIQON Shield", "Riesgo automático en MT5", "shield/", ""),
+                               ("ciberseguridad", "Ciberseguridad", "Escaneo gratis de tu web", "ciberseguridad/", "Nuevo"),
+                               ("tokenizacion", "Tokenización", "Vales y saldo en blockchain", "laboratorio/vale-agm/", ""),
+                               ("auditoria", "Auditoría", "De estrategias y bots", "auditoria-bots/", ""),
+                               ("libro", "Libro", "¿Ventaja o suerte?", "libro/", ""),
+                               ("laboratorio", "Laboratorio", "20+ estrategias probadas", "#laboratorio", "")]),
+    "pt": ("Nossos selos", [("shield", "WIQON Shield", "Risco automático no MT5", "#shield", ""),
+                            ("ciberseguridad", "Cibersegurança", "Escaneamento grátis do seu site", "ciberseguranca/", "Novo"),
+                            ("tokenizacion", "Tokenização", "Vales e saldo em blockchain", "../laboratorio/vale-agm/", ""),
+                            ("auditoria", "Auditoria", "De estratégias e robôs", "auditoria-robos/", ""),
+                            ("libro", "Livro", "Vantagem ou sorte?", "livro/", ""),
+                            ("laboratorio", "Laboratório", "20+ estratégias testadas", "#laboratorio", "")]),
+    "en": ("Our seals", [("shield", "WIQON Shield", "Automatic risk control in MT5", "shield/", ""),
+                         ("ciberseguridad", "Cybersecurity", "Free website scan", "../escaneo/", "New"),
+                         ("tokenizacion", "Tokenization", "Vouchers and balance on blockchain", "../laboratorio/vale-agm/", ""),
+                         ("auditoria", "Audit", "Strategies and bots", "bot-audit/", ""),
+                         ("libro", "Book", "Edge or luck?", "book/", ""),
+                         ("laboratorio", "Laboratory", "20+ strategies tested", "#laboratorio", "")]),
+}
+ACENTOS = {"shield": "#2ad4ff", "ciberseguridad": "#3be08a", "tokenizacion": "#ffd76a", "auditoria": "#a78bfa", "libro": "#ff9f43", "laboratorio": "#17c3e6"}
+SELLOS_CSS = ("<style>.sellos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:6px 0 30px}"
+              ".sello-p{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:18px 10px 16px;"
+              "border-radius:18px;border:1px solid rgba(127,127,127,.22);text-decoration:none;color:inherit;transition:transform .2s ease,border-color .2s ease}"
+              ".sello-p img{width:112px;height:112px;margin-bottom:6px;transition:transform .4s cubic-bezier(.2,.8,.2,1)}"
+              ".sello-p b{font-size:1rem}.sello-p small{font-size:.86rem;opacity:.78;line-height:1.3}"
+              ".sello-p:hover,.sello-p:focus-visible{transform:translateY(-3px);border-color:var(--ac)}"
+              ".sello-p:hover img,.sello-p:focus-visible img{transform:rotate(-8deg) scale(1.05)}"
+              ".sello-p .nv{position:absolute;top:10px;right:10px;font-size:.7rem;font-weight:800;padding:3px 8px;border-radius:99px;background:var(--ac);color:#06142e}"
+              "@media (prefers-reduced-motion:reduce){.sello-p,.sello-p img{transition:none}}</style>")
+
+
+def sellos(lang, r=""):
+    titulo, items = SELLOS[lang]
+    suf = "" if lang == "es" else f"_{lang}"
+    tarjetas = "".join(
+        f'<a class="sello-p" href="{href}" style="--ac:{ACENTOS[k]}">{f"<span class=nv>{nv}</span>" if nv else ""}'
+        f'<img src="{r}assets/distintivos/{k}{suf}.svg" width="112" height="112" alt="" loading="lazy" decoding="async">'
+        f'<b>{nombre}</b><small>{desc}</small></a>' for k, nombre, desc, href, nv in items)
+    return f'{SELLOS_CSS}<nav class="sellos" aria-label="{titulo}">{tarjetas}</nav>'
+
+
 def serv(icono, texto, chip, cls):
     return f'<li>{ic(icono)}<span>{texto}</span><span class="chip-e {cls}">{chip}</span></li>'
 
@@ -598,6 +642,7 @@ ES = dict(ICONOS,
     c_t="Datos y automatización", c_chip="Servicios",
     c_que="Bots, auditorías y paneles hechos con la misma metodología del laboratorio.",
     c_prob="automatizar y medir tu operativa sin depender de promesas.",
+    sellos=sellos("es", ""),
     c_lista="".join([serv("lupa", '<a href="auditoria-bots/">Auditoría de estrategias y bots</a>', "Disponible", "ok"), serv("bot", "Bots para Binance", "Disponible", "ok"),
                      serv("panel", "Dashboards y capacitación", "Disponible", "ok"), serv("codigo", '<a href="laboratorio/vale-agm/">Tokenización de vales y garantías para comercios</a>', "Disponible", "ok"),
                      serv("muestra", '<a href="colaboraciones/">Colaboraciones con marcas (pruebas reales)</a>', "Disponible", "ok"),
@@ -754,6 +799,7 @@ BR = dict(ICONOS,
     c_t="Dados e automação", c_chip="Serviços",
     c_que="Robôs, auditorias e painéis feitos com a mesma metodologia do laboratório.",
     c_prob="automatizar e medir a sua operação sem depender de promessas.",
+    sellos=sellos("pt", "../"),
     c_lista="".join([serv("lupa", '<a href="auditoria-robos/">Auditoria de estratégias e robôs</a>', "Disponível", "ok"), serv("bot", "Robôs para Binance", "Disponível", "ok"),
                      serv("panel", "Dashboards e capacitação", "Disponível", "ok"), serv("codigo", '<a href="../laboratorio/vale-agm/">Tokenização de vales e garantias para comércios</a>', "Disponível", "ok"),
                      serv("muestra", '<a href="parcerias/">Parcerias com marcas (testes reais)</a>', "Disponível", "ok"),
@@ -917,6 +963,7 @@ EN = dict(ES,
     c_t="Data and automation", c_chip="Services",
     c_que="Bots, audits and dashboards built with the same methodology as the lab.",
     c_prob="automating and measuring your trading without relying on promises.",
+    sellos=sellos("en", "../"),
     c_lista="".join([serv("lupa", '<a href="bot-audit/">Strategy and bot audits</a>', "Available", "ok"), serv("bot", "Binance bots", "Available", "ok"),
                      serv("panel", "Dashboards and training", "Available", "ok"), serv("codigo", '<a href="../laboratorio/vale-agm/">Tokenized vouchers and warranties for stores</a>', "Available", "ok"),
                      serv("muestra", '<a href="partnerships/">Brand partnerships (real tests)</a>', "Available", "ok"),
