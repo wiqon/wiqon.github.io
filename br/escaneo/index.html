@@ -56,6 +56,9 @@
 .esc-lista .con{opacity:.85;font-size:.95rem}
 .pt{width:16px;height:16px;border-radius:50%;margin-top:4px}
 .pt.verde{background:#22c55e}.pt.amarillo{background:#eab308}.pt.rojo{background:#ef4444}
+.esc-lista li.bloq{opacity:.9;border-style:dashed}
+.esc-lista li.bloq b{filter:blur(0)}
+.esc-lista li.bloq span.borroso{display:inline-block;filter:blur(5px);user-select:none}
 .esc-cta{margin-top:18px;padding:16px 18px;border-radius:16px;border:2px solid #2ad4ff}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style><h1>Escaneamento gratuito do seu site</h1>
@@ -72,6 +75,7 @@
 <li><strong>É passivo:</strong> olha só o que qualquer navegador vê ao abrir a página inicial e os registros públicos do DNS, como outros serviços abertos de análise.</li>
 <li><strong>Não</strong> testa senhas, não procura arquivos ocultos, não escaneia portas e não muda nada no site.</li>
 <li>Guardamos o domínio consultado e a data, para estatísticas e para evitar abusos. Não guardamos seu IP em claro.</li>
+<li>A amostra grátis detalha um problema; se houver mais, dizemos quantos e qual a gravidade, e o detalhe vai no relatório completo.</li>
 <li>Há um limite de escaneamentos por hora.</li>
 </ul>
 <p>Quer a revisão completa, com relatório e como corrigir cada ponto? Veja a <a href="../ciberseguranca/">WIQON Cibersegurança</a>.</p>
@@ -102,8 +106,16 @@
           if (i.consejo) dv.appendChild(el('p', 'con', i.consejo));
           li.appendChild(dv); ul.appendChild(li);
         });
+        var oc = j.ocultos || [];
+        oc.forEach(function (o) {
+          var li = el('li', 'bloq'); li.appendChild(el('span', 'pt ' + o.estado));
+          var dv = el('div'); dv.appendChild(el('b', '', '🔒 ' + (o.estado === 'rojo' ? 'Problema urgente' : 'Problema importante')));
+          dv.appendChild(el('p', '', 'O detalhe e como corrigir estão no relatório completo.')); var bo = el('span', 'borroso', 'xxxxxxxx xxxxx xxxxxxxxxxxx xxxxxx'); dv.appendChild(bo);
+          li.appendChild(dv); ul.appendChild(li);
+        });
         r.appendChild(ul);
-        var cta = el('div', 'esc-cta'); cta.innerHTML = '<b>Isto é uma amostra.</b> A revisão completa também verifica plugins e versões com falhas conhecidas, arquivos e painéis expostos, DKIM, domínios que imitam o seu e portas abertas, com relatório e como corrigir cada ponto. <a href="../ciberseguranca/">Ver WIQON Cibersegurança</a>.'; r.appendChild(cta);
+        var cta = el('div', 'esc-cta');
+        cta.innerHTML = (oc.length ? '<b>' + 'Encontramos mais N problema(s).'.replace('N', oc.length) + '</b> ' : '') + 'A amostra grátis mostra um. A revisão completa explica todos e também verifica plugins e versões com falhas conhecidas, arquivos e painéis expostos, DKIM, domínios que imitam o seu e portas abertas, com relatório e como corrigir cada ponto. <a href="../ciberseguranca/">Ver WIQON Cibersegurança</a>.'; r.appendChild(cta);
         r.style.display = 'block';
       })
       .catch(function () { e.textContent = 'Não foi possível concluir o escaneamento. Tente de novo em alguns minutos.'; })

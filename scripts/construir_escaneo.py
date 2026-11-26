@@ -25,6 +25,9 @@ ESTILO = """<style>
 .esc-lista .con{opacity:.85;font-size:.95rem}
 .pt{width:16px;height:16px;border-radius:50%;margin-top:4px}
 .pt.verde{background:#22c55e}.pt.amarillo{background:#eab308}.pt.rojo{background:#ef4444}
+.esc-lista li.bloq{opacity:.9;border-style:dashed}
+.esc-lista li.bloq b{filter:blur(0)}
+.esc-lista li.bloq span.borroso{display:inline-block;filter:blur(5px);user-select:none}
 .esc-cta{margin-top:18px;padding:16px 18px;border-radius:16px;border:2px solid #2ad4ff}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>"""
@@ -58,8 +61,16 @@ def script(t):
           if (i.consejo) dv.appendChild(el('p', 'con', i.consejo));
           li.appendChild(dv); ul.appendChild(li);
         }});
+        var oc = j.ocultos || [];
+        oc.forEach(function (o) {{
+          var li = el('li', 'bloq'); li.appendChild(el('span', 'pt ' + o.estado));
+          var dv = el('div'); dv.appendChild(el('b', '', '🔒 ' + (o.estado === 'rojo' ? {t['oc_rojo']!r} : {t['oc_ama']!r})));
+          dv.appendChild(el('p', '', {t['oc_txt']!r})); var bo = el('span', 'borroso', 'xxxxxxxx xxxxx xxxxxxxxxxxx xxxxxx'); dv.appendChild(bo);
+          li.appendChild(dv); ul.appendChild(li);
+        }});
         r.appendChild(ul);
-        var cta = el('div', 'esc-cta'); cta.innerHTML = {t['cta']!r}; r.appendChild(cta);
+        var cta = el('div', 'esc-cta');
+        cta.innerHTML = (oc.length ? '<b>' + {t['cta_n']!r}.replace('N', oc.length) + '</b> ' : '') + {t['cta']!r}; r.appendChild(cta);
         r.style.display = 'block';
       }})
       .catch(function () {{ e.textContent = {t['fallo']!r}; }})
@@ -74,14 +85,20 @@ T = {
         niveles={"verde": "bien", "amarillo": "hay cosas para mejorar", "rojo": "hay puntos urgentes"},
         falta="Escribí un dominio, por ejemplo miempresa.com.py", escaneando="Escaneando… (tarda unos 10 segundos)",
         fallo="No pudimos completar el escaneo. Probá de nuevo en unos minutos.", urg="urgentes", imp="importantes", bien="bien",
-        cta='<b>Esto es una muestra.</b> La revisión completa mira además los plugins y versiones con fallas conocidas, '
+        oc_rojo="Problema urgente", oc_ama="Problema importante",
+        oc_txt="El detalle y cómo corregirlo están en el informe completo.",
+        cta_n="Encontramos N problema(s) más.",
+        cta='La muestra gratis te enseña uno. La revisión completa te explica todos y mira además los plugins y versiones con fallas conocidas, '
             'archivos y paneles expuestos, DKIM, dominios que imitan al tuyo y puertos abiertos, con un informe y cómo '
             'corregir cada punto. <a href="../ciberseguridad/">Ver WIQON Ciberseguridad</a>.'),
     "pt": dict(
         niveles={"verde": "tudo bem", "amarillo": "há pontos a melhorar", "rojo": "há pontos urgentes"},
         falta="Digite um domínio, por exemplo minhaempresa.com.br", escaneando="Escaneando… (leva uns 10 segundos)",
         fallo="Não foi possível concluir o escaneamento. Tente de novo em alguns minutos.", urg="urgentes", imp="importantes", bien="ok",
-        cta='<b>Isto é uma amostra.</b> A revisão completa também verifica plugins e versões com falhas conhecidas, '
+        oc_rojo="Problema urgente", oc_ama="Problema importante",
+        oc_txt="O detalhe e como corrigir estão no relatório completo.",
+        cta_n="Encontramos mais N problema(s).",
+        cta='A amostra grátis mostra um. A revisão completa explica todos e também verifica plugins e versões com falhas conhecidas, '
             'arquivos e painéis expostos, DKIM, domínios que imitam o seu e portas abertas, com relatório e como '
             'corrigir cada ponto. <a href="../ciberseguranca/">Ver WIQON Cibersegurança</a>.'),
 }
@@ -100,6 +117,7 @@ ES = f"""{ESTILO}<h1>Escaneo gratuito de tu sitio</h1>
 <li><strong>Es pasivo:</strong> mira solo lo que ve cualquier navegador al abrir la portada y los registros públicos del DNS, como lo hacen otros servicios de análisis abiertos.</li>
 <li><strong>No</strong> prueba contraseñas, no busca archivos ocultos, no escanea puertos y no cambia nada en el sitio.</li>
 <li>Guardamos el dominio consultado y la fecha, para estadísticas y para evitar abusos. No guardamos tu IP en claro.</li>
+<li>La muestra gratis te detalla un problema; si hay más, te decimos cuántos y qué tan graves son, y el detalle va en el informe completo.</li>
 <li>Hay un límite de escaneos por hora.</li>
 </ul>
 <p>¿Querés la revisión completa, con informe y cómo corregir cada punto? Mirá <a href="../ciberseguridad/">WIQON Ciberseguridad</a>.</p>
@@ -120,6 +138,7 @@ PT = f"""{ESTILO}<h1>Escaneamento gratuito do seu site</h1>
 <li><strong>É passivo:</strong> olha só o que qualquer navegador vê ao abrir a página inicial e os registros públicos do DNS, como outros serviços abertos de análise.</li>
 <li><strong>Não</strong> testa senhas, não procura arquivos ocultos, não escaneia portas e não muda nada no site.</li>
 <li>Guardamos o domínio consultado e a data, para estatísticas e para evitar abusos. Não guardamos seu IP em claro.</li>
+<li>A amostra grátis detalha um problema; se houver mais, dizemos quantos e qual a gravidade, e o detalhe vai no relatório completo.</li>
 <li>Há um limite de escaneamentos por hora.</li>
 </ul>
 <p>Quer a revisão completa, com relatório e como corrigir cada ponto? Veja a <a href="../ciberseguranca/">WIQON Cibersegurança</a>.</p>
