@@ -44,13 +44,107 @@
 <main class="legal-p">
 <h1>WIQON Ciberseguridad</h1>
 <p>Revisamos la seguridad de sitios web y plataformas online de comercios y pymes. Te entregamos un informe claro, en lenguaje simple, con qué está mal, qué tan grave es y cómo corregirlo. Usamos el mismo método que en el laboratorio: <strong>medir y documentar, no prometer</strong>.</p>
+<style>
+.radar-s{--r-fondo:#030a1a;--r-borde:#17325f;--r-tx:#e6f0ff;--r-sv:#a9bbd8;--rw:#ff5d6c;--kev:#ffc04d;--hibp:#b49cff;--ph:#3fe0ff;
+  position:relative;width:min(1120px,calc(100vw - 32px));left:50%;transform:translateX(-50%);margin:26px 0 30px;
+  background:radial-gradient(700px 380px at 22% 50%,rgba(42,123,255,.22),transparent 70%),var(--r-fondo);color:var(--r-tx);
+  border:1px solid var(--r-borde);border-radius:22px;padding:26px;display:grid;grid-template-columns:minmax(260px,400px) 1fr;gap:28px;align-items:center;overflow:hidden}
+.radar-s::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(63,224,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(63,224,255,.06) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
+.radar-s>*{position:relative}
+.radar{aspect-ratio:1;width:100%;border-radius:50%;position:relative;
+  background:radial-gradient(circle closest-side,transparent 0 24%,rgba(63,224,255,.28) 24.3% 24.8%,transparent 25% 49%,rgba(63,224,255,.28) 49.3% 49.8%,transparent 50% 74%,rgba(63,224,255,.28) 74.3% 74.8%,transparent 75% 98.6%,rgba(63,224,255,.5) 99% 100%),
+  linear-gradient(rgba(63,224,255,.2),rgba(63,224,255,.2)) center/1px 100% no-repeat,linear-gradient(90deg,rgba(63,224,255,.2),rgba(63,224,255,.2)) center/100% 1px no-repeat,#04122a}
+.radar .barrido{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 280deg,rgba(63,224,255,.12) 320deg,rgba(63,224,255,.55) 360deg);animation:r-gira 6s linear infinite;-webkit-mask:radial-gradient(circle closest-side,#000 98%,transparent 99%);mask:radial-gradient(circle closest-side,#000 98%,transparent 99%);transform-origin:50% 50%}
+.radar .blip{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);opacity:.35;animation:r-blip 6s linear infinite}
+.radar .centro{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px;border-radius:50%;background:#06142e;border:2px solid #3fe0ff;display:grid;place-items:center;font:800 15px/1 var(--titulos);color:#fff}
+@keyframes r-gira{to{transform:rotate(360deg)}}
+@keyframes r-blip{0%{opacity:1;transform:scale(1.9)}18%{opacity:.75;transform:scale(1)}100%{opacity:.25;transform:scale(1)}}
+.radar-d h2{margin:0 0 4px !important;font-size:1.3rem !important;color:var(--r-tx)}
+.radar-d .sub{color:var(--r-sv) !important;margin:0 0 16px;font-size:.92rem !important}
+.r-cifras{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.r-cifra{border:1px solid var(--r-borde);border-radius:14px;padding:12px 14px;background:rgba(6,20,46,.75)}
+.r-cifra b{display:block;font:800 1.7rem/1.1 var(--titulos);color:var(--c)}
+.r-cifra span{font-size:.86rem;color:var(--r-sv);line-height:1.35;display:block;margin-top:4px}
+.r-lista{list-style:none;margin:0 !important;padding:0 !important;display:grid;gap:6px;min-height:186px}
+.r-lista li{display:grid;grid-template-columns:10px auto 1fr;gap:10px;align-items:baseline;font-size:.88rem !important;color:var(--r-tx) !important;line-height:1.4 !important;padding:6px 10px;border-radius:10px;background:rgba(6,20,46,.6);animation:r-entra .5s ease both}
+.r-lista li i{width:9px;height:9px;border-radius:50%;background:var(--c);align-self:center}
+.r-lista time{font-family:var(--mono);color:var(--r-sv);font-size:.8rem}
+@keyframes r-entra{from{opacity:0;transform:translateY(8px)}}
+.radar-s .fuente{grid-column:1/-1;margin:0;font-size:.78rem !important;color:var(--r-sv) !important}
+.radar-s .fuente a{color:#8aebff}
+@media (max-width:760px){.radar-s{grid-template-columns:1fr;padding:18px}.radar{max-width:300px;margin:0 auto}.r-cifra b{font-size:1.4rem}}
+@media (prefers-reduced-motion:reduce){.radar .barrido,.radar .blip,.r-lista li{animation:none}.radar .blip{opacity:.9}}
+.legal-p .tit.plan{position:relative;padding-right:120px;background-repeat:no-repeat;background-position:right 16px top 16px;background-size:92px}
+.legal-p .tit.plan.vig{background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22 fill=%22none%22 stroke=%22%233fe0ff%22 stroke-width=%223%22%3E%3Ccircle cx=%2260%22 cy=%2260%22 r=%2250%22/%3E%3Ccircle cx=%2260%22 cy=%2260%22 r=%2232%22/%3E%3Ccircle cx=%2260%22 cy=%2260%22 r=%2214%22/%3E%3Cpath d=%22M60 60 L104 36%22 stroke-width=%224%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%2288%22 cy=%2246%22 r=%225%22 fill=%22%233fe0ff%22/%3E%3C/svg%3E")}.legal-p .tit.plan.rev{background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22 fill=%22none%22 stroke=%22%233fe0ff%22 stroke-width=%223%22%3E%3Crect x=%228%22 y=%2216%22 width=%2284%22 height=%2264%22 rx=%228%22/%3E%3Cpath d=%22M8 30 H92%22/%3E%3Ccircle cx=%2218%22 cy=%2223%22 r=%222.5%22 fill=%22%233fe0ff%22/%3E%3Ccircle cx=%2227%22 cy=%2223%22 r=%222.5%22 fill=%22%233fe0ff%22/%3E%3Cpath d=%22M20 44 H60 M20 54 H50 M20 64 H56%22/%3E%3Ccircle cx=%2278%22 cy=%2278%22 r=%2220%22 stroke-width=%225%22/%3E%3Cpath d=%22M92 92 L110 110%22 stroke-width=%228%22 stroke-linecap=%22round%22/%3E%3C/svg%3E")}.legal-p .tit.plan.aud{background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22 fill=%22none%22 stroke=%22%233fe0ff%22 stroke-width=%223%22%3E%3Cpath d=%22M60 8 L102 24 V56 C102 84 84 102 60 112 C36 102 18 84 18 56 V24 Z%22 stroke-width=%224%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M40 50 H80 M40 64 H80 M40 78 H66%22/%3E%3Cpath d=%22M76 74 L82 80 L94 66%22 stroke-width=%225%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E")}
+@media (max-width:560px){.legal-p .tit.plan{padding-right:18px;background-size:64px;background-position:right 12px top 12px}.legal-p .tit.plan strong{display:inline-block;padding-right:70px}}
+.trabajo{position:relative;border:1px solid var(--borde);border-radius:16px;padding:6px 22px 10px;margin-top:10px;background-image:linear-gradient(var(--caja-bg),var(--caja-bg)),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22 viewBox=%220 0 160 160%22 fill=%22none%22 stroke=%22%233fe0ff%22 stroke-opacity=%22.35%22 stroke-width=%221.4%22%3E%3Cpath d=%22M0 40 H40 L56 24 H90 M90 24 V8 M160 120 H120 L104 136 H70 M70 136 V152 M40 160 V120 L56 104%22/%3E%3Ccircle cx=%2290%22 cy=%228%22 r=%223%22/%3E%3Ccircle cx=%2270%22 cy=%22152%22 r=%223%22/%3E%3Ccircle cx=%2256%22 cy=%22104%22 r=%223%22/%3E%3Crect x=%22104%22 y=%2244%22 width=%2226%22 height=%2222%22 rx=%224%22/%3E%3Cpath d=%22M109 44 V37 a8 8 0 0 1 16 0 V44%22/%3E%3Crect x=%2222%22 y=%2270%22 width=%2220%22 height=%2217%22 rx=%223%22/%3E%3Cpath d=%22M26 70 V65 a6 6 0 0 1 12 0 V70%22/%3E%3C/svg%3E");background-size:auto,160px}
+.trabajo::before{content:"";position:absolute;inset:0;border-radius:16px;background:linear-gradient(90deg,var(--fondo) 35%,transparent);opacity:.85;pointer-events:none}
+.trabajo>*{position:relative}
+</style>
+<section class="radar-s" aria-labelledby="radar-t">
+<div class="radar" aria-hidden="true"><div class="barrido"></div><div id="r-blips"></div><div class="centro">W</div></div>
+<div class="radar-d">
+<h2 id="radar-t">Radar de sucesos · últimos 30 días</h2>
+<p class="sub">Lo que está pasando en la región y en el mundo, con datos públicos que vigilamos todos los días.</p>
+<div class="r-cifras" id="r-cifras"></div>
+<ul class="r-lista" id="r-lista" aria-live="off"><li><i style="--c:#3fe0ff"></i><time></time><span>Cargando sucesos…</span></li></ul>
+</div>
+<p class="fuente" id="r-fuente">Fuentes públicas: ransomware.live, catálogo KEV de CISA, Have I Been Pwned, OpenPhish y Phishing.Database. No mostramos nombres de empresas afectadas: son víctimas. Actualizado: …</p>
+</section>
+<script>
+(function () {
+  var T = {"tit": "Radar de sucesos · últimos 30 días", "sub": "Lo que está pasando en la región y en el mundo, con datos públicos que vigilamos todos los días.", "c_rw": "ataques de ransomware publicados en Paraguay y Brasil", "c_kev": "fallas explotadas activamente (CISA)", "c_hibp": "cuentas expuestas en filtraciones nuevas", "c_ph": "sitios .py usados hoy para phishing", "rw": "Ransomware en {pais}: empresa de {sector} · grupo {grupo}", "kev": "Falla explotada: {prod} ({cve})", "kev_rw": " · usada en ransomware", "hibp": "Filtración nueva: {n} cuentas expuestas", "paises": {"PY": "Paraguay", "BR": "Brasil"}, "sin_sector": "sector sin dato", "fuente": "Fuentes públicas: ransomware.live, catálogo KEV de CISA, Have I Been Pwned, OpenPhish y Phishing.Database. No mostramos nombres de empresas afectadas: son víctimas. Actualizado: ", "cargando": "Cargando sucesos…", "sin": "El radar se actualiza todos los días a la mañana.", "sectores": {"Technology": "tecnología", "Professional Services": "servicios profesionales", "Retail & E-Commerce": "comercio", "Manufacturing": "industria", "Healthcare": "salud", "Financial Services": "finanzas", "Education": "educación", "Construction": "construcción", "Transportation/Logistics": "transporte y logística", "Agriculture": "agro", "Hospitality": "hotelería y turismo", "Government": "gobierno", "Energy": "energía", "Business Services": "servicios", "Consumer Services": "servicios al consumidor", "Telecommunication": "telecomunicaciones", "Public Sector": "sector público", "Legal": "servicios legales", "Real Estate": "inmobiliaria", "Media": "medios"}}, C = {rw: 'var(--rw)', kev: 'var(--kev)', hibp: 'var(--hibp)', ph: 'var(--ph)'};
+  var lista = document.getElementById('r-lista'), cifras = document.getElementById('r-cifras'), blips = document.getElementById('r-blips');
+  var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nf = new Intl.NumberFormat(document.documentElement.lang);
+  function el(tag, cls, txt) { var x = document.createElement(tag); if (cls) x.className = cls; if (txt != null) x.textContent = txt; return x; }
+  function grande(n) { return n >= 1e6 ? nf.format(Math.round(n / 1e5) / 10) + ' M' : nf.format(n); }
+  function texto(e) {
+    if (e.t === 'rw') return T.rw.replace('{pais}', T.paises[e.pais] || e.pais).replace('{sector}', T.sectores[e.sector] || (e.sector && e.sector !== 'Other' ? e.sector : T.sin_sector)).replace('{grupo}', e.grupo || '?');
+    if (e.t === 'kev') return T.kev.replace('{prod}', e.prod).replace('{cve}', e.cve) + (e.rw ? T.kev_rw : '');
+    return T.hibp.replace('{n}', grande(e.n));
+  }
+  function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
+  function cifra(n, txt, c) { var d = el('div', 'r-cifra'); d.style.setProperty('--c', c); d.appendChild(el('b', '', n)); d.appendChild(el('span', '', txt)); cifras.appendChild(d); }
+  function fila(e) {
+    var li = el('li'); var i = el('i'); i.style.setProperty('--c', C[e.t]); li.appendChild(i);
+    var f = (e.f || '').split('-'); li.appendChild(el('time', '', f.length === 3 ? f[2] + '/' + f[1] : '')); li.lastChild.setAttribute('datetime', e.f);
+    li.appendChild(el('span', '', texto(e))); return li;
+  }
+  fetch('https://n8n.wiqonlab.com/webhook/sucesos').then(function (r) { return r.json(); }).then(function (d) {
+    var por = {rw: [], kev: [], hibp: []}, ev = [];
+    (d.eventos || []).forEach(function (e) { if (por[e.t]) por[e.t].push(e); });
+    for (var k = 0; ev.length < (d.eventos || []).length && k < 80; k++) ['rw', 'kev', 'hibp'].forEach(function (t) { if (por[t][k]) ev.push(por[t][k]); });
+    if (!ev.length) { lista.innerHTML = ''; lista.appendChild(el('li', '', T.sin)); return; }
+    var tt = d.totales || {}, ph = d.phishing || {};
+    cifra(nf.format(tt.rw || 0), T.c_rw, C.rw); cifra(nf.format(tt.kev || 0), T.c_kev, C.kev);
+    cifra(grande(tt.hibp_cuentas || 0), T.c_hibp, C.hibp); if (ph.py_sitios != null) cifra(nf.format(ph.py_sitios), T.c_ph, C.ph);
+    ev.slice(0, 40).forEach(function (e) {
+      var h = hash((e.cve || '') + e.f + (e.grupo || '') + (e.n || '') + e.t), ang = (h % 360), rad = 0.18 + ((h >> 9) % 70) / 100 * 0.42 + (e.t === 'rw' ? 0 : 0.05);
+      var b = el('span', 'blip'); b.style.setProperty('--c', C[e.t]);
+      b.style.left = (50 + Math.sin(ang * Math.PI / 180) * rad * 86) + '%'; b.style.top = (50 - Math.cos(ang * Math.PI / 180) * rad * 86) + '%';
+      b.style.animationDelay = (ang / 360 * 6 - 6).toFixed(2) + 's'; blips.appendChild(b);
+    });
+    var desde = 0, N = 6;
+    function mostrar() { lista.innerHTML = ''; for (var k = 0; k < N && k < ev.length; k++) lista.appendChild(fila(ev[(desde + k) % ev.length])); }
+    mostrar();
+    if (!quieto && ev.length > N) setInterval(function () {
+      if (document.hidden) return;
+      desde = (desde + 1) % ev.length; lista.insertBefore(fila(ev[(desde + N - 1) % ev.length]), lista.firstChild);
+      while (lista.children.length > N) lista.removeChild(lista.lastChild);
+    }, 3200);
+    var a = (d.actualizado || '').replace('T', ' ');
+    document.getElementById('r-fuente').textContent = T.fuente + a + '.';
+  }).catch(function () { lista.innerHTML = ''; lista.appendChild(el('li', '', T.sin)); });
+})();
+</script>
 <p>¿Por qué ahora? En noviembre de 2026 relevamos <strong>63 sitios de empresas paraguayas (.com.py)</strong> que aparecen en listas públicas de phishing: les entraron por un WordPress o un plugin desactualizado y los usaron para alojar estafas. Casi siempre, el dueño no se había enterado.</p>
 
 <div class="tit"><p><strong>Probá gratis el escaneo básico.</strong> Escribí tu dominio y en segundos ves un semáforo con HTTPS, certificado, cabeceras, correo y listas de phishing. <a href="../escaneo/">Escanear mi sitio gratis</a>.</p></div>
 
 <h2>Planes</h2>
-<div class="tit"><p><strong>Vigilancia mensual · US$ 30 por mes</strong><br>Te avisamos si tu sitio se cae, si el certificado está por vencer, si cambia la portada (desfiguración), si aparece en una lista de phishing, si alguien registra un dominio parecido o si sale una vulnerabilidad nueva en lo que usás.</p></div>
-<div class="tit"><p><strong>Revisión externa · US$ 120 de lanzamiento</strong> (precio normal US$ 180)<br>Sin intrusión: miramos lo que cualquiera ve desde afuera. Entrega en 3 días hábiles.</p>
+<div class="tit plan vig"><p><strong>Vigilancia mensual · US$ 30 por mes</strong><br>Te avisamos si tu sitio se cae, si el certificado está por vencer, si cambia la portada (desfiguración), si aparece en una lista de phishing, si alguien registra un dominio parecido o si sale una vulnerabilidad nueva en lo que usás.</p></div>
+<div class="tit plan rev"><p><strong>Revisión externa · US$ 120 de lanzamiento</strong> (precio normal US$ 180)<br>Sin intrusión: miramos lo que cualquiera ve desde afuera. Entrega en 3 días hábiles.</p>
 <ul>
 <li>Certificado, cabeceras de seguridad, archivos y paneles expuestos.</li>
 <li>Versión de WordPress, plugins o framework, y vulnerabilidades conocidas (CVE).</li>
@@ -59,7 +153,7 @@
 <li>Puertos abiertos del servidor.</li>
 <li>Informe con semáforo (🔴 urgente, 🟡 importante, 🟢 bien) y cómo corregir cada punto.</li>
 </ul></div>
-<div class="tit"><p><strong>Auditoría con autorización · US$ 550</strong><br>Todo lo de la revisión externa y además pruebas activas, con autorización firmada. Entrega en 7 a 10 días hábiles.</p>
+<div class="tit plan aud"><p><strong>Auditoría con autorización · US$ 550</strong><br>Todo lo de la revisión externa y además pruebas activas, con autorización firmada. Entrega en 7 a 10 días hábiles.</p>
 <ul>
 <li>Escaneo activo de vulnerabilidades del sitio y del servidor.</li>
 <li>Revisión de formularios, inicio de sesión y permisos, sin explotar fallos ni tocar datos.</li>
@@ -70,13 +164,13 @@
 
 
 <h2>Cómo trabajamos</h2>
-<ul>
+<div class="trabajo"><ul>
 <li><strong>Autorización por escrito</strong> antes de empezar: qué sitio, qué alcance y en qué fechas. Sin autorización no revisamos nada.</li>
 <li><strong>Confidencialidad:</strong> el informe es solo para vos. No publicamos hallazgos ni nombres de clientes.</li>
 <li><strong>Sin daño:</strong> no explotamos fallos, no accedemos a datos de tus clientes y no cambiamos nada en tu sitio.</li>
 <li><strong>Sin promesas imposibles:</strong> ninguna revisión deja un sitio «100 % seguro». Reducimos el riesgo y te decimos qué queda pendiente.</li>
 <li>Pago por adelantado en la revisión externa; 50 % al iniciar y 50 % al entregar en la auditoría.</li>
-</ul>
+</ul></div>
 
 <h2>Cómo empezamos</h2>
 <ol>

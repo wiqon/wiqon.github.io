@@ -47,6 +47,12 @@
 .esc-form input{flex:1 1 260px;min-width:0;font:inherit;font-size:1.05rem;padding:12px 14px;border-radius:12px;border:1px solid rgba(127,127,127,.45);background:transparent;color:inherit}
 .esc-form button{font-size:1.05rem}
 .esc-estado{min-height:1.4em;margin:6px 0 0}
+.esc-ses{margin:4px 0 0;font-size:.92rem}
+.esc-nota{font-weight:600;margin:0 0 10px}
+.acceso label.check{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:.88rem;color:var(--suave)}
+.acceso .btn{margin-top:16px;width:100%}
+.acceso .msg.ok{color:var(--sube)}.acceso .msg.error{color:var(--baja)}
+.acceso .pie-d{font-size:.8rem}
 .esc-res{margin-top:18px;display:none}
 .esc-cab{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:16px;border:1px solid rgba(127,127,127,.35);margin-bottom:12px}
 .esc-cab b{font-size:1.2rem}
@@ -68,6 +74,7 @@
   <input id="esc-d" name="dominio" placeholder="minhaempresa.com.br" autocomplete="url" inputmode="url" maxlength="200" required>
   <button class="btn p" type="submit">Escanear grátis</button>
 </form>
+<p class="esc-ses" id="esc-ses">O escaneamento grátis é um por conta.</p>
 <p class="esc-estado" id="esc-e" role="status" aria-live="polite"></p>
 <div class="esc-res" id="esc-r"></div>
 <h2>O que faz e o que não faz</h2>
@@ -76,53 +83,98 @@
 <li><strong>Não</strong> testa senhas, não procura arquivos ocultos, não escaneia portas e não muda nada no site.</li>
 <li>Guardamos o domínio consultado e a data, para estatísticas e para evitar abusos. Não guardamos seu IP em claro.</li>
 <li>A amostra grátis detalha um problema; se houver mais, dizemos quantos e qual a gravidade, e o detalhe vai no relatório completo.</li>
-<li>Há um limite de escaneamentos por hora.</li>
+<li><strong>Um escaneamento grátis por conta.</strong> Você entra com seu e-mail (sem senha) e pode ver seu resultado de novo quando quiser.</li>
 </ul>
 <p>Quer a revisão completa, com relatório e como corrigir cada ponto? Veja a <a href="../ciberseguranca/">WIQON Cibersegurança</a>.</p>
 <script>
 (function () {
-  var f = document.getElementById('esc-f'), e = document.getElementById('esc-e'), r = document.getElementById('esc-r');
+  var f = document.getElementById('esc-f'), e = document.getElementById('esc-e'), r = document.getElementById('esc-r'),
+      ses = document.getElementById('esc-ses'), pendiente = null;
   var NIVEL = {'verde': 'tudo bem', 'amarillo': 'há pontos a melhorar', 'rojo': 'há pontos urgentes'};
   function el(tag, cls, txt) { var x = document.createElement(tag); if (cls) x.className = cls; if (txt) x.textContent = txt; return x; }
+  function cuenta() { return window.wiqonCuenta || {}; }
+  function pintarSes(s) {
+    ses.textContent = '';
+    if (s && s.user) { ses.appendChild(document.createTextNode('Você entrou como {e}. Você tem um escaneamento grátis com esta conta.'.replace('{e}', s.user.email || ''))); }
+    else {
+      ses.appendChild(document.createTextNode('O escaneamento grátis é um por conta.' + ' '));
+      var a = el('a', '', 'Entre com seu e-mail'); a.href = '#ingresar';
+      a.addEventListener('click', function (ev) { ev.preventDefault(); if (cuenta().abrir) cuenta().abrir(); }); ses.appendChild(a);
+    }
+  }
+  document.addEventListener('wiqon:sesion', function (ev) {
+    pintarSes(ev.detail.sesion);
+    if (ev.detail.logueado && pendiente) { f.dominio.value = pendiente; pendiente = null; f.requestSubmit ? f.requestSubmit() : f.dispatchEvent(new Event('submit')); }
+  });
+  try { var d0 = sessionStorage.getItem('esc-pendiente'); if (d0) { pendiente = d0; f.dominio.value = d0; sessionStorage.removeItem('esc-pendiente'); } } catch (x) {}
+  function pintar(j) {
+    r.innerHTML = '';
+    if (j.repetido) r.appendChild(el('p', 'esc-nota', 'Este é o resultado do seu escaneamento grátis de F.'.replace('F', (j.fecha_uso || '').slice(0, 10))));
+    var cab = el('div', 'esc-cab'); cab.appendChild(el('span', 'pt ' + j.nivel));
+    var c = el('div'); c.appendChild(el('b', '', j.dominio + ': ' + NIVEL[j.nivel]));
+    c.appendChild(el('p', '', j.resumen.rojo + ' urgentes · ' + j.resumen.amarillo + ' importantes · ' + j.resumen.verde + ' ok'));
+    cab.appendChild(c); r.appendChild(cab);
+    var ul = el('ul', 'esc-lista');
+    j.items.forEach(function (i) {
+      var li = el('li'); li.appendChild(el('span', 'pt ' + i.estado));
+      var dv = el('div'); dv.appendChild(el('b', '', i.titulo)); dv.appendChild(el('p', '', i.detalle));
+      if (i.consejo) dv.appendChild(el('p', 'con', i.consejo));
+      li.appendChild(dv); ul.appendChild(li);
+    });
+    var oc = j.ocultos || [];
+    oc.forEach(function (o) {
+      var li = el('li', 'bloq'); li.appendChild(el('span', 'pt ' + o.estado));
+      var dv = el('div'); dv.appendChild(el('b', '', '🔒 ' + (o.estado === 'rojo' ? 'Problema urgente' : 'Problema importante')));
+      dv.appendChild(el('p', '', 'O detalhe e como corrigir estão no relatório completo.')); dv.appendChild(el('span', 'borroso', 'xxxxxxxx xxxxx xxxxxxxxxxxx xxxxxx'));
+      li.appendChild(dv); ul.appendChild(li);
+    });
+    r.appendChild(ul);
+    var cta = el('div', 'esc-cta');
+    cta.innerHTML = (oc.length ? '<b>' + 'Encontramos mais N problema(s).'.replace('N', oc.length) + '</b> ' : '') + 'A amostra grátis mostra um. A revisão completa explica todos e também verifica plugins e versões com falhas conhecidas, arquivos e painéis expostos, DKIM, domínios que imitam o seu e portas abertas, com relatório e como corrigir cada ponto. <a href="../ciberseguranca/">Ver WIQON Cibersegurança</a>.'; r.appendChild(cta);
+    r.style.display = 'block';
+  }
   f.addEventListener('submit', function (ev) {
     ev.preventDefault();
     var d = (f.dominio.value || '').trim();
     if (d.length < 4) { e.textContent = 'Digite um domínio, por exemplo minhaempresa.com.br'; return; }
+    var s = cuenta().sesion;
+    if (!s) {
+      pendiente = d; try { sessionStorage.setItem('esc-pendiente', d); } catch (x) {}
+      e.textContent = 'Para escanear grátis, entre com seu e-mail: enviamos um link e você volta aqui.'; if (cuenta().abrir) cuenta().abrir(); return;
+    }
     var b = f.querySelector('button'); b.disabled = true; r.style.display = 'none'; e.textContent = 'Escaneando… (leva uns 10 segundos)';
-    fetch('https://n8n.wiqonlab.com/webhook/escaneo-gratis', { method: 'POST', body: new URLSearchParams({ dominio: d }) })
+    fetch('https://n8n.wiqonlab.com/webhook/escaneo-gratis', { method: 'POST', body: new URLSearchParams({ dominio: d, token: s.access_token }) })
       .then(function (x) { return x.json(); })
       .then(function (j) {
+        if (j.requiere_cuenta) { e.textContent = 'Para escanear grátis, entre com seu e-mail: enviamos um link e você volta aqui.'; pendiente = d; if (cuenta().abrir) cuenta().abrir(); return; }
+        if (j.usado) {
+          e.textContent = '';
+          r.innerHTML = '<div class="esc-cta"><b>' + 'Você já usou seu escaneamento grátis com D.'.replace('D', j.dominio_usado) + '</b> ' + 'A amostra grátis mostra um. A revisão completa explica todos e também verifica plugins e versões com falhas conhecidas, arquivos e painéis expostos, DKIM, domínios que imitam o seu e portas abertas, com relatório e como corrigir cada ponto. <a href="../ciberseguranca/">Ver WIQON Cibersegurança</a>.' + '</div>';
+          r.style.display = 'block'; return;
+        }
         if (j.aviso || j.error || !j.items) { e.textContent = j.aviso || j.error || 'Não foi possível concluir o escaneamento. Tente de novo em alguns minutos.'; return; }
-        e.textContent = '';
-        r.innerHTML = '';
-        var cab = el('div', 'esc-cab'); cab.appendChild(el('span', 'pt ' + j.nivel));
-        var c = el('div'); c.appendChild(el('b', '', j.dominio + ': ' + NIVEL[j.nivel]));
-        c.appendChild(el('p', '', j.resumen.rojo + ' urgentes · ' + j.resumen.amarillo + ' importantes · ' + j.resumen.verde + ' ok'));
-        cab.appendChild(c); r.appendChild(cab);
-        var ul = el('ul', 'esc-lista');
-        j.items.forEach(function (i) {
-          var li = el('li'); li.appendChild(el('span', 'pt ' + i.estado));
-          var dv = el('div'); dv.appendChild(el('b', '', i.titulo)); dv.appendChild(el('p', '', i.detalle));
-          if (i.consejo) dv.appendChild(el('p', 'con', i.consejo));
-          li.appendChild(dv); ul.appendChild(li);
-        });
-        var oc = j.ocultos || [];
-        oc.forEach(function (o) {
-          var li = el('li', 'bloq'); li.appendChild(el('span', 'pt ' + o.estado));
-          var dv = el('div'); dv.appendChild(el('b', '', '🔒 ' + (o.estado === 'rojo' ? 'Problema urgente' : 'Problema importante')));
-          dv.appendChild(el('p', '', 'O detalhe e como corrigir estão no relatório completo.')); var bo = el('span', 'borroso', 'xxxxxxxx xxxxx xxxxxxxxxxxx xxxxxx'); dv.appendChild(bo);
-          li.appendChild(dv); ul.appendChild(li);
-        });
-        r.appendChild(ul);
-        var cta = el('div', 'esc-cta');
-        cta.innerHTML = (oc.length ? '<b>' + 'Encontramos mais N problema(s).'.replace('N', oc.length) + '</b> ' : '') + 'A amostra grátis mostra um. A revisão completa explica todos e também verifica plugins e versões com falhas conhecidas, arquivos e painéis expostos, DKIM, domínios que imitam o seu e portas abertas, com relatório e como corrigir cada ponto. <a href="../ciberseguranca/">Ver WIQON Cibersegurança</a>.'; r.appendChild(cta);
-        r.style.display = 'block';
+        e.textContent = ''; pintar(j);
       })
       .catch(function () { e.textContent = 'Não foi possível concluir o escaneamento. Tente de novo em alguns minutos.'; })
       .finally(function () { b.disabled = false; });
   });
 })();
 </script>
+<dialog class="acceso" id="acceso" aria-labelledby="acc-t">
+  <form class="cuerpo" id="acc-form" novalidate>
+    <div class="cab-d"><h3 id="acc-t">Entre para escanear grátis</h3><button class="cerrar" type="button" aria-label="Fechar">×</button></div>
+    <p>Digite seu e-mail e enviamos um link para entrar. Não usamos senhas. Cada conta tem um escaneamento grátis.</p>
+    <label class="campo" for="acc-email">E-mail</label>
+    <input type="email" id="acc-email" name="email" autocomplete="email" required placeholder="voce@email.com">
+    <label class="check"><input type="checkbox" id="acc-priv" required> <span>Aceito a <a href="../privacidade/" target="_blank">política de privacidade</a>.</span></label>
+    <label class="check"><input type="checkbox" id="acc-nov"> <span>Quero receber novidades da WIQON (opcional, posso cancelar quando quiser).</span></label>
+    <button class="btn p" type="submit">Enviar link de acesso</button>
+    <p class="msg" id="acc-msg" role="status" aria-live="polite"></p>
+    <p class="pie-d">Se você já tem conta, o mesmo link faz você entrar.</p>
+  </form>
+</dialog>
+<script src="../../assets/vendor/supabase-2.119.0.js"></script>
+<script src="../../assets/cuenta.js"></script>
 
 </main>
 <footer class="pie-l"><a href="../termos/">Termos e condições</a><a href="../devolucoes/">Entregas e devoluções</a><a href="../privacidade/">Privacidade</a><a href="../contato/">Contato</a><a href="../parcerias/">Parcerias</a><br>© 2026 WIQON · Avelino González Melgarejo · Paraguai</footer>
